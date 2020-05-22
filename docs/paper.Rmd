@@ -1,0 +1,386 @@
+---
+title: "Beliefs about meritocracy and non-meritocracy in international comparison"
+css: "../input/css/custom.css"
+linestretch: '1.5'
+link-citations: yes
+output:
+  html_document:
+    theme: flatly
+    number_sections: true
+    always_allow_html: yes
+linkcolor: blue
+bibliography:
+  - ../input/bib/EconomiaMoral.bib
+  - ../input/bib/meritocracy.bib
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE,message = FALSE, cache = FALSE)
+knitr::opts_knit$set(root.dir = "../")
+options(scipen=999)
+rm(list=ls())
+options(knitr.kable.NA = '')
+```
+
+```{r message=FALSE, warning=FALSE, include=FALSE, echo=FALSE}
+library(knitr)
+#install.packages("KableExtra")
+library(kableExtra)
+library(dplyr)
+#install.packages("captioner")
+library(captioner)
+```
+
+<div style="text-align: justify">
+
+
+# Introduction
+
+
+To be submitted in Social Indicators Research
+Ideas: meritocracy and redistributive
+To what extent perceptions of meritocracy affect redistributive preferences? The argument is that
+if individuals and groups in general consider that merit leads to career advancement and to move
+upwards in the status ladder, a possible consequence is that redistribution from the side of the
+cental agency as the state could be less supported as individuals are seen as responsible for their
+own fate. In this sense, perceptions of a well-functioning meritocracy would be linked to less
+redistributive preferences. Many ad-hoc decisions in operationalization and building instruments.
+Some of them represent different research interests and this is valid, but in many cases they are
+not well argued and are actually wrong. Of course this is probably not only the case for studying
+meritocratic beliefs, but this can be used both for researchers studying specifically this topic and
+jcastillov@uc.cl - jc-castillo.com
+1
+others that deal with measurement issues in international comparisons. Validity of measures in
+cross-national research ... is not really "up to date", mostly in sociology. Restricted to survey research,
+mostly comparative. Conceptual clarification: meritocratic pereceptions and meritocratic
+preferences. Beliefs, although mostly linked with normative principles, sometimes they are also
+used of perceptions (Reynolds and Xian, 2014), or even somentime "justice perceptions", which is
+something ambiguous as justice, as a normative ideal, cannot really be perceived and mostly refer
+to perception of inequality (which is not necessarily consider unjust).
+One: definition of meritocracy and conceptual framework Two: measurement of meritocratic
+perceptions (merit and non-merit)
+1.1 Measuring meritocratic perceptions and beliefs ... maybe a different
+paper- Mau seminar presentation
+From a sociological perspective, the study of meritocracy can be framed in the area of distributive
+or social justice studies, which in broad terms empirical research on justice "deals solely with
+empirical phenomena, concentrating on the empirical validity of conceptions of justice for individuals’
+attitudes and behavior and for the structure and processes of society or other forms of
+social aggregation" (Liebig and Sauer, 2016, p.37). Within this framework, beliefs about inequality
+through survey research is an area of studies that was first conceptualized as such by Kluegel
+and Smith (1981) and that has developed mainly through comparative studies as the ISJP and
+the ISSP.
+
+Within this tradition meritocray does not appear as a main focus of study until the paper of
+Kunovich and Slomczynski (2007). In this research, the authors use ISSP 1992 data (14 countries)
+and analize the role of individual and country variables on meritocratic beliefs as the dependent
+variables. Meritocratic beliefs are operationalized through a sum index of 6 indicators. The first
+five com from a items’ battery listing a number of reasons about "How important should be in
+deciding pay...": number of years spent in education, responsibility, how well person does the
+job, what is needed to support a family, and whether the person has children to support. The
+desicion of how to add these items to an index is based on "applying face validity criterion"
+(Kunovich and Slomczynski, 2007, p.652), whereby the first three are pointed as meritocratic
+when the answer is "essential" and for the other two when the answer is "not important at all"
+or "not very important". Finally, another item is included in the index: "the government should
+provide jobs for everyone who wants one", which is pointed as meritocratic when aswered strongly
+disagree and disagree. Two main weaknesses can be identified in the approach followed by the
+2authors. First, the discretional decision regarding which response value should be pointed as promeritocratic,
+which opens a series of doubts regarding the replicability of the results if different
+decisions had been made. Secondly, the final score based on the items is not necessarily related
+to pro-meritocratic beliefs, which is a more serious weakness as it pertains to the validity of the
+results. And this is not only an opinion based on the description of the index. Rather, and
+somewhat surprising, the authors themselves defend the index as something that is not measuring
+the same latent construct: "the average correlation among items proved to be weak and all items
+share no more than 30 per cent of variance. In this situation, we decided to rely on a summative
+index. In choosing this strategy of index construction, we argue that support for meritocracy is
+not a latent variable causing particular responses to the questionnaire items. Rather it is a stance,
+which might be viewed as an aggregate of various opinions about the relationship between merit
+and reward" (Kunovich and Slomczynski, 2007, p.653-654).
+
+Duru-Bellat and Tenret (2012) follow a similar rationale than the paper of Kunovich and Slomczynski
+(2007), but using ISSP 1999 with 26 countries (some missing due to lack of information for
+some variables). They distinguish between desired and perceived meritocracy. For desired meritocracy
+they use one of the item which was part of (Kunovich and Slomczynski, 2007), namely
+"how important should the number of years spent in education and training be in deciding how
+much money people ought to earn?", whereas for perceived meritocracy they average two items:
+"Would you say that in your country, people are rewarded for their efforts?" and "... people are
+rewarded for their skills?" The main contribution here is the distinction between perceptions and
+beliefs (desires), but unfortunately the use of few indicators does not allow to test the measurement
+quality, and the results are not strictily comparable to the previous from Kunovich and
+Slomczynski (2007).
+
+Reynolds and Xian (2014) compare 1987 and 2010 General Social Survey, which also has a version
+of the "get ahead" items battery, which ask about a series of reason about "...how important
+you think it is for getting ahead in life". The main innovation from this paper is to distinguish
+meritocratic from non-meritocratic beliefs, under the assumption that beliefs in meritocracy and
+non-meritocracy are not the extremes of the same continuum. By meritocratic beliefs they consider
+the agreement with the statements related to good education, ambition and hard work, whereas
+the non-meritocratic beliefs are divided in two groups: friends and family (coming from a wealthy
+family, having well-educated parents, knowing the right people, having political connections) and
+discrimination (a persons’ race, religion, and being born a man or a woman). The authors build
+five scales based on these groups, one for each of the three groups, then a fourth adding all the
+non-meritocratic scales (scale two and three), and a fifth which is built upon a substraction of the
+non-meritocratic scales (fourth) from the meritocratic scale. The grouping of items is supported
+
+3
+
+by a principal component analysis, in which it is possible to identify three components.
+Drawbacks - principal component is not a factor analysis method, it is for reducing dimensions,
+which is not the same. - in scale four they are adding two non-meritocratic scale, but based on
+the factor analysis they actually support the idea that they are measuring two different things,
+then adding pears and apples. Probably the rationale behind this is that the two non-meritocratic
+scales build a second order factor, but they actually do not test this possibility. - The substractions
+of scales in scale fifth assumes that meritocracy and non-meritocracy are two poles of the same
+continuum, contrary to what the authors argue at the beginning and also not supported by the
+analysis of the scales. Actually, by using varimax rotation in the principal component analysis
+they restrict the correlations between the scales to be zero, being not possible to get at least some
+information about whether they are negatively correlated. - As one of the focus of the paper is to
+compare two years, the authors are making the strong assumption that the instrument is equivalent
+in both time-points, but this is also non tested. Without evidence in favor of equivalence, we
+cannot be sure whether the reported changes are due to "actual" changes or instrument variability
+(Davidov et al., 2014).
+
+There are other papers that take simple measures (one or two indicators) of meritocracy and
+that do not deal with the issue of measurement, although this does not leave them out of the
+problem. For instance, Newman et al. (2015), contrary to Reynolds and Xian (2014), affirm that
+belief in meritocracy is the contrary of believing in non-meritocracy: " ...belief in meritocracy
+should also involve rejection of the opposing idea that the achievement of wealth and success is
+largely determined by forces outside of the hands of the individual, such as good luck, inherited
+privileges and resources, political connections, and other forms of structural advantage or preferential
+treatment" (Reynolds and Xian, 2014, p.331). Consistently, they build several indexes
+in which non-meritocratic items are reverse coded. Besides, they use different items when comparing
+different waves of the date used (Pew Research datasets), an issue already mentioned by
+Solt et al. (2016) in the review and critique of this article. For contrasting the results, Solt et al.
+(2016) use two items referred to hard work as indicator of meritocratic beliefs in the US (Using
+the Religious Landscape Survey), something that is certainly more consistent than Newman et al.
+(2015), but that does not solve the problem of the definition and measurement of meritocracy and
+non-meritocratic distribution.
+
+
+So far research in both preferences and to some extent on meritocracy have considered the homoeconomicus
+
+- homo-sociologicus perspectives in order to explain individual and country differences
+in individual attitudes. In this paper
+4
+
+Mediation hypothesis??
+
+- Polanyi and three types of resource distribution: reciprocity, redistribution and commercial
+exchange. Si bien Polanyi relaciona reciprocity con sociedades arcaicas y la redistribución con
+estados fuertes tipo feudales, es posible señalar que reciprocidad y redistribución pueden verse
+como parte de una misma lógica de intercambio a distintos niveles (micro/macro), y que además
+conviven con la distribución basada en el mercado.
+Qué rol juega el mérito en esta historia? La referencia a principios meritocráticos es anterior a la
+creación de los mercados, es posible rastrear esta noción en la Etica Nicomaquea de Aristóteles y sus
+nociones de igualdad proporcional, aún cuando esto se refiere principalmente a derechos políticos
+y no económicos y de hecho la clásica referencia bíblica al respecto es la parábola de los talentos,
+popularizada en sociología como "efecto Mateo" por Merton. Sin embargo, el que los méritos
+(principalmente el esfuerzo) opera largamente en la historia a nivel micro mientras se mantienen
+mecanismos tradicionales de redistribución desde la discrecionalidad de figuras de autoridad (ej:
+señor feudal). Cuando los principios adscriptivos como títulos nobiliarios y su hereditabilidad
+entran en crisis con la ilustración, se genera un cambio dramático en los criterios de merecimiento
+y en las respectivas formas de organización social. Los principios de merecimiento juegan un lugar
+central, ya que de lo que se trata en justicia distributiva es de justificar la desigualdad, asumiendo
+que la igualdad absoluta es injusta. Vuelven los criterios Aristotélicos de proporcionalidad, pero
+esta vez no en forma de derechos políticos sino aplicados bienes y recompensas (Fleischacker,
+2004).
+
+En este escenario, el mérito se instala como un criterio de distribución que legitima las desigualdades
+en distintos ámbitos basados en criterios como el esfuerzo y los talentos individuales (Hadjar,
+2008), y que se reflejarían en distintas posiciones relacionadas principalmente en credenciales para
+alcanzar posociones en el mercado laboral. Y siendo un mercado, con pretensiones de autorregulación
+basado en mecanismos de competencia, oferta y demanda. Por su parte, el estado asume
+un rol en la redistribución principalmente con distintas formas de involucramiento en la gestión
+de riesgos que el mercado potencialmente genera a aquellos con limitaciones para acceder a este
+mercado, clásicamente el desempleo pero también la salud pensiones, así como también nivelando
+las condiciones de entrada a este mercado mediante la educación y en parte también con políticas
+de salud preventivas (dentro de las que pueden contarse programas de salud para el nacimiento y
+primeros años de vida).
+En este marco entonces podemos delimitar en términos generales dos esferas distintas de merecimiento:
+dentro y fuera del mercado del trabajo. Dentro del mercado del trabajo se supone
+5
+deberían operar los mecanismos meritocráticos para asignación de bienes y recompensas, mientras
+fuera operarían mecanismos de solidaridad/bienestar/reciprocidad social.
+Varios puntos a desarrollar aquí: - qué sucede cuando no operan los mecanismos de reciprocidad
+social para amortiguar riesgos? Aquí entonces tiene que compensar el segundo ámbito de normas
+de reciprocidad: la reciprocidad familiar. La familia privada familiar. La familiar entonces
+se puede definir como normas principalmente compensatorias. Esta compensación se puede producir
+ex post ante las deficiencias de la reciprocidad institucional (ej: desempleo, problemas de
+salud), así como también ex-ante, anticipando posibles deficiencias de la reciprocidad institucional
+e intentando entonces pre-compensar ganando ventajas comparativas mediante la acumulación de
+oportunidades que se transmiten a su descendencia en el momento presente (educación) como así
+también en el futuro (herencias). Cuando este mecanismo es predominante en una sociedad en
+terminos de reproducción y acumulación de oportunidades familiares se habla entonces de "parentocracia"
+(ver citas). La parentocracia entonces podría ser una consecuencia de la necesidad de
+compensación en la administración de los riesgos ante las faltas de la reciprocidad institucional.
+Por lo tanto, desde aquí una hipótesis empírica sería que en sociedades con un menor nivel de
+gasto público en seguridad social se mostrarían mayores preferencias por reciprocidad familiar.
+Reciprocidad y meritocracia
+Los principios meritocráticos como han sido planteados hasta ahora serían propios del mercado
+laboral. Sin embargo, esta división comienza a difuminarse en situaciones de privatización de la
+seguridad social. Por ejemplo, en caso de fondos privados de pensiones basados en mecanismos
+de capitalización individual, las lógicas de reciprocidad institucional conviven o eventualmente
+son reemplazadas por lógicas de meritocracia: el bienestar en la vejez ya no es asociado a una
+compensación institucional de riesgos individuales para quienes salen del mercado del trabajo, sino
+más bien vinculado a los méritos en el mismo mercado del trabajo. La marquetización (Mau) de
+la reciprocidad institucional entonces tiene como consecuencia que las normas de merecimiento
+en el mercado laboral se traspasan a la seguridad/bienestar social y los riesgos se administran de
+manera individual.
+Para que esto pueda funcionar sin afectar mayormente a la seguridad y bienestar, se tienen que
+cumplir dos supuestos a) condiciones de entrada al mercado laboral (igualdad de oportunidades
+de entrada) y b) capacidad de control de eventos azarosos que pueden mermar el desempeño en
+el mercado laboral (ej:problemas de salud). Ya que la retracción de la reciprocidad institucional
+llevará a activar normas compensatorias de reciprocidad familiar, se fomentará la acumulación
+de ventajas comparativas que van en dirección opuesta a la igualdad de oportunidades, que es lo
+6
+que precisamente plantea Young (1962) en "The rise of meritocracy": el ingreso de mecanismos
+y normas meritocráticos en el mundo de la educación llevará cada vez un mayor distanciamiento
+de la clase "meritocratica" del resto de la sociedad. Y esto, entendiendo el carácter satírico de
+la novela, se refleja por ejemplo en citas como: (... acá cita de la presentación en ISUC) . En
+cuanto a la segunda, el control del azar conlleva en sí mismo una contradicción, y aunque si bien
+los intentos y avances en la "domesticación de la casualidad" son característicos de la modernidad
+(citar taming of chance), claramente quedan fuera de esto una serie de eventos que pueden limitar
+drásticamente la capacidad de desempeño en el mercado laboral y la consecuente compensación
+individual de riesgos.
+La privatización de la seguridad social por tanto necesariamente se traducirá en una mayor desigualdad
+económica.
+Por tanto, ante estas evidentes contradicciones, la pregunta que se abre es por qué en una sociedad
+democrática se optaría por privatización de seguridad social, no debería la mayoría de clase media
+oponerse a este tipo de reformas / intentar contrarrestarlas? Aquí se han dado una serie de
+argumentos que se vinculan con la literatura de preferencias redistributivas. El principal es el
+del median voter Meltzer and Richard (1981), donde el argumento es que en una sociedad con
+alta desigualdad la mayoría optaría por la redistribución, basado en una noción de autointerés del
+homo-economicus. Sin embargo, la literatura de preferencias establece también la noción de homosociologicus
+/ homo-reciprocans, donde se enfatiza el rol de las normas de distribución que van más
+allá del autointerés, y que permitirían por ejemplo explicar por qué en algunas sociedades aún las
+mayorías preferirían formas de distribución que generan mayor desigualdad aunque eventualmente
+no los beneficien directamente (ej: POUM).
+En este paper se intentará explorar en qué medida la meritocracia se relaciona con preferencias por
+la redistribución y preferencias por la acumulación. ¿Existe alguna relación entre estas variables?
+Nota sobre foco en percepción de meritocracia en lugar de y creencias: primero, las creencias son
+más consensuales, menos varianza que las percepciones, por lo tanto no hay mucho que aclarar. Y
+la segunda, lamentablemente los datos no permiten operacionalizar adecuadamente las creencias,
+sobre todo en relación con percepción ya que no hay items "espejo" al respecto.
+Otras ideas: sobre la separación entre desempeño (esfuerzo más talento= desempeño), logro y
+recompensa (dinero / éxito). Mérito es lo que relaciona los logros con las recompensas, bajo la
+premisa general que esto funciona de manera directamente proporcional: el desempeño conduce
+a logros, y estos a su vez a recompensas. Por lo tanto, un ámbito central es la evaluación de los
+logros, y aquí se producen una serie de problemas que atentan a la noción ideal de proporcionalidad:
+7
+discriminación basada en características adscriptivas, efecto mateo, etc. Lutter (2013).
+Mau (2015).
+- Ahora bien,
+- educación: mezcla entre mecanismos meritocráticos y de reciprocidad social y familiar, es para
+otro paper. - suma cero entre ambos mundos? - efecto de la suerte, Robert Frank - idea: huevo
+o gallina? Es la desigualdad la que lleva a ciertas preferencias redistributivas, o es al revés?
+Casi toda la evidencia empírica va en la dirección de que es la desigualdad la que lleva a ajustar
+las preferencias, no al revés. Entonces, cómo se origina la desigualdad si no es un resultado de
+políticas implementadas en un entorno democrático? Una primera alternativa es entonces fuera de
+lo democrático, como sucede en dictaduras que se sumaron al consenso de washington (ej América
+Latina, Chile como caso paradigmático). Y segundo, en sociedades con tradición democrática
+una posibilidad /hipótesis son las consecuencias (insospechadas) del capitalismo financiero, que
+genera una acumulación desproporcionada con muy poca regulación desde lo público, traspasando
+incluso barreras nacionales (ej: inversión en paraisos fiscales). Todo esto para argumentar que la
+desigualdad es más bien el huevo que la gallina. Y los resultados de esto se pueden comprobar
+empíricamente en artículos como del de Schröder y también de Solt.
+
+
+# Results - so far
+
+A) Redistribución
+- Sobre redistribución: las preferencias por la redistribución y la acumulación se relacionan negativamente,
+pero no son polos de un mismo contínuo. Por lo tanto, si bien a mayor preferencias por
+la redistribución menores son por la acumulación, en teoría podrían existir personas/sociedades
+donde ese modelo no opera. - En redistribución en promedio lo que manda es el autointeres:
+mayor educación, mayor ingreso y mayor estatus subjetivo llevan a una menor preferencia por redistribución.
+Dicho esto, existe variabilidad entre paises (ver random slopes). - En marketización
+de servicios sociales, vemos una tendencia en general contraria, como podría esperarse: mayor
+estatus se relaciona con mayor preferencia por marketización. - En términos de desigualdad contextual,
+es interesante notar que no se aprecia un efecto en de desigualdad en redistribución (falta
+explorar scatters), pero si en marquetización.
+b) Meritocracia - sobre medición: es posible extraer 4 factores, identificando mérito, padres, redes
+y background. En esta estructura, es destacable que la correlación entre mérito y las otras dimen-
+8
+siones es alta, siendo la más alta la con redes. Por lo tanto, la alta percepción de meritocracia
+(uso de talento y esfuerzo) no es incompatible con percibir que otras estrategias también funcionan.
+Esto puede ser visto como una percepción general de recursos para salir adelante y que no
+son incompatibles (a Dios rogando, y con el mazo dando). - Sobre anti-meritocracia: a mayor
+ingreso se percibe menos anti-meritocracia, pero pasa lo contrario con la educacion: aquí si que
+se observa el efecto ilustrador. - A mas desigualdad se percibe más antimeritocracia, y a mayor
+redistribución se percibe menos desmeritocracia. Es decir, la redistribución hace que se consideren
+menos importantes las formas más antimeritocráticas para el ascenso social.
+Al parecer, es más interesante estudiar la desmeritocracia y la marketización que los otros fenómenos.
+c) Meritocracia & marquetización
+d) Es la meritocracia un mediador del efecto de desigualdad en marquetización?
+3 here another section
+
+# Data, variables & Methods
+### Data
+The data used in the analysis corresponds to the ISSP Cumulative inequality provided by The
+Data Catalogue DBK (https://dbk.gesis.org/dbksearch). The cumulation covers all those ISSP
+member countries that participated in at least two “Social Inequality” modules (27 countries). The
+data release consists of two separate data files. The main file, ZA5890 “ISSP Cumulation Social
+Inequality I-IV”, contains only cumulated variables. That means it includes:
+- topic-related variables of the master questionnaires, called module variables, which appear in at
+least two “Social Inequality” modules and - background variables, mostly covering demographics,
+which appear in at least two - Las variables de percepción / justificación de salarios no aparecen
+en el cumulative (por razones de cambio en los valores de monedas (?!)). De todas maneras se
+podrían merge desde los datos complementarios (aka add-on)
+9
+
+# Variables
+
+- Preferences variables (health & education) only present in 1999 and 2009 - Government should
+
+reduce income differences 4 waves - Should people with high incomes pay more taxes, 4 waves -
+References
+
+Davidov, E., Meuleman, B., Cieciuch, J., Schmidt, P., and Billiet, J. (2014). Measurement Equivalence
+in Cross-National Research. Annual Review of Sociology, 40(1):55–75.
+
+Duru-Bellat, M. and Tenret, E. (2012). Who’s for Meritocracy? Individual and Contextual
+Variations in the Faith. Comparative Education Review, 56(2):223–247.
+
+Fleischacker, S. (2004). A Short History of Distributive Justice. Harvard University Press, Cambridge,
+MA.
+
+Hadjar, A. (2008). Meritokratie Als Legitimationsprinzip. VS Verlag, Wiesbaden.
+
+Kluegel, J. and Smith, E. (1981). Beliefs About Stratification. Annual Review of Sociology,
+7:29–56.
+
+Kunovich, S. and Slomczynski, K. M. (2007). Systems of Distribution and a Sense of Equity: A
+Multilevel Analysis of Meritocratic Attitudes in Post-industrial Societies. European Sociological
+Review, 23(5):649–663.
+
+Liebig, S. and Sauer, C. (2016). Sociology of Justice. In Sabbagh, C. and Schmitt, M., editors,
+
+Handbook of Social Justice Theory and Research, pages 37–59. Springer, New York.
+
+Lutter, M. (2013). Strukturen ungleichen Erfolgs. Winner-take-all-Konzentrationen und ihre
+sozialen Entstehungskontexte auf flexiblen Arbeitsmärkten. KZfSS Kölner Zeitschrift für Soziologie
+und Sozialpsychologie, 65(4):597–622.
+
+Mau, S. (2015). Inequality, Marketization and the Majority Class: Why Did the European Middle
+
+Classes Accept Neo-Liberalism? Palgrave provocations. Palgrave Macmillan, Houndmills,
+Basingstoke, Hampshire.
+
+Meltzer, A. and Richard, S. (1981). A Rational Theory of the Size of Government. The Journal
+of Political Economy, 89(5):914.
+10
+
+Newman, B. J., Johnston, C. D., and Lown, P. L. (2015). False Consciousness or Class Awareness?
+Local Income Inequality, Personal Economic Position, and Belief in American Meritocracy.
+American Journal of Political Science, 59(2):326–340.
+
+Reynolds, J. and Xian, H. (2014). Perceptions of meritocracy in the land of opportunity. Research
+in Social Stratification and Mobility, 36:121–137.
+
+Solt, F., Hu, Y., Hudson, K., Song, J., and Yu, D. E. (2016). Economic inequality and belief in
+meritocracy in the United States. Research & Politics, 3(4):2053168016672101.
+Young, M. (1962). The Rise of the Meritocracy. Penguin Books, Baltimore.
+11
+
+<div/>
