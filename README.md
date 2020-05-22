@@ -1,5 +1,5 @@
-# Perceptions and Preferences for Meritocracy Scale (PPM-S)
+# Meritocracy and distributive preferences in international comparison
 
 
-[Website for the PPM-S](https://juancarloscastillo.github.io/merit-scale/)
+[Website for the repository](https://juancarloscastillo.github.io/meritocracy-preferences/)
   
