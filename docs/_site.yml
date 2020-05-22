@@ -1,0 +1,18 @@
+name: "meritredist2019"
+output_dir: "." # Esto es para que se compile en el rootdir
+navbar:
+  title: "Measuring meritocratic perceptions and beliefs"
+  right:
+    - text: "Data preparation"
+      href: "prod_prep-data-A.html"
+    - text: "Analysis"
+      href: "prod_analysis-cfa.html"
+    - text: "Paper"
+      href: "paper.html"
+    - text: ""
+      icon: fa-github fa-lg
+      href: https://github.com/juancarloscastillo/merit-scale
+output:
+  html_document:
+    css: "../input/bib/style.css"
+    theme: flatly

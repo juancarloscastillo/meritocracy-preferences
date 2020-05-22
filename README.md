@@ -1,3 +1,5 @@
-# meritocracy-preferences
-Research project moral economy of meritocracy and redistributive preferences
+# Perceptions and Preferences for Meritocracy Scale (PPM-S)
 
+
+[Website for the PPM-S](https://juancarloscastillo.github.io/merit-scale/)
+  
