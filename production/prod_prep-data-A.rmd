@@ -30,17 +30,32 @@ options(knitr.kable.NA = '')
 load packages
 ```{r}
 library(sjPlot)
-library(dplyr)
-library(tidyr)
+library(sjmisc) # several functions,ej read_stata
+library(descr)
+library(memisc)  # codebook
+library(psych) # cor2latex
+library(corrplot) # graph correlations
 library(lavaan)
-library(stargazer)
-library(corrplot)
-library(psych)
-library(knitr)
+library(stargazer) 
+library(semTools)
+library(plyr) # count
+library(dplyr)
+library(car) # recode
+library(ggplot2)
+library(Hmisc)
+library(tidyverse)
+library(data.table)
+library(stringr)
+library(countrycode)
+library(lme4)
+library(texreg)
+library(mice)
+library(ggrepel) # for scatter labels in sjp.scatter	
+library(semPlot)
+library(haven)
+library(sjlabelled) 
 library(kableExtra)
 library(summarytools)
-library(sjlabelled)
-library(mice)
 
 #library(Hmisc)
 ```
@@ -55,9 +70,6 @@ issp2009=read_stata("input/data/original/ZA5400_v4-0-0.dta")
     #names(issp2009)
 ```
 
-##  homogenize names of the items on the scale.
-
-The items on the scale had different orders according to the order in which they were exposed to the respondents. There are three order. The first one the orders keeps together the items of the same factor. The second order then asks for perceptions and preferences regarding the same topic (i.e Distribution of resources according to efforts). In the third order, the items are presented randomly to each respondent.
 
 ```{r}
 # Check & generate IDs (v4: respondent, v5: country)
@@ -72,14 +84,14 @@ The items on the scale had different orders according to the order in which they
     issp2009$id=issp2009$idtem + issp2009$id
 ```
 
-# 1.MEASUREMENT MERIT & GETTING AHEAD ===== =
+# 1.MEASUREMENT MERIT & GETTING AHEAD 
 
 #Note: object now generated from different
 #script (merit_per_pref.R; merit_per_pref.rda)
 
-# 2. MEASUREMENT REDISTRIBUTION =========== =
+# 2. MEASUREMENT REDISTRIBUTION 
 
-# 2.1 Data preparation, gen redistrib.rda #####    
+# 2.1 Data preparation, gen redistrib.rda     
 
   # v33: Gov. resp to reduce differences in income
   # v34: Gov. resp to provide decent s andard of living for
@@ -90,9 +102,7 @@ The items on the scale had different orders according to the order in which they
   # v38: ok if people with high income can buy better health  
   # v39: ok if people with high income can buy better education 
   
-  ##############################################################
-  AGREGAR DESCRIPTIVOS PARA ESTAS VARIABLES EN UNA TABLA SIMPLE
-  ##############################################################
+
 
 ```{r}
  table(issp2009$v33)
@@ -110,7 +120,7 @@ The items on the scale had different orders according to the order in which they
   
     names(redistrib)
     redistrib=redistrib[-c(2:6)]
-    stargazer(redistrib[-c(1,2)], type="text")  
+    stargazer(redistrib[-c(1,2)], type="html")  
   
   # Recode NAs
     freq(redistrib$income_dif)
@@ -119,7 +129,7 @@ The items on the scale had different orders according to the order in which they
 
     # adjust labels NAs
       get_labels(redistrib$income_dif)
-     # set_na(redistrib[3:7]) <- c(8, 9) ############################## SET_NA NO FUNCIONA. 
+     # set_na(redistrib[3:7]) <- c(8, 9) # SET_NA NO FUNCIONA. 
       get_labels(redistrib$income_dif) # check
  
   # Dataset with original code for sjp.likert graph 
@@ -150,7 +160,7 @@ print(dfSummary(redistrib, valid.col = FALSE, graph.magnif = 0.75),
 
 ```{r}
 # 2.5 Invariance -------------pendiente-- -----
-    ########## measurementInvariance(cfa_2, data = redistrib, group = "v5")      ###### No funciono la invarianza arreglar.
+    # measurementInvariance(cfa_2, data = redistrib, group = "v5")      # No funciono la invarianza arreglar.
 
 ```
 
@@ -165,10 +175,9 @@ print(dfSummary(redistrib, valid.col = FALSE, graph.magnif = 0.75),
 
 
 
-# 3.PREP INDIVIDUAL & MACRO VAR  ========== = 
+# 3.PREP INDIVIDUAL & MACRO VAR  
 
-# 3.1 Individual level variables -------- ####
-
+# 3.1 Individual level variables 
 ```{r}
   indepvar=issp2009
 	summary(indepvar$id)
@@ -219,15 +228,15 @@ print(dfSummary(redistrib, valid.col = FALSE, graph.magnif = 0.75),
 	    	freq(indepvar$cl_inc)
 	    	summary(indepvar[182:222]) # missings vary (note 2)
 	 
-	    	# Para todos, recode missings dÃ?gitos   	
-	    		indepvar[182:222][indepvar[182:222] >= 9999990] <- NA
-	    		indepvar[182:222][indepvar[182:222] == 999990] =NA
-	    		indepvar[182:222][indepvar[182:222] == 999997] =NA
-					indepvar[182:222][indepvar[182:222] == 999998] =NA
-					indepvar[182:222][indepvar[182:222] == 999999] =NA
-					
-					summary(indepvar[182:222])
-	
+  	    	# Para todos, recode missings dÃ?gitos   	
+  	    		indepvar[182:222][indepvar[182:222] >= 9999990] <- NA
+  	    		indepvar[182:222][indepvar[182:222] == 999990] =NA
+  	    		indepvar[182:222][indepvar[182:222] == 999997] =NA
+  					indepvar[182:222][indepvar[182:222] == 999998] =NA
+  					indepvar[182:222][indepvar[182:222] == 999999] =NA
+  					
+  					summary(indepvar[182:222])
+  	
 				# Checks
 					summary(indepvar$cl_inc)
 					summary(indepvar$ar_inc)
@@ -324,67 +333,62 @@ print(dfSummary(redistrib, valid.col = FALSE, graph.magnif = 0.75),
 ```{r}
 		
 	# Inequality swiid (4)        #########################3 No encuentro el objeto. 
-	#	load("data/swiid/SWIIDv5_0.RData")
+	swiid =	read_stata("input/data/original/swiid8_2.dta")
 
 		# convertir formato original list a dataframe
-	#		swiid_summary <- swiid %>%  bind_rows() %>%
-	#			group_by(country, year) %>%  
-	#			summarize_all(funs(mean, sd)) %>% 
-#				ungroup() %>% rename_(.dots=setNames(names(.), 
+#			swiid_summary <- swiid %>%  bind_rows() %>%
+#				group_by(country, year) %>%  
+#				summarize_all(funs(mean, sd)) %>% 
+#				ungroup() %>% rename(.dots=setNames(names(.), 
 #				str_replace(names(.), "_mean", ""))) %>%  
 #				rename_(.dots=setNames(names(.), 
- #     	str_replace(names(.), "_sd", "_se")))
+#     	str_replace(names(.), "_sd", "_se")))
 		
 	#		names(swiid_summary)
-
+#table(swiid_summary$.dots...year)
 		# Filter only 2009
-	#		swiid_summary09=subset(swiid_summary, year==2009)
+		
+#			swiid_summary09=subset(swiid_summary, .dots...year==2009)
 			
 		# Merge with indepvar object
 			
 			# Generate equivalente country code		
 			
-	#			swiid_summary09$country
-	#			as.numeric(swiid_summary09$country)
+#				table(swiid_summary09$.dots...country)
+#				as.numeric(swiid_summary09$country)
 			  
 				# Continuo
-	#			swiid_summary09$v5=countrycode(swiid_summary09$country,
-	#			'country.name','iso3n')
-	#			swiid_summary09$v5
-	#			str(swiid_summary09$v5)
+#				swiid_summary09$v5=countrycode(swiid_summary09$.dots...country,'country.name','iso3n')
+#				swiid_summary09$v5
+#				str(swiid_summary09$v5)
 				
 				# CategÃ³rico
-	#			swiid_summary09$v5c=countrycode(swiid_summary09$country,
-	#			'country.name','iso3c')
-	#			str(swiid_summary09$v5c)
+#				swiid_summary09$v5c=countrycode(swiid_summary09$.dots...country,'country.name','iso3c')
+#				str(swiid_summary09$v5c)
 				
 			# Merge
-	#			indepvar <- merge(swiid_summary09,indepvar,by=c("v5"))
-	#			indepvar=indepvar[,c(1:12,95:100,364:378)]
-	#			names(indepvar)	
-	#			freq(indepvar$gini_net)
-	#			summary(indepvar$gini_net)
+#				indepvar <- merge(swiid_summary09,indepvar,by=c("v5"))
+#				freq(indepvar$.dots..._1_gini_disp)
+#				summary(indepvar$.dots..._1_gini_disp)
 				
 			# check
-	#			aggregate(indepvar[c("v5","gini_net")], 
-	#				list(indepvar$country
-	#				,indepvar$v5c),mean)
+#aggregate(indepvar[c("v5","gini_net")],list(indepvar$.dots...country,indepvar$v5c.x),mean) #Buscar como #agregar la variable
 		
 	# Quality of government
 		# los objetos se generan en la sintax qog_explore
 
 		# Merge qog
-			load("input/data/proc/qog_merit.rda")
-			names(qog_merit)
-			indepvar <- merge(qog_merit,indepvar,by=c("v5"))
-		#	freq(indepvar$wdi_gini)
-			
-		# Generate object
-			#names(indepvar)	
-	#		save(indepvar, file="input/data/proc/indepvar.rda")
-		
-# End sec 3 objeto: indepvar.rda -------
-
+#			load("input/data/proc/qog_merit.rda")
+#			names(qog_merit)
+#			indepvar <- merge(qog_merit,indepvar,by=c("v5"))
+#		#	freq(indepvar$wdi_gini)
+#			
+#		# Generate object
+#			#names(indepvar)	
+#	#		save(indepvar, file="input/data/proc/indepvar.rda")
+#		
+## End sec 3 objeto: indepvar.rda -------
+#
 			
 			
 		
@@ -392,6 +396,8 @@ print(dfSummary(redistrib, valid.col = FALSE, graph.magnif = 0.75),
 
 
 ```{r}
+load(file = "input/data/proc/indepvar.rda")
+
 print(dfSummary(indepvar, valid.col = FALSE, graph.magnif = 0.75),
       max.tbl.height = 300, method = "render")
 ```
@@ -399,7 +405,7 @@ print(dfSummary(indepvar, valid.col = FALSE, graph.magnif = 0.75),
 
 
 ```{r}
-# 5. MODELS B: PREFERENCES ================ = 
+# 5. MODELS B: PREFERENCES  
 
 # 5.1 Data preparation - pref.rda ------- #####
   
@@ -409,7 +415,7 @@ print(dfSummary(indepvar, valid.col = FALSE, graph.magnif = 0.75),
 	  #names(indepvar)
 	  #load("input/data/proc/redistrib.rda")
 		#names(redistrib)
-		#length(redistrib$accum)
+		length(redistrib$accum)
 		
 		
 		#aggregate(redistrib[c("redist","accum")],by=list(v5),FUN=mean, na.rm=TRUE)

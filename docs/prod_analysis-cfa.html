@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -27,9 +27,8 @@
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
-<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
-<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -78,9 +77,7 @@ h6 {
 
 <link rel="stylesheet" href="..\input\bib\style.css" type="text/css" />
 
-</head>
 
-<body>
 
 <style type = "text/css">
 .main-container {
@@ -94,7 +91,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -104,6 +100,9 @@ img {
 }
 button.code-folding-btn:focus {
   outline: none;
+}
+summary {
+  display: list-item;
 }
 </style>
 
@@ -119,7 +118,6 @@ body {
   padding-top: 65px;
   margin-top: -65px;
 }
-
 .section h2 {
   padding-top: 65px;
   margin-top: -65px;
@@ -139,6 +137,43 @@ body {
 .section h6 {
   padding-top: 65px;
   margin-top: -65px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
 }
 </style>
 
@@ -160,55 +195,69 @@ $(document).ready(function () {
 });
 </script>
 
-
-<div class="container-fluid main-container">
-
 <!-- tabsets -->
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-</script>
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
 
 <!-- code folding -->
 <style type="text/css">
 .code-folding-btn { margin-bottom: 4px; }
 </style>
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
-});
-</script>
 
 
-
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = false;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -222,6 +271,12 @@ $(document).ready(function ()  {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -257,8 +312,6 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -273,6 +326,16 @@ div.tocify {
 }
 
 </style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row-fluid">
@@ -335,7 +398,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Meritocracy and distributive preferences ISSP</h1>
-<h4 class="date"><em>viernes 22 mayo 2020 7:45:56</em></h4>
+<h4 class="date">domingo 24 mayo 2020 5:04:47</h4>
 
 </div>
 
@@ -353,10 +416,10 @@ library(stargazer)
 library(semTools)
 library(plyr) # count
 library(dplyr)
-#library(car) # recode
+library(car) # recode
 library(ggplot2)
-#library(Hmisc)
-#library(tidyverse)
+library(Hmisc)
+library(tidyverse)
 library(data.table)
 library(stringr)
 library(countrycode)
@@ -364,7 +427,7 @@ library(lme4)
 library(texreg)
 library(mice)
 library(ggrepel) # for scatter labels in sjp.scatter    
-#library(semPlot)
+library(semPlot)
 library(haven)
 library(sjlabelled) 
 library(kableExtra)</code></pre>
@@ -409,12 +472,146 @@ Max
 <td colspan="8" style="border-bottom: 1px solid black">
 </td>
 </tr>
+<tr>
+<td style="text-align:left">
+income_dif
+</td>
+<td>
+54,400
+</td>
+<td>
+3.900
+</td>
+<td>
+1.100
+</td>
+<td>
+1.000
+</td>
+<td>
+3.000
+</td>
+<td>
+5.000
+</td>
+<td>
+5.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+unemployed
+</td>
+<td>
+54,698
+</td>
+<td>
+3.900
+</td>
+<td>
+0.990
+</td>
+<td>
+1.000
+</td>
+<td>
+3.000
+</td>
+<td>
+5.000
+</td>
+<td>
+5.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+taxes
+</td>
+<td>
+53,258
+</td>
+<td>
+4.000
+</td>
+<td>
+0.780
+</td>
+<td>
+1.000
+</td>
+<td>
+4.000
+</td>
+<td>
+5.000
+</td>
+<td>
+5.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+health
+</td>
+<td>
+54,237
+</td>
+<td>
+2.500
+</td>
+<td>
+1.300
+</td>
+<td>
+1.000
+</td>
+<td>
+1.000
+</td>
+<td>
+4.000
+</td>
+<td>
+5.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+educ
+</td>
+<td>
+54,220
+</td>
+<td>
+2.500
+</td>
+<td>
+1.300
+</td>
+<td>
+1.000
+</td>
+<td>
+1.000
+</td>
+<td>
+4.000
+</td>
+<td>
+5.000
+</td>
+</tr>
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
 </table>
 <pre class="r"><code>  # Summary table to latex
-    #sink(&quot;output/results/desctab_red.txt&quot;)
-    #stargazer(redistrib[-c(1,2)], type=&quot;text&quot;); sink()
-    
-  # Simple graph:
+    sink(&quot;output/results/desctab_red.txt&quot;)
+    stargazer(redistrib[-c(1,2)], type=&quot;text&quot;); sink()</code></pre>
+<p>============================================================== Statistic N Mean St. Dev. Min Pctl(25) Pctl(75) Max ————————————————————– income_dif 54,400 3.900 1.100 1.000 3.000 5.000 5.000 unemployed 54,698 3.900 0.990 1.000 3.000 5.000 5.000 taxes 53,258 4.000 0.780 1.000 4.000 5.000 5.000 health 54,237 2.500 1.300 1.000 1.000 4.000 5.000 educ 54,220 2.500 1.300 1.000 1.000 4.000 5.000 ————————————————————–</p>
+<pre class="r"><code>  # Simple graph:
     sjPlot::plot_frq(redistrib$income_dif, show.values = TRUE, coord.flip = TRUE)</code></pre>
 <p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <pre><code>## [[1]]</code></pre>
@@ -431,13 +628,9 @@ Max
 <pre><code>## 
 ## [[5]]</code></pre>
 <p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-6-5.png" width="672" /> <img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-6-6.png" width="672" /></p>
-<pre><code>## png 
-##   3</code></pre>
-<pre><code>## png 
-##   2</code></pre>
 <pre class="r"><code># 2.3 Measurement structure ------------- ######## 
     
-# EstimaciÃƒÂ³n del modelo
+# EstimaciÃ³n del modelo
     
     load(&quot;input/data/proc/redistrib.rda&quot;)  
 
@@ -457,20 +650,29 @@ Max
                 
         # Path 
     
-    #       semPlot::semPaths(fit_red1,layout = &quot;tree2&quot;, rotation = 2, 
-    #   intercepts = FALSE, style = &quot;lisrel&quot;, curvePivot = TRUE,
-    #   cardinal = TRUE)
-    #     dev.copy(png,&quot;output/results/path_red1.png&quot;,width=750,height=600)
-    #     dev.off()          
-## ## ## ## ### ##                                            ### ## ## ## ##ARREGLAR LOS DIAGRAMAS. 
+            semPlot::semPaths(fit_red1,layout = &quot;tree2&quot;, rotation = 2, 
+        intercepts = FALSE, style = &quot;lisrel&quot;, curvePivot = TRUE,
+        cardinal = TRUE)</code></pre>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre class="r"><code>          dev.copy(png,&quot;output/results/path_red1.png&quot;,width=750,height=600)</code></pre>
+<pre><code>## png 
+##   5</code></pre>
+<pre class="r"><code>          dev.off()          </code></pre>
+<pre><code>## RStudioGD 
+##         2</code></pre>
+<pre class="r"><code>## ## ## ## ### ##                                            ### ## ## ## ##ARREGLAR LOS DIAGRAMAS. 
         # Path - with results
-    #     semPlot::semPaths(fit_red1,&quot;std&quot;,layout = &quot;tree2&quot;, rotation = 2, 
-    #   intercepts = FALSE, style = &quot;lisrel&quot;, curvePivot = TRUE,
-    #   cardinal = TRUE, edge.color = &quot;black&quot;, residScale = 10)
-    #     dev.copy(png,&quot;output/results/path_red1_res.png&quot;,
-    #       width=750,height=600); dev.off()        
-          
-    # Categorical     
+          semPlot::semPaths(fit_red1,&quot;std&quot;,layout = &quot;tree2&quot;, rotation = 2, 
+        intercepts = FALSE, style = &quot;lisrel&quot;, curvePivot = TRUE,
+        cardinal = TRUE, edge.color = &quot;black&quot;, residScale = 10)</code></pre>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-7-2.png" width="672" /><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-7-3.png" width="672" /></p>
+<pre class="r"><code>          dev.copy(png,&quot;output/results/path_red1_res.png&quot;,
+            width=750,height=600); dev.off()        </code></pre>
+<pre><code>## png 
+##   5</code></pre>
+<pre><code>## RStudioGD 
+##         2</code></pre>
+<pre class="r"><code>    # Categorical     
         fit_red1c &lt;- cfa(cfa_red1,data=redistrib, 
             ordered = c(&quot;income_dif&quot;,&quot;unemployed&quot;,&quot;taxes&quot;, &quot;health&quot;, 
             &quot;educ&quot;)) 
@@ -537,7 +739,7 @@ RMSEA.rob
 4
 </td>
 <td style="text-align:right;">
-0.996
+1
 </td>
 <td style="text-align:right;">
 </td>
@@ -628,8 +830,8 @@ MLR
 <pre><code>## [1] 56021     2</code></pre>
 <pre class="r"><code>    str(scores_dat)</code></pre>
 <pre><code>## &#39;data.frame&#39;:    56021 obs. of  2 variables:
-##  $ redist: num  -0.1263 0.0257 0.1853 0.5702 0.655 ...
-##  $ accum : num  0.469 0.459 -1.322 -1.005 0.418 ...</code></pre>
+##  $ redist: num  -0.1267 0.0253 0.1851 0.5678 0.6526 ...
+##  $ accum : num  0.47 0.46 -1.321 -1.002 0.419 ...</code></pre>
 <pre class="r"><code># Adaptar base para agregar factor scores (sacar todos NA)  
     dim(redistrib)</code></pre>
 <pre><code>## [1] 56021     7</code></pre>
@@ -641,17 +843,13 @@ MLR
         
       # Check
         summary(redistrib_sco$redist)</code></pre>
-<pre><code>##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## -2.47757 -0.37061  0.09274  0.00000  0.49041  0.96655</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   -2.47   -0.37    0.09    0.00    0.49    0.96</code></pre>
 <pre class="r"><code>        summary(redistrib_sco$accum)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -1.3732 -1.0147 -0.3099  0.0000  0.8139  2.3941</code></pre>
+##   -1.37   -1.01   -0.31    0.00    0.82    2.39</code></pre>
 <pre class="r"><code>    # Save  factor scores
-#     save(redistrib_sco, file=&quot;input/data/proc/redistrib_sco.rda&quot;)</code></pre>
-<div class="figure">
-<img src="../output/results/path_red1_res.png" alt="IMAGEN PROVISORIA" />
-<p class="caption">IMAGEN PROVISORIA</p>
-</div>
+     # save(redistrib_sco, file=&quot;input/data/proc/redistrib_sco.rda&quot;)</code></pre>
 <pre class="r"><code># 4. MODELS A:  MERIT &amp; REDISTRIB ========= =
 
 # 4.1 Merge objects --------------------- ---- 
@@ -684,15 +882,20 @@ MLR
 #    summary(fit_mer_red1, fit.measures=TRUE,standardized=TRUE)
         
         # Path
-            #  semPlot::semPaths(fit_mer_red1,layout = &quot;circle&quot;, rotation = 3, 
-            #   intercepts = FALSE, style = &quot;lisrel&quot;, curvePivot = TRUE,
-            #   sizeMan = 4, sizeLat = 6)
-            #  dev.copy(png,&quot;output/results/path_mer_red1.png&quot;,width=800,
-          #     height=650);  dev.off()
-              
-      fit_mer_redc &lt;- cfa(cfa_mer_red1,data=merit_redist,
-        ordered = names(merit_redist[3:10,19:29]))
-    #   summary(fit_mer_redc, fit.measures=TRUE,standardized=TRUE)
+              semPlot::semPaths(fit_mer_red1,layout = &quot;circle&quot;, rotation = 3, 
+                intercepts = FALSE, style = &quot;lisrel&quot;, curvePivot = TRUE,
+                sizeMan = 4, sizeLat = 6)</code></pre>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code>              dev.copy(png,&quot;output/results/path_mer_red1.png&quot;,width=800,
+                height=650);  dev.off()</code></pre>
+<pre><code>## png 
+##   5</code></pre>
+<pre><code>## RStudioGD 
+##         2</code></pre>
+<pre class="r"><code>      fit_mer_redc &lt;- cfa(cfa_mer_red1,data=merit_redist,
+        ordered = names(merit_redist[3:10,19:29]))</code></pre>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
+<pre class="r"><code>    #   summary(fit_mer_redc, fit.measures=TRUE,standardized=TRUE)
   
       
 sum_fit&lt;- bind_rows(fitmeasures(fit_mer_redc)[c(&quot;chisq.scaled&quot;,&quot;df&quot;,&quot;cfi&quot;,&quot;cfi.scaled&quot;,&quot;cfi.robust&quot;,&quot;rmsea&quot;,&quot;rmsea.scaled&quot;,&quot;rmsea.robust&quot;)])
@@ -749,13 +952,13 @@ RMSEA.rob
 <tbody>
 <tr>
 <td style="text-align:right;">
-2852.233
+2852
 </td>
 <td style="text-align:right;">
 91
 </td>
 <td style="text-align:right;">
-0.996
+1
 </td>
 <td style="text-align:right;">
 0.99
@@ -863,7 +1066,7 @@ RMSEA.rob
 101
 </td>
 <td style="text-align:right;">
-0.973
+0.97
 </td>
 <td style="text-align:right;">
 </td>
@@ -900,22 +1103,24 @@ MLR
       cormat=cor(fscores[c(7,8,1,9,5,6)],
                  use=&quot;pairwise.complete.obs&quot;)
       corrplot.mixed(cormat)</code></pre>
-<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-8-3.png" width="672" /></p>
 <pre class="r"><code>      #save
-      dev.copy(png,&quot;output/results/corplot_totscores.png&quot;,width=600,
-               height=600); dev.off()</code></pre>
-<pre><code>## png 
-##   3</code></pre>
-<pre><code>## png 
-##   2</code></pre>
-<pre class="r"><code>        # Path
-        #     semPlot::semPaths(fit_mer_red2,layout = &quot;tree&quot;, rotation = 2, 
-        #       intercepts = FALSE, style = &quot;lisrel&quot;, curvePivot = TRUE,
-        #       sizeMan = 4, sizeLat = 6)
-        #     dev.copy(png,&quot;output/results/path_mer_red2.png&quot;,width=800,
-        #       height=650);  dev.off()       
+    #  dev.copy(png,&quot;output/results/corplot_totscores.png&quot;,width=600,
+     #          height=600); dev.off()
       
-    # Structural model
+      
+      #  Path
+              semPlot::semPaths(fit_mer_red2,layout = &quot;tree&quot;, rotation = 2, 
+                intercepts = FALSE, style = &quot;lisrel&quot;, curvePivot = TRUE,
+                sizeMan = 4, sizeLat = 6)</code></pre>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-8-4.png" width="672" /></p>
+<pre class="r"><code>              dev.copy(png,&quot;output/results/path_mer_red2.png&quot;,width=800,
+                height=650);  dev.off()       </code></pre>
+<pre><code>## png 
+##   5</code></pre>
+<pre><code>## RStudioGD 
+##         2</code></pre>
+<pre class="r"><code>    # Structural model
       sem_mer_red1 &lt;- &#39;
       # latent variables
           merit =~ hwork + ambition 
@@ -939,11 +1144,12 @@ MLR
       
       
         # Path
-            #  semPlot::semPaths(fitsem_mer_red1,layout = &quot;tree&quot;, rotation = 2, 
-            #   intercepts = FALSE, style = &quot;lisrel&quot;, curvePivot = TRUE,
-            #   sizeMan = 4, sizeLat = 6)
-            #  dev.copy(png,&quot;output/results/path_mer_red2.png&quot;,width=800,
-          #     height=650);  dev.off()
+              semPlot::semPaths(fitsem_mer_red1,layout = &quot;tree&quot;, rotation = 2, 
+                intercepts = FALSE, style = &quot;lisrel&quot;, curvePivot = TRUE,
+            sizeMan = 4, sizeLat = 6)</code></pre>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-8-5.png" width="672" /></p>
+<pre class="r"><code>         # dev.copy(png,&quot;output/results/path_mer_red2.png&quot;,width=800,
+          # height=650);  dev.off()
         
     # saque este argumento del codigo de abajo  op==&quot;~&quot;
       
@@ -969,20 +1175,22 @@ MLR
         
   # Macro descriptives
     
-### Hay que remplazar sjp.scatter, por plot_scatter #############################################################
-    ### Ademas me dice que el suindice esta fuera de los limites.
     
-  #  plot_scatter(pref_agg$gini_net,pref_agg$accum, 
-  #     dot.labels = pref_agg$v5c,
-  #     fit.line = TRUE,
-  #     show.ci = TRUE
-    #       )
+    hist(pref_agg$gini_net)</code></pre>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre class="r"><code>    table(pref_agg$accum)   ############# no encuentro esta variable accum</code></pre>
+<pre><code>## &lt; table of extent 0 &gt;</code></pre>
+<pre class="r"><code>  #  plot_scatter(pref_agg, gini_net, accum, 
+   #    dot.labels = pref_agg$v5c,
+    #fit.line = &quot;lm&quot;,
+    #show.ci = TRUE)
   
-#    sjp.scatter(pref_agg$gini_net,pref_agg$redist, 
- #      dot.labels = pref_agg$v5c,
-  #     fit.line = TRUE,
-   #    show.ci = TRUE
-      #     )
+    #table(pref_agg$redis)
+    
+    #plot_scatter(pref_agg, gini_net, redist, 
+    #dot.labels = pref_agg$v5c,
+    #fit.line = TRUE,
+    #show.ci = TRUE     )
     
     # Sin ZAF outlier (igual, no cambia)
   #     pref_agg2 &lt;- pref_agg[which(pref_agg$v5c!=&#39;ZAF&#39;), ]
@@ -1066,16 +1274,16 @@ RMSEA.rob
 <tbody>
 <tr>
 <td style="text-align:right;">
-839.06
+839
 </td>
 <td style="text-align:right;">
 16
 </td>
 <td style="text-align:right;">
-0.998
+1
 </td>
 <td style="text-align:right;">
-0.997
+1
 </td>
 <td style="text-align:right;">
 </td>
@@ -1105,8 +1313,8 @@ MLR
 </table>
 <pre class="r"><code># Multilevel (with factor scores) ################################## No funciono nada de este apartado. 
     # check simple regresion
-    #  ols_prefred=lm(redist ~ univ + quintile + sstatus + gini_market)
-    #  summary(ols_prefred) # ok, similar SEM, scores OK
+    #ols_prefred=lm(redist ~ univ + quintile + sstatus + gini_market)
+    # summary(ols_prefred) # ok, similar SEM, scores OK
     
   # Multilevel models redist
       
@@ -1193,63 +1401,64 @@ MLR
     ################################agregar Polichoric.
     # Macro level corr
     
-  #    corMat &lt;- cor(merit_agg[c(&quot;merit&quot;,&quot;unmerit&quot;,&quot;bmerit&quot;,&quot;need&quot;,&quot;gini_net&quot;,&quot;gini_market&quot;,&quot;j_fi_index&quot;)], use=&quot;pairwise.complete.obs&quot;) # estimar matriz pearson
-  #    options(digits=2)
-  #    corMat # muestra matriz
-      
-  #    M=cor(merit_agg) # matriz simple 
-  #    corrplot.mixed(corMat)   
+      corMat &lt;- cor(merit_agg[c(&quot;merit&quot;,&quot;unmerit&quot;,&quot;bmerit&quot;,&quot;need&quot;,&quot;gini_net&quot;,&quot;gini_market&quot;,&quot;j_fi_index&quot;)], use=&quot;pairwise.complete.obs&quot;) # estimar matriz pearson
+      options(digits=2)
+      corMat # muestra matriz</code></pre>
+<pre><code>##              merit unmerit bmerit   need gini_net gini_market j_fi_index
+## merit        1.000   0.465  0.656 -0.036     0.12      -0.038      0.177
+## unmerit      0.465   1.000  0.546  0.588     0.42      -0.029     -0.341
+## bmerit       0.656   0.546  1.000  0.401     0.19      -0.126     -0.021
+## need        -0.036   0.588  0.401  1.000     0.49      -0.023     -0.449
+## gini_net     0.123   0.416  0.192  0.491     1.00       0.483     -0.297
+## gini_market -0.038  -0.029 -0.126 -0.023     0.48       1.000      0.194
+## j_fi_index   0.177  -0.341 -0.021 -0.449    -0.30       0.194      1.000</code></pre>
+<pre class="r"><code> #     M=cor(merit_agg) # matriz simple 
+      corrplot.mixed(corMat)    </code></pre>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre class="r"><code>      ##### la mayoria de los str.scatter precentan problemas en los limites &quot;subindice fuera de limites. 
     
-      
-      ##### la mayoria de los str.scatter precentan problemas en los limites &quot;subindice fuera de limites. 
+    plot_scatter(merit_agg, gini_net, bmerit, 
+        dot.labels = merit_agg$v5c,
+        fit.line = &quot;lm&quot;,
+        show.ci = TRUE)</code></pre>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
+<pre class="r"><code>  # Save
+  # dev.copy(png,&quot;output/results/gini_bmerit.png&quot;); dev.off()
     
-  #  sjp.scatter(merit_agg$gini_net,merit_agg$bmerit, 
-  #     dot.labels = merit_agg$v5c,
-  #     fit.line = TRUE,
-  #     show.ci = TRUE
-    #       )
-  #    # Save
-  #    dev.copy(png,&quot;output/results/gini_bmerit.png&quot;); dev.off()
-  #  
     
-  #  sjp.scatter(merit_agg$gini_net,merit_agg$unmerit, 
-   #    dot.labels = merit_agg$v5c,
-    #   fit.line = TRUE,
-  #     show.ci = TRUE
-    #       )    
-# 
- #  sjp.scatter(merit_agg$gini_net,merit_agg$need, 
-  #     dot.labels = merit_agg$v5c,
-   #    fit.line = TRUE,
-    #   show.ci = TRUE
-       #    )  
-
-         # Save
+  plot_scatter(merit_agg, gini_net,unmerit, 
+  dot.labels = merit_agg$v5c,
+  fit.line = &quot;lm&quot;,
+  show.ci = TRUE)    </code></pre>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-11-3.png" width="672" /></p>
+<pre class="r"><code>  plot_scatter(merit_agg, gini_net,need, 
+    dot.labels = merit_agg$v5c,
+    fit.line = &quot;lm&quot;,
+    show.ci = TRUE)  </code></pre>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-11-4.png" width="672" /></p>
+<pre class="r"><code>         # Save
       #dev.copy(png,&quot;output/results/fi_need.png&quot;); dev.off()</code></pre>
 <div class="figure">
 <img src="../output/results/fi_need.png" alt="Imagen provisoria" />
 <p class="caption">Imagen provisoria</p>
 </div>
-<pre class="r"><code>   #sjp.scatter(merit_agg$j_fi_index,merit_agg$need, 
-    #   dot.labels = merit_agg$v5c,
-  #     fit.line = TRUE,
-   #    show.ci = TRUE
-      #     )     
-      # Save
-     # dev.copy(png,&quot;output/results/gini_fi.png&quot;); dev.off()</code></pre>
-<div class="figure">
-<img src="../output/results/gini_fi.png" alt="Imagen provisoria" />
-<p class="caption">Imagen provisoria</p>
-</div>
+<pre class="r"><code>   plot_scatter(merit_agg, j_fi_index, need, 
+        dot.labels = merit_agg$v5c,
+        fit.line = &quot;lm&quot;,
+        show.ci = TRUE)     </code></pre>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<pre class="r"><code>      # Save
+     # dev.copy(png,&quot;output/results/gini_fi.png&quot;); dev.off()  Este objeto tampoco estaba en la carpeta.</code></pre>
 <pre class="r"><code>  # Sin outliers
     
     merit_agg2 &lt;- merit_agg[which(merit_agg$v5c!=&quot;ZAF&quot; &amp; merit_agg$v5c!=&quot;CHN&quot; &amp;  merit_agg$v5c!=&quot;CHL&quot; ), ]
     
-    #sjp.scatter(merit_agg2$gini_net,merit_agg2$unmerit, 
-    #   dot.labels = merit_agg2$v5c,
-    #   fit.line = TRUE,
-    #   show.ci = TRUE
-     #      )  </code></pre>
+  plot_scatter(merit_agg2, gini_net, unmerit, 
+    dot.labels = merit_agg2$v5c,
+    fit.line = TRUE,
+    show.ci = TRUE
+        )  </code></pre>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <pre class="r"><code># 6.3 Models -----------------------------#####       
 
 # Multilevel (with factor scores)
@@ -1261,56 +1470,397 @@ MLR
         levels(meritocracy$Quintile)[6] &lt;- &quot;miss&quot;
   
     # check simple regresion
-#     ols_merit=lm(merit ~ univ + Quintile + sstatus + gini_net, data = meritocracy)
-#     summary(ols_merit) # ok, similar SEM, scores OK
-    
-  # Multilevel models merit
+      ols_merit=lm(merit ~ univ + Quintile + sstatus + gini_net, data = meritocracy)
+      summary(ols_merit) # ok, similar SEM, scores OK</code></pre>
+<p>Call: lm(formula = merit ~ univ + Quintile + sstatus + gini_net, data = meritocracy)</p>
+<p>Residuals: Min 1Q Median 3Q Max -2.1224 -0.2899 0.0311 0.3453 0.9320</p>
+<p>Coefficients: Estimate Std. Error t value Pr(&gt;|t|)<br />
+(Intercept) -0.190897 0.008870 -21.52 &lt; 0.0000000000000002 <strong><em> univ 0.057645 0.005463 10.55 &lt; 0.0000000000000002 </em></strong> Quintile2 0.016282 0.006964 2.34 0.0194 *<br />
+Quintile3 0.021357 0.006974 3.06 0.0022 ** Quintile4 0.027356 0.007002 3.91 0.000094 <strong><em> Quintile5 0.028543 0.007133 4.00 0.000063 </em></strong> Quintilemiss 0.009673 0.006860 1.41 0.1585<br />
+sstatus 0.000129 0.000178 0.72 0.4686<br />
+gini_net 0.004705 0.000208 22.67 &lt; 0.0000000000000002 *** — Signif. codes: 0 ‘<em><strong>’ 0.001 ’</strong>’ 0.01 ’</em>’ 0.05 ‘.’ 0.1 ’ ’ 1</p>
+<p>Residual standard error: 0.47 on 54625 degrees of freedom (387 observations deleted due to missingness) Multiple R-squared: 0.0116, Adjusted R-squared: 0.0114 F-statistic: 79.9 on 8 and 54625 DF, p-value: &lt;0.0000000000000002</p>
+<pre class="r"><code>  # Multilevel models merit
       
       # Null
         mlmerit_0 = lmer(merit ~ 1 + (1 | v5c), data = meritocracy)
-            screenreg(mlmerit_0) # de library texreg  </code></pre>
-<p>================================ Model 1<br />
-——————————– (Intercept) -0.01 (0.03) ——————————– AIC 66347.55 BIC 66374.29 Log Likelihood -33170.77 Num. obs. 55021<br />
-Num. groups: v5c 40<br />
-Var: v5c (Intercept) 0.03 Var: Residual 0.19 ================================ *** p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05</p>
+            htmlreg(mlmerit_0) # de library texreg  </code></pre>
+&lt;!DOCTYPE HTML PUBLIC “-//W3C//DTD HTML 4.01 Transitional//EN” “<a href="http://www.w3.org/TR/html4/loose.dtd" class="uri">http://www.w3.org/TR/html4/loose.dtd</a>”&gt;
+<table cellspacing="0" align="center" style="border: none;">
+<caption align="bottom" style="margin-top:0.3em;">
+Statistical models
+</caption>
+<tr>
+<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
+<b></b>
+</th>
+<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
+<b>Model 1</b>
+</th>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+(Intercept)
+</td>
+<td style="padding-right: 12px; border: none;">
+-0.01
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.03)
+</td>
+</tr>
+<tr>
+<td style="border-top: 1px solid black;">
+AIC
+</td>
+<td style="border-top: 1px solid black;">
+66347.55
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+BIC
+</td>
+<td style="padding-right: 12px; border: none;">
+66374.29
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+Log Likelihood
+</td>
+<td style="padding-right: 12px; border: none;">
+-33170.77
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+Num. obs.
+</td>
+<td style="padding-right: 12px; border: none;">
+55021
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+Num. groups: v5c
+</td>
+<td style="padding-right: 12px; border: none;">
+40
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+Var: v5c (Intercept)
+</td>
+<td style="padding-right: 12px; border: none;">
+0.03
+</td>
+</tr>
+<tr>
+<td style="border-bottom: 2px solid black;">
+Var: Residual
+</td>
+<td style="border-bottom: 2px solid black;">
+0.19
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;" colspan="3">
+<span style="font-size:0.8em"><sup style="vertical-align: 0px;"><em><strong></sup>p &lt; 0.001, <sup style="vertical-align: 0px;"></strong></sup>p &lt; 0.01, <sup style="vertical-align: 0px;"></em></sup>p &lt; 0.05</span>
+</td>
+</tr>
+</table>
 <pre class="r"><code>            # Graph
-        #   sjp.lmer(mlmerit_0, sort.est=&quot;(Intercept)&quot;)
+        #   sjp.lmer(mlmerit_0, sort.est=&quot;(Intercept)&quot;)   No encuentro el paquete.
       
             # ICC
             varcomp=as.data.frame(VarCorr(mlmerit_0))
             tau00=varcomp[1,4]
             sigma2=varcomp[2,4]
             tau00/(tau00+sigma2)</code></pre>
-<p>[1] 0.1138328</p>
+<p>[1] 0.11</p>
 <pre class="r"><code>        # Individual level vars
             mlmerit_1 = lmer(merit ~ 1 + univ + quintile_miss + 
                     sstatus + sex + age + (1 | v5), data = meritocracy)
-            screenreg(mlmerit_1)</code></pre>
-<p>================================== Model 1<br />
-———————————- (Intercept) 0.01<br />
-(0.03)<br />
-univ 0.04 <strong><em> (0.01)<br />
-quintile_miss 0.01 </em></strong> (0.00)<br />
-sstatus -0.00<br />
-(0.00)<br />
-sex -0.01<br />
-(0.00)<br />
-age -0.00 <strong><em> (0.00)<br />
-———————————- AIC 65233.10<br />
-BIC 65304.31<br />
-Log Likelihood -32608.55<br />
-Num. obs. 54213<br />
-Num. groups: v5 40<br />
-Var: v5 (Intercept) 0.02<br />
-Var: Residual 0.19<br />
-================================== </em></strong> p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05</p>
+            htmlreg(mlmerit_1)</code></pre>
+&lt;!DOCTYPE HTML PUBLIC “-//W3C//DTD HTML 4.01 Transitional//EN” “<a href="http://www.w3.org/TR/html4/loose.dtd" class="uri">http://www.w3.org/TR/html4/loose.dtd</a>”&gt;
+<table cellspacing="0" align="center" style="border: none;">
+<caption align="bottom" style="margin-top:0.3em;">
+Statistical models
+</caption>
+<tr>
+<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
+<b></b>
+</th>
+<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
+<b>Model 1</b>
+</th>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+(Intercept)
+</td>
+<td style="padding-right: 12px; border: none;">
+0.01
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.03)
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+univ
+</td>
+<td style="padding-right: 12px; border: none;">
+0.04<sup style="vertical-align: 0px;">***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.01)
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+quintile_miss
+</td>
+<td style="padding-right: 12px; border: none;">
+0.01<sup style="vertical-align: 0px;">***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.00)
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+sstatus
+</td>
+<td style="padding-right: 12px; border: none;">
+-0.00
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.00)
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+sex
+</td>
+<td style="padding-right: 12px; border: none;">
+-0.01
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.00)
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+age
+</td>
+<td style="padding-right: 12px; border: none;">
+-0.00<sup style="vertical-align: 0px;">***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.00)
+</td>
+</tr>
+<tr>
+<td style="border-top: 1px solid black;">
+AIC
+</td>
+<td style="border-top: 1px solid black;">
+65233.10
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+BIC
+</td>
+<td style="padding-right: 12px; border: none;">
+65304.31
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+Log Likelihood
+</td>
+<td style="padding-right: 12px; border: none;">
+-32608.55
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+Num. obs.
+</td>
+<td style="padding-right: 12px; border: none;">
+54213
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+Num. groups: v5
+</td>
+<td style="padding-right: 12px; border: none;">
+40
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+Var: v5 (Intercept)
+</td>
+<td style="padding-right: 12px; border: none;">
+0.02
+</td>
+</tr>
+<tr>
+<td style="border-bottom: 2px solid black;">
+Var: Residual
+</td>
+<td style="border-bottom: 2px solid black;">
+0.19
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;" colspan="3">
+<span style="font-size:0.8em"><sup style="vertical-align: 0px;"><em><strong></sup>p &lt; 0.001, <sup style="vertical-align: 0px;"></strong></sup>p &lt; 0.01, <sup style="vertical-align: 0px;"></em></sup>p &lt; 0.05</span>
+</td>
+</tr>
+</table>
 <pre class="r"><code>        # Macro level vars
             mlmerit_2 = lmer(bmerit ~ 1 + gini_net + (1 | v5), data = meritocracy)
-            screenreg(mlmerit_2)    </code></pre>
-<p>=============================== Model 1<br />
-——————————- (Intercept) -0.04 (0.04) gini_net 0.00 (0.00) ——————————- AIC -14937.09 BIC -14901.43 Log Likelihood 7472.55 Num. obs. 55021<br />
-Num. groups: v5 40<br />
-Var: v5 (Intercept) 0.00 Var: Residual 0.04 =============================== *** p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05</p>
+        htmlreg(mlmerit_2)    </code></pre>
+&lt;!DOCTYPE HTML PUBLIC “-//W3C//DTD HTML 4.01 Transitional//EN” “<a href="http://www.w3.org/TR/html4/loose.dtd" class="uri">http://www.w3.org/TR/html4/loose.dtd</a>”&gt;
+<table cellspacing="0" align="center" style="border: none;">
+<caption align="bottom" style="margin-top:0.3em;">
+Statistical models
+</caption>
+<tr>
+<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
+<b></b>
+</th>
+<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
+<b>Model 1</b>
+</th>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+(Intercept)
+</td>
+<td style="padding-right: 12px; border: none;">
+-0.04
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.04)
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+gini_net
+</td>
+<td style="padding-right: 12px; border: none;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.00)
+</td>
+</tr>
+<tr>
+<td style="border-top: 1px solid black;">
+AIC
+</td>
+<td style="border-top: 1px solid black;">
+-14937.09
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+BIC
+</td>
+<td style="padding-right: 12px; border: none;">
+-14901.43
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+Log Likelihood
+</td>
+<td style="padding-right: 12px; border: none;">
+7472.55
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+Num. obs.
+</td>
+<td style="padding-right: 12px; border: none;">
+55021
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+Num. groups: v5
+</td>
+<td style="padding-right: 12px; border: none;">
+40
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+Var: v5 (Intercept)
+</td>
+<td style="padding-right: 12px; border: none;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="border-bottom: 2px solid black;">
+Var: Residual
+</td>
+<td style="border-bottom: 2px solid black;">
+0.04
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;" colspan="3">
+<span style="font-size:0.8em"><sup style="vertical-align: 0px;"><em><strong></sup>p &lt; 0.001, <sup style="vertical-align: 0px;"></strong></sup>p &lt; 0.01, <sup style="vertical-align: 0px;"></em></sup>p &lt; 0.05</span>
+</td>
+</tr>
+</table>
 <pre class="r"><code># Models meritocracy and preferences
             
   load(&quot;input/data/proc/meritocracy.rda&quot;)
@@ -1327,33 +1877,34 @@ Var: v5 (Intercept) 0.00 Var: Residual 0.04 =============================== *** 
 
     # Graphs    # mismo problemas de subindices.
   
-  #    plot_scatter(mer_pref_agg$merit,mer_pref_agg$bmerit, 
-   #    dot.labels = mer_pref_agg$v5c,
-    #   fit.line = TRUE,
-  #     show.ci = TRUE
-     #      )
-  #    
-  #    plot_scatter(mer_pref_agg$merit,mer_pref_agg$redist, 
-  #     dot.labels = mer_pref_agg$v5c,
-   #    fit.line = TRUE,
-    #   show.ci = TRUE
-     #      )
-      # Save
+    plot_scatter(mer_pref_agg,merit , bmerit, 
+      dot.labels = mer_pref_agg$v5c,
+      fit.line = lm,
+      show.ci = TRUE)</code></pre>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<pre class="r"><code>    plot_scatter(mer_pref_agg, merit, redist, 
+        dot.labels = mer_pref_agg$v5c,
+        fit.line = lm,
+        show.ci = TRUE) </code></pre>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-14-2.png" width="672" /></p>
+<pre class="r"><code>      # Save
   #    dev.copy(png,&quot;loc_merit_pref_int/results/merit_redis.png&quot;); dev.off()
  
-    #  sjp.scatter(mer_pref_agg$unmerit,mer_pref_agg$redist, 
-  #     dot.labels = mer_pref_agg$v5c,
-   #    fit.line = TRUE,
-    #   show.ci = TRUE
-        #)      
-       # Save
+     plot_scatter(mer_pref_agg, unmerit,redist, 
+        dot.labels = mer_pref_agg$v5c,
+        fit.line = &quot;lm&quot;,
+        show.ci = TRUE)      </code></pre>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-14-3.png" width="672" /></p>
+<pre class="r"><code>       # Save
      # dev.copy(png,&quot;loc_merit_pref_int/results/unmerit_redis.png&quot;); dev.off()
 
-  #    sjp.scatter(mer_pref_agg$redist,mer_pref_agg$accum, 
-  #     dot.labels = mer_pref_agg$v5c,
-  #     fit.line = TRUE,
-  #     show.ci = TRUE
-    #       )  </code></pre>
+  #    plot_scatter(mer_pref_agg$redist,mer_pref_agg$accum)
+      
+   plot_scatter(mer_pref_agg, redist,accum, 
+    dot.labels = mer_pref_agg$v5c,
+    fit.line = &quot;lm&quot;,
+    show.ci = TRUE)  </code></pre>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-14-4.png" width="672" /></p>
 <div class="figure">
 <img src="../output/results/merit_redis.png" alt="IMAGEN PROVISORIA" />
 <p class="caption">IMAGEN PROVISORIA</p>
@@ -1378,6 +1929,54 @@ $(document).ready(function () {
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

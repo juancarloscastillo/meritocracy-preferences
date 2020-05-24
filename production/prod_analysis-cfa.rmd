@@ -40,10 +40,10 @@ library(stargazer)
 library(semTools)
 library(plyr) # count
 library(dplyr)
-#library(car) # recode
+library(car) # recode
 library(ggplot2)
-#library(Hmisc)
-#library(tidyverse)
+library(Hmisc)
+library(tidyverse)
 library(data.table)
 library(stringr)
 library(countrycode)
@@ -51,7 +51,7 @@ library(lme4)
 library(texreg)
 library(mice)
 library(ggrepel) # for scatter labels in sjp.scatter	
-#library(semPlot)
+library(semPlot)
 library(haven)
 library(sjlabelled) 
 library(kableExtra)
@@ -70,8 +70,8 @@ load(file = "input/data/proc/redistrib.rda")
     stargazer(redistrib[-c(1,2)], type="html") 
       
   # Summary table to latex
-    #sink("output/results/desctab_red.txt")
-    #stargazer(redistrib[-c(1,2)], type="text"); sink()
+    sink("output/results/desctab_red.txt")
+    stargazer(redistrib[-c(1,2)], type="text"); sink()
     
   # Simple graph:
     sjPlot::plot_frq(redistrib$income_dif, show.values = TRUE, coord.flip = TRUE)
@@ -96,10 +96,7 @@ load(file = "input/data/proc/redistrib.rda")
                       legend.inside = TRUE, 
                       legend.pos    = "bottom right", legend.size = 0.8,
                       geom.outline.size=0, geom.label.size =3)
-    #   sjp.setTheme(theme         = "blank",
-    #             legend.inside = TRUE, 
-    #            legend.pos    = "bottom right", legend.size = 0.8,
-    #           geom.outline.size=0, geom.label.size =3) 
+   
     
     sjPlot::plot_likert((redistrib[3:7]), 
                         axis.labels   = items,
@@ -115,20 +112,9 @@ load(file = "input/data/proc/redistrib.rda")
                         grid.range    = 1.40) # expand axis 130% )
     
     
-    # sjp.likert((redistrib2[3:7]), 
-    #             axis.labels   = items,
-    #            legend.labels = labels,
-    #           cat.neutral   = 3, # identifica a indiferentes
-    #          geom.colors   = c("#9ecae1", "#6baed6","#4292c6", 
-    #                           "#2171b5"), # colorbrewer2.org 
-    #        sort.frq      = "neg.asc", # sort descending)
-    #       title         = "Agree / disagree ...",
-    #     expand.grid   = FALSE, # no inner margins in plot
-    #     show.n        = FALSE, # hide N's in axis labels
-    #    grid.range    = 1.40) # expand axis 130% 
     
     # Save
-    dev.copy(png,"output/results/likert_red.png",width=800); dev.off()
+    #dev.copy(png,"output/results/likert_red.png",width=800); dev.off()
     
     
 ```
@@ -158,18 +144,18 @@ load(file = "input/data/proc/redistrib.rda")
 				
 		# Path 
 	
-	#		semPlot::semPaths(fit_red1,layout = "tree2", rotation = 2, 
-	#  	intercepts = FALSE,	style = "lisrel", curvePivot = TRUE,
-	#  	cardinal = TRUE)
-	#	  dev.copy(png,"output/results/path_red1.png",width=750,height=600)
-	#	  dev.off()	  	  	 
+			semPlot::semPaths(fit_red1,layout = "tree2", rotation = 2, 
+	  	intercepts = FALSE,	style = "lisrel", curvePivot = TRUE,
+	  	cardinal = TRUE)
+		  dev.copy(png,"output/results/path_red1.png",width=750,height=600)
+		  dev.off()	  	  	 
 ## ## ## ## ### ##                                            ### ## ## ## ##ARREGLAR LOS DIAGRAMAS. 
 		# Path - with results
-	#	  semPlot::semPaths(fit_red1,"std",layout = "tree2", rotation = 2, 
-	#  	intercepts = FALSE,	style = "lisrel", curvePivot = TRUE,
-	#  	cardinal = TRUE, edge.color = "black", residScale = 10)
-	#	  dev.copy(png,"output/results/path_red1_res.png",
-	#	  	width=750,height=600); dev.off()		
+		  semPlot::semPaths(fit_red1,"std",layout = "tree2", rotation = 2, 
+	  	intercepts = FALSE,	style = "lisrel", curvePivot = TRUE,
+	  	cardinal = TRUE, edge.color = "black", residScale = 10)
+		  dev.copy(png,"output/results/path_red1_res.png",
+		  	width=750,height=600); dev.off()		
 		  
 	# Categorical	  
 		fit_red1c <- cfa(cfa_red1,data=redistrib, 
@@ -240,11 +226,12 @@ sumtable01
 	    summary(redistrib_sco$accum)
 	
 	# Save  factor scores
-#	  save(redistrib_sco, file="input/data/proc/redistrib_sco.rda")
+	 # save(redistrib_sco, file="input/data/proc/redistrib_sco.rda")
 	
 ```
 
-![IMAGEN PROVISORIA](../output/results/path_red1_res.png)
+
+
 ```{r}
 # 4. MODELS A:  MERIT & REDISTRIB ========= =
 
@@ -278,11 +265,11 @@ sumtable01
 #	 summary(fit_mer_red1, fit.measures=TRUE,standardized=TRUE)
 	    
 	  	# Path
-	 		#  semPlot::semPaths(fit_mer_red1,layout = "circle", rotation = 3, 
-			#  	intercepts = FALSE, style = "lisrel", curvePivot = TRUE,
-			#  	sizeMan = 4, sizeLat = 6)
-	 		#  dev.copy(png,"output/results/path_mer_red1.png",width=800,
-		  #  	height=650);  dev.off()
+	 		  semPlot::semPaths(fit_mer_red1,layout = "circle", rotation = 3, 
+			  	intercepts = FALSE, style = "lisrel", curvePivot = TRUE,
+			  	sizeMan = 4, sizeLat = 6)
+	 		  dev.copy(png,"output/results/path_mer_red1.png",width=800,
+		    	height=650);  dev.off()
 	 		  
 	  fit_mer_redc <- cfa(cfa_mer_red1,data=merit_redist,
 	  	ordered = names(merit_redist[3:10,19:29]))
@@ -344,16 +331,16 @@ sumtable01
 	             use="pairwise.complete.obs")
 	  corrplot.mixed(cormat)
 	  #save
-	  dev.copy(png,"output/results/corplot_totscores.png",width=600,
-	           height=600); dev.off()
+	#  dev.copy(png,"output/results/corplot_totscores.png",width=600,
+	 #          height=600); dev.off()
 	  
 	  
-	   	# Path
-	 	#	  semPlot::semPaths(fit_mer_red2,layout = "tree", rotation = 2, 
-		#	  	intercepts = FALSE, style = "lisrel", curvePivot = TRUE,
-		#	  	sizeMan = 4, sizeLat = 6)
-	 	#	  dev.copy(png,"output/results/path_mer_red2.png",width=800,
-		#    	height=650);  dev.off()	  	  
+	  #  Path
+	 		  semPlot::semPaths(fit_mer_red2,layout = "tree", rotation = 2, 
+			  	intercepts = FALSE, style = "lisrel", curvePivot = TRUE,
+			  	sizeMan = 4, sizeLat = 6)
+	 		  dev.copy(png,"output/results/path_mer_red2.png",width=800,
+		    	height=650);  dev.off()	  	  
 	  
 	# Structural model
 	  sem_mer_red1 <- '
@@ -379,11 +366,11 @@ sumtable01
 	  
 	  
 	  	# Path
-	 		#  semPlot::semPaths(fitsem_mer_red1,layout = "tree", rotation = 2, 
-			#  	intercepts = FALSE, style = "lisrel", curvePivot = TRUE,
-			#  	sizeMan = 4, sizeLat = 6)
-	 		#  dev.copy(png,"output/results/path_mer_red2.png",width=800,
-		  #  	height=650);  dev.off()
+	 		  semPlot::semPaths(fitsem_mer_red1,layout = "tree", rotation = 2, 
+			  	intercepts = FALSE, style = "lisrel", curvePivot = TRUE,
+		  	sizeMan = 4, sizeLat = 6)
+	 	 # dev.copy(png,"output/results/path_mer_red2.png",width=800,
+		  #	height=650);  dev.off()
 	 	
 	# saque este argumento del codigo de abajo  op=="~"
 	  
@@ -413,20 +400,21 @@ sumtable01
     	
   # Macro descriptives
     
-### Hay que remplazar sjp.scatter, por plot_scatter #############################################################
-    ### Ademas me dice que el suindice esta fuera de los limites.
     
-  #  plot_scatter(pref_agg$gini_net,pref_agg$accum, 
-  #  	dot.labels = pref_agg$v5c,
-  #  	fit.line = TRUE,
-  #  	show.ci = TRUE
-	#   	)
+    hist(pref_agg$gini_net)
+    table(pref_agg$accum)   ############# no encuentro esta variable accum
+    
+  #  plot_scatter(pref_agg, gini_net, accum, 
+   #	dot.labels = pref_agg$v5c,
+  	#fit.line = "lm",
+  	#show.ci = TRUE)
   
-#    sjp.scatter(pref_agg$gini_net,pref_agg$redist, 
- #   	dot.labels = pref_agg$v5c,
-  #  	fit.line = TRUE,
-   # 	show.ci = TRUE
-	  # 	)
+    #table(pref_agg$redis)
+    
+    #plot_scatter(pref_agg, gini_net, redist, 
+   	#dot.labels = pref_agg$v5c,
+	#fit.line = TRUE,
+ 	#show.ci = TRUE 	)
     
     # Sin ZAF outlier (igual, no cambia)
   #  	pref_agg2 <- pref_agg[which(pref_agg$v5c!='ZAF'), ]
@@ -437,6 +425,8 @@ sumtable01
 	#	   	)
 
 ```
+
+
 
 ```{r}
 # 5.3 Models ---------------------------- ######
@@ -482,8 +472,8 @@ sumtable01
 
 # Multilevel (with factor scores) ################################## No funciono nada de este apartado. 
 	# check simple regresion
-	#  ols_prefred=lm(redist ~ univ + quintile + sstatus + gini_market)
-	#  summary(ols_prefred) # ok, similar SEM, scores OK
+	#ols_prefred=lm(redist ~ univ + quintile + sstatus + gini_market)
+	# summary(ols_prefred) # ok, similar SEM, scores OK
     
   # Multilevel models redist
 	  
@@ -575,36 +565,37 @@ sumtable01
     ################################agregar Polichoric.
     # Macro level corr
     
-  #    corMat <- cor(merit_agg[c("merit","unmerit","bmerit","need","gini_net","gini_market","j_fi_index")], use="pairwise.complete.obs") # estimar matriz pearson
-  #    options(digits=2)
-  #    corMat # muestra matriz
+      corMat <- cor(merit_agg[c("merit","unmerit","bmerit","need","gini_net","gini_market","j_fi_index")], use="pairwise.complete.obs") # estimar matriz pearson
+      options(digits=2)
+      corMat # muestra matriz
       
-  #    M=cor(merit_agg) # matriz simple 
-  #    corrplot.mixed(corMat)	
+ #     M=cor(merit_agg) # matriz simple 
+      corrplot.mixed(corMat)	
     
       
       ##### la mayoria de los str.scatter precentan problemas en los limites "subindice fuera de limites. 
     
-  #  sjp.scatter(merit_agg$gini_net,merit_agg$bmerit, 
-  #  	dot.labels = merit_agg$v5c,
-  #  	fit.line = TRUE,
-  #  	show.ci = TRUE
-	#   	)
-  #    # Save
-  #    dev.copy(png,"output/results/gini_bmerit.png"); dev.off()
-  #  
+    plot_scatter(merit_agg, gini_net, bmerit, 
+    	dot.labels = merit_agg$v5c,
+    	fit.line = "lm",
+    	show.ci = TRUE)
+      
     
-  #  sjp.scatter(merit_agg$gini_net,merit_agg$unmerit, 
-   # 	dot.labels = merit_agg$v5c,
-    #	fit.line = TRUE,
-  #  	show.ci = TRUE
-	#   	)    
-# 
- #  sjp.scatter(merit_agg$gini_net,merit_agg$need, 
-  #  	dot.labels = merit_agg$v5c,
-   # 	fit.line = TRUE,
-    #	show.ci = TRUE
-	   #	)  
+    
+  # Save
+  # dev.copy(png,"output/results/gini_bmerit.png"); dev.off()
+    
+    
+  plot_scatter(merit_agg, gini_net,unmerit, 
+  dot.labels = merit_agg$v5c,
+  fit.line = "lm",
+  show.ci = TRUE)    
+
+  
+  plot_scatter(merit_agg, gini_net,need, 
+  	dot.labels = merit_agg$v5c,
+ 	fit.line = "lm",
+	show.ci = TRUE)  
 
          # Save
       #dev.copy(png,"output/results/fi_need.png"); dev.off()
@@ -616,32 +607,30 @@ sumtable01
 ![Imagen provisoria](../output/results/fi_need.png)
 
 ```{r}
-   #sjp.scatter(merit_agg$j_fi_index,merit_agg$need, 
-    #	dot.labels = merit_agg$v5c,
-  #  	fit.line = TRUE,
-   # 	show.ci = TRUE
-	  # 	)     
+   plot_scatter(merit_agg, j_fi_index, need, 
+    	dot.labels = merit_agg$v5c,
+    	fit.line = "lm",
+    	show.ci = TRUE)     
       # Save
-     # dev.copy(png,"output/results/gini_fi.png"); dev.off()
+     # dev.copy(png,"output/results/gini_fi.png"); dev.off()  Este objeto tampoco estaba en la carpeta.
 ```
 
 
-![Imagen provisoria](../output/results/gini_fi.png)
 
 ```{r}
   # Sin outliers
     
   	merit_agg2 <- merit_agg[which(merit_agg$v5c!="ZAF" & merit_agg$v5c!="CHN" &  merit_agg$v5c!="CHL" ), ]
     
-    #sjp.scatter(merit_agg2$gini_net,merit_agg2$unmerit, 
-    #	dot.labels = merit_agg2$v5c,
-    #	fit.line = TRUE,
-    #	show.ci = TRUE
-	 #  	)  
+  plot_scatter(merit_agg2, gini_net, unmerit, 
+  	dot.labels = merit_agg2$v5c,
+  	fit.line = TRUE,
+  	show.ci = TRUE
+	  	)  
     
 ```
 
-```{r results='asis'}
+```{r results='asis' , message= F}
 # 6.3 Models -----------------------------#####       
 
 # Multilevel (with factor scores)
@@ -653,17 +642,17 @@ sumtable01
      	levels(meritocracy$Quintile)[6] <- "miss"
   
 	# check simple regresion
-#	  ols_merit=lm(merit ~ univ + Quintile + sstatus + gini_net, data = meritocracy)
-#	  summary(ols_merit) # ok, similar SEM, scores OK
+	  ols_merit=lm(merit ~ univ + Quintile + sstatus + gini_net, data = meritocracy)
+	  summary(ols_merit) # ok, similar SEM, scores OK
     
   # Multilevel models merit
 	  
 	  # Null
 	  	mlmerit_0 = lmer(merit ~ 1 + (1 | v5c), data = meritocracy)
-			screenreg(mlmerit_0) # de library texreg  
+			htmlreg(mlmerit_0) # de library texreg  
 			
 			# Graph
-		#	sjp.lmer(mlmerit_0, sort.est="(Intercept)")
+		#	sjp.lmer(mlmerit_0, sort.est="(Intercept)")   No encuentro el paquete.
 	  
 			# ICC
 			varcomp=as.data.frame(VarCorr(mlmerit_0))
@@ -674,11 +663,11 @@ sumtable01
   		# Individual level vars
   			mlmerit_1 = lmer(merit ~ 1 + univ +	quintile_miss +	
   					sstatus + sex + age + (1 | v5), data = meritocracy)
-  			screenreg(mlmerit_1)
+  			htmlreg(mlmerit_1)
   			
 		# Macro level vars
 			mlmerit_2 = lmer(bmerit ~ 1 + gini_net + (1 | v5), data = meritocracy)
-			screenreg(mlmerit_2)    
+		htmlreg(mlmerit_2)    
         
 
 			
@@ -698,33 +687,33 @@ sumtable01
 
     # Graphs    # mismo problemas de subindices.
   
-  #    plot_scatter(mer_pref_agg$merit,mer_pref_agg$bmerit, 
-   # 	dot.labels = mer_pref_agg$v5c,
-    #	fit.line = TRUE,
-  #  	show.ci = TRUE
-	 #  	)
-  #    
-  #    plot_scatter(mer_pref_agg$merit,mer_pref_agg$redist, 
-  #  	dot.labels = mer_pref_agg$v5c,
-   # 	fit.line = TRUE,
-    #	show.ci = TRUE
-	 #  	)
+    plot_scatter(mer_pref_agg,merit , bmerit, 
+   	  dot.labels = mer_pref_agg$v5c,
+  	  fit.line = lm,
+      show.ci = TRUE)
+  
+    plot_scatter(mer_pref_agg, merit, redist, 
+        dot.labels = mer_pref_agg$v5c,
+       	fit.line = lm,
+      	show.ci = TRUE) 
+           
+        
       # Save
   #    dev.copy(png,"loc_merit_pref_int/results/merit_redis.png"); dev.off()
  
-    #  sjp.scatter(mer_pref_agg$unmerit,mer_pref_agg$redist, 
-  #  	dot.labels = mer_pref_agg$v5c,
-   # 	fit.line = TRUE,
-    #	show.ci = TRUE
-	   	#)      
+     plot_scatter(mer_pref_agg, unmerit,redist, 
+    	dot.labels = mer_pref_agg$v5c,
+    	fit.line = "lm",
+    	show.ci = TRUE)      
        # Save
      # dev.copy(png,"loc_merit_pref_int/results/unmerit_redis.png"); dev.off()
 
-  #    sjp.scatter(mer_pref_agg$redist,mer_pref_agg$accum, 
-  #  	dot.labels = mer_pref_agg$v5c,
-  #  	fit.line = TRUE,
-  #  	show.ci = TRUE
-	#   	)  
+  #    plot_scatter(mer_pref_agg$redist,mer_pref_agg$accum)
+      
+   plot_scatter(mer_pref_agg, redist,accum, 
+  	dot.labels = mer_pref_agg$v5c,
+  	fit.line = "lm",
+  	show.ci = TRUE)  
 
 ```
 
