@@ -122,7 +122,7 @@ load(file = "input/data/proc/redistrib.rda")
 
 
 ```{r}
-# 2.3 Measurement structure ------------- ######## 
+# 2.3 Measurement structure 
     
 # EstimaciÃ³n del modelo
 	
@@ -138,8 +138,6 @@ load(file = "input/data/proc/redistrib.rda")
 #	summary(fit_red1, fit.measures=TRUE,standardized=TRUE)     
 
 
-
-###	################## 	agregar un sumary mas  reducido
 		 
 				
 		# Path 
@@ -162,7 +160,7 @@ load(file = "input/data/proc/redistrib.rda")
 			ordered = c("income_dif","unemployed","taxes", "health", 
 			"educ")) 
 	#	summary(fit_red1c, fit.measures=TRUE,standardized=TRUE)
-###	################## 	                                         agregar un sumary mas  reducido
+# 	                                      
 
 
 sum_fit<- bind_rows(fitmeasures(fit_red1)[c("chisq.scaled","df","cfi","cfi.scaled","cfi.robust","rmsea","rmsea.scaled","rmsea.robust")])
@@ -390,7 +388,7 @@ sumtable01
 ```
 
 ```{r}
-# 5.2 Descriptives ---------------------- #####
+# 5.2 Descriptives 
 	load("input/data/proc/pref.rda")
 
   # Adjust data
@@ -429,8 +427,7 @@ sumtable01
 
 
 ```{r}
-# 5.3 Models ---------------------------- ######
-    
+# 5.3 Models
 
 
   #  Models SEM simple
@@ -470,7 +467,7 @@ sumtable01
 
 
 
-# Multilevel (with factor scores) ################################## No funciono nada de este apartado. 
+# Multilevel (with factor scores) #No funciono nada de este apartado. 
 	# check simple regresion
 	#ols_prefred=lm(redist ~ univ + quintile + sstatus + gini_market)
 	# summary(ols_prefred) # ok, similar SEM, scores OK
@@ -544,12 +541,11 @@ sumtable01
 
 ```
 
-# 6. MODELS C: MERITOCRACY ================ =
-
+# 6. MODELS C: MERITOCRACY
 
 ```{r}
 
-# 6.2 Descriptives ---------------------- #####
+# 6.2 Descriptives
 
     load("input/data/proc/meritocracy.rda")
  	  
@@ -562,7 +558,7 @@ sumtable01
     	
   # Macro descriptives
     
-    ################################agregar Polichoric.
+    # agregar Polichoric.
     # Macro level corr
     
       corMat <- cor(merit_agg[c("merit","unmerit","bmerit","need","gini_net","gini_market","j_fi_index")], use="pairwise.complete.obs") # estimar matriz pearson
@@ -631,7 +627,7 @@ sumtable01
 ```
 
 ```{r results='asis' , message= F}
-# 6.3 Models -----------------------------#####       
+# 6.3 Models       
 
 # Multilevel (with factor scores)
    

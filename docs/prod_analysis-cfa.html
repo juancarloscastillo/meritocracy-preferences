@@ -357,7 +357,7 @@ div.tocify {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">Measuring meritocratic perceptions and beliefs</a>
+      <a class="navbar-brand" href="index.html">Meritocratic beliefs and preferencias redistributivas</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -374,7 +374,7 @@ div.tocify {
   <a href="paper.html">Paper</a>
 </li>
 <li>
-  <a href="https://github.com/juancarloscastillo/merit-scale">
+  <a href="https://github.com/juancarloscastillo/meritocracy-preferences">
     <span class="fa fa-github fa-lg"></span>
      
     
@@ -398,7 +398,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Meritocracy and distributive preferences ISSP</h1>
-<h4 class="date">domingo 24 mayo 2020 5:04:47</h4>
+<h4 class="date">viernes 29 mayo 2020 14:07:28</h4>
 
 </div>
 
@@ -628,7 +628,7 @@ educ
 <pre><code>## 
 ## [[5]]</code></pre>
 <p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-6-5.png" width="672" /> <img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-6-6.png" width="672" /></p>
-<pre class="r"><code># 2.3 Measurement structure ------------- ######## 
+<pre class="r"><code># 2.3 Measurement structure 
     
 # EstimaciÃ³n del modelo
     
@@ -644,8 +644,6 @@ educ
 #   summary(fit_red1, fit.measures=TRUE,standardized=TRUE)     
 
 
-
-### ##################  agregar un sumary mas  reducido
          
                 
         # Path 
@@ -656,28 +654,28 @@ educ
 <p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <pre class="r"><code>          dev.copy(png,&quot;output/results/path_red1.png&quot;,width=750,height=600)</code></pre>
 <pre><code>## png 
-##   5</code></pre>
+##   3</code></pre>
 <pre class="r"><code>          dev.off()          </code></pre>
-<pre><code>## RStudioGD 
-##         2</code></pre>
+<pre><code>## png 
+##   2</code></pre>
 <pre class="r"><code>## ## ## ## ### ##                                            ### ## ## ## ##ARREGLAR LOS DIAGRAMAS. 
         # Path - with results
           semPlot::semPaths(fit_red1,&quot;std&quot;,layout = &quot;tree2&quot;, rotation = 2, 
         intercepts = FALSE, style = &quot;lisrel&quot;, curvePivot = TRUE,
         cardinal = TRUE, edge.color = &quot;black&quot;, residScale = 10)</code></pre>
-<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-7-2.png" width="672" /><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-7-3.png" width="672" /></p>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
 <pre class="r"><code>          dev.copy(png,&quot;output/results/path_red1_res.png&quot;,
             width=750,height=600); dev.off()        </code></pre>
 <pre><code>## png 
-##   5</code></pre>
-<pre><code>## RStudioGD 
-##         2</code></pre>
+##   3</code></pre>
+<pre><code>## png 
+##   2</code></pre>
 <pre class="r"><code>    # Categorical     
         fit_red1c &lt;- cfa(cfa_red1,data=redistrib, 
             ordered = c(&quot;income_dif&quot;,&quot;unemployed&quot;,&quot;taxes&quot;, &quot;health&quot;, 
             &quot;educ&quot;)) 
     #   summary(fit_red1c, fit.measures=TRUE,standardized=TRUE)
-### ##################                                           agregar un sumary mas  reducido
+#                                         
 
 
 sum_fit&lt;- bind_rows(fitmeasures(fit_red1)[c(&quot;chisq.scaled&quot;,&quot;df&quot;,&quot;cfi&quot;,&quot;cfi.scaled&quot;,&quot;cfi.robust&quot;,&quot;rmsea&quot;,&quot;rmsea.scaled&quot;,&quot;rmsea.robust&quot;)])
@@ -830,8 +828,8 @@ MLR
 <pre><code>## [1] 56021     2</code></pre>
 <pre class="r"><code>    str(scores_dat)</code></pre>
 <pre><code>## &#39;data.frame&#39;:    56021 obs. of  2 variables:
-##  $ redist: num  -0.1267 0.0253 0.1851 0.5678 0.6526 ...
-##  $ accum : num  0.47 0.46 -1.321 -1.002 0.419 ...</code></pre>
+##  $ redist: num  -0.1259 0.0261 0.1853 0.5712 0.6562 ...
+##  $ accum : num  0.47 0.46 -1.321 -1.001 0.419 ...</code></pre>
 <pre class="r"><code># Adaptar base para agregar factor scores (sacar todos NA)  
     dim(redistrib)</code></pre>
 <pre><code>## [1] 56021     7</code></pre>
@@ -844,7 +842,7 @@ MLR
       # Check
         summary(redistrib_sco$redist)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   -2.47   -0.37    0.09    0.00    0.49    0.96</code></pre>
+##   -2.48   -0.37    0.09    0.00    0.49    0.97</code></pre>
 <pre class="r"><code>        summary(redistrib_sco$accum)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##   -1.37   -1.01   -0.31    0.00    0.82    2.39</code></pre>
@@ -889,13 +887,12 @@ MLR
 <pre class="r"><code>              dev.copy(png,&quot;output/results/path_mer_red1.png&quot;,width=800,
                 height=650);  dev.off()</code></pre>
 <pre><code>## png 
-##   5</code></pre>
-<pre><code>## RStudioGD 
-##         2</code></pre>
+##   3</code></pre>
+<pre><code>## png 
+##   2</code></pre>
 <pre class="r"><code>      fit_mer_redc &lt;- cfa(cfa_mer_red1,data=merit_redist,
-        ordered = names(merit_redist[3:10,19:29]))</code></pre>
-<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
-<pre class="r"><code>    #   summary(fit_mer_redc, fit.measures=TRUE,standardized=TRUE)
+        ordered = names(merit_redist[3:10,19:29]))
+    #   summary(fit_mer_redc, fit.measures=TRUE,standardized=TRUE)
   
       
 sum_fit&lt;- bind_rows(fitmeasures(fit_mer_redc)[c(&quot;chisq.scaled&quot;,&quot;df&quot;,&quot;cfi&quot;,&quot;cfi.scaled&quot;,&quot;cfi.robust&quot;,&quot;rmsea&quot;,&quot;rmsea.scaled&quot;,&quot;rmsea.robust&quot;)])
@@ -1103,7 +1100,7 @@ MLR
       cormat=cor(fscores[c(7,8,1,9,5,6)],
                  use=&quot;pairwise.complete.obs&quot;)
       corrplot.mixed(cormat)</code></pre>
-<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-8-3.png" width="672" /></p>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
 <pre class="r"><code>      #save
     #  dev.copy(png,&quot;output/results/corplot_totscores.png&quot;,width=600,
      #          height=600); dev.off()
@@ -1113,13 +1110,13 @@ MLR
               semPlot::semPaths(fit_mer_red2,layout = &quot;tree&quot;, rotation = 2, 
                 intercepts = FALSE, style = &quot;lisrel&quot;, curvePivot = TRUE,
                 sizeMan = 4, sizeLat = 6)</code></pre>
-<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-8-4.png" width="672" /></p>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-8-3.png" width="672" /></p>
 <pre class="r"><code>              dev.copy(png,&quot;output/results/path_mer_red2.png&quot;,width=800,
                 height=650);  dev.off()       </code></pre>
 <pre><code>## png 
-##   5</code></pre>
-<pre><code>## RStudioGD 
-##         2</code></pre>
+##   3</code></pre>
+<pre><code>## png 
+##   2</code></pre>
 <pre class="r"><code>    # Structural model
       sem_mer_red1 &lt;- &#39;
       # latent variables
@@ -1147,7 +1144,7 @@ MLR
               semPlot::semPaths(fitsem_mer_red1,layout = &quot;tree&quot;, rotation = 2, 
                 intercepts = FALSE, style = &quot;lisrel&quot;, curvePivot = TRUE,
             sizeMan = 4, sizeLat = 6)</code></pre>
-<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-8-5.png" width="672" /></p>
+<p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-8-4.png" width="672" /></p>
 <pre class="r"><code>         # dev.copy(png,&quot;output/results/path_mer_red2.png&quot;,width=800,
           # height=650);  dev.off()
         
@@ -1165,7 +1162,7 @@ MLR
               
                   
 # End sec 4 ----------------------------- </code></pre>
-<pre class="r"><code># 5.2 Descriptives ---------------------- #####
+<pre class="r"><code># 5.2 Descriptives 
     load(&quot;input/data/proc/pref.rda&quot;)
 
   # Adjust data
@@ -1199,8 +1196,7 @@ MLR
     #       fit.line = TRUE,
     #       show.ci = TRUE
     #       )</code></pre>
-<pre class="r"><code># 5.3 Models ---------------------------- ######
-    
+<pre class="r"><code># 5.3 Models
 
 
   #  Models SEM simple
@@ -1311,7 +1307,7 @@ MLR
 </tr>
 </tfoot>
 </table>
-<pre class="r"><code># Multilevel (with factor scores) ################################## No funciono nada de este apartado. 
+<pre class="r"><code># Multilevel (with factor scores) #No funciono nada de este apartado. 
     # check simple regresion
     #ols_prefred=lm(redist ~ univ + quintile + sstatus + gini_market)
     # summary(ols_prefred) # ok, similar SEM, scores OK
@@ -1384,8 +1380,8 @@ MLR
 # End sec. 5 ----------------------------           </code></pre>
 </div>
 <div id="models-c-meritocracy" class="section level1">
-<h1><span class="header-section-number">2</span> 6. MODELS C: MERITOCRACY ================ =</h1>
-<pre class="r"><code># 6.2 Descriptives ---------------------- #####
+<h1><span class="header-section-number">2</span> 6. MODELS C: MERITOCRACY</h1>
+<pre class="r"><code># 6.2 Descriptives
 
     load(&quot;input/data/proc/meritocracy.rda&quot;)
       
@@ -1398,7 +1394,7 @@ MLR
         
   # Macro descriptives
     
-    ################################agregar Polichoric.
+    # agregar Polichoric.
     # Macro level corr
     
       corMat &lt;- cor(merit_agg[c(&quot;merit&quot;,&quot;unmerit&quot;,&quot;bmerit&quot;,&quot;need&quot;,&quot;gini_net&quot;,&quot;gini_market&quot;,&quot;j_fi_index&quot;)], use=&quot;pairwise.complete.obs&quot;) # estimar matriz pearson
@@ -1459,7 +1455,7 @@ MLR
     show.ci = TRUE
         )  </code></pre>
 <p><img src="prod_analysis-cfa_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
-<pre class="r"><code># 6.3 Models -----------------------------#####       
+<pre class="r"><code># 6.3 Models       
 
 # Multilevel (with factor scores)
    

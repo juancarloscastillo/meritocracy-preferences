@@ -84,14 +84,14 @@ issp2009=read_stata("input/data/original/ZA5400_v4-0-0.dta")
     issp2009$id=issp2009$idtem + issp2009$id
 ```
 
-# 1.MEASUREMENT MERIT & GETTING AHEAD 
+# Measurement Merit & Getting ahead 
 
-#Note: object now generated from different
-#script (merit_per_pref.R; merit_per_pref.rda)
+Note: object now generated from different
+script (merit_per_pref.R; merit_per_pref.rda)
 
-# 2. MEASUREMENT REDISTRIBUTION 
+#  Measurement and Redistribution
 
-# 2.1 Data preparation, gen redistrib.rda     
+## Data preparation, gen redistrib.rda     
 
   # v33: Gov. resp to reduce differences in income
   # v34: Gov. resp to provide decent s andard of living for
@@ -110,7 +110,7 @@ issp2009=read_stata("input/data/original/ZA5400_v4-0-0.dta")
 
 ```{r}
   # Rename & define object
-    names(issp2009)  
+    #names(issp2009)  
     redistrib=issp2009[,c("v5","v33","v34","v36","v38","v39","id")] 
     redistrib$income_dif= redistrib$v33
     redistrib$unemployed= redistrib$v34
@@ -118,7 +118,7 @@ issp2009=read_stata("input/data/original/ZA5400_v4-0-0.dta")
     redistrib$health    = redistrib$v38
     redistrib$educ      = redistrib$v39
   
-    names(redistrib)
+    #names(redistrib)
     redistrib=redistrib[-c(2:6)]
     stargazer(redistrib[-c(1,2)], type="html")  
   
@@ -159,14 +159,14 @@ print(dfSummary(redistrib, valid.col = FALSE, graph.magnif = 0.75),
 
 
 ```{r}
-# 2.5 Invariance -------------pendiente-- -----
+# 2.5 Invariance
     # measurementInvariance(cfa_2, data = redistrib, group = "v5")      # No funciono la invarianza arreglar.
 
 ```
 
 
 
-# End sec 2; saved objects
+ End sec 2; saved objects
 	  # redistrib.rda: clean & recoded
 	  # redistrib_sco.rda : fac scores [por ahora en analysis]
 
@@ -175,9 +175,9 @@ print(dfSummary(redistrib, valid.col = FALSE, graph.magnif = 0.75),
 
 
 
-# 3.PREP INDIVIDUAL & MACRO VAR  
+# Preparation Individual & Macro variables. 
 
-# 3.1 Individual level variables 
+## Individual level variables 
 ```{r}
   indepvar=issp2009
 	summary(indepvar$id)
@@ -224,7 +224,7 @@ print(dfSummary(redistrib, valid.col = FALSE, graph.magnif = 0.75),
 		# Continuo
     		
 	    # Recode missings
-	     	names(indepvar)
+	     	#names(indepvar)
 	    	freq(indepvar$cl_inc)
 	    	summary(indepvar[182:222]) # missings vary (note 2)
 	 
@@ -329,10 +329,10 @@ print(dfSummary(redistrib, valid.col = FALSE, graph.magnif = 0.75),
 
 ```
 
-# 3.2 Indep macro var ------------------- ####
+# 3.2 Indep macro var 
 ```{r}
 		
-	# Inequality swiid (4)        #########################3 No encuentro el objeto. 
+	# Inequality swiid (4)         
 	swiid =	read_stata("input/data/original/swiid8_2.dta")
 
 		# convertir formato original list a dataframe
@@ -407,7 +407,7 @@ print(dfSummary(indepvar, valid.col = FALSE, graph.magnif = 0.75),
 ```{r}
 # 5. MODELS B: PREFERENCES  
 
-# 5.1 Data preparation - pref.rda ------- #####
+# 5.1 Data preparation
   
   # Load & merge
   
@@ -471,7 +471,7 @@ print(dfSummary(indepvar, valid.col = FALSE, graph.magnif = 0.75),
 ```
 
 ```{r}
-# 6.1 Data preparation - meritocracy.rda  #####
+# 6.1 Data preparation - meritocracy.rda  
   
   # Load & merge
 #  load("input/data/proc/getahead.rda")
