@@ -1,3 +1,10 @@
-En redistribución en promedio lo que manda es el autointeres: mayor educación, mayor ingreso y mayor estatus subjetivo llevan una menor preferencia por redistribución. 
+Cometi el error de dividir el codigo de mala manera, deje cfa en analisis, aunque genera variables para las bases de datos, lo que va en preparacion. al dividirlo se perdieron algunas cosas.
 
+redist -> variables latentes
+
+
+
+
+Comentario texto:
+En redistribución en promedio lo que manda es el autointeres: mayor educación, mayor ingreso y mayor estatus subjetivo llevan una menor preferencia por redistribución. 
 creo que una mayor educacion o ingreso se relacione con una menor preferencia redistributiva no necesariamente se debe a la teoria del autointeres. 

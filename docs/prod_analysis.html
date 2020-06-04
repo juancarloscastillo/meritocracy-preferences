@@ -398,7 +398,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Meritocracy and distributive preferences ISSP</h1>
-<h4 class="date">miércoles 03 junio 2020 2:54:42</h4>
+<h4 class="date">jueves 04 junio 2020 2:38:32</h4>
 
 </div>
 
@@ -627,26 +627,21 @@ educ
 #summary(fit_red1, fit.measures=TRUE,standardized=TRUE)   
 
 #fitmeasures(fit_red1)</code></pre>
-<div id="measurement-structure" class="section level3">
-<h3><span class="header-section-number">2.0.1</span> Measurement structure</h3>
-<pre class="r"><code>        # Path 
-            semPlot::semPaths(fit_red1,layout = &quot;tree2&quot;, rotation = 2, 
+<div id="measurement-structure" class="section level2">
+<h2><span class="header-section-number">2.1</span> Measurement structure</h2>
+<pre class="r"><code>        # Path
+# dev.copy(&quot;output/results/path_red1.png&quot;,width=750,height=600)
+    
+        semPlot::semPaths(fit_red1,layout = &quot;tree2&quot;, rotation = 2, 
         intercepts = FALSE, style = &quot;lisrel&quot;, curvePivot = TRUE,
         cardinal = TRUE)</code></pre>
 <p><img src="prod_analysis_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<pre class="r"><code>    #     dev.copy(png,&quot;output/results/path_red1.png&quot;,width=750,height=600)
-        #  dev.off()             
-## ## ## ## ### ##                                            ### ## ## ## ##ARREGLAR LOS DIAGRAMAS. </code></pre>
-</div>
-<div id="fit-cfa-model" class="section level2">
-<h2><span class="header-section-number">2.1</span> Fit cfa model</h2>
+<pre class="r"><code># dev.off()          </code></pre>
+<div id="fit-cfa-model" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> Fit cfa model</h3>
 <pre class="r"><code>sum_fit&lt;- bind_rows(fitmeasures(fit_red1)[c(&quot;chisq&quot;,&quot;df&quot;,&quot;cfi&quot;,&quot;rmsea&quot;,&quot;rmsea.ci.lower&quot;,&quot;rmsea.ci.upper&quot;)])
-sum_fit</code></pre>
-<pre><code>## # A tibble: 1 x 6
-##   chisq    df   cfi  rmsea rmsea.ci.lower rmsea.ci.upper
-##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;
-## 1  269.     4 0.996 0.0345         0.0310         0.0380</code></pre>
-<pre class="r"><code>colnames &lt;- c(&quot;$\\chi2$&quot;,&quot;df&quot;,&quot;CFI&quot;,&quot;RMSEA&quot;,&quot;RMSEA CI lower&quot;, &quot;RMSEA CI upper&quot;)
+
+colnames &lt;- c(&quot;$\\chi2$&quot;,&quot;df&quot;,&quot;CFI&quot;,&quot;RMSEA&quot;,&quot;RMSEA CI lower&quot;, &quot;RMSEA CI upper&quot;)
 
 sumtable01&lt;- kable(sum_fit,digits = 3,format = &quot;html&quot;,row.names = F,booktabs=T, caption = &quot;Summary fit indices wave 01&quot;,col.names = colnames,escape = FALSE) %&gt;%
   kable_styling(full_width = F)  %&gt;%
@@ -700,6 +695,9 @@ RMSEA CI upper
 </tr>
 </tbody>
 </table>
+</div>
+<div id="diagram-model" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> Diagram model</h3>
 <pre class="r"><code>        # Path - with results
           semPlot::semPaths(fit_red1,&quot;std&quot;,layout = &quot;tree2&quot;, rotation = 2, 
         intercepts = FALSE, style = &quot;lisrel&quot;, curvePivot = TRUE,
@@ -714,39 +712,9 @@ RMSEA CI upper
             &quot;educ&quot;)) 
     #   summary(fit_red1c, fit.measures=TRUE,standardized=TRUE)
 #                                         </code></pre>
+</div>
 <div id="factor-scores" class="section level3">
-<h3><span class="header-section-number">2.1.1</span> 2.4 Factor scores</h3>
-<pre class="r"><code>    # Multiple imputation (para recuperar missings en scores)
-  
-      # generate 5 multiple complete datasets 
-        out &lt;- mice(redistrib[3:7], m=5) </code></pre>
-<pre><code>## 
-##  iter imp variable
-##   1   1  income_dif  unemployed  taxes  health  educ
-##   1   2  income_dif  unemployed  taxes  health  educ
-##   1   3  income_dif  unemployed  taxes  health  educ
-##   1   4  income_dif  unemployed  taxes  health  educ
-##   1   5  income_dif  unemployed  taxes  health  educ
-##   2   1  income_dif  unemployed  taxes  health  educ
-##   2   2  income_dif  unemployed  taxes  health  educ
-##   2   3  income_dif  unemployed  taxes  health  educ
-##   2   4  income_dif  unemployed  taxes  health  educ
-##   2   5  income_dif  unemployed  taxes  health  educ
-##   3   1  income_dif  unemployed  taxes  health  educ
-##   3   2  income_dif  unemployed  taxes  health  educ
-##   3   3  income_dif  unemployed  taxes  health  educ
-##   3   4  income_dif  unemployed  taxes  health  educ
-##   3   5  income_dif  unemployed  taxes  health  educ
-##   4   1  income_dif  unemployed  taxes  health  educ
-##   4   2  income_dif  unemployed  taxes  health  educ
-##   4   3  income_dif  unemployed  taxes  health  educ
-##   4   4  income_dif  unemployed  taxes  health  educ
-##   4   5  income_dif  unemployed  taxes  health  educ
-##   5   1  income_dif  unemployed  taxes  health  educ
-##   5   2  income_dif  unemployed  taxes  health  educ
-##   5   3  income_dif  unemployed  taxes  health  educ
-##   5   4  income_dif  unemployed  taxes  health  educ
-##   5   5  income_dif  unemployed  taxes  health  educ</code></pre>
+<h3><span class="header-section-number">2.1.3</span> 2.4 Factor scores</h3>
 <pre class="r"><code>        D1 &lt;- complete(out, 1) 
         D2 &lt;- complete(out, 2) 
         D3 &lt;- complete(out, 3) 
@@ -772,35 +740,113 @@ RMSEA CI upper
 
  #Generate factor scores      
    scores_dat=as.data.frame(scores)
-    dim(scores_dat)</code></pre>
-<pre><code>## [1] 56021     2</code></pre>
-<pre class="r"><code>    str(scores_dat)</code></pre>
-<pre><code>## &#39;data.frame&#39;:    56021 obs. of  2 variables:
-##  $ redist: num  -0.1266 0.0253 0.1851 0.5687 0.6535 ...
-##  $ accum : num  0.471 0.461 -1.322 -1.008 0.42 ...</code></pre>
-<pre class="r"><code># Adaptar base para agregar factor scores (sacar todos NA)  
-    dim(redistrib)</code></pre>
-<pre><code>## [1] 56021     7</code></pre>
-<pre class="r"><code>   redistrib_m=redistrib[rowSums(is.na(redistrib[3:7]))!=5,]
-    dim(redistrib_m)</code></pre>
-<pre><code>## [1] 55822     7</code></pre>
+
+    
+# Adaptar base para agregar factor scores (sacar todos NA)  
+   redistrib_m=redistrib[rowSums(is.na(redistrib[3:7]))!=5,]</code></pre>
 <pre class="r"><code># Merge with factor scores
       redistrib_sco=cbind(redistrib,scores)
         
       # Check
-        summary(redistrib_sco$redist)</code></pre>
-<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   -2.47   -0.37    0.09    0.00    0.49    0.97</code></pre>
-<pre class="r"><code>        summary(redistrib_sco$accum)</code></pre>
-<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   -1.37   -1.02   -0.32    0.00    0.81    2.40</code></pre>
+       stargazer(redistrib_sco[,8:9], type =&quot;html&quot;)</code></pre>
+<table style="text-align:center">
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Statistic
+</td>
+<td>
+N
+</td>
+<td>
+Mean
+</td>
+<td>
+St. Dev.
+</td>
+<td>
+Min
+</td>
+<td>
+Pctl(25)
+</td>
+<td>
+Pctl(75)
+</td>
+<td>
+Max
+</td>
+</tr>
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+redist
+</td>
+<td>
+56,021
+</td>
+<td>
+-0.000
+</td>
+<td>
+0.640
+</td>
+<td>
+-2.500
+</td>
+<td>
+-0.370
+</td>
+<td>
+0.490
+</td>
+<td>
+0.970
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+accum
+</td>
+<td>
+56,021
+</td>
+<td>
+0.000
+</td>
+<td>
+1.100
+</td>
+<td>
+-1.400
+</td>
+<td>
+-1.000
+</td>
+<td>
+0.820
+</td>
+<td>
+2.400
+</td>
+</tr>
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
+</table>
 <pre class="r"><code>    # Save  factor scores
      # save(redistrib_sco, file=&quot;input/data/proc/redistrib_sco.rda&quot;)</code></pre>
 </div>
 </div>
-</div>
-<div id="models-a-merit-redistrib" class="section level1">
-<h1><span class="header-section-number">3</span> MODELS A: MERIT &amp; REDISTRIB</h1>
+<div id="models-a-merit-redistrib" class="section level2">
+<h2><span class="header-section-number">2.2</span> MODELS A: MERIT &amp; REDISTRIB</h2>
 <pre class="r"><code># 4.1 Merge objects --------------------- ---- 
     load(&quot;input/data/proc/redistrib.rda&quot;)
     load(&quot;input/data/proc/getahead.rda&quot;)                       
@@ -808,10 +854,12 @@ RMSEA CI upper
 
     aux1 &lt;- merge(getahead,redistrib,by=c(&quot;id&quot;,&quot;v5&quot;))
   merit_redist=merge(aux1,detearn,by=c(&quot;id&quot;,&quot;v5&quot;))</code></pre>
-<pre class="r"><code># 4.2 Measurement &amp; structural model ---- --------
-
-  # Measurement simple 
-      cfa_mer_red1 &lt;- &#39;
+</div>
+<div id="measurement-structural-mode" class="section level2">
+<h2><span class="header-section-number">2.3</span> Measurement &amp; structural mode</h2>
+<div id="measurement-simple" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Measurement simple</h3>
+<pre class="r"><code>      cfa_mer_red1 &lt;- &#39;
       # latent variables
           merit =~ hwork + ambition 
           parent=~ wealthy + pareduc
@@ -822,53 +870,26 @@ RMSEA CI upper
             redist =~ income_dif + unemployed + taxes 
         accum  =~ health + educ&#39;        
     
-      fit_mer_red1 &lt;- cfa(cfa_mer_red1,data=merit_redist, 
-        missing = &quot;ML&quot;) 
+fit_mer_red1 &lt;- cfa(cfa_mer_red1,data=merit_redist,missing = &quot;ML&quot;) 
      
     
 #    summary(fit_mer_red1, fit.measures=TRUE,standardized=TRUE)
         
-        # Path
-              semPlot::semPaths(fit_mer_red1,layout = &quot;circle&quot;, rotation = 3, 
-                intercepts = FALSE, style = &quot;lisrel&quot;, curvePivot = TRUE,
-                sizeMan = 4, sizeLat = 6)</code></pre>
-<p><img src="prod_analysis_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
-<pre class="r"><code>    #         dev.copy(png,&quot;output/results/path_mer_red1.png&quot;,width=800,
-    #           height=650);  dev.off()
               
-      fit_mer_redc &lt;- cfa(cfa_mer_red1,data=merit_redist,
+      fit_mer_red1c &lt;- cfa(cfa_mer_red1,data=merit_redist,
         ordered = names(merit_redist[3:10,19:29]))
-    #   summary(fit_mer_redc, fit.measures=TRUE,standardized=TRUE)</code></pre>
-<pre class="r"><code>    # CFA with secon order unmerit
-
-      cfa_mer_red2 &lt;- &#39;
-      # latent variables
-          merit =~ hwork + ambition 
-          parent=~ wealthy + pareduc
-          backg=~ race + gender
-            network=~ people + polcone
-          bmerit =~ welljob + hardjob 
-          need=~ family + child
-            redist =~ income_dif + unemployed + taxes 
-        accum  =~ health + educ
-            unmerit =~ parent + backg + network
-      &#39;     
-      fit_mer_red2 &lt;- cfa(cfa_mer_red2,data=merit_redist, 
-        missing = &quot;ML&quot;) 
-#     summary(fit_mer_red2, fit.measures=TRUE,standardized=TRUE)</code></pre>
-<pre class="r"><code>sum_fit&lt;- bind_rows(fitmeasures(fit_mer_redc)[c(&quot;chisq&quot;,&quot;df&quot;,&quot;cfi&quot;,&quot;rmsea&quot;,&quot;rmsea.ci.lower&quot;,&quot;rmsea.ci.upper&quot;)],
-                    fitmeasures(fit_mer_red2)[c(&quot;chisq&quot;,&quot;df&quot;,&quot;cfi&quot;,&quot;rmsea&quot;,&quot;rmsea.ci.lower&quot;,&quot;rmsea.ci.upper&quot;)])
+    #   summary(fit_mer_redc, fit.measures=TRUE,standardized=TRUE)
+      
+      
+      
+sum_fit&lt;- bind_rows(fitmeasures(fit_mer_red1)[c(&quot;chisq&quot;,&quot;df&quot;,&quot;cfi&quot;,&quot;rmsea&quot;,&quot;rmsea.ci.lower&quot;,&quot;rmsea.ci.upper&quot;)],
+                    fitmeasures(fit_mer_red1c)[c(&quot;chisq&quot;,&quot;df&quot;,&quot;cfi&quot;,&quot;rmsea&quot;,&quot;rmsea.ci.lower&quot;,&quot;rmsea.ci.upper&quot;)])
 sum_fit$mod &lt;- c(&quot;Model 1&quot;,&quot;Model 2&quot;)
 sum_fit$est &lt;- c(&quot;MLR&quot;,&quot;DWLS&quot;)
 #sum_fit &lt;- select(sum_fit,mod,est,everything())
 colnames &lt;- c(&quot;Model&quot;,&quot;Estimator&quot;,&quot;$\\chi2$&quot;,&quot;df&quot;,&quot;CFI&quot;,&quot;RMSEA&quot;,&quot;RMSEA CI lower&quot;, &quot;RMSEA CI upper&quot;)
- sum_fit</code></pre>
-<pre><code>## # A tibble: 2 x 8
-##   chisq    df   cfi  rmsea rmsea.ci.lower rmsea.ci.upper mod     est  
-##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;
-## 1 1967.    91 0.996 0.0264         0.0254         0.0275 Model 1 MLR  
-## 2 5771.   101 0.973 0.0320         0.0313         0.0327 Model 2 DWLS</code></pre>
-<pre class="r"><code>sumtable01&lt;- kable(sum_fit,digits = 3,format = &quot;html&quot;,row.names = F,booktabs=T, caption = &quot;Summary fit indices wave 01&quot;,col.names = colnames,escape = FALSE) %&gt;%
+      
+sumtable01&lt;- kable(sum_fit,digits = 3,format = &quot;html&quot;,row.names = F,booktabs=T, caption = &quot;Summary fit indices wave 01&quot;,col.names = colnames,escape = FALSE) %&gt;%
   kable_styling(full_width = F)  %&gt;%
       collapse_rows(columns = 1,valign = &quot;middle&quot;)  %&gt;%
       footnote(number = c(&quot;Model 1: Continue item&quot;,
@@ -908,6 +929,32 @@ RMSEA CI upper
 <tbody>
 <tr>
 <td style="text-align:right;">
+4521
+</td>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+0.030
+</td>
+<td style="text-align:right;">
+0.029
+</td>
+<td style="text-align:right;">
+0.031
+</td>
+<td style="text-align:left;">
+Model 1
+</td>
+<td style="text-align:left;">
+MLR
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
 1967
 </td>
 <td style="text-align:right;">
@@ -924,32 +971,6 @@ RMSEA CI upper
 </td>
 <td style="text-align:right;">
 0.027
-</td>
-<td style="text-align:left;">
-Model 1
-</td>
-<td style="text-align:left;">
-MLR
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-5771
-</td>
-<td style="text-align:right;">
-101
-</td>
-<td style="text-align:right;">
-0.97
-</td>
-<td style="text-align:right;">
-0.032
-</td>
-<td style="text-align:right;">
-0.031
-</td>
-<td style="text-align:right;">
-0.033
 </td>
 <td style="text-align:left;">
 Model 2
@@ -972,6 +993,92 @@ DWLS
 </tr>
 </tfoot>
 </table>
+<pre class="r"><code>        # Path
+
+    #         dev.copy(png,&quot;output/results/path_mer_red1.png&quot;,width=800,height=650)
+              semPlot::semPaths(fit_mer_red1,layout = &quot;circle&quot;, rotation = 3, 
+                intercepts = FALSE, style = &quot;lisrel&quot;, curvePivot = TRUE,
+                sizeMan = 4, sizeLat = 6)</code></pre>
+<p><img src="prod_analysis_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<pre class="r"><code>    #           dev.off()</code></pre>
+<pre class="r"><code>    # CFA with secon order unmerit
+
+      cfa_mer_red2 &lt;- &#39;
+      # latent variables
+          merit =~ hwork + ambition 
+          parent=~ wealthy + pareduc
+          backg=~ race + gender
+            network=~ people + polcone
+          bmerit =~ welljob + hardjob 
+          need=~ family + child
+            redist =~ income_dif + unemployed + taxes 
+        accum  =~ health + educ
+            unmerit =~ parent + backg + network
+      &#39;     
+      fit_mer_red2 &lt;- cfa(cfa_mer_red2,data=merit_redist, 
+        missing = &quot;ML&quot;) 
+#     summary(fit_mer_red2, fit.measures=TRUE,standardized=TRUE)</code></pre>
+<pre class="r"><code>sum_fit&lt;- bind_rows(fitmeasures(fit_mer_red2)[c(&quot;chisq&quot;,&quot;df&quot;,&quot;cfi&quot;,&quot;rmsea&quot;,&quot;rmsea.ci.lower&quot;,&quot;rmsea.ci.upper&quot;)])
+
+colnames &lt;- c(&quot;$\\chi2$&quot;,&quot;df&quot;,&quot;CFI&quot;,&quot;RMSEA&quot;,&quot;RMSEA CI lower&quot;, &quot;RMSEA CI upper&quot;)
+
+sumtable01&lt;- kable(sum_fit,digits = 3,format = &quot;html&quot;,row.names = F,booktabs=T, caption = &quot;Summary fit indices wave 01&quot;,col.names = colnames,escape = FALSE) %&gt;%
+  kable_styling(full_width = F)  %&gt;%
+      collapse_rows(columns = 1,valign = &quot;middle&quot;);sumtable01</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Summary fit indices wave 01
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+<span class="math inline">\(\chi2\)</span>
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+CFI
+</th>
+<th style="text-align:right;">
+RMSEA
+</th>
+<th style="text-align:right;">
+RMSEA CI lower
+</th>
+<th style="text-align:right;">
+RMSEA CI upper
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+5771
+</td>
+<td style="text-align:right;">
+101
+</td>
+<td style="text-align:right;">
+0.97
+</td>
+<td style="text-align:right;">
+0.032
+</td>
+<td style="text-align:right;">
+0.031
+</td>
+<td style="text-align:right;">
+0.033
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="correlation-factor-scores" class="section level1">
+<h1><span class="header-section-number">3</span> Correlation factor scores</h1>
 <pre class="r"><code>        # Factor scores
       fscores &lt;- as.data.frame(lavPredict(fit_mer_red2))
 
@@ -980,17 +1087,15 @@ DWLS
       cormat=cor(fscores[c(7,8,1,9,5,6)],
                  use=&quot;pairwise.complete.obs&quot;)
       corrplot.mixed(cormat)</code></pre>
-<p><img src="prod_analysis_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="prod_analysis_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <pre class="r"><code>      #save
     #  dev.copy(png,&quot;output/results/corplot_totscores.png&quot;,width=600,
-     #          height=600); dev.off()
-      
-      
-      #  Path
+     #          height=600); dev.off()</code></pre>
+<pre class="r"><code>      #  Path
               semPlot::semPaths(fit_mer_red2,layout = &quot;tree&quot;, rotation = 2, 
                 intercepts = FALSE, style = &quot;lisrel&quot;, curvePivot = TRUE,
                 sizeMan = 4, sizeLat = 6)</code></pre>
-<p><img src="prod_analysis_files/figure-html/unnamed-chunk-16-2.png" width="672" /></p>
+<p><img src="prod_analysis_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <pre class="r"><code>            #  dev.copy(png,&quot;output/results/path_mer_red2.png&quot;,width=800,
            #    height=650);  dev.off()       
       
@@ -1021,7 +1126,7 @@ DWLS
               semPlot::semPaths(fitsem_mer_red1,layout = &quot;tree&quot;, rotation = 2, 
                 intercepts = FALSE, style = &quot;lisrel&quot;, curvePivot = TRUE,
             sizeMan = 4, sizeLat = 6)</code></pre>
-<p><img src="prod_analysis_files/figure-html/unnamed-chunk-16-3.png" width="672" /></p>
+<p><img src="prod_analysis_files/figure-html/unnamed-chunk-20-2.png" width="672" /></p>
 <pre class="r"><code>         # dev.copy(png,&quot;output/results/path_mer_red2.png&quot;,width=800,
           # height=650);  dev.off()
         
@@ -1040,45 +1145,43 @@ DWLS
                   
 # End sec 4 ----------------------------- </code></pre>
 </div>
-<div id="descriptives-1" class="section level1">
-<h1><span class="header-section-number">4</span> Descriptives</h1>
-<pre class="r"><code>    load(&quot;input/data/proc/pref.rda&quot;)
+<div id="descriptives-x" class="section level1">
+<h1><span class="header-section-number">4</span> Descriptives <strong>x</strong></h1>
+<pre class="r"><code>    load(&quot;input/data/proc/pref_agg.rda&quot;)
 
-  # Adjust data
-    pref_agg=aggregate(pref, by=list(pref$v5c),
-        FUN=mean, na.rm=TRUE)
-    names(pref_agg)[names(pref_agg)==&quot;Group.1&quot;] &lt;- &quot;v5c&quot;
-        
-  # Macro descriptives
+  ############# no encuentro esta variable accum
     
     
-    hist(pref_agg$gini_net)</code></pre>
-<p><img src="prod_analysis_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
-<pre class="r"><code>    table(pref_agg$accum)   ############# no encuentro esta variable accum</code></pre>
-<pre><code>## &lt; table of extent 0 &gt;</code></pre>
-<pre class="r"><code>  #  plot_scatter(pref_agg, gini_net, accum, 
-   #    dot.labels = pref_agg$v5c,
-    #fit.line = &quot;lm&quot;,
-    #show.ci = TRUE)
-  
-    #table(pref_agg$redis)
     
-    #plot_scatter(pref_agg, gini_net, redist, 
-    #dot.labels = pref_agg$v5c,
-    #fit.line = TRUE,
-    #show.ci = TRUE     )
+####################### Faltan las variables accum y redist.
     
-    # Sin ZAF outlier (igual, no cambia)
-  #     pref_agg2 &lt;- pref_agg[which(pref_agg$v5c!=&#39;ZAF&#39;), ]
-    #       plot_scatter(pref_agg2$gini_net,pref_agg2$redist, 
-    #       dot.labels = pref_agg2$v5c,
-    #       fit.line = TRUE,
-    #       show.ci = TRUE
-    #       )</code></pre>
+    plot_scatter(pref_agg, gini_net, accum, 
+    dot.labels = pref_agg$v5c,
+    fit.line = &quot;lm&quot;,
+    show.ci = TRUE)</code></pre>
+<p><img src="prod_analysis_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<pre class="r"><code>    #table(pref_agg$redis)
+    
+  plot_scatter(pref_agg, gini_net, redist, 
+  dot.labels = pref_agg$v5c,
+    fit.line = lm,
+    show.ci = TRUE  )</code></pre>
+<p><img src="prod_analysis_files/figure-html/unnamed-chunk-21-2.png" width="672" /></p>
+<pre class="r"><code>  # Sin ZAF outlier (igual, no cambia)
+        pref_agg2 &lt;- pref_agg[which(pref_agg$v5c!=&#39;ZAF&#39;), ]
+          
+          plot_scatter(pref_agg2,gini_net,redist, 
+            dot.labels = pref_agg2$v5c,
+            fit.line = lm,
+            show.ci = TRUE
+            )</code></pre>
+<p><img src="prod_analysis_files/figure-html/unnamed-chunk-21-3.png" width="672" /></p>
 </div>
 <div id="models" class="section level1">
 <h1><span class="header-section-number">5</span> Models</h1>
 <pre class="r"><code>  #  Models SEM simple
+
+    load(&quot;input/data/proc/pref.rda&quot;)
   
   sem_b &lt;- &#39;
     # latent variables
@@ -1089,19 +1192,12 @@ DWLS
     fit_2c &lt;- sem(sem_b,data=pref, ordered = c(&quot;income_dif&quot;,
       &quot;unemployed&quot;,&quot;taxes&quot;, &quot;health&quot;, &quot;educ&quot;))
     #summary(fit_2c, fit.measures=TRUE,standardized=TRUE)
-    
-    
-#cnames &lt;- c(&quot;Factor&quot;,&quot;Indicator&quot;,&quot;Loading (MLR)&quot;,&quot;Loading (DWLS)&quot;)
-#kable(left_join(x = standardizedsolution(fit_2c) %&gt;% filter(op==&quot;=~&quot;) %&gt;% select(lhs,rhs,est.std),y = #standardizedsolution(fit_2c) %&gt;% filter(op==&quot;=~&quot;) %&gt;% select(lhs,rhs,est.std),c(&quot;lhs&quot;,&quot;rhs&quot;)),format = #&quot;markdown&quot;,digits = 2,col.names = cnames, caption = &quot;Factor loadings&quot;)
-    
+
 
 sum_fit&lt;- bind_rows(fitmeasures(fit_red1)[c(&quot;chisq&quot;,&quot;df&quot;,&quot;cfi&quot;,&quot;rmsea&quot;,&quot;rmsea.ci.lower&quot;,&quot;rmsea.ci.upper&quot;)])
-sum_fit</code></pre>
-<pre><code>## # A tibble: 1 x 6
-##   chisq    df   cfi  rmsea rmsea.ci.lower rmsea.ci.upper
-##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;
-## 1  269.     4 0.996 0.0345         0.0310         0.0380</code></pre>
-<pre class="r"><code>colnames &lt;- c(&quot;$\\chi2$&quot;,&quot;df&quot;,&quot;CFI&quot;,&quot;RMSEA&quot;,&quot;RMSEA CI lower&quot;, &quot;RMSEA CI upper&quot;)
+
+
+colnames &lt;- c(&quot;$\\chi2$&quot;,&quot;df&quot;,&quot;CFI&quot;,&quot;RMSEA&quot;,&quot;RMSEA CI lower&quot;, &quot;RMSEA CI upper&quot;)
 
 sumtable01&lt;- kable(sum_fit,digits = 3,format = &quot;html&quot;,row.names = F,booktabs=T, caption = &quot;Summary fit indices wave 01&quot;,col.names = colnames,escape = FALSE) %&gt;%
   kable_styling(full_width = F)  %&gt;%
@@ -1155,19 +1251,26 @@ RMSEA CI upper
 </tr>
 </tbody>
 </table>
-<pre class="r"><code># Multilevel (with factor scores) #No funciono nada de este apartado. 
-    # check simple regresion
-    #ols_prefred=lm(redist ~ univ + quintile + sstatus + gini_market)
-    # summary(ols_prefred) # ok, similar SEM, scores OK
-    
-  # Multilevel models redist
-      
-      # Null
-     #  mlprefred_0 = lmer(redist ~ 1 + (1 | v5c))
-    #       screenreg(mlprefred_0) # de library texreg  
-    #       
-#           # Graph
-#           sjp.lmer(mlprefred_0, sort.est=&quot;(Intercept)&quot;)
+<div id="multilevel-with-factor-scores" class="section level2">
+<h2><span class="header-section-number">5.1</span> Multilevel (with factor scores)</h2>
+<p>Estos codigos de abajo no especifican base de datos. las bases de datos con esas variables son pref_agg. pero esa base es o nivel uno (pref) o nivel 2 (pref_agg.)</p>
+<p>—&gt; hacer una base de datos con ambos datos.</p>
+<div id="check-simple-regresion-x" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> check simple regresion <strong>X</strong></h3>
+<pre class="r"><code>#   ols_prefred=lm(redist ~ univ + quintile + sstatus + gini_market)
+ # stargazer(ols_prefred, type = &quot;text&quot;) # ok, similar SEM, scores OK</code></pre>
+</div>
+</div>
+<div id="multilevel-models-redist.-x" class="section level2">
+<h2><span class="header-section-number">5.2</span> Multilevel models redist. <strong>X</strong></h2>
+<pre class="r"><code>      # Null
+      # mlprefred_0 = lmer(redist ~ 1 + (1 | v5c))
+        #   screenreg(mlprefred_0) # de library texreg  </code></pre>
+</div>
+<div id="esta-seccion-no-me-funciona.-x" class="section level2">
+<h2><span class="header-section-number">5.3</span> Esta seccion no me funciona. <strong>X</strong></h2>
+<pre class="r"><code>    #       sjp.lmer(mlprefred_0, sort.est=&quot;(Intercept)&quot;) ### ¿Que grafico se quiere hacer?</code></pre>
+<pre class="r"><code>#           # Graph
 #     
             # ICC
 #           varcomp=as.data.frame(VarCorr(mlprefred_0))
@@ -1227,10 +1330,11 @@ RMSEA CI upper
             
 # End sec. 5 ----------------------------           </code></pre>
 </div>
+</div>
 <div id="models-c-meritocracy" class="section level1">
 <h1><span class="header-section-number">6</span> MODELS C: MERITOCRACY</h1>
-<div id="descriptives-2" class="section level2">
-<h2><span class="header-section-number">6.1</span> Descriptives</h2>
+<div id="macro-descriptives" class="section level2">
+<h2><span class="header-section-number">6.1</span> Macro Descriptives</h2>
 <pre class="r"><code>    load(&quot;input/data/proc/meritocracy.rda&quot;)
       
   # Adjust data
@@ -1238,83 +1342,67 @@ RMSEA CI upper
         FUN=mean, na.rm=TRUE)
     names(merit_agg)[names(merit_agg)==&quot;Group.1&quot;]=&quot;v5c&quot;
  #   names(merit_agg)
-  #  dim(merit_agg)
-        
-  # Macro descriptives
-    
-    # agregar Polichoric.
-    # Macro level corr
-    
-      corMat &lt;- cor(merit_agg[c(&quot;merit&quot;,&quot;unmerit&quot;,&quot;bmerit&quot;,&quot;need&quot;,&quot;gini_net&quot;,&quot;gini_market&quot;,&quot;j_fi_index&quot;)], use=&quot;pairwise.complete.obs&quot;) # estimar matriz pearson
+  #  dim(merit_agg)</code></pre>
+<div id="macro-level-corr" class="section level3">
+<h3><span class="header-section-number">6.1.1</span> Macro level corr</h3>
+<pre class="r"><code>      corMat &lt;- cor(merit_agg[c(&quot;merit&quot;,&quot;unmerit&quot;,&quot;bmerit&quot;,&quot;need&quot;,&quot;gini_net&quot;,&quot;gini_market&quot;,&quot;j_fi_index&quot;)], use=&quot;pairwise.complete.obs&quot;) # estimar matriz pearson
       options(digits=2)
-      corMat # muestra matriz</code></pre>
-<pre><code>##              merit unmerit bmerit   need gini_net gini_market j_fi_index
-## merit        1.000   0.465  0.656 -0.036     0.12      -0.038      0.177
-## unmerit      0.465   1.000  0.546  0.588     0.42      -0.029     -0.341
-## bmerit       0.656   0.546  1.000  0.401     0.19      -0.126     -0.021
-## need        -0.036   0.588  0.401  1.000     0.49      -0.023     -0.449
-## gini_net     0.123   0.416  0.192  0.491     1.00       0.483     -0.297
-## gini_market -0.038  -0.029 -0.126 -0.023     0.48       1.000      0.194
-## j_fi_index   0.177  -0.341 -0.021 -0.449    -0.30       0.194      1.000</code></pre>
-<pre class="r"><code> #     M=cor(merit_agg) # matriz simple 
-      corrplot.mixed(corMat)    </code></pre>
-<p><img src="prod_analysis_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+ corrplot.mixed(corMat) </code></pre>
+<p><img src="prod_analysis_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 <pre class="r"><code>    plot_scatter(merit_agg, gini_net, bmerit, 
         dot.labels = merit_agg$v5c,
         fit.line = &quot;lm&quot;,
         show.ci = TRUE)</code></pre>
-<p><img src="prod_analysis_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="prod_analysis_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 <pre class="r"><code>  # Save
-  # dev.copy(png,&quot;output/results/gini_bmerit.png&quot;); dev.off()
-    
+# dev.copy(png,&quot;output/results/gini_bmerit.png&quot;) 
     
   plot_scatter(merit_agg, gini_net,unmerit, 
   dot.labels = merit_agg$v5c,
   fit.line = &quot;lm&quot;,
   show.ci = TRUE)    </code></pre>
-<p><img src="prod_analysis_files/figure-html/unnamed-chunk-20-2.png" width="672" /></p>
-<pre class="r"><code>  plot_scatter(merit_agg, gini_net,need, 
+<p><img src="prod_analysis_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<pre class="r"><code># dev.off()</code></pre>
+<pre class="r"><code>#dev.copy(png,&quot;output/results/fi_need.png&quot;); 
+
+  plot_scatter(merit_agg, gini_net,need, 
     dot.labels = merit_agg$v5c,
     fit.line = &quot;lm&quot;,
     show.ci = TRUE)  </code></pre>
-<p><img src="prod_analysis_files/figure-html/unnamed-chunk-20-3.png" width="672" /></p>
-<pre class="r"><code>         # Save
-      #dev.copy(png,&quot;output/results/fi_need.png&quot;); dev.off()</code></pre>
-<div class="figure">
-<img src="../output/results/fi_need.png" alt="Imagen provisoria" />
-<p class="caption">Imagen provisoria</p>
-</div>
-<pre class="r"><code>   plot_scatter(merit_agg, j_fi_index, need, 
+<p><img src="prod_analysis_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<pre class="r"><code>#dev.off()</code></pre>
+<pre class="r"><code> # dev.copy(png,&quot;output/results/gini_fi.png&quot;)
+   plot_scatter(merit_agg, j_fi_index, need, 
         dot.labels = merit_agg$v5c,
         fit.line = &quot;lm&quot;,
         show.ci = TRUE)     </code></pre>
-<p><img src="prod_analysis_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
-<pre class="r"><code>      # Save
-     # dev.copy(png,&quot;output/results/gini_fi.png&quot;); dev.off()  Este objeto tampoco estaba en la carpeta.</code></pre>
+<p><img src="prod_analysis_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<pre class="r"><code>#  dev.off()</code></pre>
 <div id="graficos-sin-outliers" class="section level4">
-<h4><span class="header-section-number">6.1.0.1</span> Graficos sin outliers</h4>
-<pre class="r"><code>    merit_agg2 &lt;- merit_agg[which(merit_agg$v5c!=&quot;ZAF&quot; &amp; merit_agg$v5c!=&quot;CHN&quot; &amp;  merit_agg$v5c!=&quot;CHL&quot; ), ]
+<h4><span class="header-section-number">6.1.1.1</span> Graficos sin outliers</h4>
+<pre class="r"><code>merit_agg2 &lt;- merit_agg[which(merit_agg$v5c!=&quot;ZAF&quot; &amp; merit_agg$v5c!=&quot;CHN&quot; &amp;  merit_agg$v5c!=&quot;CHL&quot; ), ]
     
   plot_scatter(merit_agg2, gini_net, unmerit, 
     dot.labels = merit_agg2$v5c,
     fit.line = TRUE,
     show.ci = TRUE
         )  </code></pre>
-<p><img src="prod_analysis_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="prod_analysis_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+</div>
 </div>
 </div>
 <div id="models-1" class="section level2">
 <h2><span class="header-section-number">6.2</span> Models</h2>
-<pre class="r"><code># Multilevel (with factor scores)
-   
-  load(&quot;input/data/proc/meritocracy.rda&quot;)
+<div id="multilevel-with-factor-scores-1" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> Multilevel (with factor scores)</h3>
+<pre class="r"><code>  load(&quot;input/data/proc/meritocracy.rda&quot;)
 
     # Adjust some variables
         meritocracy$Quintile=as.factor(meritocracy$quintile_miss)
-        levels(meritocracy$Quintile)[6] &lt;- &quot;miss&quot;
-  
-    # check simple regresion
-      ols_merit=lm(merit ~ univ + Quintile + sstatus + gini_net, data = meritocracy)
+        levels(meritocracy$Quintile)[6] &lt;- &quot;miss&quot;</code></pre>
+<div id="check-simple-regresion" class="section level4">
+<h4><span class="header-section-number">6.2.1.1</span> check simple regresion</h4>
+<pre class="r"><code>      ols_merit=lm(merit ~ univ + Quintile + sstatus + gini_net, data = meritocracy)
       stargazer(ols_merit, type =&quot;html&quot;) # ok, similar SEM, scores OK</code></pre>
 <table style="text-align:center">
 <tr>
@@ -1591,10 +1679,15 @@ F Statistic
 </td>
 </tr>
 </table>
-<pre class="r"><code>  # Multilevel models merit
-      
-      # Null
-        mlmerit_0 = lmer(merit ~ 1 + (1 | v5c), data = meritocracy)
+</div>
+</div>
+</div>
+</div>
+<div id="multilevel-models-merit" class="section level1">
+<h1><span class="header-section-number">7</span> Multilevel models merit</h1>
+<div id="null-model" class="section level2">
+<h2><span class="header-section-number">7.1</span> Null Model</h2>
+<pre class="r"><code>        mlmerit_0 = lmer(merit ~ 1 + (1 | v5c), data = meritocracy)
             htmlreg(mlmerit_0) # de library texreg  </code></pre>
 &lt;!DOCTYPE HTML PUBLIC “-//W3C//DTD HTML 4.01 Transitional//EN” “<a href="http://www.w3.org/TR/html4/loose.dtd" class="uri">http://www.w3.org/TR/html4/loose.dtd</a>”&gt;
 <table cellspacing="0" align="center" style="border: none;">
@@ -1972,9 +2065,11 @@ Var: Residual
 </td>
 </tr>
 </table>
-<pre class="r"><code># Models meritocracy and preferences
-            
-  load(&quot;input/data/proc/meritocracy.rda&quot;)
+</div>
+</div>
+<div id="models-meritocracy-and-preferences" class="section level1">
+<h1><span class="header-section-number">8</span> Models meritocracy and preferences</h1>
+<pre class="r"><code>  load(&quot;input/data/proc/meritocracy.rda&quot;)
   load(&quot;input/data/proc/redistrib_sco.rda&quot;)
             
     mer_pref=merge(meritocracy, redistrib_sco, by=c(&quot;id&quot;))
@@ -1986,18 +2081,17 @@ Var: Residual
      #  names(mer_pref_agg)
   #  dim(mer_pref_agg)
 
-    # Graphs    # mismo problemas de subindices.
   
     plot_scatter(mer_pref_agg,merit , bmerit, 
       dot.labels = mer_pref_agg$v5c,
       fit.line = lm,
       show.ci = TRUE)</code></pre>
-<p><img src="prod_analysis_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p><img src="prod_analysis_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 <pre class="r"><code>    plot_scatter(mer_pref_agg, merit, redist, 
         dot.labels = mer_pref_agg$v5c,
         fit.line = lm,
         show.ci = TRUE) </code></pre>
-<p><img src="prod_analysis_files/figure-html/unnamed-chunk-24-2.png" width="672" /></p>
+<p><img src="prod_analysis_files/figure-html/unnamed-chunk-38-2.png" width="672" /></p>
 <pre class="r"><code>      # Save
   #    dev.copy(png,&quot;loc_merit_pref_int/results/merit_redis.png&quot;); dev.off()
  
@@ -2005,7 +2099,7 @@ Var: Residual
         dot.labels = mer_pref_agg$v5c,
         fit.line = &quot;lm&quot;,
         show.ci = TRUE)      </code></pre>
-<p><img src="prod_analysis_files/figure-html/unnamed-chunk-24-3.png" width="672" /></p>
+<p><img src="prod_analysis_files/figure-html/unnamed-chunk-38-3.png" width="672" /></p>
 <pre class="r"><code>       # Save
      # dev.copy(png,&quot;loc_merit_pref_int/results/unmerit_redis.png&quot;); dev.off()
 
@@ -2015,12 +2109,7 @@ Var: Residual
     dot.labels = mer_pref_agg$v5c,
     fit.line = &quot;lm&quot;,
     show.ci = TRUE)  </code></pre>
-<p><img src="prod_analysis_files/figure-html/unnamed-chunk-24-4.png" width="672" /></p>
-<div class="figure">
-<img src="../output/results/merit_redis.png" alt="IMAGEN PROVISORIA" />
-<p class="caption">IMAGEN PROVISORIA</p>
-</div>
-</div>
+<p><img src="prod_analysis_files/figure-html/unnamed-chunk-38-4.png" width="672" /></p>
 </div>
 
 

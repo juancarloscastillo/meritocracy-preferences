@@ -123,24 +123,24 @@ load(file = "input/data/proc/redistrib.rda")
 
 ```
 
-### Measurement structure 
+## Measurement structure 
 
 ```{r}
-		# Path 
-			semPlot::semPaths(fit_red1,layout = "tree2", rotation = 2, 
+		# Path
+# dev.copy("output/results/path_red1.png",width=750,height=600)
+	
+		semPlot::semPaths(fit_red1,layout = "tree2", rotation = 2, 
 	  	intercepts = FALSE,	style = "lisrel", curvePivot = TRUE,
 	  	cardinal = TRUE)
-	#	  dev.copy(png,"output/results/path_red1.png",width=750,height=600)
-		#  dev.off()	  	  	 
-## ## ## ## ### ##                                            ### ## ## ## ##ARREGLAR LOS DIAGRAMAS. 
+
+# dev.off()	  	  	 
 
 ```
 
-## Fit cfa model
+### Fit cfa model
 ```{r}
 
 sum_fit<- bind_rows(fitmeasures(fit_red1)[c("chisq","df","cfi","rmsea","rmsea.ci.lower","rmsea.ci.upper")])
-sum_fit
 
 colnames <- c("$\\chi2$","df","CFI","RMSEA","RMSEA CI lower", "RMSEA CI upper")
 
@@ -148,6 +148,8 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
   kable_styling(full_width = F)  %>%
       collapse_rows(columns = 1,valign = "middle");sumtable01
 ```
+
+### Diagram model
 
 ```{r}
 		# Path - with results
@@ -168,11 +170,16 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
 
 
 ### 2.4 Factor scores 
-```{r}
+
+```{r include=FALSE}
 	# Multiple imputation (para recuperar missings en scores)
   
 	  # generate 5 multiple complete datasets 
 		out <- mice(redistrib[3:7], m=5) 
+```
+
+
+```{r}
 		D1 <- complete(out, 1) 
 		D2 <- complete(out, 2) 
 		D3 <- complete(out, 3) 
@@ -198,27 +205,27 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
 
  #Generate factor scores      
    scores_dat=as.data.frame(scores)
-    dim(scores_dat)
-    str(scores_dat)
+
     
 # Adaptar base para agregar factor scores (sacar todos NA)  
-    dim(redistrib)
    redistrib_m=redistrib[rowSums(is.na(redistrib[3:7]))!=5,]
-    dim(redistrib_m)
+    
+```
 
+```{r results='asis'}
 # Merge with factor scores
 	  redistrib_sco=cbind(redistrib,scores)
 	    
 	  # Check
-	    summary(redistrib_sco$redist)
-	    summary(redistrib_sco$accum)
+	   stargazer(redistrib_sco[,8:9], type ="html")
 	
 	# Save  factor scores
 	 # save(redistrib_sco, file="input/data/proc/redistrib_sco.rda")
-	
+
 ```
 
-# MODELS A:  MERIT & REDISTRIB
+
+## MODELS A:  MERIT & REDISTRIB
 ```{r}
 # 4.1 Merge objects --------------------- ---- 
 	load("input/data/proc/redistrib.rda")
@@ -230,10 +237,10 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
 
 ```
 
-```{r}
-# 4.2 Measurement & structural model ---- --------
+## Measurement & structural mode
 
-  # Measurement simple 
+### Measurement simple 
+```{r}
 	  cfa_mer_red1 <- '
 	  # latent variables
 		  merit =~ hwork + ambition 
@@ -245,24 +252,45 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
 			redist =~ income_dif + unemployed + taxes 
 	  	accum  =~ health + educ'        
 	
-	  fit_mer_red1 <- cfa(cfa_mer_red1,data=merit_redist, 
-	  	missing = "ML") 
+fit_mer_red1 <- cfa(cfa_mer_red1,data=merit_redist,missing = "ML") 
 	 
 	
 #	 summary(fit_mer_red1, fit.measures=TRUE,standardized=TRUE)
 	    
+	 		  
+	  fit_mer_red1c <- cfa(cfa_mer_red1,data=merit_redist,
+	  	ordered = names(merit_redist[3:10,19:29]))
+	#	summary(fit_mer_redc, fit.measures=TRUE,standardized=TRUE)
+	  
+	  
+	  
+sum_fit<- bind_rows(fitmeasures(fit_mer_red1)[c("chisq","df","cfi","rmsea","rmsea.ci.lower","rmsea.ci.upper")],
+                    fitmeasures(fit_mer_red1c)[c("chisq","df","cfi","rmsea","rmsea.ci.lower","rmsea.ci.upper")])
+sum_fit$mod <- c("Model 1","Model 2")
+sum_fit$est <- c("MLR","DWLS")
+#sum_fit <- select(sum_fit,mod,est,everything())
+colnames <- c("Model","Estimator","$\\chi2$","df","CFI","RMSEA","RMSEA CI lower", "RMSEA CI upper")
+	  
+sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, caption = "Summary fit indices wave 01",col.names = colnames,escape = FALSE) %>%
+  kable_styling(full_width = F)  %>%
+      collapse_rows(columns = 1,valign = "middle")  %>%
+      footnote(number = c("Model 1: Continue item",
+                          "Model 2: Ordered item)"));sumtable01
+
+```
+
+```{r}
 	  	# Path
+
+	# 		  dev.copy(png,"output/results/path_mer_red1.png",width=800,height=650)
 	 		  semPlot::semPaths(fit_mer_red1,layout = "circle", rotation = 3, 
 			  	intercepts = FALSE, style = "lisrel", curvePivot = TRUE,
 			  	sizeMan = 4, sizeLat = 6)
-	# 		  dev.copy(png,"output/results/path_mer_red1.png",width=800,
-	#	    	height=650);  dev.off()
-	 		  
-	  fit_mer_redc <- cfa(cfa_mer_red1,data=merit_redist,
-	  	ordered = names(merit_redist[3:10,19:29]))
-	#	summary(fit_mer_redc, fit.measures=TRUE,standardized=TRUE)
 
+	#	    	dev.off()
 ```
+
+
 
 ```{r}
 
@@ -287,31 +315,24 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
 ```
 
 
-
 ```{r}
-sum_fit<- bind_rows(fitmeasures(fit_mer_redc)[c("chisq","df","cfi","rmsea","rmsea.ci.lower","rmsea.ci.upper")],
-                    fitmeasures(fit_mer_red2)[c("chisq","df","cfi","rmsea","rmsea.ci.lower","rmsea.ci.upper")])
-sum_fit$mod <- c("Model 1","Model 2")
-sum_fit$est <- c("MLR","DWLS")
-#sum_fit <- select(sum_fit,mod,est,everything())
-colnames <- c("Model","Estimator","$\\chi2$","df","CFI","RMSEA","RMSEA CI lower", "RMSEA CI upper")
- sum_fit
+
+sum_fit<- bind_rows(fitmeasures(fit_mer_red2)[c("chisq","df","cfi","rmsea","rmsea.ci.lower","rmsea.ci.upper")])
+
+colnames <- c("$\\chi2$","df","CFI","RMSEA","RMSEA CI lower", "RMSEA CI upper")
 
 sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, caption = "Summary fit indices wave 01",col.names = colnames,escape = FALSE) %>%
   kable_styling(full_width = F)  %>%
-      collapse_rows(columns = 1,valign = "middle")  %>%
-      footnote(number = c("Model 1: Continue item",
-                          "Model 2: Ordered item)"));sumtable01
+      collapse_rows(columns = 1,valign = "middle");sumtable01
 
 ```
   
 
 
 
-
+# Correlation factor scores
 
 ```{r}
-
 	    # Factor scores
 	  fscores <- as.data.frame(lavPredict(fit_mer_red2))
 
@@ -324,7 +345,10 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
 	#  dev.copy(png,"output/results/corplot_totscores.png",width=600,
 	 #          height=600); dev.off()
 	  
-	  
+```
+
+
+```{r}
 	  #  Path
 	 		  semPlot::semPaths(fit_mer_red2,layout = "tree", rotation = 2, 
 			  	intercepts = FALSE, style = "lisrel", curvePivot = TRUE,
@@ -379,52 +403,47 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
 
 ```
 
-#  Descriptives 
-
+#  Descriptives **x**
 ```{r}
 
-	load("input/data/proc/pref.rda")
+	load("input/data/proc/pref_agg.rda")
 
-  # Adjust data
-    pref_agg=aggregate(pref, by=list(pref$v5c),
-    	FUN=mean, na.rm=TRUE)
-    names(pref_agg)[names(pref_agg)=="Group.1"] <- "v5c"
-    	
-  # Macro descriptives
+  ############# no encuentro esta variable accum
     
     
-    hist(pref_agg$gini_net)
-    table(pref_agg$accum)   ############# no encuentro esta variable accum
     
-  #  plot_scatter(pref_agg, gini_net, accum, 
-   #	dot.labels = pref_agg$v5c,
-  	#fit.line = "lm",
-  	#show.ci = TRUE)
+####################### Faltan las variables accum y redist.
+    
+    plot_scatter(pref_agg, gini_net, accum, 
+  	dot.labels = pref_agg$v5c,
+    fit.line = "lm",
+  	show.ci = TRUE)
   
     #table(pref_agg$redis)
     
-    #plot_scatter(pref_agg, gini_net, redist, 
-   	#dot.labels = pref_agg$v5c,
-	#fit.line = TRUE,
- 	#show.ci = TRUE 	)
+  plot_scatter(pref_agg, gini_net, redist, 
+  dot.labels = pref_agg$v5c,
+	fit.line = lm,
+ 	show.ci = TRUE 	)
     
-    # Sin ZAF outlier (igual, no cambia)
-  #  	pref_agg2 <- pref_agg[which(pref_agg$v5c!='ZAF'), ]
-	#	    plot_scatter(pref_agg2$gini_net,pref_agg2$redist, 
-	#    	dot.labels = pref_agg2$v5c,
-	#    	fit.line = TRUE,
-	#    	show.ci = TRUE
-	#	   	)
+  # Sin ZAF outlier (igual, no cambia)
+    	pref_agg2 <- pref_agg[which(pref_agg$v5c!='ZAF'), ]
+		  
+    	  plot_scatter(pref_agg2,gini_net,redist, 
+	    	dot.labels = pref_agg2$v5c,
+	    	fit.line = lm,
+	    	show.ci = TRUE
+		   	)
 
 ```
 
 
 # Models
+
 ```{r}
-
-
-
   #  Models SEM simple
+
+	load("input/data/proc/pref.rda")
   
   sem_b <- '
   	# latent variables
@@ -435,14 +454,10 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
     fit_2c <- sem(sem_b,data=pref, ordered = c("income_dif",
       "unemployed","taxes", "health", "educ"))
     #summary(fit_2c, fit.measures=TRUE,standardized=TRUE)
-    
-    
-#cnames <- c("Factor","Indicator","Loading (MLR)","Loading (DWLS)")
-#kable(left_join(x = standardizedsolution(fit_2c) %>% filter(op=="=~") %>% select(lhs,rhs,est.std),y = #standardizedsolution(fit_2c) %>% filter(op=="=~") %>% select(lhs,rhs,est.std),c("lhs","rhs")),format = #"markdown",digits = 2,col.names = cnames, caption = "Factor loadings")
-    
+
 
 sum_fit<- bind_rows(fitmeasures(fit_red1)[c("chisq","df","cfi","rmsea","rmsea.ci.lower","rmsea.ci.upper")])
-sum_fit
+
 
 colnames <- c("$\\chi2$","df","CFI","RMSEA","RMSEA CI lower", "RMSEA CI upper")
 
@@ -450,22 +465,41 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
   kable_styling(full_width = F)  %>%
       collapse_rows(columns = 1,valign = "middle");sumtable01
 
+```
+
+## Multilevel (with factor scores) 
+
+Estos codigos de abajo no especifican base de datos. las bases de datos con esas variables son pref_agg. pero esa base es o nivel uno (pref) o nivel 2 (pref_agg.)
+
+---> hacer una base de datos con ambos datos. 
+
+### check simple regresion **X**
+```{r}
+
+#	ols_prefred=lm(redist ~ univ + quintile + sstatus + gini_market)
+ # stargazer(ols_prefred, type = "text") # ok, similar SEM, scores OK
+```
 
 
-
-# Multilevel (with factor scores) #No funciono nada de este apartado. 
-	# check simple regresion
-	#ols_prefred=lm(redist ~ univ + quintile + sstatus + gini_market)
-	# summary(ols_prefred) # ok, similar SEM, scores OK
-    
-  # Multilevel models redist
-	  
+## Multilevel models redist. **X**
+```{r}    
 	  # Null
-	 # 	mlprefred_0 = lmer(redist ~ 1 + (1 | v5c))
-	#		screenreg(mlprefred_0) # de library texreg  
-	#		
+	  #	mlprefred_0 = lmer(redist ~ 1 + (1 | v5c))
+		#	screenreg(mlprefred_0) # de library texreg  
+```
+
+
+## Esta seccion no me funciona. **X**
+
+```{r}
+	#		sjp.lmer(mlprefred_0, sort.est="(Intercept)") ### ¿Que grafico se quiere hacer?
+
+```
+
+
+```{r}
+			
 #			# Graph
-#			sjp.lmer(mlprefred_0, sort.est="(Intercept)")
 #	  
 			# ICC
 #			varcomp=as.data.frame(VarCorr(mlprefred_0))
@@ -528,8 +562,7 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
 ```
 
 #  MODELS C: MERITOCRACY
-##  Descriptives
-
+## Macro Descriptives
 
 ```{r}
     load("input/data/proc/meritocracy.rda")
@@ -540,71 +573,64 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
     names(merit_agg)[names(merit_agg)=="Group.1"]="v5c"
  #   names(merit_agg)
   #  dim(merit_agg)
-    	
-  # Macro descriptives
-    
-    # agregar Polichoric.
-    # Macro level corr
+```
+
+### Macro level corr
+
+```{r}
     
       corMat <- cor(merit_agg[c("merit","unmerit","bmerit","need","gini_net","gini_market","j_fi_index")], use="pairwise.complete.obs") # estimar matriz pearson
       options(digits=2)
-      corMat # muestra matriz
-      
- #     M=cor(merit_agg) # matriz simple 
-      corrplot.mixed(corMat)	
-    
-
+ corrplot.mixed(corMat)	
 ```
  
 
-```{r}
 
+```{r}
     plot_scatter(merit_agg, gini_net, bmerit, 
     	dot.labels = merit_agg$v5c,
     	fit.line = "lm",
     	show.ci = TRUE)
-      
-    
-    
+```
+
+```{r}
   # Save
-  # dev.copy(png,"output/results/gini_bmerit.png"); dev.off()
-    
+# dev.copy(png,"output/results/gini_bmerit.png") 
     
   plot_scatter(merit_agg, gini_net,unmerit, 
   dot.labels = merit_agg$v5c,
   fit.line = "lm",
   show.ci = TRUE)    
+# dev.off()
 
-  
+```
+
+
+```{r}
+#dev.copy(png,"output/results/fi_need.png"); 
+
   plot_scatter(merit_agg, gini_net,need, 
   	dot.labels = merit_agg$v5c,
  	fit.line = "lm",
 	show.ci = TRUE)  
 
-         # Save
-      #dev.copy(png,"output/results/fi_need.png"); dev.off()
-   
-  
-   
+#dev.off()
 ```
 
-![Imagen provisoria](../output/results/fi_need.png)
 
 ```{r}
+ # dev.copy(png,"output/results/gini_fi.png")
    plot_scatter(merit_agg, j_fi_index, need, 
     	dot.labels = merit_agg$v5c,
     	fit.line = "lm",
     	show.ci = TRUE)     
-      # Save
-     # dev.copy(png,"output/results/gini_fi.png"); dev.off()  Este objeto tampoco estaba en la carpeta.
+#  dev.off()
 ```
 
 
 #### Graficos sin outliers
 ```{r}
-
-    
-  	merit_agg2 <- merit_agg[which(merit_agg$v5c!="ZAF" & merit_agg$v5c!="CHN" &  merit_agg$v5c!="CHL" ), ]
+merit_agg2 <- merit_agg[which(merit_agg$v5c!="ZAF" & merit_agg$v5c!="CHN" &  merit_agg$v5c!="CHL" ), ]
     
   plot_scatter(merit_agg2, gini_net, unmerit, 
   	dot.labels = merit_agg2$v5c,
@@ -617,31 +643,38 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
 ##  Models 
 
 
-```{r results='asis'}
-
-
-# Multilevel (with factor scores)
+###  Multilevel (with factor scores)
    
+```{r results='asis'}
   load("input/data/proc/meritocracy.rda")
 
     # Adjust some variables
     	meritocracy$Quintile=as.factor(meritocracy$quintile_miss)
      	levels(meritocracy$Quintile)[6] <- "miss"
   
-	# check simple regresion
+
+```
+
+#### check simple regresion
+
+```{r results='asis'}
+
 	  ols_merit=lm(merit ~ univ + Quintile + sstatus + gini_net, data = meritocracy)
 	  stargazer(ols_merit, type ="html") # ok, similar SEM, scores OK
 ```
 
 
-```{r results='asis' , message= F}
-    
-    
-  # Multilevel models merit
-	  
-	  # Null
+# Multilevel models merit
+## Null Model
+ 
+```{r results='asis'}
 	  	mlmerit_0 = lmer(merit ~ 1 + (1 | v5c), data = meritocracy)
 			htmlreg(mlmerit_0) # de library texreg  
+```
+
+
+
+```{r results='asis' , message= F}
 			
 			# Graph
 		#	sjp.lmer(mlmerit_0, sort.est="(Intercept)")   No encuentro el paquete.
@@ -663,8 +696,12 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
         
 
 			
+
+```
+
+
 # Models meritocracy and preferences
-			
+```{r}
   load("input/data/proc/meritocracy.rda")
   load("input/data/proc/redistrib_sco.rda")
   			
@@ -677,7 +714,6 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
 	 #  names(mer_pref_agg)
   #  dim(mer_pref_agg)
 
-    # Graphs    # mismo problemas de subindices.
   
     plot_scatter(mer_pref_agg,merit , bmerit, 
    	  dot.labels = mer_pref_agg$v5c,
@@ -709,4 +745,3 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
 
 ```
 
-![IMAGEN PROVISORIA](../output/results/merit_redis.png)

@@ -79,12 +79,10 @@ names(issp2009) <- tolower(names(issp2009)) # change to small
 ## Check & generate IDs (v4: respondent, v5: country)
 
 ```{r}
-    tapply(issp2009$v4, issp2009$v5, mean, na.rm=TRUE)
+    
 # Generate new sequential id individuals by country to merge
       issp2009$id <- sequence(tabulate(issp2009
                                      $v5))
-    tapply(issp2009$id, issp2009$v5, mean, na.rm=TRUE)
-    summary(issp2009$id)
     issp2009$idtem=issp2009$v5*10000  
     issp2009$id=issp2009$idtem + issp2009$id
 ```
@@ -145,7 +143,7 @@ script (merit_per_pref.R; merit_per_pref.rda)
    
 ```
 
-### Aggregated data
+### Aggregated data **x**
 
 ```{r}
 
@@ -156,7 +154,10 @@ script (merit_per_pref.R; merit_per_pref.rda)
       redistrib[3:7]=6-redistrib[3:7]
      
   # Checks
-# aggregate(redistrib, by=list(redistrib$v5), FUN=mean,na.rm=TRUE) ## Funciona pero no lo guarda en una base ##############
+redistrib_agg <- aggregate(redistrib, by=list(redistrib$v5), FUN=mean,na.rm=TRUE) 
+
+
+# En analisis me falta esta base de datos, no estoy seguro de como debe guardarse. 
      
   # Save object
      # save(redistrib, file="input/data/proc/redistrib.rda")
@@ -165,17 +166,16 @@ script (merit_per_pref.R; merit_per_pref.rda)
 
 ### General Check "redistrib.rda"
 ```{r}
-print(dfSummary(redistrib, valid.col = FALSE, graph.magnif = 1),
+print(dfSummary(redistrib_agg, valid.col = FALSE, graph.magnif = 1),
       max.tbl.height = 300, method = "render")
 ```
-
 
 
 ```{r}
 #############################################
 # Ver donde va este codigo. (agregar a prodcution)
 ###################################################################################################################### 2.5 Invariance
-    # measurementInvariance(cfa_2, data = redistrib, group = "v5")      # No funciono la invarianza arreglar.
+  #   measurementInvariance(cfa_2, data = redistrib.agg, group = "v5")      # No funciono la invarianza arreglar.
 
 ```
 
@@ -183,12 +183,8 @@ print(dfSummary(redistrib, valid.col = FALSE, graph.magnif = 1),
 
  End sec 2; saved objects
  # redistrib.rda: clean & recoded
- # redistrib_sco.rda : fac scores  --------------------------------------- [por ahora en analysis]
-
-
-
-
-
+ # redistrib_sco.rda : fac scores   [por ahora en analysis]
+ # __propuesta__ redistrib.agg
 
 # Preparation Individual & Macro variables.
 
@@ -197,7 +193,7 @@ print(dfSummary(redistrib, valid.col = FALSE, graph.magnif = 1),
 
 ```{r}
   indepvar=issp2009
-length(indepvar$id)
+#length(indepvar$id)
 ```
 
 ### Recode sex
@@ -216,7 +212,7 @@ label<- c("")
 label<- "1"
   # Age
 sjPlot::plot_frq(indepvar$age, title = "Before",show.mean = T , show.values = F,show.n = F, axis.labels =)
-dim(indepvar)
+
 #which(indepvar$age > 85) # / 461 casos !
 #which(indepvar$age < 15) # / 0 casos !
 indepvar$age[indepvar$age > 85] = NA
@@ -245,20 +241,21 @@ sjPlot::plot_frq(indepvar$degree, coord.flip = TRUE, title = "Before")
 ```{r}
   # Recode. Values over 5 are removed
 
-table(indepvar$degree)
   indepvar$degree[indepvar$degree > 5]=NA
-  table(indepvar$degree)
 
-sjPlot::plot_frq(indepvar$degree, coord.flip = TRUE, title = "After")
+
  
 ```
 
+#### Dummy university
 ```{r}
 # Dummy university
   indepvar$univ=indepvar$degree
   indepvar$univ=ifelse(indepvar$univ<=4,0,
   ifelse(indepvar$univ==5,1,NA))
-    freq(indepvar$univ)
+
+  
+  sjPlot::plot_frq(indepvar$univ, coord.flip = TRUE, title = "Dummy university")
 
 ```
 
@@ -291,11 +288,6 @@ sjPlot::plot_frq(indepvar$degree, coord.flip = TRUE, title = "After")
    
   # Agregar ahora todos en un solo vector
 indepvar$income=rowSums(indepvar[182:222],na.rm = TRUE)
-length(indepvar$income)
-
-
-length(indepvar$income)
-head(indepvar[c("ar_inc","cl_inc", "income")])
 
 indepvar$income[indepvar$income ==0]=NA
 indepvar$income[indepvar$income ==1111]=0
@@ -311,14 +303,14 @@ summary(indepvar$income)
 
 
 ### Recode Household income
+
 ```{r}
 # Household income
 
 # Preparar numero de personas en household
-freq(indepvar$hompop)
 indepvar$hompop[indepvar$hompop==99]=NA
 
-# Ahora dividir el vector income por nÂ° de personas en hogar
+# Ahora dividir el vector income por n° de personas en hogar
 indepvar$hhincome=indepvar$income/indepvar$hompop
 summary(indepvar$hhincome)
  
@@ -328,7 +320,10 @@ indepvar$hhincome[indepvar$income==111111]= 0
 indepvar$hhincome[indepvar$hompop==0]= NA
 
 summary(indepvar$hhincome)
+```
 
+
+```{r}
 # check
 income=indepvar[c("v5", "ar_inc", "hompop","income",
 "hhincome")]
@@ -339,7 +334,6 @@ indepvar %>% group_by(v5) %>% mutate(quintile =
 ntile(hhincome,5)) ->indepvar
 
 # Check
-freq(indepvar$quintile)
 prop.table(table(indepvar$v5,indepvar$quintile),1)*100
 
 ```
@@ -347,9 +341,9 @@ prop.table(table(indepvar$v5,indepvar$quintile),1)*100
 ```{r}
 # Generar quintiles con NA como categorÃ?a
 indepvar$quintile_miss=indepvar$quintile
-freq(indepvar$quintile_miss)
 indepvar$quintile_miss[is.na(indepvar$quintile_miss)] = 6
-freq(indepvar$quintile_miss)
+
+summary(indepvar$quintile_miss)
 ```
 
 
@@ -359,16 +353,16 @@ freq(indepvar$quintile_miss)
   # Subjective status
    
 # Individual
-freq(indepvar$v44)
+#freq(indepvar$v44)
 indepvar$sstatus=indepvar$v44
 indepvar$sstatus[indepvar$ssttus>10]=NA
-  freq(indepvar$sstatus)
+  #freq(indepvar$sstatus)
    
     # Family
-freq(indepvar$v45)
+#freq(indepvar$v45)
 indepvar$f_sstatus=indepvar$v45
     indepvar$f_sstatus[indepvar$f_sstatus>10]=NA
-  freq(indepvar$f_sstatus)
+  #freq(indepvar$f_sstatus)
 
 
 # Home value (ver Nota 3)
@@ -378,15 +372,15 @@ summary(indepvar$v67)
 
 ```{r}
   # Party
-    freq(issp2009$party_lr)
-prop.table(table(indepvar$v5,indepvar$party_lr),1)*100
+    #freq(issp2009$party_lr)
+#prop.table(table(indepvar$v5,indepvar$party_lr),1)*100
 # paises sin datos: CL, CN, CY, HU, IL, TW
-freq(indepvar$cl_prty) # estan
-freq(indepvar$cn_prty) # no
-freq(indepvar$cy_prty) # si
-freq(indepvar$hu_prty) # si
-freq(indepvar$il_prty) # si
-freq(indepvar$tw_prty) # si
+#freq(indepvar$cl_prty) # estan
+#freq(indepvar$cn_prty) # no
+#freq(indepvar$cy_prty) # si
+#freq(indepvar$hu_prty) # si
+#freq(indepvar$il_prty) # si
+#freq(indepvar$tw_prty) # si
 
 # para usarlas habría que clasificar partidos de esos países
 
@@ -441,12 +435,9 @@ swiid = read_stata("input/data/original/swiid8_2.dta")
 #summary(indepvar$.dots..._1_gini_disp)
 
 
-
-
-
 ```
 
-#### agregate
+#### agregate ========
 ```{r}
 # aggregate(indepvar[c("v5","gini_net")],list(indepvar$v5c.x,indepvar$.dots...country),mean) #Buscar como #agregar la variable
 ```
@@ -460,7 +451,7 @@ swiid = read_stata("input/data/original/swiid8_2.dta")
 load("input/data/proc/qog_merit.rda")
 names(qog_merit)
 indepvar <- merge(qog_merit,indepvar,by=c("v5"))
-# freq(indepvar$wdi_gini)
+# #freq(indepvar$wdi_gini)
 
 # Generate object
 # save(indepvar, file="input/data/proc/indepvar.rda")
@@ -483,9 +474,6 @@ print(dfSummary(indepvar, valid.col = FALSE, graph.magnif = 0.75),
 
 #  MODELS B: PREFERENCES  
 
-```{r}
-
-```
 
 
 ```{r}
@@ -497,27 +485,24 @@ print(dfSummary(indepvar, valid.col = FALSE, graph.magnif = 0.75),
  load("input/data/proc/indepvar.rda")
  
  load("input/data/proc/redistrib.rda")
-
+ load("input/data/proc/redistrib_sco.rda")
 length(redistrib$accum)
 
 
 ### aggregate(redistrib[c("redist","accum")],by=list(v5),FUN=mean, na.rm=TRUE)
 
 # Check legths for merge
-length(indepvar$id)
-summary(indepvar$id)
- length(redistrib$id)
- summary(redistrib$id)
+
 
  # Merge  (to the x, indepvar, largest)
- pref=merge(redistrib, indepvar, by=c("id"), all.x = TRUE)
- names(pref)
+ pref=merge(redistrib_sco, indepvar, by=c("id"), all.x = TRUE)
+ #names(pref)
 
  
 
 # Check
- dim(pref)
-length(pref$v5.x)
+# dim(pref)
+#length(pref$v5.x)
 #  aggregate(pref[c("v5.x","gini_net","redist")],list(pref$country, pref$v5c),mean, na.rm=TRUE)
 
 
@@ -617,6 +602,20 @@ length(pref$v5.x)
 
 
 
+```{r}
+# Adjust data
+    pref_agg=aggregate(pref, by=list(pref$v5c),
+    	FUN=mean, na.rm=TRUE)
+    names(pref_agg)[names(pref_agg)=="Group.1"] <- "v5c"
+    	
+  # Macro descriptives
+    
+    
+    hist(pref_agg$gini_net)
+   table(pref_agg$accum)   
+   
+    save(pref_agg, file = "input/data/proc/pref_agg.rda")
+```
 
 
 
