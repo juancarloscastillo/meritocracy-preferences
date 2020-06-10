@@ -1,17 +1,17 @@
 name: "meritredist2019"
 output_dir: "." # Esto es para que se compile en el rootdir
 navbar:
-  title: "Measuring meritocratic perceptions and beliefs"
+  title: "Meritocratic beliefs and preferencias redistributivas"
   right:
     - text: "Data preparation"
-      href: "prod_prep-data-A.html"
+      href: "prod_prep-data.html"
     - text: "Analysis"
-      href: "prod_analysis-cfa.html"
+      href: "prod_analysis.html"
     - text: "Paper"
       href: "paper.html"
     - text: ""
       icon: fa-github fa-lg
-      href: https://github.com/juancarloscastillo/merit-scale
+      href: https://github.com/juancarloscastillo/meritocracy-preferences
 output:
   html_document:
     css: "../input/bib/style.css"
