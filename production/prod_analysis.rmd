@@ -1,0 +1,987 @@
+---
+title: "Meritocracy and distributive preferences ISSP"
+date: "`r format(Sys.time(), '%A %d %B %Y %X')`"
+css: "../input/css/custom.css"
+output:
+  html_document:
+    theme: flatly
+    highlight: tango
+    number_sections: true
+    toc: true
+    toc_float:
+        collapsed: true
+    toc_depth: 2
+    code_folding: "hide"
+editor_options:
+  chunk_output_type: console
+---
+<div style="text-align: justify">
+
+En el presente documento se exponen los análisis realizados a la base de datos creada en data-prep. 
+
+En la primera sección se entregan análisis descriptivos de las principales variables dependientes e independientes.
+
+En la segunda sección se exponen los análisis factoriales a partir de los cuales se imputan valores  para utilizar en la seccion de analisis multinivel. Además, en la segunda sección se incorpora un análisis de invarianza de medida y una ecuación estructural que resume los modelos a testear. 
+
+En la tercera sección se presentan los modelos multinivel que son utilizados para el artículo. Se calcula la correlación intraclase, se evalúan los efectos de las variables nacionales e individuales, para posteriormente evaluar pendientes aleatorias e interacciones entre niveles. 
+
+
+
+```{r eval=FALSE, include=FALSE}
+rmarkdown::render(input = "production/prod_analysis-cfa.rmd",output_format = "html_document"); browseURL(url = "production/prod_analysis-cfa.html")
+```
+
+```{r include=FALSE}
+knitr::opts_chunk$set(warning = FALSE,message = FALSE, cache = TRUE)
+knitr::opts_knit$set(root.dir = "../")
+options(scipen=999)
+rm(list=ls())
+options(knitr.kable.NA = '')
+```
+
+**Libraries**
+```{r}
+library(sjPlot)
+library(sjmisc) # several functions,ej read_stata
+library(descr)
+library(memisc)  # codebook
+library(psych) # cor2latex
+library(corrplot) # graph correlations
+library(lavaan)
+library(stargazer) 
+library(semTools)
+library(plyr) # count
+library(dplyr)
+library(car) # recode
+library(ggplot2)
+library(Hmisc)
+library(tidyverse)
+library(data.table)
+library(stringr)
+library(countrycode)
+library(lme4)
+library(texreg)
+library(mice)
+library(ggrepel) # for scatter labels in sjp.scatter	
+library(semPlot)
+library(haven)
+library(sjlabelled) 
+library(kableExtra)
+library(ggeffects)
+```
+
+**Load data**
+
+```{r}
+load(file = "input/data/proc/redistrib.rda")
+load(file="input/data/proc/mer_pref.rda")
+	load("input/data/proc/redistrib.rda")
+	load("input/data/proc/getahead.rda")                       
+	load("input/data/proc/detearn.rda")
+	
+```
+
+# Descriptives
+```{r results='asis'}
+  # Summary table to latex
+    sink("output/results/desctab_red.html")
+    stargazer(redistrib[-c(1,2)], type="html"); sink()
+```
+
+```{r echo=FALSE}
+     # short var labels
+    items <- c("Gov. reduce income dif.", "Gov. decent unemp.",
+               "High income taxes", "Buy better health", 
+               "Buy better education") 
+    
+    # cambiar orden para la leyenda  
+    labels= c("Strongly agree", "Agree", "Disagree",
+              "Strongly disagree", "(neither/nor)" )  ### E
+    png<-sjPlot::plot_likert((redistrib[3:7]), 
+                        axis.labels   = items,
+                        legend.labels = labels,
+                        cat.neutral   = 5, # identifica a indiferentes
+                        geom.colors   = c("#9ecae1", "#6baed6","#4292c6", 
+                                            "#2171b5"), # colorbrewer2.org 
+                        sort.frq      = "neg.asc", # sort descending)
+                        title         = "Agree / disagree ...",
+                        intercept.line.color = "white", # vertical middle
+                        expand.grid   = F, # no inner margins in plot
+                        show.n        = FALSE, # hide N's in axis labels
+                        grid.range    = 1.8,
+                        geom.size = 0.6) # expand axis 130% )
+    
+    
+    
+    # Save
+    ggsave(png,filename = "output/images/plotlikert.png",device = "png", width=25, units = "cm")
+
+```
+
+![](../output/images/plotlikert.png)
+ 
+```{r echo=FALSE}
+     # short var labels
+
+    # cambiar orden para la leyenda  
+    labels= c("Strongly agree", "Agree", "Disagree",
+              "Strongly disagree", "(neither/nor)" )  ### E
+    png<-sjPlot::plot_likert((getahead[3:8]), 
+                        legend.labels = labels,
+                        cat.neutral   = 5, # identifica a indiferentes
+                        geom.colors   = c("#9ecae1", "#6baed6","#4292c6", 
+                                            "#2171b5"), # colorbrewer2.org 
+                        sort.frq      = "neg.asc", # sort descending)
+                        title         = "Agree / disagree ...",
+                        intercept.line.color = "white", # vertical middle
+                        expand.grid   = F, # no inner margins in plot
+                        show.n        = FALSE, # hide N's in axis labels
+                        grid.range    = 1.8,
+                        geom.size = 0.6) # expand axis 130% )
+    
+    
+    
+    # Save
+    ggsave(png,filename = "output/images/plotlikert_getahead.png",device = "png", width=25, units = "cm")
+
+```
+
+![](../output/images/plotlikert_getahead.png)
+
+
+```{r echo=FALSE}
+     # short var labels
+
+    # cambiar orden para la leyenda  
+    labels= c("Strongly agree", "Agree", "Disagree",
+              "Strongly disagree", "(neither/nor)" )  ### E
+    png<-sjPlot::plot_likert((detearn[3:8]), 
+                        legend.labels = labels,
+                        cat.neutral   = 5, # identifica a indiferentes
+                        geom.colors   = c("#9ecae1", "#6baed6","#4292c6", 
+                                            "#2171b5"), # colorbrewer2.org 
+                        sort.frq      = "neg.asc", # sort descending)
+                        title         = "Agree / disagree ...",
+                        intercept.line.color = "white", # vertical middle
+                        expand.grid   = F, # no inner margins in plot
+                        show.n        = FALSE, # hide N's in axis labels
+                        grid.range    = 1.8,
+                        geom.size = 0.6) # expand axis 130% )
+    
+    
+    
+    # Save
+    ggsave(png,filename = "output/images/plotlikert_detearn.png",device = "png", width=25, units = "cm")
+
+```
+
+![](../output/images/plotlikert_detearn.png)
+
+
+
+
+
+# Modelos de medida 
+
+## MODELS A:  MERIT & REDISTRIB
+```{r}
+# 4.1 Merge objects --------------------- ---- 
+	load("input/data/proc/redistrib.rda")
+	load("input/data/proc/getahead.rda")                       
+	load("input/data/proc/detearn.rda")
+
+	aux1 <- merge(getahead,redistrib,by=c("id","v5"))
+  merit_redist=merge(aux1,detearn,by=c("id","v5"))
+
+```
+
+## Measurement & structural mode
+
+### Measurement simple 
+```{r}
+	  cfa_mer_red1 <- '
+	  # latent variables
+		  merit =~ hwork + ambition 
+		  parent=~ wealthy + pareduc
+		  backg=~ race + gender
+			network=~ people + polcone
+		  bmerit =~ welljob + hardjob 
+		  need=~ family + child
+			redist =~ income_dif + unemployed + taxes 
+	  	accum  =~ health + educ'        
+	
+fit_mer_red1 <- cfa(cfa_mer_red1,data=merit_redist,missing = "ML") 
+	 
+	
+#	 summary(fit_mer_red1, fit.measures=TRUE,standardized=TRUE)
+	    
+	 		  
+	  fit_mer_red1c <- cfa(cfa_mer_red1,data=merit_redist,
+	  	ordered = names(merit_redist[3:10,19:29]))
+	#	summary(fit_mer_redc, fit.measures=TRUE,standardized=TRUE)
+	  
+	  
+	  
+sum_fit<- bind_rows(fitmeasures(fit_mer_red1)[c("chisq","df","cfi","rmsea","rmsea.ci.lower","rmsea.ci.upper")],
+                    fitmeasures(fit_mer_red1c)[c("chisq","df","cfi","rmsea","rmsea.ci.lower","rmsea.ci.upper")])
+sum_fit$mod <- c("Model 1","Model 2")
+sum_fit$est <- c("MLR","DWLS")
+#sum_fit <- select(sum_fit,mod,est,everything())
+colnames <- c("Model","Estimator","$\\chi2$","df","CFI","RMSEA","RMSEA CI lower", "RMSEA CI upper")
+	  
+sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, caption = "Summary fit indices wave 01",col.names = colnames,escape = FALSE) %>%
+  kable_styling(full_width = F)  %>%
+      collapse_rows(columns = 1,valign = "middle")  %>%
+      footnote(number = c("Model 1: Continue item",
+                          "Model 2: Ordered item)"));sumtable01
+
+```
+
+```{r}
+	  	# Path
+
+	 		  png("output/results/path_mer_red1.png",width=800,height=650)
+	 		  
+        semPlot::semPaths(fit_mer_red1,layout = "circle", rotation = 3, 
+			  	intercepts = FALSE, style = "lisrel", curvePivot = TRUE,
+			  	sizeMan = 4, sizeLat = 6)
+
+	    	dev.off()
+```
+
+
+
+```{r}
+
+		
+	# CFA with secon order unmerit
+
+	  cfa_mer_red2 <- '
+	  # latent variables
+		  merit =~ hwork + ambition 
+		  parent=~ wealthy + pareduc
+		  backg=~ race + gender
+			network=~ people + polcone
+		  bmerit =~ welljob + hardjob 
+		  need=~ family + child
+			redist =~ income_dif + unemployed + taxes 
+	  	accum  =~ health + educ
+			unmerit =~ parent + backg + network
+	  '     
+	  fit_mer_red2 <- cfa(cfa_mer_red2,data=merit_redist, 
+	  	missing = "ML") 
+#	  summary(fit_mer_red2, fit.measures=TRUE,standardized=TRUE)
+```
+
+
+```{r}
+
+sum_fit<- bind_rows(fitmeasures(fit_mer_red2)[c("chisq","df","cfi","rmsea","rmsea.ci.lower","rmsea.ci.upper")])
+
+colnames <- c("$\\chi2$","df","CFI","RMSEA","RMSEA CI lower", "RMSEA CI upper")
+
+sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, caption = "Summary fit indices wave 01",col.names = colnames,escape = FALSE) %>%
+  kable_styling(full_width = F)  %>%
+      collapse_rows(columns = 1,valign = "middle");sumtable01
+
+```
+  
+
+
+```{r}
+# CFA with secon order unmerit: Invarianza
+
+#	  fit_mer_red2 <- cfa(cfa_mer_red2,data=merit_redist, 
+#	  	missing = "ML", group= "v5") 
+#	  summary(fit_mer_red2, fit.measures=TRUE,standardized=TRUE)
+
+```
+
+El modelo no converge. 
+
+# Correlation factor scores
+
+```{r}
+	    # Factor scores
+	  fscores <- as.data.frame(lavPredict(fit_mer_red2))
+
+	  
+	    # Correlations
+	  cormat=cor(fscores[c(7,8,1,9,5,6)],
+	             use="pairwise.complete.obs")
+
+	  #save
+	png("output/results/corplot_totscores.png",width=600,height=600)
+	  
+	  corrplot.mixed(cormat)  
+	
+	dev.off()
+	  
+```
+
+# Modelo de estructura
+
+```{r}
+	  #  Path
+png("output/results/path_mer_red2.png",width=800,height=650)	 		
+
+  semPlot::semPaths(fit_mer_red2,layout = "tree", rotation = 2, 
+			  	intercepts = FALSE, style = "lisrel", curvePivot = TRUE,
+			  	sizeMan = 4, sizeLat = 6)
+dev.off()	  	  
+	  
+	# Structural model
+	  sem_mer_red1 <- '
+	  # latent variables
+		  merit =~ hwork + ambition 
+		  parent=~ wealthy + pareduc
+		  backg=~ race + gender
+			network=~ people + polcone
+		  bmerit =~ welljob + hardjob 
+		  need=~ family + child
+			redist =~ income_dif + unemployed + taxes 
+	  	accum  =~ health + educ
+			unmerit =~ parent + backg + network
+		# regressions
+			redist + accum ~ merit + unmerit + bmerit + need
+	  '     
+  
+	  fitsem_mer_red1 <- sem(sem_mer_red1,data=merit_redist, 
+	  	missing = "ML") 
+#	  summary(fitsem_mer_red1, fit.measures=TRUE,standardized=TRUE)
+	  
+	 		  semPlot::semPaths(fitsem_mer_red1,layout = "tree", rotation = 2, 
+			  	intercepts = FALSE, style = "lisrel", curvePivot = TRUE,
+		  	sizeMan = 4, sizeLat = 6)
+	  
+	  
+png("output/results/fitsem_mer_red1,png",width=800, height=650)
+	  
+	  	# Path
+	 		  semPlot::semPaths(fitsem_mer_red1,layout = "tree", rotation = 2, 
+			  	intercepts = FALSE, style = "lisrel", curvePivot = TRUE,
+		  	sizeMan = 4, sizeLat = 6)
+
+dev.off()
+	 	
+
+```
+
+
+	# saque este argumento del codigo de abajo  op=="~"
+	  
+	 	# Table
+	 	tabreg=subset(standardizedsolution(fitsem_mer_red1)	,op=="~", select=c(lhs,rhs,est.std,z)) 
+	 	tabreg2=subset(tabreg, select=c(lhs,rhs,est.std,z))
+	 	tabredist=subset(tabreg2,lhs=="redist",
+	 		select=rhs:z)
+	 	tabaccumt=subset(tabreg2,lhs=="accum",select=est.std:z)	
+	 	tabtot=cbind(tabredist,tabaccumt)
+	 	tabtot2=rbind(tabtot$est.std,tabtot$z)
+
+
+#  MODELS C: MERITOCRACY
+## Macro Descriptives
+
+```{r}
+    load("input/data/proc/meritocracy.rda")
+
+ 	  
+  # Adjust data
+    merit_agg=aggregate(meritocracy, by=list(meritocracy$v5c),
+    	FUN=mean, na.rm=TRUE)
+    names(merit_agg)[names(merit_agg)=="Group.1"]="v5c"
+ #   names(merit_agg)
+  #  dim(merit_agg)
+```
+
+### Macro level corr
+
+```{r}
+load("input/data/proc/mer_pref_polycor.rda")
+
+corMat <- cor(mer_pref_polycor, use="pairwise.complete.obs")
+
+corrplot.mixed(corMat)
+
+```
+ 
+
+
+```{r}
+
+    plot_scatter(merit_agg, gini_net, j_bmerit, 
+    	dot.labels = merit_agg$v5c,
+    	fit.line = "lm",
+    	show.ci = TRUE)
+```
+
+```{r}
+  plot_scatter(merit_agg, gini_net,unmerit, 
+  dot.labels = merit_agg$v5c,
+  fit.line = "lm",
+  show.ci = TRUE)  
+
+  # Save
+png("output/results/gini_bmerit.png") 
+    
+  plot_scatter(merit_agg, gini_net,unmerit, 
+  dot.labels = merit_agg$v5c,
+  fit.line = "lm",
+  show.ci = TRUE)    
+dev.off()
+
+```
+
+
+```{r}
+
+
+  plot_scatter(merit_agg, gini_net,need, 
+  	dot.labels = merit_agg$v5c,
+ 	fit.line = "lm",
+	show.ci = TRUE)  
+png("output/results/fi_need.png"); 
+
+  plot_scatter(merit_agg, gini_net,need, 
+  	dot.labels = merit_agg$v5c,
+ 	fit.line = "lm",
+	show.ci = TRUE)  
+
+dev.off()
+```
+
+
+```{r}
+   plot_scatter(merit_agg, j_fi_index, need, 
+    	dot.labels = merit_agg$v5c,
+    	fit.line = "lm",
+    	show.ci = TRUE)   
+
+png("output/results/gini_fi.png")
+   plot_scatter(merit_agg, j_fi_index, need, 
+    	dot.labels = merit_agg$v5c,
+    	fit.line = "lm",
+    	show.ci = TRUE)     
+dev.off()
+```
+
+
+#### Graficos sin outliers
+```{r}
+merit_agg2 <- merit_agg[which(merit_agg$v5c!="ZAF" & merit_agg$v5c!="CHN" &  merit_agg$v5c!="CHL" ), ]
+    
+  plot_scatter(merit_agg2, gini_net, unmerit, 
+  	dot.labels = merit_agg2$v5c,
+  	fit.line = TRUE,
+  	show.ci = TRUE
+	  	)  
+    
+```
+
+
+# Models meritocracy and preferences
+```{r}
+#Se agrega la base de datos dejando paises como
+  mer_pref_agg=aggregate(mer_pref, by=list(mer_pref$v5c),
+    	FUN=mean, na.rm=TRUE)
+      names(mer_pref_agg)[names(mer_pref_agg)=="Group.1"]="v5c"
+      
+##      
+      plot_scatter(mer_pref_agg,merit , bmerit, 
+   	  dot.labels = mer_pref_agg$v5c,
+  	  fit.line = lm,
+      show.ci = TRUE)
+  
+      png("output/results/merit_bmerit.png")
+      plot_scatter(mer_pref_agg,merit , bmerit, 
+   	  dot.labels = mer_pref_agg$v5c,
+  	  fit.line = lm,
+      show.ci = TRUE)
+      dev.off()
+##           
+        
+plot_scatter(mer_pref_agg, merit, redist, 
+        dot.labels = mer_pref_agg$v5c,
+       	fit.line = lm,
+      	show.ci = TRUE)
+      
+        png("output/results/merit_redis.png")
+plot_scatter(mer_pref_agg, merit, redist, 
+        dot.labels = mer_pref_agg$v5c,
+       	fit.line = lm,
+      	show.ci = TRUE)
+        dev.off()      
+##     
+plot_scatter(mer_pref_agg, unmerit,redist, 
+    	dot.labels = mer_pref_agg$v5c,
+    	fit.line = "lm",
+    	show.ci = TRUE)      
+        
+      png("output/results/unmerit_redis.png")
+plot_scatter(mer_pref_agg, unmerit,redist, 
+    	dot.labels = mer_pref_agg$v5c,
+    	fit.line = "lm",
+    	show.ci = TRUE)      
+      dev.off()
+     
+##      
+plot_scatter(mer_pref_agg, redist,accum, 
+  	dot.labels = mer_pref_agg$v5c,
+  	fit.line = "lm",
+  	show.ci = TRUE)  
+        
+    png("output/results/redis_accum.png")
+plot_scatter(mer_pref_agg, redist,accum, 
+  	dot.labels = mer_pref_agg$v5c,
+  	fit.line = "lm",
+  	show.ci = TRUE)  
+    dev.off()
+```
+
+
+```{r}
+
+	load("input/data/proc/pref_agg.rda")
+
+    
+    plot_scatter(pref_agg, gini_net, accum, 
+  	dot.labels = pref_agg$v5c,
+    fit.line = "lm",
+  	show.ci = TRUE)
+  
+    #table(pref_agg$redis)
+    
+  plot_scatter(pref_agg, gini_net, redist, 
+  dot.labels = pref_agg$v5c,
+	fit.line = lm,
+ 	show.ci = TRUE 	)
+    
+  # Sin ZAF outlier (igual, no cambia)
+    	pref_agg2 <- pref_agg[which(pref_agg$v5c!='ZAF'), ]
+		  
+    	  plot_scatter(pref_agg2, gini_net, redist, 
+	    	dot.labels = pref_agg2$v5c,
+	    	fit.line = lm,
+	    	show.ci = TRUE
+		   	)
+
+```
+
+
+# Modelos
+
+
+## Modelos nulos: varianza intraclase.
+
+### Modelos nulo Preferencias resdistributivas
+
+```{r}
+# Modelo nulo
+results_0_redist  = lmer(redist ~ 1 + (1| v5c), data = mer_pref, REML=F)
+# Correlacion intraclase redist
+reghelper::ICC(results_0_redist)
+```
+
+Aproximadamente un 15% de la varianza de las preferencias redistributivas se encuentra entre paises.
+
+### Modelos nulo Preferencias por accumulacion 
+
+```{r}
+# Modelo nulo
+results_0_accum = lmer(accum ~ 1 + (1| v5c), data = mer_pref, REML=F)
+# Correlacion intraclases accum 
+reghelper::ICC(results_0_accum)
+```
+
+Aproximadamente un 18% de la varianza de las preferencias redistributivas se encuentra entre paises.
+
+
+## Modelos con predictores.
+
+### Demograficos, individuales sustantivos y macrovariables: redist
+```{r results='asis'}
+results_1_redist_dem  = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + sex + age + 1 + (1| v5c), data = mer_pref, REML=F)
+results_1_redist_indsust = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + sex + age  + merit + bmerit + unmerit + need + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_redist_macro = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + sex + age  + merit + bmerit + unmerit + need + gini_neto + fi_index + 1 +  (1| v5c), data = mer_pref, REML=F)
+
+
+htmlreg(list(results_1_redist_dem, results_1_redist_indsust,results_1_redist_macro))
+sjPlot::plot_model(results_1_redist_macro, type="std")
+
+    png("output/results/results_1_redist_macro.png")
+sjPlot::plot_model(results_1_redist_macro, type="std")
+    dev.off()
+
+```
+
+```{r}
+anova(results_1_redist_dem,results_1_redist_macro)  
+anova(results_1_redist_indsust,results_1_redist_macro)
+```
+
+
+La variable que mayor efecto genera es el quintil de ingreso, lo cual va en la linea de la teoria del autointeres. Seguidamente, las preferencias por un ingreso basado en las necedades poseen una relacion positiva y significativa. 
+
+Respecto a la variable de mayor interes, la percepcion de meritocracia, se puede apreciar que posee un ligero efecto negativo en las preferencias redistributivas.
+
+
+
+### Demograficos, individuales sustantivos y macrovariables: accum
+```{r results='asis'}
+results_1_accum_dem  = lmer(accum ~ univ + as.factor(quintile_miss) +	sstatus + sex + age + 1 + (1| v5c), data = mer_pref, REML=F)
+results_1_accum_indsust = lmer(accum ~ univ + as.factor(quintile_miss) +	sstatus + sex + age  + merit + bmerit + unmerit + need + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_accum_macro = lmer(accum ~ univ + as.factor(quintile_miss) +	sstatus + sex + age  + merit + bmerit + unmerit + need + gini_neto + fi_index + 1 +  (1| v5c), data = mer_pref, REML=F)
+
+
+htmlreg(list(results_1_accum_dem, results_1_accum_indsust,results_1_accum_macro))
+
+sjPlot::plot_model(results_1_accum_macro, type="std")
+
+    png("output/results/results_1_accum_macro")
+sjPlot::plot_model(results_1_accum_macro, type="std")
+    dev.off()
+
+
+
+```
+
+
+```{r}
+anova(results_1_accum_dem,results_1_accum_indsust)  
+anova(results_1_accum_indsust,results_1_accum_macro)
+
+```
+
+
+Cada modelo es significativamente mejor que el anterior. Respecto al modelo anterior si bien los efectos son menores, puede verse un efecto mucho más claro de una variable macro, el gini_neto (Esto va en la linea de la h: un pais más desigual fomenta preferencia por )
+
+
+
+## Modelos con pendientes aleatorias. 
+```{r results='asis'}
+# Redis
+results_2_redist_macro_bv = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + sex + age  + merit + bmerit + unmerit + need + gini_neto + fi_index + 1 +  (1 + merit| v5c), data= mer_pref, REML=F)
+
+
+htmlreg(list(results_1_redist_macro, results_2_redist_macro_bv))
+
+graf2=ggpredict(results_2_redist_macro_bv, terms = c("merit","v5c [sample = 9]"), type="re")
+plot(graf2)
+
+
+    png("output/results/mer_pref_mu.png")
+plot(graf2)
+    dev.off()
+
+```
+
+```{r}
+anova(results_1_redist_macro,results_2_redist_macro_bv)
+```
+
+
+```{r results='asis'}
+# accum
+results_2_accum_macro_bv = lmer(accum ~ univ + as.factor(quintile_miss) +	sstatus + sex + age  + merit + bmerit + unmerit + need +  gini_neto + fi_index + 1 +  (1 + merit| v5c), data = mer_pref, REML=F)
+
+
+htmlreg(list(results_1_accum_macro, results_2_accum_macro_bv))
+
+
+graf2=ggpredict(results_2_accum_macro_bv, terms = c("merit","v5c [sample = 9]"), type="re")
+plot(graf2)
+
+    png("output/results/mer_accum_mu.png")
+plot(graf2)
+    dev.off()
+    
+
+    
+```
+
+```{r}
+    anova(results_1_accum_macro,results_2_accum_macro_bv)
+```
+
+
+## Modelos con interacciones. 
+
+```{r results='asis'}
+#Redis
+results_3_redist_macro_bvi = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + sex + age  + merit + bmerit + unmerit + need + merit*gini_neto + fi_index + 1 +  (1 + merit| v5c), data = mer_pref, REML=F)
+
+
+htmlreg(list(results_1_redist_macro, results_2_redist_macro_bv, results_3_redist_macro_bvi))
+
+
+
+sjPlot::plot_model(results_3_redist_macro_bvi, type = c("int")) 
+
+    png("output/results/mer_redist_int_gini.png")
+sjPlot::plot_model(results_3_redist_macro_bvi, type = c("int")) 
+    dev.off()
+
+```
+
+
+```{r results='asis'}
+# accum
+results_3_accum_macro_bvi = lmer(accum ~ univ + as.factor(quintile_miss) +	sstatus + sex + age  + merit + bmerit + unmerit + need +  gini_neto + merit*fi_index + 1 +  (1 + merit| v5c), data = mer_pref, REML=F)
+
+
+htmlreg(list(results_1_accum_macro, results_2_accum_macro_bv, results_3_accum_macro_bvi))
+
+    png("output/results/mer_accum_int_fi.png")
+sjPlot::plot_model(results_3_accum_macro_bvi, type = c("int"))
+    dev.off()
+```
+
+
+
+
+
+
+```{r}
+# guardar tablas
+
+
+#redis 
+save(results_1_redist_macro, file = "output/results/results_1_redist_macro.rdata")
+save(results_2_redist_macro_bv, file = "output/results/results_2_redist_macro_bv.rdata")
+save(results_3_redist_macro_bvi, file = "output/results/results_3_redist_macro_bvi.rdata")
+
+
+#accum
+save(results_1_accum_macro, file = "output/results/results_1_accum_macro.rdata")
+save(results_2_accum_macro_bv, file = "output/results/results_2_accum_macro_bv.rdata")
+save(results_3_accum_macro_bvi, file = "output/results/results_3_accum_macro_bvi.rdata")
+
+
+```
+
+
+
+#Other analysis 
+
+
+
+
+
+
+```{r results='asis'}
+		# Individual level vars
+			mlaccum_1 = lmer(accum ~ 1 + univ + as.factor(quintile_miss) +	
+					sstatus + sex + age + univ*sex + age*age + (1 | v5.x), data =mer_pref)
+			htmlreg(mlaccum_1)
+
+```
+
+```{r}
+			plot_model(mlaccum_1, type = c("est")) ### 
+```
+
+
+```{r results='asis'}
+		# Macro level vars
+			mlaccum_2 = lmer(accum ~ 1 + univ_g + as.factor(quintile_miss) +
+					(sstatus -f_sstatus) + gini_neto + (1 | v5.x), data=mer_pref)
+			htmlreg(mlaccum_2)
+
+```
+
+
+```{r results='asis'}
+			
+		# Random slope & cross-level
+			mlaccum_3 = lmer(accum ~ 1 + univ_g + f_sstatus + gini_neto + 
+					gini_neto*f_sstatus +	(1 + f_sstatus | v5.x), data=mer_pref)
+			
+		htmlreg(mlaccum_3)	
+
+```
+
+```{r}
+#			# Graphs
+			plot_model(mlaccum_3, type = "est")
+
+			plot_model(mlaccum_3, type = "int")
+```
+
+
+
+```{r results='asis'}
+mlaccum_4 = lmer(accum ~ 1 + univ + f_sstatus + gini_neto + gini_neto*f_sstatus + hhincome +	(1 + hhincome | v5), data= mer_pref)
+			htmlreg(mlaccum_4)
+			
+```
+
+```{r}
+sjPlot::plot_model(mlaccum_4, type = c("est"))
+sjPlot::plot_model(mlaccum_4, type = c("int"))
+
+```
+
+
+
+
+
+
+
+
+
+
+
+## Multilevel (with factor scores) 
+
+### check simple regresion 
+```{r results='asis'}
+ols_prefred=lm(redist ~ univ + quintile + sstatus + gini_mkt, data = mer_pref)
+stargazer(ols_prefred, type = "html") # ok, similar SEM, scores OK
+```
+
+
+## Multilevel models redist. 
+
+```{r results='asis'}    
+#table(pref_agg$v5c)
+
+# Null
+	  	mlprefred_0 = lmer(redist ~ 1 + (1 | v5c), data = mer_pref)
+			htmlreg(mlprefred_0) # de library texreg  
+```
+
+
+```{r}
+#sjPlot::plot_model(mlprefred_0, type = c("re")) ### ¿Que grafico se quiere #hacer?
+
+```
+
+
+```{r results='asis'}
+			# ICC
+			varcomp=as.data.frame(VarCorr(mlprefred_0))
+			tau00=varcomp[1,4]
+			sigma2=varcomp[2,4]
+			tau00/(tau00+sigma2)
+		
+		# Individual level varsH
+			mlprefred_1 = lmer(redist ~ 1 + univ + 
+					as.factor(quintile_miss) +	sstatus + sex + age + 
+					(1 | v5.x), data=mer_pref)
+			htmlreg(mlprefred_1)
+
+			
+```
+
+
+```{r}
+			sjPlot::plot_model(mlprefred_1, type = c("est")) 
+```
+
+
+
+```{r results='asis'}
+#		# Macro level vars
+			mlprefred_2 = lmer(redist ~ 1 + univ + 
+					as.factor(quintile_miss)+ sstatus + .dots...gini_mkt + 
+					univ_g + (1 | v5c), data = mer_pref)
+			htmlreg(mlprefred_2)
+			
+```
+
+
+
+
+
+
+
+
+
+#### Los siguientes codigos si bien estaban en el repositorio no posen relaicon con las hipotesis.
+
+
+## Primera evaluacion de mediacion. control
+
+d) Es la meritocracia un mediador del efecto de desigualdad en marquetización?
+
+
+```{r results='asis'}
+
+
+results_1_accum_gini = lmer(accum ~ univ + as.factor(quintile_miss) +	sstatus + sex + age + gini_neto + 1 +  (1| v5c),  data = mer_pref, REML=F)
+results_1_accum_mediation = lmer(accum ~ univ + as.factor(quintile_miss) +	sstatus + sex + age + gini_neto + merit + bmerit + unmerit + need +  1 +  (1| v5c),  data = mer_pref, REML=F)
+
+htmlreg(list(results_1_accum_gini, results_1_accum_mediation))
+                             
+                             
+```
+
+
+
+
+A partir de las regresiones multinivel presentadas, se puede inferir que no existe un efecto de mediacion por parte de las creencias meritocraticas en el efecto de la desiguadlad sobre las preferencias de mercantilizacion.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##  Models 
+
+
+
+
+ ###  Multilevel (with factor scores)
+
+
+ #### check simple regresion
+
+ 
+ols_merit=lm(merit ~ univ + quintile + sstatus + gini_neto, data = mer_pref)
+	  stargazer(ols_merit, type ="html") # ok, similar SEM, scores OK
+
+
+  # Multilevel models merit
+  ## Null Model
+ 
+
+	  	mlmerit_0 = lmer(merit ~ 1 + (1 | v5c), data = mer_pref)
+			htmlreg(mlmerit_0) # de library texreg  
+
+			# Graph
+		#	sjp.lmer(mlmerit_0, sort.est="(Intercept)")   No encuentro el paquete.
+	  
+			# ICC
+			varcomp=as.data.frame(VarCorr(mlmerit_0))
+			tau00=varcomp[1,4]
+			sigma2=varcomp[2,4]
+			tau00/(tau00+sigma2)
+
+
+
+  	# Individual level vars
+  			mlmerit_1 = lmer(merit ~ 1 + univ +	quintile_miss +	
+  					sstatus + sex + age + (1 | v5), data = mer_pref)
+  			htmlreg(mlmerit_1)
+  			
+		# Macro level vars
+			mlmerit_2 = lmer(bmerit ~ 1 + gini_neto + (1 | v5), data = mer_pref)
+		  htmlreg(mlmerit_2)    
+
+
+
+ 
