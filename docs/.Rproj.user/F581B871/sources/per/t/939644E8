@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1594008595784.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "939644E8",
+    "lastKnownWriteTime" : 2218749494552,
+    "last_content_update" : 1594008595784,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "id" : "1359187af0434d3bb7d73e69d2fc2224",
+        "name" : "fit_mer_mer_group",
+        "title" : "fit_mer_mer_group"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "object_explorer"
+}

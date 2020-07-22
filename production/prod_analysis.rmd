@@ -71,6 +71,7 @@ library(haven)
 library(sjlabelled) 
 library(kableExtra)
 library(ggeffects)
+
 ```
 
 **Load data**
@@ -232,7 +233,7 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
       collapse_rows(columns = 1,valign = "middle")  %>%
       footnote(number = c("Model 1: Continue item",
                           "Model 2: Ordered item",
-                          "Model 2: multigroup"));sumtable01
+                          "Model 3: multigroup"));sumtable01
      
   semPlot::semPaths(fit_mer_redis,layout = "tree", rotation = 3, 
 			  	intercepts = FALSE, style = "lisrel", curvePivot = TRUE,
@@ -439,7 +440,7 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
       collapse_rows(columns = 1,valign = "middle")  %>%
       footnote(number = c("Model 1: Continue item",
                           "Model 2: Ordered item",
-                          "Model 2: multigroup"));sumtable01
+                          "Model 3: multigroup"));sumtable01
      
   semPlot::semPaths(fit_mer_mer,layout = "tree", rotation = 3, 
 			  	intercepts = FALSE, style = "lisrel", curvePivot = TRUE,
@@ -670,7 +671,7 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
 
 ## Macro level corr
 
-```{r fig.cap = "Predictores de preferencias redistributivas"}
+```{r, results='hide'}
 
 #Se agrega la base de datos dejando paises como
   mer_pref_agg=aggregate(mer_pref, by=list(mer_pref$v5c),
@@ -702,12 +703,12 @@ corrplot.mixed(corMat)
 
 ## Preferencias redistributivas. 
 
-```{r fig.cap = "Preferencias redistributivas, desigualdad y mercantilizacion." , out.width = "200%"}
+```{r results='hide'}
 plotredistgini<-plot_scatter(mer_pref_agg, gini_neto, redist, 
     title = "Desigualdad ",
     	#dot.labels = merit_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE) + theme_classic() 
 
 mer_pref_agg_zaf <- mer_pref_agg[which(mer_pref_agg$v5c!='ZAF'), ]
 		  
@@ -715,13 +716,13 @@ plotredistgini_outliers <- plot_scatter(mer_pref_agg_zaf, gini_neto, redist,
 	    	title = "Desigualdad (sin outliers)",
     	 fit.line = lm,
 	    	show.ci = TRUE
-		   	)
+		   	) + theme_classic()
 
 plotredistfi<-plot_scatter(mer_pref_agg,  fi_index, redist, 
     title = "Libertad economica",
     	#dot.labels = merit_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE) + theme_classic()
 
 mer_pref_agg_ven <- mer_pref_agg[which(mer_pref_agg$v5c!='VEN'), ]
 
@@ -729,51 +730,59 @@ plotredistfi_outliers<-plot_scatter(mer_pref_agg_ven,  fi_index, redist,
     title = "Libertad economica (sin outliers)",
     	#dot.labels = merit_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE) + theme_classic()
 
-plot_grid(list(plotredistgini, plotredistgini_outliers, plotredistfi, plotredistfi_outliers),margin = c(0.3,0.3,0.3,0.3), tags = c(" ", " ", " ", " ", " ", " "))
 
+
+ggsave(plot = plot_grid(list(plotredistgini, plotredistgini_outliers, plotredistfi, plotredistfi_outliers),margin = c(0.3,0.3,0.3,0.3), tags = c(" ", " ", " ", " ", " ", " ")), filename = "output/results/plot_redistmacro.png", width = 10, height = 10, dpi= "retina")
 ```
 
+![Redistribution preferences, gini and fi index](../output/results/plot_redistmacro.png)
 
-```{r fig.cap = "Preferencias redistributivas y creencias meritocraticas. " ,out.width = "200%"}
+```{r results='hide'}
 plotredistmerit <- plot_scatter(mer_pref_agg,  merit, redist, 
     title = "Percepcion meritocratica",
     #	dot.labels = merit_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE)  + theme_classic()
 
 plotredistbmerit <-plot_scatter(mer_pref_agg,  bmerit, redist, 
     title = "Preferencias meritocraticas",
     #	dot.labels = merit_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE)  + theme_classic()
+
 plotredistunmerit <-plot_scatter(mer_pref_agg,  unmerit, redist, 
     title = "Percepcion no meritocratica",
     	#dot.labels = merit_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE)  + theme_classic()
+
+
 plotredistneed <-plot_scatter(mer_pref_agg,  need, redist, 
     title = "Preferenciasno meritocraticas ",
     	#dot.labels = merit_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE)  + theme_classic()
 
-plot_grid(list(plotredistmerit, plotredistbmerit, plotredistunmerit, plotredistneed),margin = c(0.3,0.3,0.3,0.3), tags = c(" ", " ", " ", " ", " ", " "))
+
+
+ggsave(plot = plot_grid(list(plotredistmerit, plotredistbmerit, plotredistunmerit, plotredistneed),margin = c(0.3,0.3,0.3,0.3), tags = c(" ", " ", " ", " ", " ", " ")), filename = "output/results/plot_redistmerit.png", width = 10, height = 10, dpi= "retina")
 
 ```
 
+![Redistribution preferences and Meritocratic beliefs](../output/results/plot_redistmerit.png)
 
 
 
 ## Preferencias de Mercantilizacion.
 
-```{r fig.cap = "Preferencias redistributivas, desigualdad y mercantilizacion." ,out.width = "200%"}
+```{r results='hide'}
 plotaccumgini<-plot_scatter(mer_pref_agg, gini_neto, accum, 
     title = "Desigualdad ",
     	#dot.labels = merit_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE)  + theme_classic()
 
 mer_pref_agg_zaf <- mer_pref_agg[which(mer_pref_agg$v5c!='ZAF'), ]
 		  
@@ -782,7 +791,7 @@ plotaccumgini_outliers <- plot_scatter(mer_pref_agg_zaf, gini_neto, accum,
     	 #dot.labels = merit_agg$v5c,
 	    	fit.line = lm,
 	    	show.ci = TRUE
-		   	)
+		   	)  + theme_classic()
 
 
 mer_pref_agg_ven <- mer_pref_agg[which(mer_pref_agg$v5c!='VEN'), ]
@@ -791,56 +800,65 @@ plotaccumfi<-plot_scatter(mer_pref_agg, fi_index, accum,
     title = "Libertad economica",
     	#dot.labels = mer_pref_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE)   + theme_classic()
 
 plotaccumfi_outliers<-plot_scatter(mer_pref_agg_ven,  fi_index, accum, 
     title = "Libertad economica (sin outliers)",
     	#dot.labels = merit_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE)   + theme_classic()
 
-plot_grid(list(plotaccumgini, plotaccumgini_outliers, plotaccumfi, plotaccumfi_outliers),margin = c(0.3,0.3,0.3,0.3), tags = c(" ", " ", " ", " ", " ", " "))
+
+
+ggsave(plot = plot_grid(list(plotaccumgini, plotaccumgini_outliers, plotaccumfi, plotaccumfi_outliers),margin = c(0.3,0.3,0.3,0.3), tags = c(" ", " ", " ", " ", " ", " ")), filename = "output/results/plot_accumginifi.png", width = 10, height = 10, dpi= "retina")
 
 ```
 
+![Accumulation preferences, gini and fi index](../output/results/plot_accumginifi.png)
 
-```{r fig.cap = "Preferencias de acumulacion y creencias meritocraticas." ,out.width = "200%"}
+
+```{r results='hide'}
 plotaccummerit <- plot_scatter(mer_pref_agg,  merit, accum, 
     title = "Percepcion meritocratica",
     #	dot.labels = merit_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE) + theme_classic() 
 
 plotaccumbmerit <-plot_scatter(mer_pref_agg,  bmerit, accum, 
     title = "Preferencias meritocraticas",
     #	dot.labels = merit_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE) + theme_classic()
 plotaccumunmerit <-plot_scatter(mer_pref_agg,  unmerit, accum, 
     title = "Percepcion no meritocratica",
     	#dot.labels = merit_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE) + theme_classic()
 plotaccumneed <-plot_scatter(mer_pref_agg,  need, accum, 
     title = "Preferenciasno meritocraticas ",
     	#dot.labels = merit_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE) + theme_classic()
 
-plot_grid(list(plotaccummerit, plotaccumbmerit, plotaccumunmerit, plotaccumneed),margin = c(0.3,0.3,0.3,0.3), tags = c(" ", " ", " ", " ", " ", " "))
+
+
+
+ggsave(plot = plot_grid(list(plotaccummerit, plotaccumbmerit, plotaccumunmerit, plotaccumneed),margin = c(0.3,0.3,0.3,0.3), tags = c(" ", " ", " ", " ", " ", " ")), filename = "output/results/plot_accummerit.png", width = 10, height = 10, dpi= "retina")
 
 ```
+
+![Accumulation preferences and Meritocratic beliefs](../output/results/plot_accummerit.png)
 
 
 ## Creencias meritocraticas. 
 
-```{r fig.cap="Percepciones Meritocraticas", out.width = "200%"}
+```{r results='hide'}
 
 plotginimerit <- plot_scatter(mer_pref_agg,gini_neto,  merit,  
     title = "Percepcion meritocratica y desigualdad",
     #dot.labels = merit_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE)  + theme_classic()
 
 
 mer_pref_agg_zaf <- mer_pref_agg[which(mer_pref_agg$v5c!='ZAF'), ]
@@ -849,13 +867,13 @@ plotginimerit_out <- plot_scatter(mer_pref_agg_zaf,gini_neto,  merit,
     title = "Percepcion meritocratica y desigualdad (sin outliers)",
     	#dot.labels = merit_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE)  + theme_classic()
 
 plotgfimerit <- plot_scatter(mer_pref_agg,fi_index,  merit,  
     title = "Percepcion meritocratica y libertad economica",
     #dot.labels = mer_pref_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE)  + theme_classic()
 
 
 mer_pref_agg_ven <- mer_pref_agg[which(mer_pref_agg$v5c!='VEN'), ]
@@ -864,20 +882,25 @@ plotgfimerit_out<- plot_scatter(mer_pref_agg_ven,fi_index,  merit,
     title = "Percepcion meritocratica y libertad economica (sin outliers)",
     #	dot.labels = mer_pref_agg_ven$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE)  + theme_classic()
 
 
-plot_grid(list(plotginimerit, plotginimerit_out, plotgfimerit, plotgfimerit_out),margin = c(0.3,0.3,0.3,0.3), tags = c(" ", " ", " ", " ", " ", " "))
+
+
+
+ggsave(plot = plot_grid(list(plotginimerit, plotginimerit_out, plotgfimerit, plotgfimerit_out),margin = c(0.3,0.3,0.3,0.3), tags = c(" ", " ", " ", " ", " ", " ")), filename = "output/results/plot_meritginifi.png", width = 10, height = 10, dpi= "retina")
+
 ```
 
+![Meritocratic perception, gini and fi index](../output/results/plot_meritginifi.png)
 
-```{r fig.cap="Preferencias meritocraticas" ,out.width = "200%" }
+```{r results='hide' }
 
 plotginibmerit <- plot_scatter(mer_pref_agg,gini_neto,  bmerit,  
     title = "Preferencias meritocraticas y desigualdad",
     #dot.labels = mer_pref_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE) + theme_classic()
 
 
 mer_pref_agg_zaf <- mer_pref_agg[which(mer_pref_agg$v5c!='ZAF'), ]
@@ -886,13 +909,13 @@ plotginibmerit_out<- plot_scatter(mer_pref_agg_zaf,gini_neto,  bmerit,
     title = "Preferencias meritocraticas y desigualdad (sin outliers)",
     #	dot.labels = mer_pref_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE) + theme_classic()
 
 plotfibmerit <- plot_scatter(mer_pref_agg,fi_index,  bmerit,  
     title = "Preferencias meritocraticas y libertad economica",
     #dot.labels = mer_pref_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE) + theme_classic()
 
 
 mer_pref_agg_ven <- mer_pref_agg[which(mer_pref_agg$v5c!='VEN'), ]
@@ -901,19 +924,24 @@ plotfibmerit_out <- plot_scatter(mer_pref_agg_ven,fi_index,  bmerit,
     title = "Preferencias meritocraticas y libertad economica (sin outliers)",
     #	dot.labels = mer_pref_agg_ven$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE) + theme_classic()
 
-plot_grid(list(plotginibmerit, plotginibmerit_out, plotfibmerit, plotfibmerit_out),margin = c(0.3,0.3,0.3,0.3), tags = c(" ", " ", " ", " ", " ", " "))
+
+
+
+ggsave(plot = plot_grid(list(plotginibmerit, plotginibmerit_out, plotfibmerit, plotfibmerit_out),margin = c(0.3,0.3,0.3,0.3), tags = c(" ", " ", " ", " ", " ", " ")), filename = "output/results/plot_bmeritginifi.png", width = 10, height = 10, dpi= "retina")
+
 ```
 
+![Meritocratic preferences, gini and fi index](../output/results/plot_bmeritginifi.png)
 
-```{r fig.cap="Percepcion no meritocratica" ,out.width = "200%"}
+```{r results='hide'}
 
 plotginiunmerit <- plot_scatter(mer_pref_agg,gini_neto,  unmerit,  
     title = "Percepcion no meritocratica y desigualdad",
     dot.labels = mer_pref_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE) + theme_classic()
 
 
 mer_pref_agg_zaf <- mer_pref_agg[which(mer_pref_agg$v5c!='ZAF'), ]
@@ -922,13 +950,13 @@ plotginiunmerit_out<- plot_scatter(mer_pref_agg_zaf,gini_neto,  unmerit,
     title = "Percepcion no meritocratica y desigualdad (sin outliers)",
     #	dot.labels = mer_pref_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE)  + theme_classic()
 
 plotfiunmerit <- plot_scatter(mer_pref_agg,fi_index,  unmerit,  
     title = "Percepcion no meritocratica y libertad economica",
     #dot.labels = mer_pref_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE)  + theme_classic()
 
 
 mer_pref_agg_ven <- mer_pref_agg[which(mer_pref_agg$v5c!='VEN'), ]
@@ -937,18 +965,27 @@ plotfiunmerit_out <- plot_scatter(mer_pref_agg_ven,fi_index,  unmerit,
     title = "Percepcion no meritocratica y libertad economica (sin outliers)",
     #	dot.labels = mer_pref_agg_ven$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE)  + theme_classic()
 
-plot_grid(list(plotginiunmerit, plotginiunmerit_out, plotfiunmerit, plotfiunmerit_out),margin = c(0.3,0.3,0.3,0.3), tags = c(" ", " ", " ", " ", " ", " "))
+
+
+
+ggsave(plot = plot_grid(list(plotginiunmerit, plotginiunmerit_out, plotfiunmerit, plotfiunmerit_out),margin = c(0.3,0.3,0.3,0.3), tags = c(" ", " ", " ", " ", " ", " ")), filename = "output/results/plot_unmeritginifi.png", width = 10, height = 10, dpi= "retina")
+
 ```
 
-```{r fig.cap="Preferencia no meritocratica",out.width = "200%"}
+
+![Non Meritocratic perception, gini and fi index](../output/results/plot_unmeritginifi.png)
+
+
+
+```{r results='hide'}
 
 plotginineed <- plot_scatter(mer_pref_agg,gini_neto,  need,  
     title = "Preferencia no meritocratica y desigualdad",
     #dot.labels = mer_pref_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE) + theme_classic()
 
 
 mer_pref_agg_zaf <- mer_pref_agg[which(mer_pref_agg$v5c!='ZAF'), ]
@@ -957,13 +994,13 @@ plotginineed_out<- plot_scatter(mer_pref_agg_zaf,gini_neto,  need,
     title = "Preferencia no meritocratica y desigualdad (sin outliers)",
     #	dot.labels = mer_pref_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE)  + theme_classic()
 
 plotfineed <- plot_scatter(mer_pref_agg,fi_index,  need,  
     title = "Preferencia no meritocratica y libertad economica",
     #dot.labels = mer_pref_agg$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE)  + theme_classic()
 
 
 mer_pref_agg_ven <- mer_pref_agg[which(mer_pref_agg$v5c!='VEN'), ]
@@ -972,11 +1009,16 @@ plotfineed_out <- plot_scatter(mer_pref_agg_ven,fi_index,  need,
     title = "Preferencia no meritocratica y libertad economica (sin outliers)",
     #	dot.labels = mer_pref_agg_ven$v5c,
     	fit.line = "lm",
-    	show.ci = TRUE)
+    	show.ci = TRUE)  + theme_classic()
 
-plot_grid(list(plotginineed, plotginineed_out, plotfineed, plotfineed_out),margin = c(0.3,0.3,0.3,0.3), tags = c(" ", " ", " ", " ", " ", " "))
+
+
+ggsave(plot = plot_grid(list(plotginineed, plotginineed_out, plotfineed, plotfineed_out),margin = c(0.3,0.3,0.3,0.3), tags = c(" ", " ", " ", " ", " ", " ")), filename = "output/results/plot_needginifi.png", width = 10, height = 10, dpi= "retina")
+
 ```
 
+
+![Non Meritocratic preferences, gini and fi index](../output/results/plot_needginifi.png)
 
 # Modelos Multivariable Multinivel  {.tabset .tabset-fade .tabset-pills}
 
@@ -1029,7 +1071,7 @@ results_1_redist_8 = lmer(redist ~ gini_neto + fi_index + merit + bmerit + unmer
 
 results_1_redist_9 = lmer(redist ~ gini_neto + fi_index + merit + bmerit + unmerit + need + sstatus + as.factor(movstatus) + univ + as.factor(quintile_miss)  + sex + age  + 1 +  (1| v5c), data = mer_pref, REML=F)
 
-htmlreg(list(results_1_redist__1,results_1_redist__2, results_1_redist_3,results_1_redist_4,results_1_redist_5,results_1_redist_6,results_1_redist_7, results_1_redist_8, results_1_redist_9),caption = "Modelos con predictores")
+htmlreg(list(results_1_redist__1,results_1_redist__2, results_1_redist_3,results_1_redist_4,results_1_redist_5,results_1_redist_6,results_1_redist_7, results_1_redist_8, results_1_redist_9),caption = "Modelos con predictores", omit.coef = "(sstatus)|(movstatus)|(univ)|(quintile_miss)|(age)|(sex)")
 
 
 ```
@@ -1058,7 +1100,7 @@ results_3_redist_macro_bvi = lmer(redist ~ univ + as.factor(quintile_miss) +	sst
 
 results_3_redist_macro_bvi_2 = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit + bmerit + unmerit + need + merit*fi_index + gini_neto + 1 +  (1 + merit| v5c), data = mer_pref, REML=F)
 
-htmlreg(list(results_1_redist_macro,results_2_redist_macro_bv, results_3_redist_macro_bvi,results_3_redist_macro_bvi_2), caption = "Pendiente aleatorea e interaccion entre niveles")
+htmlreg(list(results_1_redist_macro,results_2_redist_macro_bv, results_3_redist_macro_bvi,results_3_redist_macro_bvi_2), caption = "Pendiente aleatorea e interaccion entre niveles", omit.coef = "(sstatus)|(movstatus)|(univ)|(quintile_miss)|(age)|(sex)")
 
 ```
 
@@ -1200,7 +1242,91 @@ save(results_3_accum_macro_bvi, file = "output/results/results_3_accum_macro_bvi
 
 # Analisis de robustes Modelos Multinivel
 
-## Redis 
+## Regresiones finales sin paises en los que no comverge el modelo de medida. 
+
+ venezuela croatia, Chipre, Italia ni Letonia
+```{r}
+
+results_1_accum_9 = lmer(accum ~ gini_neto + fi_index + merit + bmerit + unmerit + need + sstatus + as.factor(movstatus) + univ + as.factor(quintile_miss)  + sex + age  + 1 +  (1| v5c), data = mer_pref, REML=F)
+
+mer_pref_sinnonconvr<- mer_pref[which(mer_pref$v5c!='VEN'), ]
+mer_pref_sinnonconvr<- mer_pref_sinnonconvr[which(mer_pref_sinnonconvr$v5!=191), ]
+mer_pref_sinnonconvr <- mer_pref_sinnonconvr[which(mer_pref_sinnonconvr$v5c!='CYP'), ]
+mer_pref_sinnonconvr <- mer_pref_sinnonconvr[which(mer_pref_sinnonconvr$v5!=380), ]
+mer_pref_sinnonconvr <- mer_pref_sinnonconvr[which(mer_pref_sinnonconvr$v5!=428), ]
+
+
+results_1_accum_9_sinnocon = lmer(accum ~ gini_neto + fi_index + merit + bmerit + unmerit + need + sstatus + as.factor(movstatus) + univ + as.factor(quintile_miss)  + sex + age  + 1 +  (1| v5c), data = mer_pref_sinnonconvr, REML=F)
+
+
+```
+
+```{r results='asis'}
+htmlreg(list(results_1_accum_9, results_1_accum_9_sinnocon))
+```
+
+
+```{r}
+estex.m23 <- influence(results_1_accum_9, "v5c") 
+
+estex.m23_2 <- influence(results_1_accum_9_sinnocon, "v5c") 
+
+
+plot(estex.m23, which="cook",
+     cutoff=.17, sort=TRUE,
+     xlab="Cooks Distance",
+     ylab="Contries")
+plot(estex.m23_2, which="cook",
+     cutoff=.17, sort=TRUE,
+     xlab="Cooks Distance without non-converge",
+     ylab="Contries")
+```
+
+```{r}
+
+results_1_redist_9 = lmer(redist ~ gini_neto + fi_index + merit + bmerit + unmerit + need + sstatus + as.factor(movstatus) + univ + as.factor(quintile_miss)  + sex + age  + 1 +  (1| v5c), data = mer_pref, REML=F)
+
+mer_pref_sinnonconvr<- mer_pref[which(mer_pref$v5c!='VEN'), ]
+mer_pref_sinnonconvr<- mer_pref_sinnonconvr[which(mer_pref_sinnonconvr$v5!=191), ]
+mer_pref_sinnonconvr <- mer_pref_sinnonconvr[which(mer_pref_sinnonconvr$v5c!='CYP'), ]
+mer_pref_sinnonconvr <- mer_pref_sinnonconvr[which(mer_pref_sinnonconvr$v5!=380), ]
+mer_pref_sinnonconvr <- mer_pref_sinnonconvr[which(mer_pref_sinnonconvr$v5!=428), ]
+
+
+results_1_redist_9_sinconvr = lmer(redist ~ gini_neto + fi_index + merit + bmerit + unmerit + need + sstatus + as.factor(movstatus) + univ + as.factor(quintile_miss)  + sex + age  + 1 +  (1| v5c), data = mer_pref, REML=F)
+
+
+```
+
+```{r results='asis'}
+htmlreg(list(results_1_redist_9, results_1_redist_9_sinconvr))
+```
+
+
+
+
+
+```{r}
+estex.m23 <- influence(results_1_redist_9, "v5c") 
+
+estex.m23_2 <- influence(results_1_redist_9_sinconvr, "v5c") 
+
+plot(estex.m23, which="cook",
+     cutoff=.17, sort=TRUE,
+     xlab="Cooks Distance",
+     ylab="Contries")
+plot(estex.m23_2, which="cook",
+     cutoff=.17, sort=TRUE,
+     xlab="Cooks Distance without non-converge",
+     ylab="Contries")
+
+
+
+```
+
+## Casos influyentes 
+
+### Redis 
 ```{r}
 #Redis
 pacman::p_load(influence.ME,
@@ -1211,13 +1337,11 @@ pacman::p_load(influence.ME,
 
 estex.m23 <- influence(results_3_redist_macro_bvi, "v5c") 
 
-
-cooks.distance(estex.m23, sort = TRUE)
-
 plot(estex.m23, which="cook",
      cutoff=.17, sort=TRUE,
      xlab="Cooks Distance",
-     ylab="School ID")
+     ylab="Contries")
+
 
 ```
 
@@ -1256,12 +1380,10 @@ Al excluir los casos influyentes la mayoria de las variable no cambia drasticame
 ```{r}
 estex.m23 <- influence(results_3_accum_macro_bvi, "v5c") 
 
-cooks.distance(estex.m23, sort = TRUE)
-
 plot(estex.m23, which="cook",
      cutoff=.17, sort=TRUE,
      xlab="Cooks Distance",
-     ylab="School ID")
+     ylab="Contries")
 
 mer_pref_sininfl <- mer_pref[which(mer_pref$v5c!='ZAF'), ]
 mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='VEN'), ]
@@ -1287,4 +1409,4 @@ results_3_accum_macro_bvi_sininfl = lmer(accum ~ univ + as.factor(quintile_miss)
 
 htmlreg(list(results_3_accum_macro_bvi, results_3_accum_macro_bvi_sininfl))
 ```
-Los efectos cambiam ligeramente. La variabe Fi_index nuevamente adquiere significacion. 
+Considerando las variables sustantivas, al eliminar quellos paises con una distancia de cook por sobre el punto de corte (0.1 = 4/40), la variable percepcion meritocratica pierde significacion aunque gana potencia, manteniendose el rechazo a la hipotesis nula con un 95% de confianza. La variable percepcion no meritocrtica pierde la mitad de su efecto y desja de ser significativa. En consideracion de esta evaluacion podemos decir que las relaciones señaladas son provocadas en alguna medida por los 13 paises que se 

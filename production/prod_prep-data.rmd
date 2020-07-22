@@ -80,7 +80,9 @@ library(knitr)
 ```{r results='hide'}
 load(file = "input/data/original/issp.rda")
 #load(url('https://raw.githubusercontent.com/franciscomeneses/bases/master/issp.rda'))
-   
+
+sjPlot::view_df(issp2009, max.len = 15)
+
     # Check data  
     #names(issp2009)
 
@@ -517,7 +519,7 @@ plot_likert((getahead[,3:8]),
 
 
 
-### Detearn: Data preparation, detearn.rda ----- #####
+### Detearn
 
 
 
@@ -885,8 +887,6 @@ mer_pref <- merge(mer_pref, qog2009_c_na, by=c("v5"))
 ```
 
 
-End sec 2 objeto: mer_pref.rda -------
-
 ```{r}
 mer_pref$gini_neto<- mer_pref$.dots...gini_disp
 mer_pref$gini_mkt <- mer_pref$.dots...gini_mkt
@@ -903,6 +903,6 @@ mer_pref_polycor <- mer_pref %>% dplyr::select(
 save(mer_pref_polycor, file ="input/data/proc/mer_pref_polycor.rda")
 ```
 
-mer_pref_polycor  cambiar nombre
+
 
 

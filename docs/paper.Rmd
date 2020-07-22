@@ -8,13 +8,19 @@ output:
     theme: flatly
     number_sections: true
     always_allow_html: yes
+#  pdf_document:
+#    keep_tex: false
+#    template: null
+#    number_sections: true
 linkcolor: blue
 bibliography:
   - ../input/bib/EconomiaMoral.bib
   - ../input/bib/meritocracy.bib
 editor_options:
   chunk_output_type: console
+
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(warning = FALSE,message = FALSE, cache = FALSE)
@@ -361,101 +367,61 @@ en el cumulative (por razones de cambio en los valores de monedas (?!)). De toda
 podrían merge desde los datos complementarios (aka add-on)
 9
 
-  # Variables
+# Variables
+
+```{r echo=FALSE }
+table_format = if(is_html_output()) {
+  "html"
+} else if(is_latex_output()) {
+  "latex"
+}
 
 
+table_format2 = if(is_html_output()) {
+  T
+} else if(is_latex_output()) {
+  F
+}
 
 
-# Resultados
-
-```{r}
-library(texreg)
-library(sjPlot)
-library(ggeffects)
-
-#pref
-load(file = "output/results/results_1_redist_macro.rdata")
-load(file = "output/results/results_2_redist_macro_bv.rdata")
-load(file = "output/results/results_3_redist_macro_bvi.rdata")
-
-
-#accum
-load("output/results/results_1_accum_macro.rdata")
-load("output/results/results_2_accum_macro_bv.rdata")
-load("output/results/results_3_accum_macro_bvi.rdata")
 ```
 
-## Preferencias redistributivas
+```{r echo=FALSE}
 
-```{r results='asis'}
-htmlreg(list(results_1_redist_macro, results_2_redist_macro_bv, results_3_redist_macro_bvi)) 
-```
+ 
+outputFormat   = knitr::opts_knit$get("rmarkdown.pandoc.to")
 
-El cambio de cada modelo al anterior es significativamente mejor. Lo que nos indica la existencia de una relacion con pendiente aleatoria entre paises, la cual es explicada por la desigualdad.
-
-```{r}
-graf2=ggpredict(results_2_redist_macro_bv, terms = c("merit","v5c [sample = 9]"), type="re")
-plot(graf2)
-```
-
-
-La pendiente cambia de sentido entre paises. 
-
-```{r}
-sjPlot::plot_model(results_3_redist_macro_bvi, type = c("int")) 
-```
+#Function to add the Table Number
+capTab = function(x){
+  if(outputFormat == 'html'){
+    x = paste0("Table ",capTabNo,". ",x)
+    capTabNo <<- capTabNo + 1
+  }; x
+}
 
 
-## Preferencias por la mercantilización.
+tab01 <- read.csv(file = "input/data/original/materials/table01.csv",header = 1,sep = ";")
 
+ cnames <- c("Dimension", "Factor","Statement")
 
-```{r results='asis'}
-htmlreg(list(results_1_accum_macro, results_2_accum_macro_bv, results_3_accum_macro_bvi))
-```
-
-```{r}
-graf2=ggpredict(results_2_accum_macro_bv, terms = c("merit","v5c [sample = 9]"), type="re")
-plot(graf2)
+ caption01 <- c("Dependents y Predictors")
+ 
+ tb.foot <- paste0("Non-meritocratic perception is a second-order factor made up of three factors, (A) Inequality of origin, (B) Inequality due to contacts and (C) Ascribed inequality.")
+ 
+ kable(tab01,format = table_format ,booktabs = T, linesep = "",col.names = cnames, caption = caption01) %>%
+   kable_styling(full_width = table_format2,latex_options = c("hold_position","scale_down"),position = "center",font_size = 12) %>%
+   column_spec(column = 1,width = "1.5cm",) %>%
+   column_spec(column = 2,width = "2 cm") %>%
+   collapse_rows(columns = 1:2,valign = "middle") %>% footnote(general = tb.foot,threeparttable = T)
 ```
 
 
-
-```{r}
-sjPlot::plot_model(results_3_accum_macro_bvi, type = c("int")) 
-```
 
 # Bibliografia
 - Preferences variables (health & education) only present in 1999 and 2009 - Government should
 
 reduce income differences 4 waves - Should people with high incomes pay more taxes, 4 waves -
 References
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 Davidov, E., Meuleman, B., Cieciuch, J., Schmidt, P., and Billiet, J. (2014). Measurement Equivalence

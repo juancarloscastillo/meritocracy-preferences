@@ -22,6 +22,7 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -365,1477 +366,157 @@ $(document).ready(function () {
 <h2><span class="header-section-number">3.5</span> Herramientas analiticas.</h2>
 <p>El software de análisis estadístico utilizado fue R (version 4.00) y la plataforma de edición Github. Para el análisis factorial confirmatorio utilizamos el paquete lavaan (version 0.6-3; Rosseel, 2020), mientras que para los análisis multinivel recurrimos al paquete lme4 (version 1.1-23; Bates et al. 2019)</p>
 <p># Data, variables &amp; Methods ### Data The data used in the analysis corresponds to the ISSP Cumulative inequality provided by The Data Catalogue DBK (<a href="https://dbk.gesis.org/dbksearch" class="uri">https://dbk.gesis.org/dbksearch</a>). The cumulation covers all those ISSP member countries that participated in at least two “Social Inequality” modules (27 countries). The data release consists of two separate data files. The main file, ZA5890 “ISSP Cumulation Social Inequality I-IV”, contains only cumulated variables. That means it includes: - topic-related variables of the master questionnaires, called module variables, which appear in at least two “Social Inequality” modules and - background variables, mostly covering demographics, which appear in at least two - Las variables de percepción / justificación de salarios no aparecen en el cumulative (por razones de cambio en los valores de monedas (?!)). De todas maneras se podrían merge desde los datos complementarios (aka add-on) 9</p>
-<p># Variables</p>
 </div>
 </div>
-<div id="resultados" class="section level1">
-<h1><span class="header-section-number">4</span> Resultados</h1>
-<pre class="r"><code>library(texreg)
-library(sjPlot)
-library(ggeffects)
-
-#pref
-load(file = &quot;output/results/results_1_redist_macro.rdata&quot;)
-load(file = &quot;output/results/results_2_redist_macro_bv.rdata&quot;)
-load(file = &quot;output/results/results_3_redist_macro_bvi.rdata&quot;)
-
-
-#accum
-load(&quot;output/results/results_1_accum_macro.rdata&quot;)
-load(&quot;output/results/results_2_accum_macro_bv.rdata&quot;)
-load(&quot;output/results/results_3_accum_macro_bvi.rdata&quot;)</code></pre>
-<div id="preferencias-redistributivas" class="section level2">
-<h2><span class="header-section-number">4.1</span> Preferencias redistributivas</h2>
-<pre class="r"><code>htmlreg(list(results_1_redist_macro, results_2_redist_macro_bv, results_3_redist_macro_bvi)) </code></pre>
-<table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
-<caption>
-Statistical models
+<div id="variables" class="section level1">
+<h1><span class="header-section-number">4</span> Variables</h1>
+<table class="table" style="font-size: 12px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+Dependents y Predictors
 </caption>
 <thead>
 <tr>
-<th style="padding-left: 5px;padding-right: 5px;">
- 
+<th style="text-align:left;">
+Dimension
 </th>
-<th style="padding-left: 5px;padding-right: 5px;">
-Model 1
+<th style="text-align:left;">
+Factor
 </th>
-<th style="padding-left: 5px;padding-right: 5px;">
-Model 2
-</th>
-<th style="padding-left: 5px;padding-right: 5px;">
-Model 3
+<th style="text-align:left;">
+Statement
 </th>
 </tr>
 </thead>
 <tbody>
-<tr style="border-top: 1px solid #000000;">
-<td style="padding-left: 5px;padding-right: 5px;">
-(Intercept)
+<tr>
+<td style="text-align:left;width: 1.5cm; vertical-align: middle !important;" rowspan="5">
+Equal distribution
 </td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.95<sup>*</sup>
+<td style="text-align:left;width: 2 cm; vertical-align: middle !important;" rowspan="3">
+Redistribution Preferences
 </td>
-<td style="padding-left: 5px;padding-right: 5px;">
-1.19<sup>**</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.88<sup>*</sup>
+<td style="text-align:left;">
+It is responsib of governm to reduce differences in income betwn people with
 </td>
 </tr>
 <tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.48)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.38)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.39)
+<td style="text-align:left;">
+The government should provide a decent standard of living for the unemployed
 </td>
 </tr>
 <tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-univ
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.08<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.08<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.08<sup>***</sup>
+<td style="text-align:left;">
+Do you think people with high incomes should pay larger share of their
 </td>
 </tr>
 <tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
+<td style="text-align:left;width: 2 cm; vertical-align: middle !important;" rowspan="2">
+Acumulation
 </td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
+<td style="text-align:left;">
+Just or unjust - that people with higher incomes can buy better health care?
 </td>
 </tr>
 <tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-as.factor(quintile_miss)2
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.03<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.03<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.03<sup>***</sup>
+<td style="text-align:left;">
+Just or unjust - that people with higher incomes can buy better education fo
 </td>
 </tr>
 <tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
+<td style="text-align:left;width: 1.5cm; vertical-align: middle !important;" rowspan="12">
+Meritocratic beliefes
 </td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
+<td style="text-align:left;width: 2 cm; vertical-align: middle !important;" rowspan="2">
+Meritocratic Perception
 </td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
+<td style="text-align:left;">
+Getting ahead: How Important is having ambition?
 </td>
 </tr>
 <tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-as.factor(quintile_miss)3
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.06<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.06<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.06<sup>***</sup>
+<td style="text-align:left;">
+Getting ahead: How important is hard work?
 </td>
 </tr>
 <tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
+<td style="text-align:left;width: 2 cm; vertical-align: middle !important;" rowspan="2">
+Non meritocratic Perception (A)
 </td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
+<td style="text-align:left;">
+Getting ahead: How important is coming from a wealthy family?
 </td>
 </tr>
 <tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-as.factor(quintile_miss)4
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.10<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.10<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.10<sup>***</sup>
+<td style="text-align:left;">
+Getting ahead: How important is having well-educated parents?
 </td>
 </tr>
 <tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
+<td style="text-align:left;width: 2 cm; vertical-align: middle !important;" rowspan="2">
+Non meritocratic Perception (B)
 </td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
+<td style="text-align:left;">
+Getting ahead: How important is knowing the right people?
 </td>
 </tr>
 <tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-as.factor(quintile_miss)5
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.18<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.18<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.18<sup>***</sup>
+<td style="text-align:left;">
+How important is having political connections?
 </td>
 </tr>
 <tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
+<td style="text-align:left;width: 2 cm; vertical-align: middle !important;" rowspan="2">
+Non meritocratic Perception (C)
 </td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
+<td style="text-align:left;">
+Getting ahead: How important is a person’s race?
 </td>
 </tr>
 <tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-as.factor(quintile_miss)6
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.12<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.12<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.12<sup>***</sup>
+<td style="text-align:left;">
+Getting ahead: How important is being born a man or a woman?
 </td>
 </tr>
 <tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
+<td style="text-align:left;width: 2 cm; vertical-align: middle !important;" rowspan="2">
+Meritocratic Preferences
 </td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
+<td style="text-align:left;">
+Important for pay: how well he or she does the job?
 </td>
 </tr>
 <tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-sstatus
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.00<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.00<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.00<sup>***</sup>
+<td style="text-align:left;">
+Important for pay: How hard he or she works at the job?
 </td>
 </tr>
 <tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
+<td style="text-align:left;width: 2 cm; vertical-align: middle !important;" rowspan="2">
+Non meritocratic Preferences
 </td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.00)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.00)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.00)
+<td style="text-align:left;">
+Important for pay: what is needed to support a family?
 </td>
 </tr>
 <tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-as.factor(movstatus)2
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.01
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.01
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.01
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-as.factor(movstatus)3
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.03<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.03<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.03<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-as.factor(movstatus)4
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.00
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.00
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.00
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-sex
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.04<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.04<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.04<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-age
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.00<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.00<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.00<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.00)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.00)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.00)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-merit
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.05<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.06<sup>**</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.33<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.02)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.09)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-bmerit
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.04<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.04<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.04<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-unmerit
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.07<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.07<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.07<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-need
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.14<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.14<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.14<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.00)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.00)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.00)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-gini_neto
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.01
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.02<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.01
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.00)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-fi_index
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.09
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.08
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.08
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.05)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.04)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.04)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-merit:gini_neto
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.01<sup>**</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.00)
-</td>
-</tr>
-<tr style="border-top: 1px solid #000000;">
-<td style="padding-left: 5px;padding-right: 5px;">
-AIC
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-91282.21
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-90861.09
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-90854.58
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-BIC
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-91468.53
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-91065.15
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-91067.51
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-Log Likelihood
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--45620.11
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--45407.55
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--45403.29
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-Num. obs.
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-52681
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-52681
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-52681
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-Num. groups: v5c
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-40
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-40
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-40
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-Var: v5c (Intercept)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.05
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.06
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.05
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-Var: Residual
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.33
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.33
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.33
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-Var: v5c merit
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.02
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.01
-</td>
-</tr>
-<tr style="border-bottom: 2px solid #000000;">
-<td style="padding-left: 5px;padding-right: 5px;">
-Cov: v5c (Intercept) merit
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.02
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.02
+<td style="text-align:left;">
+Important for pay: whether the person has children to support?
 </td>
 </tr>
 </tbody>
 <tfoot>
 <tr>
-<td style="font-size: 0.8em;" colspan="4">
-<sup><em><strong></sup>p &lt; 0.001; <sup></strong></sup>p &lt; 0.01; <sup></em></sup>p &lt; 0.05
+<td style="padding: 0; border: 0;" colspan="100%">
+<span style="font-style: italic;">Note: </span>
+</td>
+</tr>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<sup></sup> Non-meritocratic perception is a second-order factor made up of three factors, (A) Inequality of origin, (B) Inequality due to contacts and (C) Ascribed inequality.
 </td>
 </tr>
 </tfoot>
 </table>
-<p>El cambio de cada modelo al anterior es significativamente mejor. Lo que nos indica la existencia de una relacion con pendiente aleatoria entre paises, la cual es explicada por la desigualdad.</p>
-<pre class="r"><code>graf2=ggpredict(results_2_redist_macro_bv, terms = c(&quot;merit&quot;,&quot;v5c [sample = 9]&quot;), type=&quot;re&quot;)
-plot(graf2)</code></pre>
-<p><img src="paper_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>La pendiente cambia de sentido entre paises.</p>
-<pre class="r"><code>sjPlot::plot_model(results_3_redist_macro_bvi, type = c(&quot;int&quot;)) </code></pre>
-<p><img src="paper_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-</div>
-<div id="preferencias-por-la-mercantilización." class="section level2">
-<h2><span class="header-section-number">4.2</span> Preferencias por la mercantilización.</h2>
-<pre class="r"><code>htmlreg(list(results_1_accum_macro, results_2_accum_macro_bv, results_3_accum_macro_bvi))</code></pre>
-<table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
-<caption>
-Statistical models
-</caption>
-<thead>
-<tr>
-<th style="padding-left: 5px;padding-right: 5px;">
- 
-</th>
-<th style="padding-left: 5px;padding-right: 5px;">
-Model 1
-</th>
-<th style="padding-left: 5px;padding-right: 5px;">
-Model 2
-</th>
-<th style="padding-left: 5px;padding-right: 5px;">
-Model 3
-</th>
-</tr>
-</thead>
-<tbody>
-<tr style="border-top: 1px solid #000000;">
-<td style="padding-left: 5px;padding-right: 5px;">
-(Intercept)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--1.36
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.88
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--1.75<sup>*</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.79)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.72)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.75)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-univ
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.10<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.10<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.10<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-as.factor(quintile_miss)2
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.00
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.00
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.00
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-as.factor(quintile_miss)3
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.03<sup>*</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.03<sup>*</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.03<sup>*</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-as.factor(quintile_miss)4
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.09<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.09<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.09<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.02)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.02)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.02)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-as.factor(quintile_miss)5
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.18<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.17<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.17<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.02)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.02)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.02)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-as.factor(quintile_miss)6
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.08<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.08<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.08<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.02)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.02)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.02)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-sstatus
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.00<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.00<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.00<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.00)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.00)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.00)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-as.factor(movstatus)2
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.05<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.05<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.05<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-as.factor(movstatus)3
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.02
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.02
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.02
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-as.factor(movstatus)4
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.01
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.01
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.01
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.02)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.02)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.02)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-sex
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.11<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.11<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.11<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-age
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.00<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.00<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.00<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.00)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.00)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.00)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-merit
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.04<sup>**</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.04
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.64<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.02)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.19)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-bmerit
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.04<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.05<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.05<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-unmerit
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.04<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.04<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.04<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-need
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.10<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.10<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.10<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-gini_neto
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.04<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.05<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.05<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-fi_index
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.00
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.09
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.03
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.09)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.08)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.09)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-merit:fi_index
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.10<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.03)
-</td>
-</tr>
-<tr style="border-top: 1px solid #000000;">
-<td style="padding-left: 5px;padding-right: 5px;">
-AIC
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-147095.77
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-146981.11
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-146972.11
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-BIC
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-147282.08
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-147185.16
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-147185.04
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-Log Likelihood
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--73526.89
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--73467.55
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--73462.06
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-Num. obs.
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-52681
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-52681
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-52681
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-Num. groups: v5c
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-40
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-40
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-40
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-Var: v5c (Intercept)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.14
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.14
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.13
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-Var: Residual
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.95
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.95
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.95
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-Var: v5c merit
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.01
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.01
-</td>
-</tr>
-<tr style="border-bottom: 2px solid #000000;">
-<td style="padding-left: 5px;padding-right: 5px;">
-Cov: v5c (Intercept) merit
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.02
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.02
-</td>
-</tr>
-</tbody>
-<tfoot>
-<tr>
-<td style="font-size: 0.8em;" colspan="4">
-<sup><em><strong></sup>p &lt; 0.001; <sup></strong></sup>p &lt; 0.01; <sup></em></sup>p &lt; 0.05
-</td>
-</tr>
-</tfoot>
-</table>
-<pre class="r"><code>graf2=ggpredict(results_2_accum_macro_bv, terms = c(&quot;merit&quot;,&quot;v5c [sample = 9]&quot;), type=&quot;re&quot;)
-plot(graf2)</code></pre>
-<p><img src="paper_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<pre class="r"><code>sjPlot::plot_model(results_3_accum_macro_bvi, type = c(&quot;int&quot;)) </code></pre>
-<p><img src="paper_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-</div>
 </div>
 <div id="bibliografia" class="section level1">
 <h1><span class="header-section-number">5</span> Bibliografia</h1>

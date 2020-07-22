@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1593997111936.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4045390775",
+    "id" : "87FC805F",
+    "lastKnownWriteTime" : 1594003460,
+    "last_content_update" : 1594003460290,
+    "path" : "~/GitHub/meritocracy-preferences/production/prod_prep-data.rmd",
+    "project_path" : null,
+    "properties" : {
+        "chunk_output_type" : "console",
+        "cursorPosition" : "581,38",
+        "scrollLine" : "561"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
