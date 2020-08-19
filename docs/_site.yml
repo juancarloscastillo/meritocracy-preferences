@@ -6,7 +6,11 @@ navbar:
     - text: "Data preparation"
       href: "prod_prep-data.html"
     - text: "Analysis"
-      href: "prod_analysis.html"
+      menu:
+        - text: "Analysis A"  
+          href: "prod_analysis-a.html"
+        - text: "Analysis B"  
+          href: "prod_analysis-b.html"
     - text: "Paper"
       href: "paper.html"
     - text: ""

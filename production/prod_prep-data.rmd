@@ -19,7 +19,7 @@ rmarkdown::render(input = "production/prod_prep-data-A.Rmd",output_format = "htm
 ```
 
 ```{r include=FALSE}
-knitr::opts_chunk$set(warning = FALSE,message = FALSE, cache = FALSE,results = "hold")
+knitr::opts_chunk$set(warning = FALSE,message = FALSE, cache = TRUE,results = "hold")
 knitr::opts_knit$set(root.dir = "../")
 options(scipen=999)
 rm(list=ls())
@@ -36,6 +36,7 @@ In the first section, in addition to selecting and recoding ISSP variables, fact
 
 
 ### load packages
+
 ```{r}
 library(sjPlot)
 library(sjmisc) # several functions,ej read_stata
@@ -72,29 +73,27 @@ library(knitr)
 
 ```
 
-
 # Section-1: Preparation individual variables ISSP
 
-
 ## General preparation
+
 ```{r results='hide'}
 load(file = "input/data/original/issp.rda")
 #load(url('https://raw.githubusercontent.com/franciscomeneses/bases/master/issp.rda'))
 
 sjPlot::view_df(issp2009, max.len = 15)
 
-    # Check data  
-    #names(issp2009)
+# Check data  
+#names(issp2009)
 
 ### change variable names to lowercase
 names(issp2009) <- tolower(names(issp2009)) 
 
 ### Check & generate IDs (v4: respondent, v5: country)
 ### Generate new sequential id individuals by country to merge
-      issp2009$id <- sequence(tabulate(issp2009
-                                     $v5))
-    issp2009$idtem=issp2009$v5*10000  
-    issp2009$id=issp2009$idtem + issp2009$id
+issp2009$id <- sequence(tabulate(issp2009$v5))
+issp2009$idtem=issp2009$v5*10000  
+issp2009$id=issp2009$idtem + issp2009$id
 ```
 
 ##  Preparation-data of the redistributive preference scales: redistrib.rda    
@@ -111,107 +110,96 @@ names(issp2009) <- tolower(names(issp2009))
  
 ```{r results='asis'}
 # select
-    redistrib=issp2009[,c("v5","v33","v34","v36","v38","v39","id")]
+redistrib=issp2009[,c("v5","v33","v34","v36","v38","v39","id")]
    
 # new names(issp2009)
-    redistrib$income_dif= redistrib$v33
-    redistrib$unemployed= redistrib$v34
-    redistrib$taxes     = redistrib$v36
-    redistrib$health    = redistrib$v38
-    redistrib$educ      = redistrib$v39
+redistrib$income_dif = redistrib$v33
+redistrib$unemployed = redistrib$v34
+redistrib$taxes     = redistrib$v36
+redistrib$health    = redistrib$v38
+redistrib$educ      = redistrib$v39
 
 #Delete old variables
-   
-    redistrib=redistrib[-c(2:6)]
-   
-    stargazer(redistrib[-c(1,2)], type="html")  
+redistrib = redistrib[-c(2:6)]
+stargazer(redistrib[-c(1,2)], type="html")  
 ```
 
 
 ### Recode NAs
-```{r results='asis'}
-    redistrib[3:7][redistrib[3:7] > 5] <- NA
-   stargazer(redistrib[-c(1,2)], type="html") 
 
+```{r results='asis'}
+redistrib[3:7][redistrib[3:7] > 5] <- NA
+stargazer(redistrib[-c(1,2)], type="html") 
 ```
 
 ```{r}
 dim(redistrib)
 ```
 
-
 ### adjust labels NAs
+
 ```{r}
-     get_labels(redistrib$income_dif)
-    redistrib[,3:7] <-sjlabelled::set_na(redistrib[,c("income_dif","unemployed", "taxes", "health", "educ")], na = c(8,9))  
-   
+get_labels(redistrib$income_dif)
+redistrib[,3:7] <-sjlabelled::set_na(redistrib[,c("income_dif","unemployed", "taxes", "health", "educ")], na = c(8,9))  
 ```
 
 ### Reverse code for SEM models
+
 ```{r}
 redistrib[3:7]=6-redistrib[3:7]
-
 ```
 
-
 ### 2.4 Factor scores 
-
 
 ```{r cache=TRUE, results='hide'}
 cfa_red1 <- '
 	# latent variables
-	redist =~ income_dif + unemployed + taxes 
+	redist =~ income_dif + unemployed + taxes
 	accum  =~ health + educ
 	'
-
-	  # generate 5 multiple complete datasets 
-		out <- mice(redistrib[3:7], m=5) 
-
 ```
 
+```{r include=FALSE, cache=TRUE}
+# generate 5 multiple complete datasets
+out <- mice(redistrib[3:7], m = 5)
 
-```{r include=FALSE}
+D1 <- complete(out, 1)
+D2 <- complete(out, 2)
+D3 <- complete(out, 3)
+D4 <- complete(out, 4)
+D5 <- complete(out, 5)
 
-		D1 <- complete(out, 1) 
-		D2 <- complete(out, 2) 
-		D3 <- complete(out, 3) 
-		D4 <- complete(out, 4) 
-		D5 <- complete(out, 5) 
-			
-		# fit model for each complete dataset 
-		fit1 <- cfa(cfa_red1, data=D1) 
-		fit2 <- cfa(cfa_red1, data=D2) 
-		fit3 <- cfa(cfa_red1, data=D3) 
-		fit4 <- cfa(cfa_red1, data=D4) 
-		fit5 <- cfa(cfa_red1, data=D5) 
-		
-	# predict scores for all models 
-		p1 <- predict(fit1) 
-		p2 <- predict(fit2) 
-		p3 <- predict(fit3) 
-		p4 <- predict(fit4) 
-	p5 <- predict(fit5) 
+# fit model for each complete dataset
+fit1 <- cfa(cfa_red1, data = D1)
+fit2 <- cfa(cfa_red1, data = D2)
+fit3 <- cfa(cfa_red1, data = D3)
+fit4 <- cfa(cfa_red1, data = D4)
+fit5 <- cfa(cfa_red1, data = D5)
 
-# compute 'average' across 5 sets of scores: 
-		scores <- (p1 + p2 + p3 + p4 + p5)/5 
+# predict scores for all models
+p1 <- predict(fit1)
+p2 <- predict(fit2)
+p3 <- predict(fit3)
+p4 <- predict(fit4)
+p5 <- predict(fit5)
 
- #Generate factor scores      
-   scores_dat=as.data.frame(scores)
+# compute 'average' across 5 sets of scores:
+scores <- (p1 + p2 + p3 + p4 + p5) / 5
 
-    
-# Adaptar base para agregar factor scores (sacar todos NA)  
-   redistrib_m=redistrib[rowSums(is.na(redistrib[3:7]))!=5,]
-    
+#Generate factor scores
+scores_dat = as.data.frame(scores)
+
+# Adaptar base para agregar factor scores (sacar todos NA)
+redistrib_m = redistrib[rowSums(is.na(redistrib[3:7])) != 5, ]
 
 # Merge with factor scores
-	  redistrib_sco=cbind(redistrib,scores)
-	    
-	  # Check
-	   stargazer(redistrib_sco[,8:9], type ="text")
+redistrib_sco = cbind(redistrib, scores)
 
-	   
-	# Save  factor scores
-	  save(redistrib_sco, file="input/data/proc/redistrib_sco.rda")
+# Check
+stargazer(redistrib_sco[, 8:9], type = "text")
+
+# Save  factor scores
+save(redistrib_sco, file = "input/data/proc/redistrib_sco.rda")
 ```
 
 redistrib_sco [56021,9]
@@ -221,30 +209,18 @@ print(dfSummary(redistrib_sco, valid.col = FALSE, graph.magnif = 1),
       max.tbl.height = 300, method = "render")
 ```
 
-
-
-
-
 ## Individual level variables: Sociodemograficas.
- 
 
 ```{r results='asis'}
 ### Select
-
-
-
 indepvar= issp2009 %>% dplyr::select(contains("_inc"), "sex","age","degree", "hompop", "v44", "v45", "movstatus"="v46", "v5","id")
 
-
 ### Recode sex
-
 sjPlot::plot_frq(indepvar$sex, title ="Gender before")
 indepvar$sex=ifelse(indepvar$sex==1,0,ifelse(indepvar$sex==2,1,NA))  
 sjPlot::plot_frq(indepvar$sex, title ="gender after")
 
-
 ### Recode Age
-
   # Age
 sjPlot::plot_frq(indepvar$age, title = "Age before",show.mean = T , show.values = F,show.n = F)
 
@@ -263,49 +239,40 @@ indepvar$age_c[indepvar$age_c > 65] = 6
 
 sjPlot::plot_frq(indepvar$age_c, title = "Age after", show.na = T)
 
-
 ### Recode Education
-
 sjPlot::plot_frq(indepvar$degree, coord.flip = TRUE, title = "Degree before")
-
   # Recode. Values over 5 are removed
-
-  indepvar$degree[indepvar$degree > 5]=NA
-
+indepvar$degree[indepvar$degree > 5]=NA
 
 #### Dummy university
 # Dummy university
-  indepvar$univ=indepvar$degree
-  indepvar$univ=ifelse(indepvar$univ<=4,0,
-  ifelse(indepvar$univ==5,1,NA))
+indepvar$univ=indepvar$degree
+indepvar$univ=ifelse(indepvar$univ<=4,0,
+ifelse(indepvar$univ==5,1,NA))
 
-  sjPlot::plot_frq(indepvar$univ, coord.flip = TRUE, title = "Dummy university")
-
+sjPlot::plot_frq(indepvar$univ, coord.flip = TRUE, title = "Dummy university")
 
 ### Recode Income
 
-  stargazer(indepvar[1:41], type="html")
+stargazer(indepvar[1:41], type="html")
 
-  # Income (variables finish in _inc)
+# Income (variables finish in _inc)
 # Continuo
    
    # Recode missings
       # Para todos los paises, recode missings.  
-      indepvar[1:41][indepvar[1:41] >= 9999990] <- NA
-      indepvar[1:41][indepvar[1:41] == 999990] =NA
-      indepvar[1:41][indepvar[1:41] == 999997] =NA
-  indepvar[1:41][indepvar[1:41] == 999998] =NA
-  indepvar[1:41][indepvar[1:41] == 999999] =NA
+indepvar[1:41][indepvar[1:41] >= 9999990] <- NA
+indepvar[1:41][indepvar[1:41] == 999990] =NA
+indepvar[1:41][indepvar[1:41] == 999997] =NA
+indepvar[1:41][indepvar[1:41] == 999998] =NA
+indepvar[1:41][indepvar[1:41] == 999999] =NA
  
 
-    # Identificar ceros (para poder diferenciar de los NAs luego)
-    indepvar[1:41][indepvar[1:41] == 0] <- 111111
+# Identificar ceros (para poder diferenciar de los NAs luego)
+indepvar[1:41][indepvar[1:41] == 0] <- 111111
 
-    
-   
-  # Agregar ahora todos en un solo vector
+# Agregar ahora todos en un solo vector
 indepvar$income=rowSums(indepvar[1:41],na.rm = TRUE)
-
 indepvar$income[indepvar$income ==0]=NA
 indepvar$income[indepvar$income ==1111]=0
 
@@ -314,8 +281,6 @@ stargazer(indepvar[1:41], type="html")
 #summary(indepvar$income)
 
 ### Recode Household income
-
-
 # Household income
 
 # Preparar numero de personas en household
@@ -331,8 +296,6 @@ indepvar$hhincome[indepvar$income==111111]= 0
 indepvar$hhincome[indepvar$hompop==0]= NA
 
 #Wsummary(indepvar$hhincome)
-  
-
 
 # check
 income=indepvar[c("v5", "ar_inc", "hompop","income",
@@ -354,10 +317,9 @@ indepvar$quintile_miss[is.na(indepvar$quintile_miss)] = 6
 sjPlot::plot_frq(indepvar$quintile_miss, coord.flip = TRUE, title = "Quintiles de ingreso")
 #stargazer(indepvar$quintile_miss, type = "html")
 
-
 ### Recode Subjetive status
 
-  # Subjective status
+# Subjective status
    
 # Individual
 #freq(indepvar$v44)
@@ -365,29 +327,24 @@ indepvar$sstatus=indepvar$v44
 indepvar$sstatus[indepvar$ssttus>10]=NA
   #freq(indepvar$sstatus)
    
-    # Family
+# Family
 #freq(indepvar$v45)
 indepvar$f_sstatus=indepvar$v45
-    indepvar$f_sstatus[indepvar$f_sstatus>10]=NA
-  #freq(indepvar$f_sstatus)
+indepvar$f_sstatus[indepvar$f_sstatus>10]=NA
+#freq(indepvar$f_sstatus)
 
     
-    knitr::kable(table(indepvar$movstatus), "html")
+knitr::kable(table(indepvar$movstatus), "html")
     
-     indepvar$movstatus[indepvar$movstatus>=8]= NA
-    indepvar$movstatus <- car::recode(indepvar$movstatus,recodes ="c(1,2)=2;3=1;c(4,5)=3;c(6,7)=4")
-    indepvar$movstatus <- set_labels(indepvar$movstatus,labels = c("Sin movilidad"=1,
+indepvar$movstatus[indepvar$movstatus>=8]= NA
+indepvar$movstatus <- car::recode(indepvar$movstatus,recodes ="c(1,2)=2;3=1;c(4,5)=3;c(6,7)=4")
+indepvar$movstatus <- set_labels(indepvar$movstatus,labels = c("Sin movilidad"=1,
                                                                     "Mov. Ascendente"=2,
                                                                     "Mov. Descendente"=3,
                                                                     "Indeterminado"=4))
     
-    knitr::kable(table(indepvar$movstatus), "html")
-
+knitr::kable(table(indepvar$movstatus), "html")
 ```
-
-
-
-
 
 ```{r}
 #Codigos por incorporar: se deben hacer ajustes de moneda y partidos por pais. 
@@ -407,9 +364,7 @@ indepvar$f_sstatus=indepvar$v45
 #freq(indepvar$tw_prty) # si
 
 # para usarlas habría que clasificar partidos de esos países
-
 ```
-
 
 ```{r}
 #Eliminar income por paises. 
@@ -420,7 +375,6 @@ View(indepvar)
 
 ```{r}
 #indepvar_graph<-as.data.frame(indepvar[,2:16])
-
 print(dfSummary(indepvar[-c(8)], valid.col = FALSE, graph.magnif = 1),
       max.tbl.height = 300, method = "render")
 ```
@@ -444,57 +398,51 @@ print(dfSummary(indepvar[-c(8)], valid.col = FALSE, graph.magnif = 1),
 
 ```{r results='hide'}
     # Rename
-    getahead=issp2009[,c("v6","v7","v9", "v10","v11","v12",
-             "v14","v16", # get ahead
-    	  		 "v5","id")]
+getahead = issp2009[, c("v6", "v7", "v9", "v10", "v11", "v12",
+                        "v14", "v16", # get ahead
+                        "v5", "id")]
 
-    getahead$wealthy=getahead$v6
-    getahead$pareduc=getahead$v7
-    getahead$ambition= getahead$v9
-    getahead$hwork=getahead$v10
-    getahead$people=getahead$v11
-    getahead$polcone=getahead$v12
-    getahead$race=getahead$v14
-    getahead$gender=getahead$v16
+getahead$wealthy = getahead$v6
+getahead$pareduc = getahead$v7
+getahead$ambition = getahead$v9
+getahead$hwork = getahead$v10
+getahead$people = getahead$v11
+getahead$polcone = getahead$v12
+getahead$race = getahead$v14
+getahead$gender = getahead$v16
 
-    getahead=getahead[-c(1:8)]
+getahead = getahead[-c(1:8)]
 
-  # recode values 8 9 to NA
-    #freq(getahead$wealthy)
-    getahead[3:10][getahead[3:10] > 5] <- NA
-    #freq(getahead$gender) # check ok
-    stargazer(getahead, type = "html")
+# recode values 8 9 to NA
+#freq(getahead$wealthy)
+getahead[3:10][getahead[3:10] > 5] <- NA
+#freq(getahead$gender) # check ok
+stargazer(getahead, type = "html")
 
-  # adjust labels
-    get_labels(getahead$wealthy)
-    getahead[ , 3:10][getahead[ , 3:10] >= 8] <- NA
-    get_labels(getahead[3:10]) # check
+# adjust labels
+get_labels(getahead$wealthy)
+getahead[, 3:10][getahead[, 3:10] >= 8] <- NA
+get_labels(getahead[3:10]) # check
 
-  # Reverse code for SEM models
-    getahead[3:10]=6-getahead[3:10]
+# Reverse code for SEM models
+getahead[3:10] = 6 - getahead[3:10]
 
-  # Generate variables with 3 values for getahead mess model categoric
-    #names(getahead)
-    getahead_temp=subset(getahead[c(2,3:10)])
-    #names(getahead_temp)
-    getahead_temp[2:9][getahead_temp[2:9] <  4] <- 3
-   # freq(getahead_temp$hwork)
-    #freq(getahead$hwork)
-  
-    
-    colnames(getahead_temp)=paste("c3", colnames(getahead_temp),
-    	sep="")
-    names(getahead_temp)[names(getahead_temp)=="c3id"] <- "id"
-    getahead_temp2=merge(getahead,getahead_temp, by=c("id"))
-  	names(getahead_temp2) # ok
-  	getahead=getahead_temp2
-  	
-  	
+# Generate variables with 3 values for getahead mess model categoric
+#names(getahead)
+getahead_temp = subset(getahead[c(2, 3:10)])
+#names(getahead_temp)
+getahead_temp[2:9][getahead_temp[2:9] <  4] <- 3
+# freq(getahead_temp$hwork)
+#freq(getahead$hwork)
 
-    
-  
+
+colnames(getahead_temp) = paste("c3", colnames(getahead_temp),
+                                sep = "")
+names(getahead_temp)[names(getahead_temp) == "c3id"] <- "id"
+getahead_temp2 = merge(getahead, getahead_temp, by = c("id"))
+names(getahead_temp2) # ok
+getahead = getahead_temp2
 ```
-
 
 ```{r}
 plot_likert((getahead[,3:8]), 
@@ -509,80 +457,69 @@ plot_likert((getahead[,3:8]),
                         geom.size = 0.6) # expand axis 130% )
 ```
 
-
-
 ```{r}
-	# Save object
-  #  save(getahead, file="../objects/getahead.rda")
-
+# Save object
+#  save(getahead, file="../objects/getahead.rda")
 ```
-
-
 
 ### Detearn
 
-
-
 ```{r}
-		#names(issp2009)
-	  detearn=issp2009[,c("v47", "v48", "v49", "v50", "v51",
-	   	"v52", "v5","id")]
+#names(issp2009)
+detearn = issp2009[, c("v47", "v48", "v49", "v50", "v51",
+                       "v52", "v5", "id")]
 names(detearn)
-    detearn$respons 	= detearn$v47
-    detearn$yeduc  	  = detearn$v48
-    detearn$family    = detearn$v49
-    detearn$child     = detearn$v50
-    detearn$welljob   = detearn$v51
-    detearn$hardjob   = detearn$v52
+detearn$respons 	= detearn$v47
+detearn$yeduc  	  = detearn$v48
+detearn$family    = detearn$v49
+detearn$child     = detearn$v50
+detearn$welljob   = detearn$v51
+detearn$hardjob   = detearn$v52
 names(detearn)
-    detearn=detearn[-c(1:6)]
+detearn = detearn[-c(1:6)]
 names(detearn)
-  # recode values 8 9 to NA
-    summary(detearn)
-  # freq(detearn$respons)
-    detearn[3:8][detearn[3:8] > 5] <- NA
- 
-    
-      # freq(detearn$respons) # check ok
-    
-    knitr::kable(summary(detearn), "html")
-    
-  # Out Portugal (no answer in well job item)
-    detearn[which(detearn$v5==620),]=NA
-  # adjust labels ###PROB PORTUCAL!!!
-    get_labels(detearn)
-detearn[ , 3:8][detearn[ , 3:8] >= 8] <- NA
-    detearn$welljob<-sjlabelled::set_na(detearn$welljob, na =c(0))
-        knitr::kable(summary(detearn), "html")
-   # freq(detearn$welljob) ## prob portugal
-    detearn$welljob[detearn$welljob ==0] = NA
-    get_labels(detearn$welljob)
-    labels(detearn$welljob)=labels(detearn$respons)### PROB NOT SOLVED
+# recode values 8 9 to NA
+summary(detearn)
+# freq(detearn$respons)
+detearn[3:8][detearn[3:8] > 5] <- NA
+
+# freq(detearn$respons) # check ok
+
+knitr::kable(summary(detearn), "html")
+
+# Out Portugal (no answer in well job item)
+detearn[which(detearn$v5 == 620), ] = NA
+# adjust labels ###PROB PORTUCAL!!!
+get_labels(detearn)
+detearn[, 3:8][detearn[, 3:8] >= 8] <- NA
+detearn$welljob <- sjlabelled::set_na(detearn$welljob, na = c(0))
+knitr::kable(summary(detearn), "html")
+# freq(detearn$welljob) ## prob portugal
+detearn$welljob[detearn$welljob == 0] = NA
+get_labels(detearn$welljob)
+labels(detearn$welljob) = labels(detearn$respons)### PROB NOT SOLVED
 
 # Reverse code for SEM models
-    detearn$respons <- as.numeric(detearn$respons)
-    detearn$yeduc <- as.numeric(detearn$yeduc)
-    detearn$family <- as.numeric(detearn$family)
-    detearn$child <- as.numeric(detearn$child)
-    detearn$welljob <- as.numeric(detearn$welljob)
-    detearn$hardjob <- as.numeric(detearn$hardjob)
-
-
+detearn$respons <- as.numeric(detearn$respons)
+detearn$yeduc <- as.numeric(detearn$yeduc)
+detearn$family <- as.numeric(detearn$family)
+detearn$child <- as.numeric(detearn$child)
+detearn$welljob <- as.numeric(detearn$welljob)
+detearn$hardjob <- as.numeric(detearn$hardjob)
 ```
 
 ```{r}
-    sjPlot::plot_likert(detearn[,3:8],
-                        geom.colors   = c("#9ecae1", "#6baed6","#4292c6", "#2171b5"), # colorbrewer2.org 
-                        cat.neutral = 3,
-                        sort.frq      = "neg.asc", # sort descending)
-                        title         = "Before detearn",
-                        intercept.line.color = "white", # vertical middle
-                        expand.grid   = F, # no inner margins in plot
-                        show.n        = FALSE, # hide N's in axis labels
-                        grid.range    = 1.8,
-                        geom.size = 0.6) # expand axis 130% ))
-    
-    
+sjPlot::plot_likert(detearn[, 3:8],
+                    geom.colors   = c("#9ecae1", "#6baed6", "#4292c6", "#2171b5"), # colorbrewer2.org
+                    cat.neutral = 3,
+                    sort.frq      = "neg.asc", # sort descending)
+                    title         = "Before detearn",
+                    intercept.line.color = "white", # vertical middle
+                    expand.grid   = F, # no inner margins in plot
+                    show.n        = FALSE, # hide N's in axis labels
+                    grid.range    = 1.8,
+                    geom.size = 0.6) # expand axis 130% ))
+
 detearn$respons = as.numeric(6 - detearn$respons)
 detearn$yeduc = as.numeric(6 - detearn$yeduc)
 detearn$family = as.numeric(6 - detearn$family)
@@ -590,16 +527,16 @@ detearn$child = as.numeric(6 - detearn$child)
 detearn$welljob = as.numeric(6 - detearn$welljob)
 detearn$hardjob = as.numeric(6 - detearn$hardjob)
   
-  sjPlot::plot_likert(detearn[,3:8],
-                        geom.colors   = c("#9ecae1", "#6baed6","#4292c6", "#2171b5"), # colorbrewer2.org 
-                      cat.neutral = 3,
-                        sort.frq      = "neg.asc", # sort descending)
-                        title         = "After detearn",
-                        intercept.line.color = "white", # vertical middle
-                        expand.grid   = F, # no inner margins in plot
-                        show.n        = FALSE, # hide N's in axis labels
-                        grid.range    = 1.8,
-                        geom.size = 0.6) # expand axis 130% ))
+sjPlot::plot_likert(detearn[,3:8],
+                    geom.colors   = c("#9ecae1", "#6baed6", "#4292c6", "#2171b5"), # colorbrewer2.org
+                    cat.neutral = 3,
+                    sort.frq      = "neg.asc", # sort descending)
+                    title         = "After detearn",
+                    intercept.line.color = "white", # vertical middle
+                    expand.grid   = F, # no inner margins in plot
+                    show.n        = FALSE, # hide N's in axis labels
+                    grid.range    = 1.8,
+                    geom.size = 0.6) # expand axis 130% ))
   
 freq(detearn$respons)
 ```
@@ -607,7 +544,7 @@ freq(detearn$respons)
 
 ## Measuring Beliefs & Perceptions: merit_pref_perc
 
-```{r}
+```{r, cache=TRUE}
 # 3. MEASURING BELIEFS & PERCEPTIONS ------ -
 
 # 3.1 Define object --------------------- -------------------------------
@@ -617,12 +554,12 @@ freq(detearn$respons)
 		#	names(getahead)
 		#	names(detearn)
 
-			merit_per_pref=merge(getahead,detearn, by=c("id","v5"))
+merit_per_pref=merge(getahead,detearn, by=c("id","v5"))
 		#	names(merit_per_pref)
 
 		
   # Estimación del modelo c/ unmerit 2do orden
-	  cfa_perpref2 <- '
+cfa_perpref2 <- '
 	  # latent variables
 	  merit =~ hwork + ambition
 	  parent=~ wealthy + pareduc
@@ -632,10 +569,8 @@ freq(detearn$respons)
 	  bmerit =~ welljob + hardjob
 	  need=~ family + child
 	  '
-	  fit_perpref2 <- cfa(cfa_perpref2,data=merit_per_pref,
-	  	missing = "ML")
+fit_perpref2 <- cfa(cfa_perpref2, data = merit_per_pref,missing = "ML")
 #	  summary(fit_perpref2, fit.measures=TRUE,standardized=TRUE)
-
   # Path model
 		  semPaths(fit_perpref2,layout = "tree", rotation = 2,
 		  	intercepts = FALSE, style = "lisrel", curvePivot = TRUE,
@@ -645,63 +580,56 @@ freq(detearn$respons)
 
 ### Factor scores fit_perpref2: merit_per_pref_sco
 
-
 ```{r cache=TRUE, results='hide'}
-
-			out <- mice(merit_per_pref[,c(3:10,19:24)], m=5)
+out <- mice(merit_per_pref[,c(3:10,19:24)], m=5)
 ```
 
+```{r results='hide', cache=TRUE}
+# Multiple imputation (para recuperar missings en scores) - REVIEW THIS, command lavPredict from 2017 should predict with missing values therefore saving from multiple imputation
 
+# generate 5 multiple complete datasets
 
-```{r results='hide'}
-		# Multiple imputation (para recuperar missings en scores) - REVIEW THIS, command lavPredict from 2017 should predict with missing values therefore saving from multiple imputation
+D1 <- complete(out, 1)
+D2 <- complete(out, 2)
+D3 <- complete(out, 3)
+D4 <- complete(out, 4)
+D5 <- complete(out, 5)
 
+# fit model for each complete dataset
+fit1 <- cfa(cfa_perpref2, data = D1)
+fit2 <- cfa(cfa_perpref2, data = D2)
+fit3 <- cfa(cfa_perpref2, data = D3)
+fit4 <- cfa(cfa_perpref2, data = D4)
+fit5 <- cfa(cfa_perpref2, data = D5)
 
-		  # generate 5 multiple complete datasets
+# predict scores for all models
+p1 <- predict(fit1)
+p2 <- predict(fit2)
+p3 <- predict(fit3)
+p4 <- predict(fit4)
+p5 <- predict(fit5)
 
-			D1 <- complete(out, 1)
-			D2 <- complete(out, 2)
-			D3 <- complete(out, 3)
-			D4 <- complete(out, 4)
-			D5 <- complete(out, 5)
+# compute 'average' across 5 sets of scores:
+scores <- (p1 + p2 + p3 + p4 + p5) / 5
 
-			# fit model for each complete dataset
-			fit1 <- cfa(cfa_perpref2, data=D1)
-			fit2 <- cfa(cfa_perpref2, data=D2)
-			fit3 <- cfa(cfa_perpref2, data=D3)
-			fit4 <- cfa(cfa_perpref2, data=D4)
-			fit5 <- cfa(cfa_perpref2, data=D5)
+# Generate factor scores
+scores_dat = as.data.frame(scores)
+dim(scores_dat)
+str(scores_dat)
+summary(scores)
 
-		# predict scores for all models
-			p1 <- predict(fit1)
-			p2 <- predict(fit2)
-			p3 <- predict(fit3)
-			p4 <- predict(fit4)
-			p5 <- predict(fit5)
+# Generate object with factor scores
+dim(merit_per_pref)
+dim(scores_dat)
+merit_per_pref_sco = cbind(merit_per_pref, scores)
 
-		# compute 'average' across 5 sets of scores:
-			scores <- (p1 + p2 + p3 + p4 + p5)/5
-
-	  # Generate factor scores
-	    scores_dat=as.data.frame(scores)
-	    dim(scores_dat)
-	    str(scores_dat)
-	    summary(scores)
-
-		# Generate object with factor scores
-	    dim(merit_per_pref)
-	    dim(scores_dat)
-		  merit_per_pref_sco=cbind(merit_per_pref,scores)
-
-	# Save object with factor scores
-	#	names(merit_per_pref_sco)
-		merit_per_pref_sco=merit_per_pref_sco[,c(1:2,25:31)]
+# Save object with factor scores
+#	names(merit_per_pref_sco)
+merit_per_pref_sco = merit_per_pref_sco[, c(1:2, 25:31)]
 #	  save(merit_per_pref_sco,
-#	  	file="./objects/merit_per_pref_sco.rda")
+#	  file="./objects/merit_per_pref_sco.rda")
 
 ```
-
-
 
 Bases de datos creadas. 
 
@@ -712,13 +640,10 @@ redistrib_sco: variables latentes de preferencias redistributivas.
 merit_perc_pref_sco: variables latentes de creencias meritocraticas. 
 
 
-
 ## Merge varaibles indivuales. 
 
 ```{r}
-
 indiv<- merge (indepvar, redistrib_sco, by = c("id"))
-
 indiv <- merge (indiv,  merit_per_pref_sco, by = c("id"))
 ```
 
@@ -727,7 +652,6 @@ indiv <- merge (indiv,  merit_per_pref_sco, by = c("id"))
 print(dfSummary(indiv, valid.col = FALSE, graph.magnif = 1),
       max.tbl.height = 300, method = "render")
 ```
-
 
 ```{r}
 save(indiv, file="input/data/proc/indiv.rda")
@@ -739,29 +663,22 @@ save(indiv, file="input/data/proc/indiv.rda")
 ```{r}
 agg_lm=aggregate(indiv, by=list(indiv$v5),FUN=mean, na.rm=TRUE)
 
-
 colnames(agg_lm) <- paste("j", colnames(agg_lm), sep = "_")
 table(agg_lm$j_v5)
 
 agg_lm$v5=agg_lm$j_v5	
-
 mer_pref=merge(indiv,agg_lm, by="v5")
 
- dim(mer_pref)
-
+dim(mer_pref)
 ```
 
 ```{r}
-    mer_pref$age_g=mer_pref$age-mer_pref$j_age
-    mer_pref$sex_g =mer_pref$sex-mer_pref$j_sex
-    mer_pref$univ_g =mer_pref$univ-mer_pref$j_univ
-  mer_pref$sstatus_g= mer_pref$sstatus-mer_pref$j_sstatus
-   
-    summary(mer_pref$univ_g)
+mer_pref$age_g = mer_pref$age - mer_pref$j_age
+mer_pref$sex_g = mer_pref$sex - mer_pref$j_sex
+mer_pref$univ_g = mer_pref$univ - mer_pref$j_univ
+mer_pref$sstatus_g = mer_pref$sstatus - mer_pref$j_sstatus
+summary(mer_pref$univ_g)
 ```
-
-
-
 
 # Seccion 3:  add macro var
 
@@ -771,9 +688,7 @@ mer_pref=merge(indiv,agg_lm, by="v5")
 #load(url("https://raw.githubusercontent.com/franciscomeneses/bases/master/swiid8_3.rda"))
 load("input/data/original/swiid8_3.rda")
 
-
 # convertir desde formato original list a dataframe
-
 swiid_summary <- swiid %>%  bind_rows() %>%
 group_by(country, year) %>%  
 summarize_all(funs(mean, sd)) %>%
@@ -781,18 +696,12 @@ ungroup() %>% dplyr::rename(.dots=setNames(names(.),
 str_replace(names(.), "_mean", ""))) %>%  
 dplyr::rename_(.dots=setNames(names(.),str_replace(names(.), "_sd", "_se")))
 
-
 save(swiid_summary, file = "input/data/proc/swiid_summary.rda")
-
 ```
-
-
-
 
 ###  Filter only 2009
 ```{r}
 summary(swiid_summary$.dots...year)
-
 swiid_summary09=subset(swiid_summary, .dots...year==2009)
 ```
 
@@ -801,7 +710,6 @@ swiid_summary09=subset(swiid_summary, .dots...year==2009)
 
 ```{r}
 # Generate equivalente country code
-
 head(swiid_summary09$.dots...country)
 as.numeric(swiid_summary09$country)
  
@@ -815,16 +723,13 @@ str(swiid_summary09$v5c)
 
 # Merge
 #indepvar <- merge(swiid_summary09,indepvar,by=c("v5"))
-
 #summary(indepvar$.dots..._1_gini_disp)
-
 ```
 
 
 ```{r}
 mer_pref<- merge(swiid_summary09,mer_pref, by=c("v5"))
 ```
-
 
 ## Section 2.2: Qog
 
@@ -852,37 +757,33 @@ mer_pref<- merge(swiid_summary09,mer_pref, by=c("v5"))
 load( file = "input/data/original/qog.rda")
 #load(url('https://raw.githubusercontent.com/franciscomeneses/bases/master/qog.rda'))    
 
+# Extract 2009 data
+qog2009 = subset(qog, year == 2009)
 
-		# Extract 2009 data
-			qog2009=subset(qog, year==2009)	
-		
-		# Merge with ISSP countries for cleaning 
-			  
-			load("input/data/proc/indepvar_contries.rda")
-			issp_countries=	aggregate(indepvar_contries[c("v5")], 
-					list(indepvar_contries$country,indepvar_contries$v5c),mean)
-		
-			
-			qog2009[c("ccode","cname")] # check ISO codes
-			names(qog2009)[names(qog2009) == 'ccode'] <- 'v5'
-			qog2009_c=merge(issp_countries, qog2009, by=c("v5")) 
-			dim(qog2009_c)
-			colSums(is.na(qog2009_c))
-			
-			# Eliminar columnas con máximo 5 NAs
-			qog2009_c_na= qog2009_c[ , colSums(is.na(qog2009_c)) < 6]
-			
-			
-			qog2009_c_na= qog2009_c_na %>% dplyr::select("v5", "fi_index") %>% as.data.frame()
-			#names(qog2009_c_na)
-			
-		
+# Merge with ISSP countries for cleaning
+
+load("input/data/proc/indepvar_contries.rda")
+issp_countries =	aggregate(indepvar_contries[c("v5")],
+                           list(indepvar_contries$country, indepvar_contries$v5c),
+                           mean)
+
+qog2009[c("ccode", "cname")] # check ISO codes
+names(qog2009)[names(qog2009) == 'ccode'] <- 'v5'
+qog2009_c = merge(issp_countries, qog2009, by = c("v5"))
+dim(qog2009_c)
+colSums(is.na(qog2009_c))
+
+# Eliminar columnas con máximo 5 NAs
+qog2009_c_na = qog2009_c[, colSums(is.na(qog2009_c)) < 6]
+
+qog2009_c_na = qog2009_c_na %>% dplyr::select("v5", "fi_index") %>% as.data.frame()
+#names(qog2009_c_na)
 ```
 
 
 # Merge
-```{r}
 
+```{r}
 mer_pref <- merge(mer_pref, qog2009_c_na, by=c("v5"))
 ```
 

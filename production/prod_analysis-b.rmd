@@ -1,0 +1,415 @@
+---
+title: "Meritocracy and distributive preferences ISSP"
+date: "`r format(Sys.time(), '%A %d %B %Y %X')`"
+css: "../input/css/custom.css"
+output:
+  html_document:
+    theme: flatly
+    highlight: tango
+    number_sections: true
+    toc: true
+    toc_float:
+        collapsed: true
+    toc_depth: 2
+    code_folding: "hide"
+editor_options:
+  chunk_output_type: console
+---
+<div style="text-align: justify">
+
+En el presente documento se exponen los análisis realizados a la base de datos creada en data-prep. 
+
+En la primera sección se entregan análisis descriptivos de las principales variables dependientes e independientes.
+
+En la segunda sección se exponen los análisis factoriales a partir de los cuales se imputan valores  para utilizar en la seccion de analisis multinivel. Además, en la segunda sección se incorpora un análisis de invarianza de medida y una ecuación estructural que resume los modelos a testear. 
+
+En la tercera sección se presentan los modelos multinivel que son utilizados para el artículo. Se calcula la correlación intraclase, se evalúan los efectos de las variables nacionales e individuales, para posteriormente evaluar pendientes aleatorias e interacciones entre niveles. 
+
+resultados. 
+pese a que la educacion y la sal son formas de redistribucion la gente no lo considera lo mismo.
+
+***
+
+```{r eval=FALSE, include=FALSE}
+rmarkdown::render(input = "production/prod_analysis-cfa.rmd",output_format = "html_document"); browseURL(url = "production/prod_analysis-cfa.html")
+```
+
+```{r include=FALSE}
+knitr::opts_chunk$set(warning = FALSE,message = FALSE, cache = FALSE)
+knitr::opts_knit$set(root.dir = "../")
+options(scipen=999)
+rm(list=ls())
+options(knitr.kable.NA = '')
+```
+
+**Libraries**
+```{r}
+library(sjPlot)
+library(sjmisc) # several functions,ej read_stata
+library(descr)
+library(memisc)  # codebook
+library(psych) # cor2latex
+library(corrplot) # graph correlations
+library(lavaan)
+library(stargazer) 
+library(semTools)
+library(plyr) # count
+library(dplyr)
+library(car) # recode
+library(ggplot2)
+library(Hmisc)
+library(tidyverse)
+library(data.table)
+library(stringr)
+library(countrycode)
+library(lme4)
+library(texreg)
+library(mice)
+library(ggrepel) # for scatter labels in sjp.scatter	
+library(semPlot)
+library(haven)
+library(sjlabelled) 
+library(kableExtra)
+library(ggeffects)
+library(influence.ME)
+library(lattice)
+```
+
+**Load data**
+
+```{r}
+load(file = "input/data/proc/redistrib.rda")
+load(file = "input/data/proc/mer_pref.rda")
+load("input/data/proc/redistrib.rda")
+load("input/data/proc/getahead.rda")
+load("input/data/proc/detearn.rda")
+```
+
+# Modelos Multinivel  {.tabset .tabset-fade .tabset-pills}
+
+## Modelos nulos: correlacion intraclase.
+
+```{r results='asis'}
+load(file="input/data/proc/mer_pref.rda")
+# Modelo nulo
+results_0_redist = lmer(redist ~ 1 + (1| v5c), data = mer_pref, REML=F)
+results_0_accum  = lmer(accum ~ 1 + (1| v5c), data = mer_pref, REML=F)
+
+htmlreg(list(results_0_redist,results_0_accum), 
+        caption = "null model of redistribution preferences and accumulation preferences", 
+        custom.model.names = c("Redistribution", "Accumulation"), 
+        caption.adove = T, star.symbol = "\\*") 
+
+#reghelper::ICC(results_0_redist)
+```
+
+
+```{r out.width=c('50%', '50%'), fig.cap="Correlacion intraclase", fig.show='hold'}
+# Modelo nulo
+# Correlacion intraclases accum
+df<-data.frame(Variance=c("Between","Whithin"),
+               porcentaje=c(15,85))
+ggplot(df,aes(x="",y=porcentaje, fill=Variance))+
+  geom_bar(stat = "identity",color="white")+
+  coord_polar(theta="y") + 
+     geom_text(aes(label=paste(porcentaje, "%")),
+              position=position_stack(vjust=0.5),color="white",size=6)+
+  coord_polar(theta = "y") + ggtitle("Correlacion intraclase prederencias redistributivas")
+
+reghelper::ICC(results_0_accum)
+
+df<-data.frame(Variance=c("Between","Whithin"),
+               porcentaje=c(18,82))
+ggplot(df,aes(x="",y=porcentaje, fill=Variance))+
+  geom_bar(stat = "identity",color="white")+
+  coord_polar(theta="y") + 
+     geom_text(aes(label=paste(porcentaje, "%")),
+              position=position_stack(vjust=0.5),color="white",size=6)+
+  coord_polar(theta = "y") + ggtitle("Correlacion intraclase prederencias redistributivas")
+```
+
+> Aproximadamente un 15% de la varianza de las preferencias redistributivas se encuentra entre paises
+
+> Aproximadamente un 18% de la varianza de las preferencias redistributivas se encuentra entre paises.
+
+
+## Modelos de Preferencias redistributivas. 
+
+```{r results='asis', cache=TRUE} 
+results_1_redist__1  = lmer(redist ~  gini_neto + fi_index + 1 + (1| v5c), data = mer_pref, REML=F)
+results_1_redist_3 = lmer(redist ~ merit + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_redist_4 = lmer(redist ~  merit + bmerit + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_redist_5 = lmer(redist ~  merit + bmerit + unmerit + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_redist_6 = lmer(redist ~ merit + bmerit + unmerit + need + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_redist_7 = lmer(redist ~ gini_neto + fi_index + merit + bmerit + unmerit + need + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_redist_9 = lmer(redist ~ gini_neto + fi_index + merit + bmerit + unmerit + need + sstatus + as.factor(movstatus) + univ + as.factor(quintile_miss)  + sex + age  + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_2_redist_macro_bv = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit + bmerit + unmerit + need + gini_neto + fi_index + 1 +  (1 + merit| v5c), data= mer_pref, REML=F)
+results_3_redist_macro_bvi = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit + bmerit + unmerit + need + merit*gini_neto + fi_index + 1 +  (1 + merit| v5c), data = mer_pref, REML=F)
+```
+
+```{r results='asis'} 
+htmlreg(list(results_1_redist__1, results_1_redist_3,results_1_redist_4,results_1_redist_5,results_1_redist_6,results_1_redist_7, results_1_redist_9, results_2_redist_macro_bv, results_3_redist_macro_bvi),
+        caption = "Redistribution preference models", 
+        omit.coef = "(sstatus)|(movstatus)|(univ)|(quintile_miss)|(age)|(sex)", 
+        custom.coef.names = c("Intercept", "Gini index", "Economic freedom index", "Meritocratic perception", 
+                              "Meritocratic preference", "Unmeritocratic Perception","Unmerit preference", "GINI x Merit-perception"), 
+        caption.above = T, 
+        star.symbol = "\\*", 
+        center = T, 
+        custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05 <br> Since Model 6 control by subjetive status, mov subjetive status, Ed.univ, quintile_miss, age and sex") 
+```
+
+
+> __Variables macroeconómicas__:solo la libertad económica posee el efecto negativo esperado sobre las preferencias redistributivas, según un criterio del 95% de confianza. No obstante, este efecto deja de ser significativo al ser controlado por las cuatro variables de creencias meritocraticas, lo cual sugiere la posibilidad de una mediación, en la cual un contexto de mayor libre mercado fomenta creencias meritocraticas que afectan negativamente las preferencias redistributivas. 
+
+> __Creencias meritocraticas__: la variable percepcion meritocratica no posee un efecto significativo sobre la variable preferencias redistributivas hasta ser controlada por las preferencias meritocraticas, las cuales tienen un efecto positivo sobre la preferencia por la redistribucion. Esto destaca la importancia de diferenciar en los modelos de medidas percepciones y preferencias pues pueden tener efectos contrarios sobre una misma variable, anulando la significación de dicho efecto.  En términos sustantivos esto indica que lo importante es la percepcion de distribucion según talento y esfuerzo,  separado de la creencia de que el mundo debería funcionar así. El efecto de esta variable vuelve a crecer cuando se controla por las percepciones no meritocraticas, pero disminuye considerablemente al incorporar la variable preferencia no meritocratica de pago según necesidades. Esta ultima variable, es aquella que mayor efecto posee sobre las preferencias redistributivas, lo cual nos sugiere que la preferencia por un estado que promueva la igualdad está relacionada con la consideracion de las necesidades de las personas a la hora de distribuir recursos. 
+
+> __Estatus subjetivo__: puede verse que ambas poseen un efecto significativo incluso según un criterio de 99,9% de confianza. El Efecto de la variable estatus subjetivo es negativo, es decir, una persona que se considera en una posición subjetiva alta posee una menor preferencia por al redistribucion. Por su parte, la movilidad subjetiva posee un efecto positivo sobre las preferencias redistributivas, cuando esta esta controladas por el estatus subjetivo individual y las creencias meritocraticas.  Quizás, el contacto con grupos desfavorecidos puede generar mayor empatía. 
+
+> __Variables demográficas__: Estas variables son todas significativas. Además, su inclusión en el modelo multinivel no anula la significación de las variables sustantivas del modelo. Entre ellas destaca la variable quintil de ingreso, según la cual, pertenecer al quintil más rico, implica una menor preferencia por la redistribucion. 
+
+> Al _aleatorizar la pendientre_ entre percepcion de meritocracia y preferencias redistributivas mejora significativamente el modelo, lo cual se debe a las diferencias entre paises en torno a dicha relacion. Comos se ejemplifica en el grafico de pendientes aleatorias, las relaciones incluso cambian de sentido de un pais a otro. 
+
+> Al incluir la _interaccion entre niveles_ el modelo mejora signifiicativamente. En alguna medida, lo que hace variar la pendiente de la relacion, es la desigualdad del pais. 
+
+
+```{r results='asis', cache=TRUE}
+results_1_redist_dem  = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age + 1 + (1| v5c), data = mer_pref, REML=F)
+results_1_redist_indsust = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit + bmerit + unmerit + need + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_redist_macro = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit + bmerit + unmerit + need + gini_neto + fi_index + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_2_redist_macro_bv = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit + bmerit + unmerit + need + gini_neto + fi_index + 1 +  (1 + merit| v5c), data= mer_pref, REML=F)
+results_3_redist_macro_bvi = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit + bmerit + unmerit + need + merit*gini_neto + fi_index + 1 +  (1 + merit| v5c), data = mer_pref, REML=F)
+results_3_redist_macro_bvi_2 = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit + bmerit + unmerit + need + merit*fi_index + gini_neto + 1 +  (1 + merit| v5c), data = mer_pref, REML=F)
+
+#htmlreg(list(results_1_redist_macro,results_2_redist_macro_bv, results_3_redist_macro_bvi,results_3_redist_macro_bvi_2), caption = "Pendiente aleatorea e interaccion entre niveles", omit.coef = "(sstatus)|(movstatus)|(univ)|(quintile_miss)|(age)|(sex)")
+```
+
+
+```{r}
+results_3_redist_macro_bvi_efectplot <- sjPlot::plot_model(results_3_redist_macro_bvi, type="std", title = "Modelo final con predictores, pendiente aleatoria e interaccion.")
+ggsave(results_3_redist_macro_bvi_efectplot, filename = "output/results/results_3_redist_macro_bvi_efectplot.png", width = 10, height = 10, dpi= "retina")
+
+graf2=ggpredict(results_2_redist_macro_bv, terms = c("merit","v5c [sample = 9]"), type="re")
+pendiente_aleatoria_redistbv <- plot(graf2)
+ggsave(pendiente_aleatoria_redistbv, filename = "output/results/pendiente_aleatoria_redistbv.png", width = 10, height = 10, dpi= "retina")
+
+
+results_3_redist_macro_bvi_interacgini_meansd <- sjPlot::plot_model(results_3_redist_macro_bvi, 
+                                                                    type = c("int"), 
+                                                                    title = "Interaccion desigualdad",  
+                                                                    mdrt.values = "meansd") +  scale_color_discrete("Gini Index", labels = c("- 1 DS", "Media", "+ 1 DS")) + theme(legend.position = "bottom")
+results_3_redist_macro_bvi_interacgini_minmax <- sjPlot::plot_model(results_3_redist_macro_bvi, 
+                                                                    type = c("int"), 
+                                                                    title = "Interaccion desigualdad") +  scale_color_discrete("Gini Index", labels = c("Min", "Max")) + theme(legend.position = "bottom")
+   
+ggsave(plot_grid(list(results_3_redist_macro_bvi_efectplot, pendiente_aleatoria_redistbv,results_3_redist_macro_bvi_interacgini_meansd, results_3_redist_macro_bvi_interacgini_minmax) ,
+                 margin = c(0.5,0.5,0.5,0.5), 
+                 tags = c(" ", " "," ", " ")), 
+       filename = "output/results/results_3_redist_macro_bvi_interacgini.png", width = 10, height = 10, dpi= "retina")
+
+#sjPlot::plot_model(results_3_redist_macro_bvi_2, type = c("int"), title = "Interaccion libertad economica",  mdrt.values = "meansd")
+```
+
+![Modelos  de Redistribucion; Efectos, pendientes aleatorias e interacciones](../output/results/results_3_redist_macro_bvi_interacgini.png) 
+
+## Modelos de Preferencias por marketizacion (accu).
+
+```{r results='asis', cache=TRUE}
+results_1_accum__1  = lmer(accum ~  gini_neto + fi_index + 1 + (1| v5c), data = mer_pref, REML=F)
+results_1_accum__2  = lmer(accum ~  gini_neto + fi_index + 1 + (1| v5c), data = mer_pref, REML=F)
+results_1_accum_3 = lmer(accum ~ merit + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_accum_4 = lmer(accum ~  merit + bmerit + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_accum_5 = lmer(accum ~  merit + bmerit + unmerit + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_accum_6 = lmer(accum ~ merit + bmerit + unmerit + need + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_accum_7 = lmer(accum ~ gini_neto + fi_index + merit + bmerit + unmerit + need + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_accum_8 = lmer(accum ~ gini_neto + fi_index + merit + bmerit + unmerit + need + sstatus + as.factor(movstatus) + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_accum_9 = lmer(accum ~ gini_neto + fi_index + merit + bmerit + unmerit + need + sstatus + as.factor(movstatus) + univ + as.factor(quintile_miss)  + sex + age  + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_accum_macro = lmer(accum ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit + bmerit + unmerit + need + gini_neto + fi_index + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_2_accum_macro_bv = lmer(accum ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit + bmerit + unmerit + need +  gini_neto + fi_index + 1 +  (1 + merit| v5c), data = mer_pref, REML=F)
+results_3_accum_macro_bvi = lmer(accum ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit + bmerit + unmerit + need +  gini_neto + merit*fi_index + 1 +  (1 + merit| v5c), data = mer_pref, REML=F)
+results_3_accum_macro_bvi_2 = lmer(accum ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit + bmerit + unmerit + need +  fi_index + merit*gini_neto + 1 +  (1 + merit| v5c), data = mer_pref, REML=F)
+
+#htmlreg(list(results_1_accum_macro,results_2_accum_macro_bv,results_3_accum_macro_bvi, results_3_accum_macro_bvi_2), star.symbol = "\\*")
+```
+
+```{r, results='asis'}
+htmlreg(list(results_1_accum__1,results_1_accum__2, results_1_accum_3,results_1_accum_4,results_1_accum_5,results_1_accum_6,results_1_accum_7, results_2_accum_macro_bv, results_3_accum_macro_bvi), 
+        caption = "Accumulation preferences models", 
+        omit.coef = "(sstatus)|(movstatus)|(univ)|(quintile_miss)|(age)|(sex)", 
+        custom.coef.names = c("Intercept", "Gini index", "Economic freedom index", "Meritocratic perception", 
+                              "Meritocratic preference", "Unmeritocratic Perception","Unmerit preference", "Economic-freedom Merit-perception"), 
+        caption.above = T, 
+        star.symbol = "\\*", 
+        center = T, 
+        custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05 <br> Since Model 6 control by subjetive status, mov subjetive status, Ed.univ, quintile_miss, age and sex") 
+```
+
+> __Variables macroeconómicas__: Solo la desigualdad posee un efecto positivo sobre las preferencias de acumulación, es decir, en países donde existen mayores diferencias de ingresos la población tiende a validar la desigualdad económica en el acceso a salud y educación. Por su parte, la libertad económica no genera un efecto positivo como podría esperarse sobre las preferencias por acumulación. 
+
+> __Creencias meritocraticas__: La variable percepciones meritocraticas posee un efecto significativo, el cual crece al ser controlado por preferencias meritocraticas y percepciones no meritocraticas.  En función de esto podemos decir que creer que la gente de mayores recursos fue más esforzada que la gente de menores recursos posee una relación significativa con justificar desigualdades socioeconómicas en el acceso a salud y educación. Por su parte, las preferencias meritocraticas poseen un efecto negativo sobre estas creencias. Dado que las preferencias están controladas por las percepciones meritocraticas, podemos decir que quienes prefieren una distribucion según merito, pero no la perciben,  poseen una mayor preferencia redistributiva, lo cual podría explicarse por su sentimiento de injusticia (_esta idea es similar a los decepcionados de Reynols) .  
+
+> __Estatus subjetivo__: puede verse que ambas poseen un efecto significativo incluso según un criterio de 99,9% de confianza. El Efecto de la variable estatus subjetivo es positivo, es decir, una persona que se considera en una posición subjetiva alta posee una mayor preferencia por a la desigualdad de acceso a servicios básicos. Por su parte, la movilidad subjetiva posee un efecto negativo sobre las preferencias de acumulación, cuando esta está controlada por el estatus subjetivo individual y las creencias meritocraticas.  Quizás, el contacto con grupos desfavorecidos puede generar mayor empatía. 
+
+> __Variables demográficas__: Estas variables son todas significativas. Además, su inclusión en el modelo multinivel no anula la significación de las variables sustantivas del modelo. Entre ellas destaca la variable quintil de ingreso.
+
+> Cada modelo es significativamente mejor que el anterior. Respecto al modelo anterior si bien los efectos son menores, puede verse un efecto mucho más claro de una variable macro, el gini_neto (Esto va en la linea de la h: un pais más desigual fomenta preferencia por )
+
+> Al aleatorizar la pendientre entre percepcion de meritocracia y preferencias por la merkantilizacion mejora significativamente el modelo, lo cual se debe a las diferencias entre paises en torno a dicha relacion, comos e ejemplifica en el grafico de pendientes aleatorias, las relaciones incluso cambian de sentido de un pais a otro. 
+
+> Al incluir la interaccion entre niveles el modelo mejora signifiicativamente. En alguna medida, lo que hace variar la pendiente de la relacion , el grado de mercantilizacion de la economia. 
+
+```{r}
+results_3_accum_macro_bvi_efect <- sjPlot::plot_model(results_3_accum_macro_bvi, type="std", title = "Modelo de pendiente aleatoria e interaccion (desigualdad)")
+ggsave(results_3_accum_macro_bvi_efect, filename = "output/results/results_3_accum_macro_bvi_efect.png", width = 10, height = 10, dpi= "retina")
+
+graf2=ggpredict(results_2_accum_macro_bv, terms = c("merit","v5c [sample = 9]"), type="re")
+pendientealeatoria_accum <- plot(graf2)
+ggsave(pendientealeatoria_accum, filename = "output/results/pendientealeatoria_accum.png", width = 10, height = 10, dpi= "retina")
+
+mer_accum_int_f1 <- sjPlot::plot_model(results_3_accum_macro_bvi_2, 
+                                       type = c("int"), 
+                                       title = "Interaccion Desigualdad",  
+                                       mdrt.values = "meansd") +  scale_color_discrete("Gini Index", labels = c("- 1 DS", "Media", "+ 1 DS"))
+
+mer_accum_int_f2 <- sjPlot::plot_model(results_3_accum_macro_bvi_2, 
+                                       type = c("int"), 
+                                       title = "Interaccion Desigualdad") +  scale_color_discrete("Gini Index", labels = c("Min", "Max"))
+
+ggsave(mer_accum_int_f1, filename = "output/results/mer_accum_int_f1.png", width = 10, height = 10, dpi= "retina")
+
+ggsave(plot_grid(list(results_3_accum_macro_bvi_efect, pendiente_aleatoria_redistbv,mer_accum_int_f1, mer_accum_int_f2) ,
+                 margin = c(0.5,0.5,0.5,0.5), tags = c(" ", " "," ", " ")), 
+       filename = "output/results/results_3_accum_macro_bvi_interacgini.png", width = 10, height = 10, dpi= "retina")
+```
+
+![](../output/results/results_3_accum_macro_bvi_interacgini.png)
+
+
+Segun la interaccion, podemos decir que el discursos meritocratico permite justifica r la desigual participacion de derechos basicos como la salud y la educaiccion, pero solo en contextos con una baja desigualdad. En paises con una alta desigualdad, la  percepcion de meritocracia no fomenta la justificacion del acceso desigual a servicios basicos, lo cual hipotetiso que puede deberse a las diferencias redicales entre los servicios de alto y bajo costo, diferencias que por sus consecuencias no permiten justificar el acceso desigual ni si quiera considerando las diferencias de merito. 
+
+
+```{r}
+# guardar tablas
+#redis 
+save(results_1_redist_macro, file = "output/results/results_1_redist_macro.rdata")
+save(results_2_redist_macro_bv, file = "output/results/results_2_redist_macro_bv.rdata")
+save(results_3_redist_macro_bvi, file = "output/results/results_3_redist_macro_bvi.rdata")
+
+#accum
+save(results_1_accum_macro, file = "output/results/results_1_accum_macro.rdata")
+save(results_2_accum_macro_bv, file = "output/results/results_2_accum_macro_bv.rdata")
+save(results_3_accum_macro_bvi, file = "output/results/results_3_accum_macro_bvi.rdata")
+```
+
+# Analisis de robustez Modelos Multinivel
+
+## Regresiones finales sin paises en los que no converge el modelo de medida. 
+
+ 
+```{r, results=TRUE}
+mer_pref_sinnonconvr<- mer_pref[which(mer_pref$v5c!='VEN'), ]
+mer_pref_sinnonconvr<- mer_pref_sinnonconvr[which(mer_pref_sinnonconvr$v5!=191), ]
+mer_pref_sinnonconvr <- mer_pref_sinnonconvr[which(mer_pref_sinnonconvr$v5c!='CYP'), ]
+mer_pref_sinnonconvr <- mer_pref_sinnonconvr[which(mer_pref_sinnonconvr$v5!=380), ]
+mer_pref_sinnonconvr <- mer_pref_sinnonconvr[which(mer_pref_sinnonconvr$v5!=428), ]
+
+results_3_redist_macro_bvi_nocong = lmer(redist ~ univ + as.factor(quintile_miss) +    sstatus + as.factor(movstatus) + sex + age  + merit + bmerit + unmerit + need + merit*gini_neto + fi_index + 1 +  (1 + merit| v5c), data = mer_pref_sinnonconvr, REML=F)
+
+results_3_accum_macro_bvi_nocong = lmer(accum ~ univ + as.factor(quintile_miss) +  sstatus + as.factor(movstatus) + sex + age  + merit + bmerit + unmerit + need +  gini_neto + merit*fi_index + 1 +  (1 + merit| v5c), data = mer_pref_sinnonconvr, REML=F)
+```
+
+```{r results='asis'}
+htmlreg(list(results_3_redist_macro_bvi, results_3_redist_macro_bvi_nocong, results_3_accum_macro_bvi, results_3_accum_macro_bvi_nocong), 
+        caption = "Comparison model excludig countries non convergent in the measurement", 
+        custom.model.names = c("Whit", "Whithout","Whit", "Whithout"), 
+        custom.header = list("Redistribution" = 1:2, "Accumulation" = 3:4), 
+        star.symbol = "\\*", 
+        custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05 <br> countries non convergent in the measurement model:Venezuela, Croatia, Cyprus, Italy, Latvia", 
+        custom.coef.names = c("Intercept", "University. Ed.", "Quintile 2", "Quintile 3", "Quintile 4","Quintile 5", "Quintile miss", "Subjetive status", 
+                              "Subjetive upward mobility", "Supjetive downward mobility","Subjetive non-mobility","Gender", "Age", "Meritorcatic perception", 
+                              "Meritocratic preferences", "Unmeritocratic perception", "Unmeritocratic preferences", "Gini index", "Economic freedom index", 
+                              "Merit-perception x Gini", "Merit-perception x Economic-freedom"), 
+        caption.above = T)
+```
+
+Como puede apresiarce en las regresiones, los pesos de las distintas variables y su significacion no varian sustantivamente al excluir del calculo a los paises que no convergen en los modelos de medida. 
+
+
+## Casos influyentes 
+
+### Cook Distance 
+```{r out.width=c('50%', '50%'), fig.cap=" D de Cook", fig.show='hold', results=TRUE,cache=TRUE}
+#Redis
+estex.m23_2a <- influence.ME::influence(results_3_redist_macro_bvi, "v5c") 
+
+plota <- plot(estex.m23_2a, which="cook",
+              cutoff = .1, sort = TRUE,
+              xlab = "Cooks Distance Redistribution Model",
+              ylab="Contries")
+
+estex.m23_2b <-  influence.ME::influence(results_3_accum_macro_bvi, "v5c") 
+
+plotb <-plot(estex.m23_2b, which="cook",
+             cutoff = .1, sort = TRUE,
+             xlab = "Cooks Distance Accumulation Model",
+             ylab="Contries")
+```
+
+> cut point > 0.1 (4/40)
+
+### Comparación de los modelos excluyendo casos influyentes a nivel 2  
+ 
+```{r results='asis', results=TRUE}
+mer_pref_sininfl <- mer_pref[which(mer_pref$v5c!='ZAF'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='CYP'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='TUR'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='TWN'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='UKR'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='CZE'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='FRA'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='AUS'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='DNK'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='USA'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='VEN'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='PHL'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='POL'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='CHN'), ]
+
+results_3_redist_macro_bvi_sininf = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit + bmerit + unmerit + need + merit*gini_neto + fi_index + 1 +  (1 + merit| v5c), data = mer_pref_sininfl, REML=F)
+
+mer_pref_sininfl <- mer_pref[which(mer_pref$v5c!='ZAF'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='VEN'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='FRA'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='CHN'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='UKR'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='ISR'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='CHL'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='AUS'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='DNK'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='LVA'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='VEN'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='PHL'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='POL'), ]
+mer_pref_sininfl <- mer_pref_sininfl[which(mer_pref_sininfl$v5c!='CZE'), ]
+
+results_3_accum_macro_bvi_sininfl = lmer(accum ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit + bmerit + unmerit + need +  gini_neto + merit*fi_index + 1 +  (1 + merit| v5c), data = mer_pref_sininfl, REML=F)
+```
+
+```{r results='asis'}
+htmlreg(list(results_3_redist_macro_bvi, results_3_redist_macro_bvi_sininf,results_3_accum_macro_bvi, results_3_accum_macro_bvi_sininfl), 
+        caption = "Comparison model Without influential cases in level two", 
+        custom.model.names = c("Whit", "Whithout","Whit", "Whithout"), 
+        custom.header = list("Redistribution" = 1:2, "Accumulation" = 3:4), 
+        caption.above = T, 
+        star.symbol = "\\*", 
+        custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05 <br> Influential contries: CYP, TUR, TWN, UKR,CZE, FRA, AUS, DNK, USA, VEN,PHL, POL, CHN, ISR, CHL, LVA, PHL", 
+        custom.coef.names = c("Intercept", "University. Ed.", "Quintile 2", "Quintile 3", "Quintile 4","Quintile 5", "Quintile miss", "Subjetive status", 
+                              "Subjetive upward mobility", "Supjetive downward mobility" ,"Subjetive non-mobility","Gender", "Age", "Meritorcatic perception", 
+                              "Meritocratic preferences", "Unmeritocratic perception", "Unmeritocratic preferences", "Gini index", "Economic freedom index", 
+                              "Merit-perception x Gini", "Merit-perception x Economic-freedom"))
+```
+
+
+Al excluir los casos influyentes la mayoria de las variable no cambia drasticamente significaciones ni sentidos. La variable fi_index pasa a ser significativa.  A mayor libertad economica menor preferencia redistributiva. 
+
+Considerando las variables sustantivas, al eliminar quellos paises con una distancia de cook por sobre el punto de corte (0.1 = 4/40), la variable percepcion meritocratica pierde significacion aunque gana potencia, manteniendose el rechazo a la hipotesis nula con un 95% de confianza. La variable percepcion no meritocrtica pierde la mitad de su efecto y desja de ser significativa. En consideracion de esta evaluacion podemos decir que las relaciones señaladas son provocadas en alguna medida por los 13 paises que se 

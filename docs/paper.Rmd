@@ -18,7 +18,6 @@ bibliography:
   - ../input/bib/meritocracy.bib
 editor_options:
   chunk_output_type: console
-
 ---
 
 
