@@ -13,7 +13,6 @@
 
 <title>Meritocracy and distributive preferences ISSP</title>
 
-<script src="site_libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -31,27 +30,26 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -60,9 +58,9 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  background-color: #f8f8f8; }
+  { background-color: #f8f8f8; }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+a.sourceLine::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -487,7 +485,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Meritocracy and distributive preferences ISSP</h1>
-<h4 class="date">miércoles 19 agosto 2020 13:32:18</h4>
+<h4 class="date">viernes 21 agosto 2020 8:33:47</h4>
 
 </div>
 
@@ -501,54 +499,54 @@ div.tocify {
 <p>resultados. pese a que la educacion y la sal son formas de redistribucion la gente no lo considera lo mismo.</p>
 <hr />
 <p><strong>Libraries</strong></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(sjPlot)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(sjmisc) <span class="co"># several functions,ej read_stata</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">library</span>(descr)</span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">library</span>(memisc)  <span class="co"># codebook</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">library</span>(psych) <span class="co"># cor2latex</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="kw">library</span>(corrplot) <span class="co"># graph correlations</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="kw">library</span>(lavaan)</span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="kw">library</span>(stargazer) </span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="kw">library</span>(semTools)</span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="kw">library</span>(plyr) <span class="co"># count</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="kw">library</span>(car) <span class="co"># recode</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="kw">library</span>(Hmisc)</span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="kw">library</span>(tidyverse)</span>
-<span id="cb1-16"><a href="#cb1-16"></a><span class="kw">library</span>(data.table)</span>
-<span id="cb1-17"><a href="#cb1-17"></a><span class="kw">library</span>(stringr)</span>
-<span id="cb1-18"><a href="#cb1-18"></a><span class="kw">library</span>(countrycode)</span>
-<span id="cb1-19"><a href="#cb1-19"></a><span class="kw">library</span>(lme4)</span>
-<span id="cb1-20"><a href="#cb1-20"></a><span class="kw">library</span>(texreg)</span>
-<span id="cb1-21"><a href="#cb1-21"></a><span class="kw">library</span>(mice)</span>
-<span id="cb1-22"><a href="#cb1-22"></a><span class="kw">library</span>(ggrepel) <span class="co"># for scatter labels in sjp.scatter    </span></span>
-<span id="cb1-23"><a href="#cb1-23"></a><span class="kw">library</span>(semPlot)</span>
-<span id="cb1-24"><a href="#cb1-24"></a><span class="kw">library</span>(haven)</span>
-<span id="cb1-25"><a href="#cb1-25"></a><span class="kw">library</span>(sjlabelled) </span>
-<span id="cb1-26"><a href="#cb1-26"></a><span class="kw">library</span>(kableExtra)</span>
-<span id="cb1-27"><a href="#cb1-27"></a><span class="kw">library</span>(ggeffects)</span>
-<span id="cb1-28"><a href="#cb1-28"></a><span class="kw">library</span>(influence.ME)</span>
-<span id="cb1-29"><a href="#cb1-29"></a><span class="kw">library</span>(lattice)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(sjPlot)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(sjmisc) <span class="co"># several functions,ej read_stata</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">library</span>(descr)</a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="kw">library</span>(memisc)  <span class="co"># codebook</span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="kw">library</span>(psych) <span class="co"># cor2latex</span></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="kw">library</span>(corrplot) <span class="co"># graph correlations</span></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="kw">library</span>(lavaan)</a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="kw">library</span>(stargazer) </a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="kw">library</span>(semTools)</a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="kw">library</span>(plyr) <span class="co"># count</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="kw">library</span>(car) <span class="co"># recode</span></a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="kw">library</span>(Hmisc)</a>
+<a class="sourceLine" id="cb1-15" title="15"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb1-16" title="16"><span class="kw">library</span>(data.table)</a>
+<a class="sourceLine" id="cb1-17" title="17"><span class="kw">library</span>(stringr)</a>
+<a class="sourceLine" id="cb1-18" title="18"><span class="kw">library</span>(countrycode)</a>
+<a class="sourceLine" id="cb1-19" title="19"><span class="kw">library</span>(lme4)</a>
+<a class="sourceLine" id="cb1-20" title="20"><span class="kw">library</span>(texreg)</a>
+<a class="sourceLine" id="cb1-21" title="21"><span class="kw">library</span>(mice)</a>
+<a class="sourceLine" id="cb1-22" title="22"><span class="kw">library</span>(ggrepel) <span class="co"># for scatter labels in sjp.scatter    </span></a>
+<a class="sourceLine" id="cb1-23" title="23"><span class="kw">library</span>(semPlot)</a>
+<a class="sourceLine" id="cb1-24" title="24"><span class="kw">library</span>(haven)</a>
+<a class="sourceLine" id="cb1-25" title="25"><span class="kw">library</span>(sjlabelled) </a>
+<a class="sourceLine" id="cb1-26" title="26"><span class="kw">library</span>(kableExtra)</a>
+<a class="sourceLine" id="cb1-27" title="27"><span class="kw">library</span>(ggeffects)</a>
+<a class="sourceLine" id="cb1-28" title="28"><span class="kw">library</span>(influence.ME)</a>
+<a class="sourceLine" id="cb1-29" title="29"><span class="kw">library</span>(lattice)</a></code></pre></div>
 <p><strong>Load data</strong></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">load</span>(<span class="dt">file =</span> <span class="st">&quot;input/data/proc/redistrib.rda&quot;</span>)</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">load</span>(<span class="dt">file =</span> <span class="st">&quot;input/data/proc/mer_pref.rda&quot;</span>)</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="kw">load</span>(<span class="st">&quot;input/data/proc/redistrib.rda&quot;</span>)</span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="kw">load</span>(<span class="st">&quot;input/data/proc/getahead.rda&quot;</span>)</span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="kw">load</span>(<span class="st">&quot;input/data/proc/detearn.rda&quot;</span>)</span></code></pre></div>
-<div id="modelos-multinivel" class="section level1 tabset tabset-fade tabset-pills" number="1">
-<h1 class="tabset tabset-fade tabset-pills" number="1"><span class="header-section-number">1</span> Modelos Multinivel</h1>
-<div id="modelos-nulos-correlacion-intraclase." class="section level2" number="1.1">
-<h2 number="1.1"><span class="header-section-number">1.1</span> Modelos nulos: correlacion intraclase.</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">load</span>(<span class="dt">file=</span><span class="st">&quot;input/data/proc/mer_pref.rda&quot;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="co"># Modelo nulo</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a>results_<span class="dv">0</span>_redist =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb3-4"><a href="#cb3-4"></a>results_<span class="dv">0</span>_accum  =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb3-5"><a href="#cb3-5"></a></span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="kw">htmlreg</span>(<span class="kw">list</span>(results_<span class="dv">0</span>_redist,results_<span class="dv">0</span>_accum), </span>
-<span id="cb3-7"><a href="#cb3-7"></a>        <span class="dt">caption =</span> <span class="st">&quot;null model of redistribution preferences and accumulation preferences&quot;</span>, </span>
-<span id="cb3-8"><a href="#cb3-8"></a>        <span class="dt">custom.model.names =</span> <span class="kw">c</span>(<span class="st">&quot;Redistribution&quot;</span>, <span class="st">&quot;Accumulation&quot;</span>), </span>
-<span id="cb3-9"><a href="#cb3-9"></a>        <span class="dt">caption.adove =</span> T, <span class="dt">star.symbol =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">*&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">load</span>(<span class="dt">file =</span> <span class="st">&quot;input/data/proc/redistrib.rda&quot;</span>)</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw">load</span>(<span class="dt">file =</span> <span class="st">&quot;input/data/proc/mer_pref.rda&quot;</span>)</a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw">load</span>(<span class="st">&quot;input/data/proc/redistrib.rda&quot;</span>)</a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="kw">load</span>(<span class="st">&quot;input/data/proc/getahead.rda&quot;</span>)</a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="kw">load</span>(<span class="st">&quot;input/data/proc/detearn.rda&quot;</span>)</a></code></pre></div>
+<div id="modelos-multinivel" class="section level1 tabset tabset-fade tabset-pills">
+<h1><span class="header-section-number">1</span> Modelos Multinivel</h1>
+<div id="modelos-nulos-correlacion-intraclase." class="section level2">
+<h2><span class="header-section-number">1.1</span> Modelos nulos: correlacion intraclase.</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">load</span>(<span class="dt">file=</span><span class="st">&quot;input/data/proc/mer_pref.rda&quot;</span>)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="co"># Modelo nulo</span></a>
+<a class="sourceLine" id="cb3-3" title="3">results_<span class="dv">0</span>_redist =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb3-4" title="4">results_<span class="dv">0</span>_accum  =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb3-5" title="5"></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="kw">htmlreg</span>(<span class="kw">list</span>(results_<span class="dv">0</span>_redist,results_<span class="dv">0</span>_accum), </a>
+<a class="sourceLine" id="cb3-7" title="7">        <span class="dt">caption =</span> <span class="st">&quot;null model of redistribution preferences and accumulation preferences&quot;</span>, </a>
+<a class="sourceLine" id="cb3-8" title="8">        <span class="dt">custom.model.names =</span> <span class="kw">c</span>(<span class="st">&quot;Redistribution&quot;</span>, <span class="st">&quot;Accumulation&quot;</span>), </a>
+<a class="sourceLine" id="cb3-9" title="9">        <span class="dt">caption.adove =</span> T, <span class="dt">star.symbol =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">*&quot;</span>) </a></code></pre></div>
 <table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
 <caption>
 null model of redistribution preferences and accumulation preferences
@@ -594,10 +592,10 @@ Accumulation
 AIC
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-98762.19
+98968.65
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-154735.01
+154860.14
 </td>
 </tr>
 <tr>
@@ -605,10 +603,10 @@ AIC
 BIC
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-98788.93
+98995.40
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-154761.76
+154886.88
 </td>
 </tr>
 <tr>
@@ -616,10 +614,10 @@ BIC
 Log Likelihood
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--49378.09
+-49481.32
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--77364.50
+-77427.07
 </td>
 </tr>
 <tr>
@@ -675,28 +673,28 @@ Var: Residual
 </tr>
 </tfoot>
 </table>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">#reghelper::ICC(results_0_redist)</span></span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Modelo nulo</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># Correlacion intraclases accum</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a>df&lt;-<span class="kw">data.frame</span>(<span class="dt">Variance=</span><span class="kw">c</span>(<span class="st">&quot;Between&quot;</span>,<span class="st">&quot;Whithin&quot;</span>),</span>
-<span id="cb5-4"><a href="#cb5-4"></a>               <span class="dt">porcentaje=</span><span class="kw">c</span>(<span class="dv">15</span>,<span class="dv">85</span>))</span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="kw">ggplot</span>(df,<span class="kw">aes</span>(<span class="dt">x=</span><span class="st">&quot;&quot;</span>,<span class="dt">y=</span>porcentaje, <span class="dt">fill=</span>Variance))<span class="op">+</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>,<span class="dt">color=</span><span class="st">&quot;white&quot;</span>)<span class="op">+</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="st">  </span><span class="kw">coord_polar</span>(<span class="dt">theta=</span><span class="st">&quot;y&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="st">     </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label=</span><span class="kw">paste</span>(porcentaje, <span class="st">&quot;%&quot;</span>)),</span>
-<span id="cb5-9"><a href="#cb5-9"></a>              <span class="dt">position=</span><span class="kw">position_stack</span>(<span class="dt">vjust=</span><span class="fl">0.5</span>),<span class="dt">color=</span><span class="st">&quot;white&quot;</span>,<span class="dt">size=</span><span class="dv">6</span>)<span class="op">+</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="st">  </span><span class="kw">coord_polar</span>(<span class="dt">theta =</span> <span class="st">&quot;y&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Correlacion intraclase prederencias redistributivas&quot;</span>)</span>
-<span id="cb5-11"><a href="#cb5-11"></a></span>
-<span id="cb5-12"><a href="#cb5-12"></a>reghelper<span class="op">::</span><span class="kw">ICC</span>(results_<span class="dv">0</span>_accum)</span></code></pre></div>
-<pre><code>## [1] 0.1817068</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>df&lt;-<span class="kw">data.frame</span>(<span class="dt">Variance=</span><span class="kw">c</span>(<span class="st">&quot;Between&quot;</span>,<span class="st">&quot;Whithin&quot;</span>),</span>
-<span id="cb7-2"><a href="#cb7-2"></a>               <span class="dt">porcentaje=</span><span class="kw">c</span>(<span class="dv">18</span>,<span class="dv">82</span>))</span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="kw">ggplot</span>(df,<span class="kw">aes</span>(<span class="dt">x=</span><span class="st">&quot;&quot;</span>,<span class="dt">y=</span>porcentaje, <span class="dt">fill=</span>Variance))<span class="op">+</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>,<span class="dt">color=</span><span class="st">&quot;white&quot;</span>)<span class="op">+</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="st">  </span><span class="kw">coord_polar</span>(<span class="dt">theta=</span><span class="st">&quot;y&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="st">     </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label=</span><span class="kw">paste</span>(porcentaje, <span class="st">&quot;%&quot;</span>)),</span>
-<span id="cb7-7"><a href="#cb7-7"></a>              <span class="dt">position=</span><span class="kw">position_stack</span>(<span class="dt">vjust=</span><span class="fl">0.5</span>),<span class="dt">color=</span><span class="st">&quot;white&quot;</span>,<span class="dt">size=</span><span class="dv">6</span>)<span class="op">+</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="st">  </span><span class="kw">coord_polar</span>(<span class="dt">theta =</span> <span class="st">&quot;y&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Correlacion intraclase prederencias redistributivas&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co">#reghelper::ICC(results_0_redist)</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># Modelo nulo</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="co"># Correlacion intraclases accum</span></a>
+<a class="sourceLine" id="cb5-3" title="3">df&lt;-<span class="kw">data.frame</span>(<span class="dt">Variance=</span><span class="kw">c</span>(<span class="st">&quot;Between&quot;</span>,<span class="st">&quot;Whithin&quot;</span>),</a>
+<a class="sourceLine" id="cb5-4" title="4">               <span class="dt">porcentaje=</span><span class="kw">c</span>(<span class="dv">15</span>,<span class="dv">85</span>))</a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="kw">ggplot</span>(df,<span class="kw">aes</span>(<span class="dt">x=</span><span class="st">&quot;&quot;</span>,<span class="dt">y=</span>porcentaje, <span class="dt">fill=</span>Variance))<span class="op">+</span></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>,<span class="dt">color=</span><span class="st">&quot;white&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="st">  </span><span class="kw">coord_polar</span>(<span class="dt">theta=</span><span class="st">&quot;y&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="st">     </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label=</span><span class="kw">paste</span>(porcentaje, <span class="st">&quot;%&quot;</span>)),</a>
+<a class="sourceLine" id="cb5-9" title="9">              <span class="dt">position=</span><span class="kw">position_stack</span>(<span class="dt">vjust=</span><span class="fl">0.5</span>),<span class="dt">color=</span><span class="st">&quot;white&quot;</span>,<span class="dt">size=</span><span class="dv">6</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="st">  </span><span class="kw">coord_polar</span>(<span class="dt">theta =</span> <span class="st">&quot;y&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Correlacion intraclase prederencias redistributivas&quot;</span>)</a>
+<a class="sourceLine" id="cb5-11" title="11"></a>
+<a class="sourceLine" id="cb5-12" title="12">reghelper<span class="op">::</span><span class="kw">ICC</span>(results_<span class="dv">0</span>_accum)</a></code></pre></div>
+<pre><code>## [1] 0.1818692</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">df&lt;-<span class="kw">data.frame</span>(<span class="dt">Variance=</span><span class="kw">c</span>(<span class="st">&quot;Between&quot;</span>,<span class="st">&quot;Whithin&quot;</span>),</a>
+<a class="sourceLine" id="cb7-2" title="2">               <span class="dt">porcentaje=</span><span class="kw">c</span>(<span class="dv">18</span>,<span class="dv">82</span>))</a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="kw">ggplot</span>(df,<span class="kw">aes</span>(<span class="dt">x=</span><span class="st">&quot;&quot;</span>,<span class="dt">y=</span>porcentaje, <span class="dt">fill=</span>Variance))<span class="op">+</span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>,<span class="dt">color=</span><span class="st">&quot;white&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="st">  </span><span class="kw">coord_polar</span>(<span class="dt">theta=</span><span class="st">&quot;y&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="st">     </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label=</span><span class="kw">paste</span>(porcentaje, <span class="st">&quot;%&quot;</span>)),</a>
+<a class="sourceLine" id="cb7-7" title="7">              <span class="dt">position=</span><span class="kw">position_stack</span>(<span class="dt">vjust=</span><span class="fl">0.5</span>),<span class="dt">color=</span><span class="st">&quot;white&quot;</span>,<span class="dt">size=</span><span class="dv">6</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="st">  </span><span class="kw">coord_polar</span>(<span class="dt">theta =</span> <span class="st">&quot;y&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Correlacion intraclase prederencias redistributivas&quot;</span>)</a></code></pre></div>
 <div class="figure">
 <img src="prod_analysis-b_files/figure-html/unnamed-chunk-6-1.png" alt="Correlacion intraclase" width="50%" /><img src="prod_analysis-b_files/figure-html/unnamed-chunk-6-2.png" alt="Correlacion intraclase" width="50%" />
 <p class="caption">
@@ -710,26 +708,26 @@ Correlacion intraclase
 <p>Aproximadamente un 18% de la varianza de las preferencias redistributivas se encuentra entre paises.</p>
 </blockquote>
 </div>
-<div id="modelos-de-preferencias-redistributivas." class="section level2" number="1.2">
-<h2 number="1.2"><span class="header-section-number">1.2</span> Modelos de Preferencias redistributivas.</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>results_<span class="dv">1</span>_redist__<span class="dv">1</span>  =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st">  </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb8-2"><a href="#cb8-2"></a>results_<span class="dv">1</span>_redist_<span class="dv">3</span> =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb8-3"><a href="#cb8-3"></a>results_<span class="dv">1</span>_redist_<span class="dv">4</span> =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st">  </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb8-4"><a href="#cb8-4"></a>results_<span class="dv">1</span>_redist_<span class="dv">5</span> =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st">  </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb8-5"><a href="#cb8-5"></a>results_<span class="dv">1</span>_redist_<span class="dv">6</span> =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb8-6"><a href="#cb8-6"></a>results_<span class="dv">1</span>_redist_<span class="dv">7</span> =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb8-7"><a href="#cb8-7"></a>results_<span class="dv">1</span>_redist_<span class="dv">9</span> =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss)  <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb8-8"><a href="#cb8-8"></a>results_<span class="dv">2</span>_redist_macro_bv =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st"> </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data=</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb8-9"><a href="#cb8-9"></a>results_<span class="dv">3</span>_redist_macro_bvi =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">    </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>merit<span class="op">*</span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">htmlreg</span>(<span class="kw">list</span>(results_<span class="dv">1</span>_redist__<span class="dv">1</span>, results_<span class="dv">1</span>_redist_<span class="dv">3</span>,results_<span class="dv">1</span>_redist_<span class="dv">4</span>,results_<span class="dv">1</span>_redist_<span class="dv">5</span>,results_<span class="dv">1</span>_redist_<span class="dv">6</span>,results_<span class="dv">1</span>_redist_<span class="dv">7</span>, results_<span class="dv">1</span>_redist_<span class="dv">9</span>, results_<span class="dv">2</span>_redist_macro_bv, results_<span class="dv">3</span>_redist_macro_bvi),</span>
-<span id="cb9-2"><a href="#cb9-2"></a>        <span class="dt">caption =</span> <span class="st">&quot;Redistribution preference models&quot;</span>, </span>
-<span id="cb9-3"><a href="#cb9-3"></a>        <span class="dt">omit.coef =</span> <span class="st">&quot;(sstatus)|(movstatus)|(univ)|(quintile_miss)|(age)|(sex)&quot;</span>, </span>
-<span id="cb9-4"><a href="#cb9-4"></a>        <span class="dt">custom.coef.names =</span> <span class="kw">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="st">&quot;Gini index&quot;</span>, <span class="st">&quot;Economic freedom index&quot;</span>, <span class="st">&quot;Meritocratic perception&quot;</span>, </span>
-<span id="cb9-5"><a href="#cb9-5"></a>                              <span class="st">&quot;Meritocratic preference&quot;</span>, <span class="st">&quot;Unmeritocratic Perception&quot;</span>,<span class="st">&quot;Unmerit preference&quot;</span>, <span class="st">&quot;GINI x Merit-perception&quot;</span>), </span>
-<span id="cb9-6"><a href="#cb9-6"></a>        <span class="dt">caption.above =</span> T, </span>
-<span id="cb9-7"><a href="#cb9-7"></a>        <span class="dt">star.symbol =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">*&quot;</span>, </span>
-<span id="cb9-8"><a href="#cb9-8"></a>        <span class="dt">center =</span> T, </span>
-<span id="cb9-9"><a href="#cb9-9"></a>        <span class="dt">custom.note =</span> <span class="st">&quot;$***p &lt;$ 0.001, $**p &lt;$ 0.01, $*p &lt;$ 0.05 &lt;br&gt; Since Model 6 control by subjetive status, mov subjetive status, Ed.univ, quintile_miss, age and sex&quot;</span>) </span></code></pre></div>
+<div id="modelos-de-preferencias-redistributivas." class="section level2">
+<h2><span class="header-section-number">1.2</span> Modelos de Preferencias redistributivas.</h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">results_<span class="dv">1</span>_redist__<span class="dv">1</span>  =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st">  </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb8-2" title="2">results_<span class="dv">1</span>_redist_<span class="dv">3</span> =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb8-3" title="3">results_<span class="dv">1</span>_redist_<span class="dv">4</span> =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st">  </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb8-4" title="4">results_<span class="dv">1</span>_redist_<span class="dv">5</span> =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st">  </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb8-5" title="5">results_<span class="dv">1</span>_redist_<span class="dv">6</span> =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb8-6" title="6">results_<span class="dv">1</span>_redist_<span class="dv">7</span> =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb8-7" title="7">results_<span class="dv">1</span>_redist_<span class="dv">9</span> =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss)  <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb8-8" title="8">results_<span class="dv">2</span>_redist_macro_bv =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st"> </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data=</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb8-9" title="9">results_<span class="dv">3</span>_redist_macro_bvi =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">    </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>merit<span class="op">*</span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">htmlreg</span>(<span class="kw">list</span>(results_<span class="dv">1</span>_redist__<span class="dv">1</span>, results_<span class="dv">1</span>_redist_<span class="dv">3</span>,results_<span class="dv">1</span>_redist_<span class="dv">4</span>,results_<span class="dv">1</span>_redist_<span class="dv">5</span>,results_<span class="dv">1</span>_redist_<span class="dv">6</span>,results_<span class="dv">1</span>_redist_<span class="dv">7</span>, results_<span class="dv">1</span>_redist_<span class="dv">9</span>, results_<span class="dv">2</span>_redist_macro_bv, results_<span class="dv">3</span>_redist_macro_bvi),</a>
+<a class="sourceLine" id="cb9-2" title="2">        <span class="dt">caption =</span> <span class="st">&quot;Redistribution preference models&quot;</span>, </a>
+<a class="sourceLine" id="cb9-3" title="3">        <span class="dt">omit.coef =</span> <span class="st">&quot;(sstatus)|(movstatus)|(univ)|(quintile_miss)|(age)|(sex)&quot;</span>, </a>
+<a class="sourceLine" id="cb9-4" title="4">        <span class="dt">custom.coef.names =</span> <span class="kw">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="st">&quot;Gini index&quot;</span>, <span class="st">&quot;Economic freedom index&quot;</span>, <span class="st">&quot;Meritocratic perception&quot;</span>, </a>
+<a class="sourceLine" id="cb9-5" title="5">                              <span class="st">&quot;Meritocratic preference&quot;</span>, <span class="st">&quot;Unmeritocratic Perception&quot;</span>,<span class="st">&quot;Unmerit preference&quot;</span>, <span class="st">&quot;GINI x Merit-perception&quot;</span>), </a>
+<a class="sourceLine" id="cb9-6" title="6">        <span class="dt">caption.above =</span> T, </a>
+<a class="sourceLine" id="cb9-7" title="7">        <span class="dt">star.symbol =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">*&quot;</span>, </a>
+<a class="sourceLine" id="cb9-8" title="8">        <span class="dt">center =</span> T, </a>
+<a class="sourceLine" id="cb9-9" title="9">        <span class="dt">custom.note =</span> <span class="st">&quot;$***p &lt;$ 0.001, $**p &lt;$ 0.01, $*p &lt;$ 0.05 &lt;br&gt; Since Model 6 control by subjetive status, mov subjetive status, Ed.univ, quintile_miss, age and sex&quot;</span>) </a></code></pre></div>
 <table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;color: #000000;border-top: 2px solid #000000;">
 <caption>
 Redistribution preference models
@@ -795,10 +793,10 @@ Intercept
 0.83
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-1.02<sup>**</sup>
+1.04<sup>**</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.72
+0.74
 </td>
 </tr>
 <tr>
@@ -987,10 +985,10 @@ Meritocratic perception
 -0.05<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.07<sup>***</sup>
+-0.07<sup>**</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.32<sup>***</sup>
+-0.33<sup>***</sup>
 </td>
 </tr>
 <tr>
@@ -1036,7 +1034,7 @@ Meritocratic preference
  
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.12<sup>***</sup>
+0.11<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 0.12<sup>***</sup>
@@ -1048,7 +1046,7 @@ Meritocratic preference
 0.03<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.04<sup>***</sup>
+0.03<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 0.04<sup>***</sup>
@@ -1286,31 +1284,31 @@ GINI x Merit-perception
 AIC
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-98762.00
+99026.94
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-98763.89
+99028.95
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-98457.99
+98731.99
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-97806.35
+98082.69
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-96035.68
+96317.76
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-96035.36
+96317.46
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-91412.00
+91695.46
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-91010.50
+91287.70
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-91004.02
+91281.21
 </td>
 </tr>
 <tr>
@@ -1318,31 +1316,31 @@ AIC
 BIC
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-98806.57
+99071.52
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-98799.55
+99064.61
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-98502.57
+98776.57
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-97859.84
+98136.18
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-96098.09
+96380.17
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-96115.60
+96397.70
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-91598.31
+91881.77
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-91214.56
+91491.76
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-91216.95
+91494.14
 </td>
 </tr>
 <tr>
@@ -1350,31 +1348,31 @@ BIC
 Log Likelihood
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--49376.00
+-49508.47
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--49377.94
+-49510.47
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--49224.00
+-49360.99
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--48897.18
+-49035.34
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--48010.84
+-48151.88
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--48008.68
+-48149.73
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--45685.00
+-45826.73
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--45482.25
+-45620.85
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--45478.01
+-45616.61
 </td>
 </tr>
 <tr>
@@ -1487,13 +1485,13 @@ Var: Residual
 0.35
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
+0.35
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
 0.34
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.33
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.33
+0.34
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 0.33
@@ -1531,7 +1529,7 @@ Var: v5c merit
  
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.01
+0.02
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 0.01
@@ -1596,67 +1594,67 @@ Cov: v5c (Intercept) merit
 <blockquote>
 <p>Al incluir la <em>interaccion entre niveles</em> el modelo mejora signifiicativamente. En alguna medida, lo que hace variar la pendiente de la relacion, es la desigualdad del pais.</p>
 </blockquote>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>results_<span class="dv">1</span>_redist_dem  =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st"> </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb10-2"><a href="#cb10-2"></a>results_<span class="dv">1</span>_redist_indsust =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">  </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb10-3"><a href="#cb10-3"></a>results_<span class="dv">1</span>_redist_macro =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">    </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb10-4"><a href="#cb10-4"></a>results_<span class="dv">2</span>_redist_macro_bv =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st"> </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data=</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb10-5"><a href="#cb10-5"></a>results_<span class="dv">3</span>_redist_macro_bvi =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">    </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>merit<span class="op">*</span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb10-6"><a href="#cb10-6"></a>results_<span class="dv">3</span>_redist_macro_bvi_<span class="dv">2</span> =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">  </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>merit<span class="op">*</span>fi_index <span class="op">+</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb10-7"><a href="#cb10-7"></a></span>
-<span id="cb10-8"><a href="#cb10-8"></a><span class="co">#htmlreg(list(results_1_redist_macro,results_2_redist_macro_bv, results_3_redist_macro_bvi,results_3_redist_macro_bvi_2), caption = &quot;Pendiente aleatorea e interaccion entre niveles&quot;, omit.coef = &quot;(sstatus)|(movstatus)|(univ)|(quintile_miss)|(age)|(sex)&quot;)</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>results_<span class="dv">3</span>_redist_macro_bvi_efectplot &lt;-<span class="st"> </span>sjPlot<span class="op">::</span><span class="kw">plot_model</span>(results_<span class="dv">3</span>_redist_macro_bvi, <span class="dt">type=</span><span class="st">&quot;std&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Modelo final con predictores, pendiente aleatoria e interaccion.&quot;</span>)</span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">ggsave</span>(results_<span class="dv">3</span>_redist_macro_bvi_efectplot, <span class="dt">filename =</span> <span class="st">&quot;output/results/results_3_redist_macro_bvi_efectplot.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</span>
-<span id="cb11-3"><a href="#cb11-3"></a></span>
-<span id="cb11-4"><a href="#cb11-4"></a>graf2=<span class="kw">ggpredict</span>(results_<span class="dv">2</span>_redist_macro_bv, <span class="dt">terms =</span> <span class="kw">c</span>(<span class="st">&quot;merit&quot;</span>,<span class="st">&quot;v5c [sample = 9]&quot;</span>), <span class="dt">type=</span><span class="st">&quot;re&quot;</span>)</span>
-<span id="cb11-5"><a href="#cb11-5"></a>pendiente_aleatoria_redistbv &lt;-<span class="st"> </span><span class="kw">plot</span>(graf2)</span>
-<span id="cb11-6"><a href="#cb11-6"></a><span class="kw">ggsave</span>(pendiente_aleatoria_redistbv, <span class="dt">filename =</span> <span class="st">&quot;output/results/pendiente_aleatoria_redistbv.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</span>
-<span id="cb11-7"><a href="#cb11-7"></a></span>
-<span id="cb11-8"><a href="#cb11-8"></a></span>
-<span id="cb11-9"><a href="#cb11-9"></a>results_<span class="dv">3</span>_redist_macro_bvi_interacgini_meansd &lt;-<span class="st"> </span>sjPlot<span class="op">::</span><span class="kw">plot_model</span>(results_<span class="dv">3</span>_redist_macro_bvi, </span>
-<span id="cb11-10"><a href="#cb11-10"></a>                                                                    <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;int&quot;</span>), </span>
-<span id="cb11-11"><a href="#cb11-11"></a>                                                                    <span class="dt">title =</span> <span class="st">&quot;Interaccion desigualdad&quot;</span>,  </span>
-<span id="cb11-12"><a href="#cb11-12"></a>                                                                    <span class="dt">mdrt.values =</span> <span class="st">&quot;meansd&quot;</span>) <span class="op">+</span><span class="st">  </span><span class="kw">scale_color_discrete</span>(<span class="st">&quot;Gini Index&quot;</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;- 1 DS&quot;</span>, <span class="st">&quot;Media&quot;</span>, <span class="st">&quot;+ 1 DS&quot;</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
-<span id="cb11-13"><a href="#cb11-13"></a>results_<span class="dv">3</span>_redist_macro_bvi_interacgini_minmax &lt;-<span class="st"> </span>sjPlot<span class="op">::</span><span class="kw">plot_model</span>(results_<span class="dv">3</span>_redist_macro_bvi, </span>
-<span id="cb11-14"><a href="#cb11-14"></a>                                                                    <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;int&quot;</span>), </span>
-<span id="cb11-15"><a href="#cb11-15"></a>                                                                    <span class="dt">title =</span> <span class="st">&quot;Interaccion desigualdad&quot;</span>) <span class="op">+</span><span class="st">  </span><span class="kw">scale_color_discrete</span>(<span class="st">&quot;Gini Index&quot;</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Min&quot;</span>, <span class="st">&quot;Max&quot;</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
-<span id="cb11-16"><a href="#cb11-16"></a>   </span>
-<span id="cb11-17"><a href="#cb11-17"></a><span class="kw">ggsave</span>(<span class="kw">plot_grid</span>(<span class="kw">list</span>(results_<span class="dv">3</span>_redist_macro_bvi_efectplot, pendiente_aleatoria_redistbv,results_<span class="dv">3</span>_redist_macro_bvi_interacgini_meansd, results_<span class="dv">3</span>_redist_macro_bvi_interacgini_minmax) ,</span>
-<span id="cb11-18"><a href="#cb11-18"></a>                 <span class="dt">margin =</span> <span class="kw">c</span>(<span class="fl">0.5</span>,<span class="fl">0.5</span>,<span class="fl">0.5</span>,<span class="fl">0.5</span>), </span>
-<span id="cb11-19"><a href="#cb11-19"></a>                 <span class="dt">tags =</span> <span class="kw">c</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>,<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>)), </span>
-<span id="cb11-20"><a href="#cb11-20"></a>       <span class="dt">filename =</span> <span class="st">&quot;output/results/results_3_redist_macro_bvi_interacgini.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</span>
-<span id="cb11-21"><a href="#cb11-21"></a></span>
-<span id="cb11-22"><a href="#cb11-22"></a><span class="co">#sjPlot::plot_model(results_3_redist_macro_bvi_2, type = c(&quot;int&quot;), title = &quot;Interaccion libertad economica&quot;,  mdrt.values = &quot;meansd&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">results_<span class="dv">1</span>_redist_dem  =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st"> </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb10-2" title="2">results_<span class="dv">1</span>_redist_indsust =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">  </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb10-3" title="3">results_<span class="dv">1</span>_redist_macro =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">    </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb10-4" title="4">results_<span class="dv">2</span>_redist_macro_bv =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st"> </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data=</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb10-5" title="5">results_<span class="dv">3</span>_redist_macro_bvi =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">    </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>merit<span class="op">*</span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb10-6" title="6">results_<span class="dv">3</span>_redist_macro_bvi_<span class="dv">2</span> =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">  </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>merit<span class="op">*</span>fi_index <span class="op">+</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb10-7" title="7"></a>
+<a class="sourceLine" id="cb10-8" title="8"><span class="co">#htmlreg(list(results_1_redist_macro,results_2_redist_macro_bv, results_3_redist_macro_bvi,results_3_redist_macro_bvi_2), caption = &quot;Pendiente aleatorea e interaccion entre niveles&quot;, omit.coef = &quot;(sstatus)|(movstatus)|(univ)|(quintile_miss)|(age)|(sex)&quot;)</span></a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">results_<span class="dv">3</span>_redist_macro_bvi_efectplot &lt;-<span class="st"> </span>sjPlot<span class="op">::</span><span class="kw">plot_model</span>(results_<span class="dv">3</span>_redist_macro_bvi, <span class="dt">type=</span><span class="st">&quot;std&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Modelo final con predictores, pendiente aleatoria e interaccion.&quot;</span>)</a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="kw">ggsave</span>(results_<span class="dv">3</span>_redist_macro_bvi_efectplot, <span class="dt">filename =</span> <span class="st">&quot;output/results/results_3_redist_macro_bvi_efectplot.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a>
+<a class="sourceLine" id="cb11-3" title="3"></a>
+<a class="sourceLine" id="cb11-4" title="4">graf2=<span class="kw">ggpredict</span>(results_<span class="dv">2</span>_redist_macro_bv, <span class="dt">terms =</span> <span class="kw">c</span>(<span class="st">&quot;merit&quot;</span>,<span class="st">&quot;v5c [sample = 9]&quot;</span>), <span class="dt">type=</span><span class="st">&quot;re&quot;</span>)</a>
+<a class="sourceLine" id="cb11-5" title="5">pendiente_aleatoria_redistbv &lt;-<span class="st"> </span><span class="kw">plot</span>(graf2)</a>
+<a class="sourceLine" id="cb11-6" title="6"><span class="kw">ggsave</span>(pendiente_aleatoria_redistbv, <span class="dt">filename =</span> <span class="st">&quot;output/results/pendiente_aleatoria_redistbv.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a>
+<a class="sourceLine" id="cb11-7" title="7"></a>
+<a class="sourceLine" id="cb11-8" title="8"></a>
+<a class="sourceLine" id="cb11-9" title="9">results_<span class="dv">3</span>_redist_macro_bvi_interacgini_meansd &lt;-<span class="st"> </span>sjPlot<span class="op">::</span><span class="kw">plot_model</span>(results_<span class="dv">3</span>_redist_macro_bvi, </a>
+<a class="sourceLine" id="cb11-10" title="10">                                                                    <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;int&quot;</span>), </a>
+<a class="sourceLine" id="cb11-11" title="11">                                                                    <span class="dt">title =</span> <span class="st">&quot;Interaccion desigualdad&quot;</span>,  </a>
+<a class="sourceLine" id="cb11-12" title="12">                                                                    <span class="dt">mdrt.values =</span> <span class="st">&quot;meansd&quot;</span>) <span class="op">+</span><span class="st">  </span><span class="kw">scale_color_discrete</span>(<span class="st">&quot;Gini Index&quot;</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;- 1 DS&quot;</span>, <span class="st">&quot;Media&quot;</span>, <span class="st">&quot;+ 1 DS&quot;</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</a>
+<a class="sourceLine" id="cb11-13" title="13">results_<span class="dv">3</span>_redist_macro_bvi_interacgini_minmax &lt;-<span class="st"> </span>sjPlot<span class="op">::</span><span class="kw">plot_model</span>(results_<span class="dv">3</span>_redist_macro_bvi, </a>
+<a class="sourceLine" id="cb11-14" title="14">                                                                    <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;int&quot;</span>), </a>
+<a class="sourceLine" id="cb11-15" title="15">                                                                    <span class="dt">title =</span> <span class="st">&quot;Interaccion desigualdad&quot;</span>) <span class="op">+</span><span class="st">  </span><span class="kw">scale_color_discrete</span>(<span class="st">&quot;Gini Index&quot;</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Min&quot;</span>, <span class="st">&quot;Max&quot;</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</a>
+<a class="sourceLine" id="cb11-16" title="16">   </a>
+<a class="sourceLine" id="cb11-17" title="17"><span class="kw">ggsave</span>(<span class="kw">plot_grid</span>(<span class="kw">list</span>(results_<span class="dv">3</span>_redist_macro_bvi_efectplot, pendiente_aleatoria_redistbv,results_<span class="dv">3</span>_redist_macro_bvi_interacgini_meansd, results_<span class="dv">3</span>_redist_macro_bvi_interacgini_minmax) ,</a>
+<a class="sourceLine" id="cb11-18" title="18">                 <span class="dt">margin =</span> <span class="kw">c</span>(<span class="fl">0.5</span>,<span class="fl">0.5</span>,<span class="fl">0.5</span>,<span class="fl">0.5</span>), </a>
+<a class="sourceLine" id="cb11-19" title="19">                 <span class="dt">tags =</span> <span class="kw">c</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>,<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>)), </a>
+<a class="sourceLine" id="cb11-20" title="20">       <span class="dt">filename =</span> <span class="st">&quot;output/results/results_3_redist_macro_bvi_interacgini.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a>
+<a class="sourceLine" id="cb11-21" title="21"></a>
+<a class="sourceLine" id="cb11-22" title="22"><span class="co">#sjPlot::plot_model(results_3_redist_macro_bvi_2, type = c(&quot;int&quot;), title = &quot;Interaccion libertad economica&quot;,  mdrt.values = &quot;meansd&quot;)</span></a></code></pre></div>
 <div class="figure">
-<img src="../output/results/results_3_redist_macro_bvi_interacgini.png" alt="" />
+<img src="../output/results/results_3_redist_macro_bvi_interacgini.png" alt="Modelos de Redistribucion; Efectos, pendientes aleatorias e interacciones" />
 <p class="caption">Modelos de Redistribucion; Efectos, pendientes aleatorias e interacciones</p>
 </div>
 </div>
-<div id="modelos-de-preferencias-por-marketizacion-accu." class="section level2" number="1.3">
-<h2 number="1.3"><span class="header-section-number">1.3</span> Modelos de Preferencias por marketizacion (accu).</h2>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>results_<span class="dv">1</span>_accum__<span class="dv">1</span>  =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st">  </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb12-2"><a href="#cb12-2"></a>results_<span class="dv">1</span>_accum__<span class="dv">2</span>  =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st">  </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb12-3"><a href="#cb12-3"></a>results_<span class="dv">1</span>_accum_<span class="dv">3</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb12-4"><a href="#cb12-4"></a>results_<span class="dv">1</span>_accum_<span class="dv">4</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st">  </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb12-5"><a href="#cb12-5"></a>results_<span class="dv">1</span>_accum_<span class="dv">5</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st">  </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb12-6"><a href="#cb12-6"></a>results_<span class="dv">1</span>_accum_<span class="dv">6</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb12-7"><a href="#cb12-7"></a>results_<span class="dv">1</span>_accum_<span class="dv">7</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb12-8"><a href="#cb12-8"></a>results_<span class="dv">1</span>_accum_<span class="dv">8</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb12-9"><a href="#cb12-9"></a>results_<span class="dv">1</span>_accum_<span class="dv">9</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss)  <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb12-10"><a href="#cb12-10"></a>results_<span class="dv">1</span>_accum_macro =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">  </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb12-11"><a href="#cb12-11"></a>results_<span class="dv">2</span>_accum_macro_bv =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">   </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st">  </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb12-12"><a href="#cb12-12"></a>results_<span class="dv">3</span>_accum_macro_bvi =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">  </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st">  </span>gini_neto <span class="op">+</span><span class="st"> </span>merit<span class="op">*</span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb12-13"><a href="#cb12-13"></a>results_<span class="dv">3</span>_accum_macro_bvi_<span class="dv">2</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">    </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st">  </span>fi_index <span class="op">+</span><span class="st"> </span>merit<span class="op">*</span>gini_neto <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</span>
-<span id="cb12-14"><a href="#cb12-14"></a></span>
-<span id="cb12-15"><a href="#cb12-15"></a><span class="co">#htmlreg(list(results_1_accum_macro,results_2_accum_macro_bv,results_3_accum_macro_bvi, results_3_accum_macro_bvi_2), star.symbol = &quot;\\*&quot;)</span></span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">htmlreg</span>(<span class="kw">list</span>(results_<span class="dv">1</span>_accum__<span class="dv">1</span>,results_<span class="dv">1</span>_accum__<span class="dv">2</span>, results_<span class="dv">1</span>_accum_<span class="dv">3</span>,results_<span class="dv">1</span>_accum_<span class="dv">4</span>,results_<span class="dv">1</span>_accum_<span class="dv">5</span>,results_<span class="dv">1</span>_accum_<span class="dv">6</span>,results_<span class="dv">1</span>_accum_<span class="dv">7</span>, results_<span class="dv">2</span>_accum_macro_bv, results_<span class="dv">3</span>_accum_macro_bvi), </span>
-<span id="cb13-2"><a href="#cb13-2"></a>        <span class="dt">caption =</span> <span class="st">&quot;Accumulation preferences models&quot;</span>, </span>
-<span id="cb13-3"><a href="#cb13-3"></a>        <span class="dt">omit.coef =</span> <span class="st">&quot;(sstatus)|(movstatus)|(univ)|(quintile_miss)|(age)|(sex)&quot;</span>, </span>
-<span id="cb13-4"><a href="#cb13-4"></a>        <span class="dt">custom.coef.names =</span> <span class="kw">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="st">&quot;Gini index&quot;</span>, <span class="st">&quot;Economic freedom index&quot;</span>, <span class="st">&quot;Meritocratic perception&quot;</span>, </span>
-<span id="cb13-5"><a href="#cb13-5"></a>                              <span class="st">&quot;Meritocratic preference&quot;</span>, <span class="st">&quot;Unmeritocratic Perception&quot;</span>,<span class="st">&quot;Unmerit preference&quot;</span>, <span class="st">&quot;Economic-freedom Merit-perception&quot;</span>), </span>
-<span id="cb13-6"><a href="#cb13-6"></a>        <span class="dt">caption.above =</span> T, </span>
-<span id="cb13-7"><a href="#cb13-7"></a>        <span class="dt">star.symbol =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">*&quot;</span>, </span>
-<span id="cb13-8"><a href="#cb13-8"></a>        <span class="dt">center =</span> T, </span>
-<span id="cb13-9"><a href="#cb13-9"></a>        <span class="dt">custom.note =</span> <span class="st">&quot;$***p &lt;$ 0.001, $**p &lt;$ 0.01, $*p &lt;$ 0.05 &lt;br&gt; Since Model 6 control by subjetive status, mov subjetive status, Ed.univ, quintile_miss, age and sex&quot;</span>) </span></code></pre></div>
+<div id="modelos-de-preferencias-por-marketizacion-accu." class="section level2">
+<h2><span class="header-section-number">1.3</span> Modelos de Preferencias por marketizacion (accu).</h2>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">results_<span class="dv">1</span>_accum__<span class="dv">1</span>  =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st">  </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb12-2" title="2">results_<span class="dv">1</span>_accum__<span class="dv">2</span>  =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st">  </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb12-3" title="3">results_<span class="dv">1</span>_accum_<span class="dv">3</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb12-4" title="4">results_<span class="dv">1</span>_accum_<span class="dv">4</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st">  </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb12-5" title="5">results_<span class="dv">1</span>_accum_<span class="dv">5</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st">  </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb12-6" title="6">results_<span class="dv">1</span>_accum_<span class="dv">6</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb12-7" title="7">results_<span class="dv">1</span>_accum_<span class="dv">7</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb12-8" title="8">results_<span class="dv">1</span>_accum_<span class="dv">8</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb12-9" title="9">results_<span class="dv">1</span>_accum_<span class="dv">9</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss)  <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb12-10" title="10">results_<span class="dv">1</span>_accum_macro =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">  </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb12-11" title="11">results_<span class="dv">2</span>_accum_macro_bv =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">   </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st">  </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb12-12" title="12">results_<span class="dv">3</span>_accum_macro_bvi =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">  </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st">  </span>gini_neto <span class="op">+</span><span class="st"> </span>merit<span class="op">*</span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb12-13" title="13">results_<span class="dv">3</span>_accum_macro_bvi_<span class="dv">2</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">    </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st">  </span>fi_index <span class="op">+</span><span class="st"> </span>merit<span class="op">*</span>gini_neto <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb12-14" title="14"></a>
+<a class="sourceLine" id="cb12-15" title="15"><span class="co">#htmlreg(list(results_1_accum_macro,results_2_accum_macro_bv,results_3_accum_macro_bvi, results_3_accum_macro_bvi_2), star.symbol = &quot;\\*&quot;)</span></a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">htmlreg</span>(<span class="kw">list</span>(results_<span class="dv">1</span>_accum__<span class="dv">1</span>,results_<span class="dv">1</span>_accum__<span class="dv">2</span>, results_<span class="dv">1</span>_accum_<span class="dv">3</span>,results_<span class="dv">1</span>_accum_<span class="dv">4</span>,results_<span class="dv">1</span>_accum_<span class="dv">5</span>,results_<span class="dv">1</span>_accum_<span class="dv">6</span>,results_<span class="dv">1</span>_accum_<span class="dv">7</span>, results_<span class="dv">2</span>_accum_macro_bv, results_<span class="dv">3</span>_accum_macro_bvi), </a>
+<a class="sourceLine" id="cb13-2" title="2">        <span class="dt">caption =</span> <span class="st">&quot;Accumulation preferences models&quot;</span>, </a>
+<a class="sourceLine" id="cb13-3" title="3">        <span class="dt">omit.coef =</span> <span class="st">&quot;(sstatus)|(movstatus)|(univ)|(quintile_miss)|(age)|(sex)&quot;</span>, </a>
+<a class="sourceLine" id="cb13-4" title="4">        <span class="dt">custom.coef.names =</span> <span class="kw">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="st">&quot;Gini index&quot;</span>, <span class="st">&quot;Economic freedom index&quot;</span>, <span class="st">&quot;Meritocratic perception&quot;</span>, </a>
+<a class="sourceLine" id="cb13-5" title="5">                              <span class="st">&quot;Meritocratic preference&quot;</span>, <span class="st">&quot;Unmeritocratic Perception&quot;</span>,<span class="st">&quot;Unmerit preference&quot;</span>, <span class="st">&quot;Economic-freedom Merit-perception&quot;</span>), </a>
+<a class="sourceLine" id="cb13-6" title="6">        <span class="dt">caption.above =</span> T, </a>
+<a class="sourceLine" id="cb13-7" title="7">        <span class="dt">star.symbol =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">*&quot;</span>, </a>
+<a class="sourceLine" id="cb13-8" title="8">        <span class="dt">center =</span> T, </a>
+<a class="sourceLine" id="cb13-9" title="9">        <span class="dt">custom.note =</span> <span class="st">&quot;$***p &lt;$ 0.001, $**p &lt;$ 0.01, $*p &lt;$ 0.05 &lt;br&gt; Since Model 6 control by subjetive status, mov subjetive status, Ed.univ, quintile_miss, age and sex&quot;</span>) </a></code></pre></div>
 <table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;color: #000000;border-top: 2px solid #000000;">
 <caption>
 Accumulation preferences models
@@ -1722,10 +1720,10 @@ Intercept
 -1.36
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.83
+-0.86
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--1.61<sup>*</sup>
+-1.64<sup>*</sup>
 </td>
 </tr>
 <tr>
@@ -1850,7 +1848,7 @@ Economic freedom index
 -0.00
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.10
+-0.09
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 0.01
@@ -1899,25 +1897,25 @@ Meritocratic perception
  
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
+0.03<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.09<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.09<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
 0.04<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.10<sup>***</sup>
+0.04<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.10<sup>***</sup>
+0.04
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.05<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.05<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.05<sup>*</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.64<sup>***</sup>
+-0.65<sup>***</sup>
 </td>
 </tr>
 <tr>
@@ -1966,16 +1964,16 @@ Meritocratic preference
  
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.11<sup>***</sup>
+-0.10<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.11<sup>***</sup>
+-0.10<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.04<sup>***</sup>
+-0.04<sup>**</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.04<sup>***</sup>
+-0.04<sup>**</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 -0.04<sup>***</sup>
@@ -2033,7 +2031,7 @@ Unmeritocratic Perception
  
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.01
+-0.00
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 0.04<sup>***</sup>
@@ -2103,7 +2101,7 @@ Unmerit preference
 -0.12<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.13<sup>***</sup>
+-0.12<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 -0.11<sup>***</sup>
@@ -2213,31 +2211,31 @@ Economic-freedom Merit-perception
 AIC
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-154721.85
+154831.85
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-154721.85
+154831.85
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-154722.01
+154836.24
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-154629.99
+154747.20
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-154631.57
+154748.90
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-154266.89
+154388.42
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-154251.85
+154373.33
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-146975.10
+147084.41
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-146965.87
+147075.40
 </td>
 </tr>
 <tr>
@@ -2245,31 +2243,31 @@ AIC
 BIC
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-154766.43
+154876.43
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-154766.43
+154876.43
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-154757.67
+154871.90
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-154674.56
+154791.77
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-154685.06
+154802.39
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-154329.30
+154450.83
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-154332.09
+154453.57
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-147179.15
+147288.47
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-147178.80
+147288.33
 </td>
 </tr>
 <tr>
@@ -2277,31 +2275,31 @@ BIC
 Log Likelihood
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--77355.93
+-77410.92
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--77355.93
+-77410.92
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--77357.00
+-77414.12
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--77309.99
+-77368.60
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--77309.78
+-77368.45
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--77126.45
+-77187.21
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--77116.92
+-77177.67
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--73464.55
+-73519.20
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--73458.94
+-73513.70
 </td>
 </tr>
 <tr>
@@ -2379,7 +2377,7 @@ Var: v5c (Intercept)
 0.14
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.21
+0.22
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 0.21
@@ -2526,65 +2524,65 @@ Cov: v5c (Intercept) merit
 <blockquote>
 <p>Al incluir la interaccion entre niveles el modelo mejora signifiicativamente. En alguna medida, lo que hace variar la pendiente de la relacion , el grado de mercantilizacion de la economia.</p>
 </blockquote>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>results_<span class="dv">3</span>_accum_macro_bvi_efect &lt;-<span class="st"> </span>sjPlot<span class="op">::</span><span class="kw">plot_model</span>(results_<span class="dv">3</span>_accum_macro_bvi, <span class="dt">type=</span><span class="st">&quot;std&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Modelo de pendiente aleatoria e interaccion (desigualdad)&quot;</span>)</span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="kw">ggsave</span>(results_<span class="dv">3</span>_accum_macro_bvi_efect, <span class="dt">filename =</span> <span class="st">&quot;output/results/results_3_accum_macro_bvi_efect.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</span>
-<span id="cb14-3"><a href="#cb14-3"></a></span>
-<span id="cb14-4"><a href="#cb14-4"></a>graf2=<span class="kw">ggpredict</span>(results_<span class="dv">2</span>_accum_macro_bv, <span class="dt">terms =</span> <span class="kw">c</span>(<span class="st">&quot;merit&quot;</span>,<span class="st">&quot;v5c [sample = 9]&quot;</span>), <span class="dt">type=</span><span class="st">&quot;re&quot;</span>)</span>
-<span id="cb14-5"><a href="#cb14-5"></a>pendientealeatoria_accum &lt;-<span class="st"> </span><span class="kw">plot</span>(graf2)</span>
-<span id="cb14-6"><a href="#cb14-6"></a><span class="kw">ggsave</span>(pendientealeatoria_accum, <span class="dt">filename =</span> <span class="st">&quot;output/results/pendientealeatoria_accum.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</span>
-<span id="cb14-7"><a href="#cb14-7"></a></span>
-<span id="cb14-8"><a href="#cb14-8"></a>mer_accum_int_f1 &lt;-<span class="st"> </span>sjPlot<span class="op">::</span><span class="kw">plot_model</span>(results_<span class="dv">3</span>_accum_macro_bvi_<span class="dv">2</span>, </span>
-<span id="cb14-9"><a href="#cb14-9"></a>                                       <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;int&quot;</span>), </span>
-<span id="cb14-10"><a href="#cb14-10"></a>                                       <span class="dt">title =</span> <span class="st">&quot;Interaccion Desigualdad&quot;</span>,  </span>
-<span id="cb14-11"><a href="#cb14-11"></a>                                       <span class="dt">mdrt.values =</span> <span class="st">&quot;meansd&quot;</span>) <span class="op">+</span><span class="st">  </span><span class="kw">scale_color_discrete</span>(<span class="st">&quot;Gini Index&quot;</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;- 1 DS&quot;</span>, <span class="st">&quot;Media&quot;</span>, <span class="st">&quot;+ 1 DS&quot;</span>))</span>
-<span id="cb14-12"><a href="#cb14-12"></a></span>
-<span id="cb14-13"><a href="#cb14-13"></a>mer_accum_int_f2 &lt;-<span class="st"> </span>sjPlot<span class="op">::</span><span class="kw">plot_model</span>(results_<span class="dv">3</span>_accum_macro_bvi_<span class="dv">2</span>, </span>
-<span id="cb14-14"><a href="#cb14-14"></a>                                       <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;int&quot;</span>), </span>
-<span id="cb14-15"><a href="#cb14-15"></a>                                       <span class="dt">title =</span> <span class="st">&quot;Interaccion Desigualdad&quot;</span>) <span class="op">+</span><span class="st">  </span><span class="kw">scale_color_discrete</span>(<span class="st">&quot;Gini Index&quot;</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Min&quot;</span>, <span class="st">&quot;Max&quot;</span>))</span>
-<span id="cb14-16"><a href="#cb14-16"></a></span>
-<span id="cb14-17"><a href="#cb14-17"></a><span class="kw">ggsave</span>(mer_accum_int_f1, <span class="dt">filename =</span> <span class="st">&quot;output/results/mer_accum_int_f1.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</span>
-<span id="cb14-18"><a href="#cb14-18"></a></span>
-<span id="cb14-19"><a href="#cb14-19"></a><span class="kw">ggsave</span>(<span class="kw">plot_grid</span>(<span class="kw">list</span>(results_<span class="dv">3</span>_accum_macro_bvi_efect, pendiente_aleatoria_redistbv,mer_accum_int_f1, mer_accum_int_f2) ,</span>
-<span id="cb14-20"><a href="#cb14-20"></a>                 <span class="dt">margin =</span> <span class="kw">c</span>(<span class="fl">0.5</span>,<span class="fl">0.5</span>,<span class="fl">0.5</span>,<span class="fl">0.5</span>), <span class="dt">tags =</span> <span class="kw">c</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>,<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>)), </span>
-<span id="cb14-21"><a href="#cb14-21"></a>       <span class="dt">filename =</span> <span class="st">&quot;output/results/results_3_accum_macro_bvi_interacgini.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">results_<span class="dv">3</span>_accum_macro_bvi_efect &lt;-<span class="st"> </span>sjPlot<span class="op">::</span><span class="kw">plot_model</span>(results_<span class="dv">3</span>_accum_macro_bvi, <span class="dt">type=</span><span class="st">&quot;std&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Modelo de pendiente aleatoria e interaccion (desigualdad)&quot;</span>)</a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="kw">ggsave</span>(results_<span class="dv">3</span>_accum_macro_bvi_efect, <span class="dt">filename =</span> <span class="st">&quot;output/results/results_3_accum_macro_bvi_efect.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a>
+<a class="sourceLine" id="cb14-3" title="3"></a>
+<a class="sourceLine" id="cb14-4" title="4">graf2=<span class="kw">ggpredict</span>(results_<span class="dv">2</span>_accum_macro_bv, <span class="dt">terms =</span> <span class="kw">c</span>(<span class="st">&quot;merit&quot;</span>,<span class="st">&quot;v5c [sample = 9]&quot;</span>), <span class="dt">type=</span><span class="st">&quot;re&quot;</span>)</a>
+<a class="sourceLine" id="cb14-5" title="5">pendientealeatoria_accum &lt;-<span class="st"> </span><span class="kw">plot</span>(graf2)</a>
+<a class="sourceLine" id="cb14-6" title="6"><span class="kw">ggsave</span>(pendientealeatoria_accum, <span class="dt">filename =</span> <span class="st">&quot;output/results/pendientealeatoria_accum.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a>
+<a class="sourceLine" id="cb14-7" title="7"></a>
+<a class="sourceLine" id="cb14-8" title="8">mer_accum_int_f1 &lt;-<span class="st"> </span>sjPlot<span class="op">::</span><span class="kw">plot_model</span>(results_<span class="dv">3</span>_accum_macro_bvi_<span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb14-9" title="9">                                       <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;int&quot;</span>), </a>
+<a class="sourceLine" id="cb14-10" title="10">                                       <span class="dt">title =</span> <span class="st">&quot;Interaccion Desigualdad&quot;</span>,  </a>
+<a class="sourceLine" id="cb14-11" title="11">                                       <span class="dt">mdrt.values =</span> <span class="st">&quot;meansd&quot;</span>) <span class="op">+</span><span class="st">  </span><span class="kw">scale_color_discrete</span>(<span class="st">&quot;Gini Index&quot;</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;- 1 DS&quot;</span>, <span class="st">&quot;Media&quot;</span>, <span class="st">&quot;+ 1 DS&quot;</span>))</a>
+<a class="sourceLine" id="cb14-12" title="12"></a>
+<a class="sourceLine" id="cb14-13" title="13">mer_accum_int_f2 &lt;-<span class="st"> </span>sjPlot<span class="op">::</span><span class="kw">plot_model</span>(results_<span class="dv">3</span>_accum_macro_bvi_<span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb14-14" title="14">                                       <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;int&quot;</span>), </a>
+<a class="sourceLine" id="cb14-15" title="15">                                       <span class="dt">title =</span> <span class="st">&quot;Interaccion Desigualdad&quot;</span>) <span class="op">+</span><span class="st">  </span><span class="kw">scale_color_discrete</span>(<span class="st">&quot;Gini Index&quot;</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Min&quot;</span>, <span class="st">&quot;Max&quot;</span>))</a>
+<a class="sourceLine" id="cb14-16" title="16"></a>
+<a class="sourceLine" id="cb14-17" title="17"><span class="kw">ggsave</span>(mer_accum_int_f1, <span class="dt">filename =</span> <span class="st">&quot;output/results/mer_accum_int_f1.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a>
+<a class="sourceLine" id="cb14-18" title="18"></a>
+<a class="sourceLine" id="cb14-19" title="19"><span class="kw">ggsave</span>(<span class="kw">plot_grid</span>(<span class="kw">list</span>(results_<span class="dv">3</span>_accum_macro_bvi_efect, pendiente_aleatoria_redistbv,mer_accum_int_f1, mer_accum_int_f2) ,</a>
+<a class="sourceLine" id="cb14-20" title="20">                 <span class="dt">margin =</span> <span class="kw">c</span>(<span class="fl">0.5</span>,<span class="fl">0.5</span>,<span class="fl">0.5</span>,<span class="fl">0.5</span>), <span class="dt">tags =</span> <span class="kw">c</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>,<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>)), </a>
+<a class="sourceLine" id="cb14-21" title="21">       <span class="dt">filename =</span> <span class="st">&quot;output/results/results_3_accum_macro_bvi_interacgini.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a></code></pre></div>
 <p><img src="../output/results/results_3_accum_macro_bvi_interacgini.png" /></p>
 <p>Segun la interaccion, podemos decir que el discursos meritocratico permite justifica r la desigual participacion de derechos basicos como la salud y la educaiccion, pero solo en contextos con una baja desigualdad. En paises con una alta desigualdad, la percepcion de meritocracia no fomenta la justificacion del acceso desigual a servicios basicos, lo cual hipotetiso que puede deberse a las diferencias redicales entre los servicios de alto y bajo costo, diferencias que por sus consecuencias no permiten justificar el acceso desigual ni si quiera considerando las diferencias de merito.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># guardar tablas</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="co">#redis </span></span>
-<span id="cb15-3"><a href="#cb15-3"></a><span class="kw">save</span>(results_<span class="dv">1</span>_redist_macro, <span class="dt">file =</span> <span class="st">&quot;output/results/results_1_redist_macro.rdata&quot;</span>)</span>
-<span id="cb15-4"><a href="#cb15-4"></a><span class="kw">save</span>(results_<span class="dv">2</span>_redist_macro_bv, <span class="dt">file =</span> <span class="st">&quot;output/results/results_2_redist_macro_bv.rdata&quot;</span>)</span>
-<span id="cb15-5"><a href="#cb15-5"></a><span class="kw">save</span>(results_<span class="dv">3</span>_redist_macro_bvi, <span class="dt">file =</span> <span class="st">&quot;output/results/results_3_redist_macro_bvi.rdata&quot;</span>)</span>
-<span id="cb15-6"><a href="#cb15-6"></a></span>
-<span id="cb15-7"><a href="#cb15-7"></a><span class="co">#accum</span></span>
-<span id="cb15-8"><a href="#cb15-8"></a><span class="kw">save</span>(results_<span class="dv">1</span>_accum_macro, <span class="dt">file =</span> <span class="st">&quot;output/results/results_1_accum_macro.rdata&quot;</span>)</span>
-<span id="cb15-9"><a href="#cb15-9"></a><span class="kw">save</span>(results_<span class="dv">2</span>_accum_macro_bv, <span class="dt">file =</span> <span class="st">&quot;output/results/results_2_accum_macro_bv.rdata&quot;</span>)</span>
-<span id="cb15-10"><a href="#cb15-10"></a><span class="kw">save</span>(results_<span class="dv">3</span>_accum_macro_bvi, <span class="dt">file =</span> <span class="st">&quot;output/results/results_3_accum_macro_bvi.rdata&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co"># guardar tablas</span></a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="co">#redis </span></a>
+<a class="sourceLine" id="cb15-3" title="3"><span class="kw">save</span>(results_<span class="dv">1</span>_redist_macro, <span class="dt">file =</span> <span class="st">&quot;output/results/results_1_redist_macro.rdata&quot;</span>)</a>
+<a class="sourceLine" id="cb15-4" title="4"><span class="kw">save</span>(results_<span class="dv">2</span>_redist_macro_bv, <span class="dt">file =</span> <span class="st">&quot;output/results/results_2_redist_macro_bv.rdata&quot;</span>)</a>
+<a class="sourceLine" id="cb15-5" title="5"><span class="kw">save</span>(results_<span class="dv">3</span>_redist_macro_bvi, <span class="dt">file =</span> <span class="st">&quot;output/results/results_3_redist_macro_bvi.rdata&quot;</span>)</a>
+<a class="sourceLine" id="cb15-6" title="6"></a>
+<a class="sourceLine" id="cb15-7" title="7"><span class="co">#accum</span></a>
+<a class="sourceLine" id="cb15-8" title="8"><span class="kw">save</span>(results_<span class="dv">1</span>_accum_macro, <span class="dt">file =</span> <span class="st">&quot;output/results/results_1_accum_macro.rdata&quot;</span>)</a>
+<a class="sourceLine" id="cb15-9" title="9"><span class="kw">save</span>(results_<span class="dv">2</span>_accum_macro_bv, <span class="dt">file =</span> <span class="st">&quot;output/results/results_2_accum_macro_bv.rdata&quot;</span>)</a>
+<a class="sourceLine" id="cb15-10" title="10"><span class="kw">save</span>(results_<span class="dv">3</span>_accum_macro_bvi, <span class="dt">file =</span> <span class="st">&quot;output/results/results_3_accum_macro_bvi.rdata&quot;</span>)</a></code></pre></div>
 </div>
 </div>
-<div id="analisis-de-robustez-modelos-multinivel" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> Analisis de robustez Modelos Multinivel</h1>
-<div id="regresiones-finales-sin-paises-en-los-que-no-converge-el-modelo-de-medida." class="section level2" number="2.1">
-<h2 number="2.1"><span class="header-section-number">2.1</span> Regresiones finales sin paises en los que no converge el modelo de medida.</h2>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>mer_pref_sinnonconvr&lt;-<span class="st"> </span>mer_pref[<span class="kw">which</span>(mer_pref<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;VEN&#39;</span>), ]</span>
-<span id="cb16-2"><a href="#cb16-2"></a>mer_pref_sinnonconvr&lt;-<span class="st"> </span>mer_pref_sinnonconvr[<span class="kw">which</span>(mer_pref_sinnonconvr<span class="op">$</span>v5<span class="op">!=</span><span class="dv">191</span>), ]</span>
-<span id="cb16-3"><a href="#cb16-3"></a>mer_pref_sinnonconvr &lt;-<span class="st"> </span>mer_pref_sinnonconvr[<span class="kw">which</span>(mer_pref_sinnonconvr<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;CYP&#39;</span>), ]</span>
-<span id="cb16-4"><a href="#cb16-4"></a>mer_pref_sinnonconvr &lt;-<span class="st"> </span>mer_pref_sinnonconvr[<span class="kw">which</span>(mer_pref_sinnonconvr<span class="op">$</span>v5<span class="op">!=</span><span class="dv">380</span>), ]</span>
-<span id="cb16-5"><a href="#cb16-5"></a>mer_pref_sinnonconvr &lt;-<span class="st"> </span>mer_pref_sinnonconvr[<span class="kw">which</span>(mer_pref_sinnonconvr<span class="op">$</span>v5<span class="op">!=</span><span class="dv">428</span>), ]</span>
-<span id="cb16-6"><a href="#cb16-6"></a></span>
-<span id="cb16-7"><a href="#cb16-7"></a>results_<span class="dv">3</span>_redist_macro_bvi_nocong =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">    </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>merit<span class="op">*</span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref_sinnonconvr, <span class="dt">REML=</span>F)</span>
-<span id="cb16-8"><a href="#cb16-8"></a></span>
-<span id="cb16-9"><a href="#cb16-9"></a>results_<span class="dv">3</span>_accum_macro_bvi_nocong =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">  </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st">  </span>gini_neto <span class="op">+</span><span class="st"> </span>merit<span class="op">*</span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref_sinnonconvr, <span class="dt">REML=</span>F)</span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">htmlreg</span>(<span class="kw">list</span>(results_<span class="dv">3</span>_redist_macro_bvi, results_<span class="dv">3</span>_redist_macro_bvi_nocong, results_<span class="dv">3</span>_accum_macro_bvi, results_<span class="dv">3</span>_accum_macro_bvi_nocong), </span>
-<span id="cb17-2"><a href="#cb17-2"></a>        <span class="dt">caption =</span> <span class="st">&quot;Comparison model excludig countries non convergent in the measurement&quot;</span>, </span>
-<span id="cb17-3"><a href="#cb17-3"></a>        <span class="dt">custom.model.names =</span> <span class="kw">c</span>(<span class="st">&quot;Whit&quot;</span>, <span class="st">&quot;Whithout&quot;</span>,<span class="st">&quot;Whit&quot;</span>, <span class="st">&quot;Whithout&quot;</span>), </span>
-<span id="cb17-4"><a href="#cb17-4"></a>        <span class="dt">custom.header =</span> <span class="kw">list</span>(<span class="st">&quot;Redistribution&quot;</span> =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="st">&quot;Accumulation&quot;</span> =<span class="st"> </span><span class="dv">3</span><span class="op">:</span><span class="dv">4</span>), </span>
-<span id="cb17-5"><a href="#cb17-5"></a>        <span class="dt">star.symbol =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">*&quot;</span>, </span>
-<span id="cb17-6"><a href="#cb17-6"></a>        <span class="dt">custom.note =</span> <span class="st">&quot;$***p &lt;$ 0.001, $**p &lt;$ 0.01, $*p &lt;$ 0.05 &lt;br&gt; countries non convergent in the measurement model:Venezuela, Croatia, Cyprus, Italy, Latvia&quot;</span>, </span>
-<span id="cb17-7"><a href="#cb17-7"></a>        <span class="dt">custom.coef.names =</span> <span class="kw">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="st">&quot;University. Ed.&quot;</span>, <span class="st">&quot;Quintile 2&quot;</span>, <span class="st">&quot;Quintile 3&quot;</span>, <span class="st">&quot;Quintile 4&quot;</span>,<span class="st">&quot;Quintile 5&quot;</span>, <span class="st">&quot;Quintile miss&quot;</span>, <span class="st">&quot;Subjetive status&quot;</span>, </span>
-<span id="cb17-8"><a href="#cb17-8"></a>                              <span class="st">&quot;Subjetive upward mobility&quot;</span>, <span class="st">&quot;Supjetive downward mobility&quot;</span>,<span class="st">&quot;Subjetive non-mobility&quot;</span>,<span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;Age&quot;</span>, <span class="st">&quot;Meritorcatic perception&quot;</span>, </span>
-<span id="cb17-9"><a href="#cb17-9"></a>                              <span class="st">&quot;Meritocratic preferences&quot;</span>, <span class="st">&quot;Unmeritocratic perception&quot;</span>, <span class="st">&quot;Unmeritocratic preferences&quot;</span>, <span class="st">&quot;Gini index&quot;</span>, <span class="st">&quot;Economic freedom index&quot;</span>, </span>
-<span id="cb17-10"><a href="#cb17-10"></a>                              <span class="st">&quot;Merit-perception x Gini&quot;</span>, <span class="st">&quot;Merit-perception x Economic-freedom&quot;</span>), </span>
-<span id="cb17-11"><a href="#cb17-11"></a>        <span class="dt">caption.above =</span> T)</span></code></pre></div>
+<div id="analisis-de-robustez-modelos-multinivel" class="section level1">
+<h1><span class="header-section-number">2</span> Analisis de robustez Modelos Multinivel</h1>
+<div id="regresiones-finales-sin-paises-en-los-que-no-converge-el-modelo-de-medida." class="section level2">
+<h2><span class="header-section-number">2.1</span> Regresiones finales sin paises en los que no converge el modelo de medida.</h2>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">mer_pref_sinnonconvr&lt;-<span class="st"> </span>mer_pref[<span class="kw">which</span>(mer_pref<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;VEN&#39;</span>), ]</a>
+<a class="sourceLine" id="cb16-2" title="2">mer_pref_sinnonconvr&lt;-<span class="st"> </span>mer_pref_sinnonconvr[<span class="kw">which</span>(mer_pref_sinnonconvr<span class="op">$</span>v5<span class="op">!=</span><span class="dv">191</span>), ]</a>
+<a class="sourceLine" id="cb16-3" title="3">mer_pref_sinnonconvr &lt;-<span class="st"> </span>mer_pref_sinnonconvr[<span class="kw">which</span>(mer_pref_sinnonconvr<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;CYP&#39;</span>), ]</a>
+<a class="sourceLine" id="cb16-4" title="4">mer_pref_sinnonconvr &lt;-<span class="st"> </span>mer_pref_sinnonconvr[<span class="kw">which</span>(mer_pref_sinnonconvr<span class="op">$</span>v5<span class="op">!=</span><span class="dv">380</span>), ]</a>
+<a class="sourceLine" id="cb16-5" title="5">mer_pref_sinnonconvr &lt;-<span class="st"> </span>mer_pref_sinnonconvr[<span class="kw">which</span>(mer_pref_sinnonconvr<span class="op">$</span>v5<span class="op">!=</span><span class="dv">428</span>), ]</a>
+<a class="sourceLine" id="cb16-6" title="6"></a>
+<a class="sourceLine" id="cb16-7" title="7">results_<span class="dv">3</span>_redist_macro_bvi_nocong =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">    </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>merit<span class="op">*</span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref_sinnonconvr, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb16-8" title="8"></a>
+<a class="sourceLine" id="cb16-9" title="9">results_<span class="dv">3</span>_accum_macro_bvi_nocong =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">  </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st">  </span>gini_neto <span class="op">+</span><span class="st"> </span>merit<span class="op">*</span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref_sinnonconvr, <span class="dt">REML=</span>F)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">htmlreg</span>(<span class="kw">list</span>(results_<span class="dv">3</span>_redist_macro_bvi, results_<span class="dv">3</span>_redist_macro_bvi_nocong, results_<span class="dv">3</span>_accum_macro_bvi, results_<span class="dv">3</span>_accum_macro_bvi_nocong), </a>
+<a class="sourceLine" id="cb17-2" title="2">        <span class="dt">caption =</span> <span class="st">&quot;Comparison model excludig countries non convergent in the measurement&quot;</span>, </a>
+<a class="sourceLine" id="cb17-3" title="3">        <span class="dt">custom.model.names =</span> <span class="kw">c</span>(<span class="st">&quot;Whit&quot;</span>, <span class="st">&quot;Whithout&quot;</span>,<span class="st">&quot;Whit&quot;</span>, <span class="st">&quot;Whithout&quot;</span>), </a>
+<a class="sourceLine" id="cb17-4" title="4">        <span class="dt">custom.header =</span> <span class="kw">list</span>(<span class="st">&quot;Redistribution&quot;</span> =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="st">&quot;Accumulation&quot;</span> =<span class="st"> </span><span class="dv">3</span><span class="op">:</span><span class="dv">4</span>), </a>
+<a class="sourceLine" id="cb17-5" title="5">        <span class="dt">star.symbol =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">*&quot;</span>, </a>
+<a class="sourceLine" id="cb17-6" title="6">        <span class="dt">custom.note =</span> <span class="st">&quot;$***p &lt;$ 0.001, $**p &lt;$ 0.01, $*p &lt;$ 0.05 &lt;br&gt; countries non convergent in the measurement model:Venezuela, Croatia, Cyprus, Italy, Latvia&quot;</span>, </a>
+<a class="sourceLine" id="cb17-7" title="7">        <span class="dt">custom.coef.names =</span> <span class="kw">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="st">&quot;University. Ed.&quot;</span>, <span class="st">&quot;Quintile 2&quot;</span>, <span class="st">&quot;Quintile 3&quot;</span>, <span class="st">&quot;Quintile 4&quot;</span>,<span class="st">&quot;Quintile 5&quot;</span>, <span class="st">&quot;Quintile miss&quot;</span>, <span class="st">&quot;Subjetive status&quot;</span>, </a>
+<a class="sourceLine" id="cb17-8" title="8">                              <span class="st">&quot;Subjetive upward mobility&quot;</span>, <span class="st">&quot;Supjetive downward mobility&quot;</span>,<span class="st">&quot;Subjetive non-mobility&quot;</span>,<span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;Age&quot;</span>, <span class="st">&quot;Meritorcatic perception&quot;</span>, </a>
+<a class="sourceLine" id="cb17-9" title="9">                              <span class="st">&quot;Meritocratic preferences&quot;</span>, <span class="st">&quot;Unmeritocratic perception&quot;</span>, <span class="st">&quot;Unmeritocratic preferences&quot;</span>, <span class="st">&quot;Gini index&quot;</span>, <span class="st">&quot;Economic freedom index&quot;</span>, </a>
+<a class="sourceLine" id="cb17-10" title="10">                              <span class="st">&quot;Merit-perception x Gini&quot;</span>, <span class="st">&quot;Merit-perception x Economic-freedom&quot;</span>), </a>
+<a class="sourceLine" id="cb17-11" title="11">        <span class="dt">caption.above =</span> T)</a></code></pre></div>
 <table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;color: #000000;border-top: 2px solid #000000;">
 <caption>
 Comparison model excludig countries non convergent in the measurement
@@ -2625,16 +2623,16 @@ Whithout
 Intercept
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.72
+0.74
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-1.09<sup>*</sup>
+1.10<sup>*</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--1.61<sup>*</sup>
+-1.64<sup>*</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--2.27<sup>*</sup>
+-2.28<sup>*</sup>
 </td>
 </tr>
 <tr>
@@ -2645,7 +2643,7 @@ Intercept
 (0.38)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.47)
+(0.48)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 (0.74)
@@ -2696,7 +2694,7 @@ Quintile 2
 -0.03<sup>**</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.03<sup>**</sup>
+-0.03<sup>*</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 0.03
@@ -2764,13 +2762,13 @@ Quintile 4
 -0.08<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.09<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.07<sup>**</sup>
+-0.08<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 0.06<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.05<sup>*</sup>
 </td>
 </tr>
 <tr>
@@ -2804,7 +2802,7 @@ Quintile 5
 0.12<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.12<sup>***</sup>
+0.11<sup>***</sup>
 </td>
 </tr>
 <tr>
@@ -2835,10 +2833,10 @@ Quintile miss
 -0.10<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.07<sup>***</sup>
+0.06<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.06<sup>***</sup>
+0.06<sup>**</sup>
 </td>
 </tr>
 <tr>
@@ -2897,7 +2895,7 @@ Subjetive status
 Subjetive upward mobility
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.02<sup>*</sup>
+-0.01<sup>*</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 -0.01
@@ -2974,7 +2972,7 @@ Subjetive non-mobility
 -0.02
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.02
+-0.01
 </td>
 </tr>
 <tr>
@@ -3067,16 +3065,16 @@ Age
 Meritorcatic perception
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.32<sup>***</sup>
+-0.33<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.36<sup>***</sup>
+-0.37<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.64<sup>***</sup>
+-0.65<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.73<sup>**</sup>
+-0.74<sup>**</sup>
 </td>
 </tr>
 <tr>
@@ -3339,16 +3337,16 @@ Merit-perception x Economic-freedom
 AIC
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-91004.02
+91281.21
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-82688.22
+82876.70
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-146965.87
+147075.40
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-133016.32
+133126.21
 </td>
 </tr>
 <tr>
@@ -3356,16 +3354,16 @@ AIC
 BIC
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-91216.95
+91494.14
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-82898.65
+83087.13
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-147178.80
+147288.33
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-133226.75
+133336.64
 </td>
 </tr>
 <tr>
@@ -3373,16 +3371,16 @@ BIC
 Log Likelihood
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--45478.01
+-45616.61
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--41320.11
+-41414.35
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--73458.94
+-73513.70
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--66484.16
+-66539.11
 </td>
 </tr>
 <tr>
@@ -3433,7 +3431,7 @@ Var: v5c (Intercept)
 0.13
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.11
+0.12
 </td>
 </tr>
 <tr>
@@ -3498,24 +3496,24 @@ Var: Residual
 </table>
 <p>Como puede apresiarce en las regresiones, los pesos de las distintas variables y su significacion no varian sustantivamente al excluir del calculo a los paises que no convergen en los modelos de medida.</p>
 </div>
-<div id="casos-influyentes" class="section level2" number="2.2">
-<h2 number="2.2"><span class="header-section-number">2.2</span> Casos influyentes</h2>
-<div id="cook-distance" class="section level3" number="2.2.1">
-<h3 number="2.2.1"><span class="header-section-number">2.2.1</span> Cook Distance</h3>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co">#Redis</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a>estex.m23_2a &lt;-<span class="st"> </span>influence.ME<span class="op">::</span><span class="kw">influence</span>(results_<span class="dv">3</span>_redist_macro_bvi, <span class="st">&quot;v5c&quot;</span>) </span>
-<span id="cb18-3"><a href="#cb18-3"></a></span>
-<span id="cb18-4"><a href="#cb18-4"></a>plota &lt;-<span class="st"> </span><span class="kw">plot</span>(estex.m23_2a, <span class="dt">which=</span><span class="st">&quot;cook&quot;</span>,</span>
-<span id="cb18-5"><a href="#cb18-5"></a>              <span class="dt">cutoff =</span> <span class="fl">.1</span>, <span class="dt">sort =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb18-6"><a href="#cb18-6"></a>              <span class="dt">xlab =</span> <span class="st">&quot;Cooks Distance Redistribution Model&quot;</span>,</span>
-<span id="cb18-7"><a href="#cb18-7"></a>              <span class="dt">ylab=</span><span class="st">&quot;Contries&quot;</span>)</span>
-<span id="cb18-8"><a href="#cb18-8"></a></span>
-<span id="cb18-9"><a href="#cb18-9"></a>estex.m23_2b &lt;-<span class="st">  </span>influence.ME<span class="op">::</span><span class="kw">influence</span>(results_<span class="dv">3</span>_accum_macro_bvi, <span class="st">&quot;v5c&quot;</span>) </span>
-<span id="cb18-10"><a href="#cb18-10"></a></span>
-<span id="cb18-11"><a href="#cb18-11"></a>plotb &lt;-<span class="kw">plot</span>(estex.m23_2b, <span class="dt">which=</span><span class="st">&quot;cook&quot;</span>,</span>
-<span id="cb18-12"><a href="#cb18-12"></a>             <span class="dt">cutoff =</span> <span class="fl">.1</span>, <span class="dt">sort =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb18-13"><a href="#cb18-13"></a>             <span class="dt">xlab =</span> <span class="st">&quot;Cooks Distance Accumulation Model&quot;</span>,</span>
-<span id="cb18-14"><a href="#cb18-14"></a>             <span class="dt">ylab=</span><span class="st">&quot;Contries&quot;</span>)</span></code></pre></div>
+<div id="casos-influyentes" class="section level2">
+<h2><span class="header-section-number">2.2</span> Casos influyentes</h2>
+<div id="cook-distance" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Cook Distance</h3>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co">#Redis</span></a>
+<a class="sourceLine" id="cb18-2" title="2">estex.m23_2a &lt;-<span class="st"> </span>influence.ME<span class="op">::</span><span class="kw">influence</span>(results_<span class="dv">3</span>_redist_macro_bvi, <span class="st">&quot;v5c&quot;</span>) </a>
+<a class="sourceLine" id="cb18-3" title="3"></a>
+<a class="sourceLine" id="cb18-4" title="4">plota &lt;-<span class="st"> </span><span class="kw">plot</span>(estex.m23_2a, <span class="dt">which=</span><span class="st">&quot;cook&quot;</span>,</a>
+<a class="sourceLine" id="cb18-5" title="5">              <span class="dt">cutoff =</span> <span class="fl">.1</span>, <span class="dt">sort =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb18-6" title="6">              <span class="dt">xlab =</span> <span class="st">&quot;Cooks Distance Redistribution Model&quot;</span>,</a>
+<a class="sourceLine" id="cb18-7" title="7">              <span class="dt">ylab=</span><span class="st">&quot;Contries&quot;</span>)</a>
+<a class="sourceLine" id="cb18-8" title="8"></a>
+<a class="sourceLine" id="cb18-9" title="9">estex.m23_2b &lt;-<span class="st">  </span>influence.ME<span class="op">::</span><span class="kw">influence</span>(results_<span class="dv">3</span>_accum_macro_bvi, <span class="st">&quot;v5c&quot;</span>) </a>
+<a class="sourceLine" id="cb18-10" title="10"></a>
+<a class="sourceLine" id="cb18-11" title="11">plotb &lt;-<span class="kw">plot</span>(estex.m23_2b, <span class="dt">which=</span><span class="st">&quot;cook&quot;</span>,</a>
+<a class="sourceLine" id="cb18-12" title="12">             <span class="dt">cutoff =</span> <span class="fl">.1</span>, <span class="dt">sort =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb18-13" title="13">             <span class="dt">xlab =</span> <span class="st">&quot;Cooks Distance Accumulation Model&quot;</span>,</a>
+<a class="sourceLine" id="cb18-14" title="14">             <span class="dt">ylab=</span><span class="st">&quot;Contries&quot;</span>)</a></code></pre></div>
 <div class="figure">
 <img src="prod_analysis-b_files/figure-html/unnamed-chunk-17-1.png" alt=" D de Cook" width="50%" /><img src="prod_analysis-b_files/figure-html/unnamed-chunk-17-2.png" alt=" D de Cook" width="50%" />
 <p class="caption">
@@ -3526,52 +3524,52 @@ D de Cook
 <p>cut point &gt; 0.1 (4/40)</p>
 </blockquote>
 </div>
-<div id="comparación-de-los-modelos-excluyendo-casos-influyentes-a-nivel-2" class="section level3" number="2.2.2">
-<h3 number="2.2.2"><span class="header-section-number">2.2.2</span> Comparación de los modelos excluyendo casos influyentes a nivel 2</h3>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref[<span class="kw">which</span>(mer_pref<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;ZAF&#39;</span>), ]</span>
-<span id="cb19-2"><a href="#cb19-2"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;CYP&#39;</span>), ]</span>
-<span id="cb19-3"><a href="#cb19-3"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;TUR&#39;</span>), ]</span>
-<span id="cb19-4"><a href="#cb19-4"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;TWN&#39;</span>), ]</span>
-<span id="cb19-5"><a href="#cb19-5"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;UKR&#39;</span>), ]</span>
-<span id="cb19-6"><a href="#cb19-6"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;CZE&#39;</span>), ]</span>
-<span id="cb19-7"><a href="#cb19-7"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;FRA&#39;</span>), ]</span>
-<span id="cb19-8"><a href="#cb19-8"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;AUS&#39;</span>), ]</span>
-<span id="cb19-9"><a href="#cb19-9"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;DNK&#39;</span>), ]</span>
-<span id="cb19-10"><a href="#cb19-10"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;USA&#39;</span>), ]</span>
-<span id="cb19-11"><a href="#cb19-11"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;VEN&#39;</span>), ]</span>
-<span id="cb19-12"><a href="#cb19-12"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;PHL&#39;</span>), ]</span>
-<span id="cb19-13"><a href="#cb19-13"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;POL&#39;</span>), ]</span>
-<span id="cb19-14"><a href="#cb19-14"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;CHN&#39;</span>), ]</span>
-<span id="cb19-15"><a href="#cb19-15"></a></span>
-<span id="cb19-16"><a href="#cb19-16"></a>results_<span class="dv">3</span>_redist_macro_bvi_sininf =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st"> </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>merit<span class="op">*</span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref_sininfl, <span class="dt">REML=</span>F)</span>
-<span id="cb19-17"><a href="#cb19-17"></a></span>
-<span id="cb19-18"><a href="#cb19-18"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref[<span class="kw">which</span>(mer_pref<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;ZAF&#39;</span>), ]</span>
-<span id="cb19-19"><a href="#cb19-19"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;VEN&#39;</span>), ]</span>
-<span id="cb19-20"><a href="#cb19-20"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;FRA&#39;</span>), ]</span>
-<span id="cb19-21"><a href="#cb19-21"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;CHN&#39;</span>), ]</span>
-<span id="cb19-22"><a href="#cb19-22"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;UKR&#39;</span>), ]</span>
-<span id="cb19-23"><a href="#cb19-23"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;ISR&#39;</span>), ]</span>
-<span id="cb19-24"><a href="#cb19-24"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;CHL&#39;</span>), ]</span>
-<span id="cb19-25"><a href="#cb19-25"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;AUS&#39;</span>), ]</span>
-<span id="cb19-26"><a href="#cb19-26"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;DNK&#39;</span>), ]</span>
-<span id="cb19-27"><a href="#cb19-27"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;LVA&#39;</span>), ]</span>
-<span id="cb19-28"><a href="#cb19-28"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;VEN&#39;</span>), ]</span>
-<span id="cb19-29"><a href="#cb19-29"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;PHL&#39;</span>), ]</span>
-<span id="cb19-30"><a href="#cb19-30"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;POL&#39;</span>), ]</span>
-<span id="cb19-31"><a href="#cb19-31"></a>mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;CZE&#39;</span>), ]</span>
-<span id="cb19-32"><a href="#cb19-32"></a></span>
-<span id="cb19-33"><a href="#cb19-33"></a>results_<span class="dv">3</span>_accum_macro_bvi_sininfl =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">  </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st">  </span>gini_neto <span class="op">+</span><span class="st"> </span>merit<span class="op">*</span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref_sininfl, <span class="dt">REML=</span>F)</span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw">htmlreg</span>(<span class="kw">list</span>(results_<span class="dv">3</span>_redist_macro_bvi, results_<span class="dv">3</span>_redist_macro_bvi_sininf,results_<span class="dv">3</span>_accum_macro_bvi, results_<span class="dv">3</span>_accum_macro_bvi_sininfl), </span>
-<span id="cb20-2"><a href="#cb20-2"></a>        <span class="dt">caption =</span> <span class="st">&quot;Comparison model Without influential cases in level two&quot;</span>, </span>
-<span id="cb20-3"><a href="#cb20-3"></a>        <span class="dt">custom.model.names =</span> <span class="kw">c</span>(<span class="st">&quot;Whit&quot;</span>, <span class="st">&quot;Whithout&quot;</span>,<span class="st">&quot;Whit&quot;</span>, <span class="st">&quot;Whithout&quot;</span>), </span>
-<span id="cb20-4"><a href="#cb20-4"></a>        <span class="dt">custom.header =</span> <span class="kw">list</span>(<span class="st">&quot;Redistribution&quot;</span> =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="st">&quot;Accumulation&quot;</span> =<span class="st"> </span><span class="dv">3</span><span class="op">:</span><span class="dv">4</span>), </span>
-<span id="cb20-5"><a href="#cb20-5"></a>        <span class="dt">caption.above =</span> T, </span>
-<span id="cb20-6"><a href="#cb20-6"></a>        <span class="dt">star.symbol =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">*&quot;</span>, </span>
-<span id="cb20-7"><a href="#cb20-7"></a>        <span class="dt">custom.note =</span> <span class="st">&quot;$***p &lt;$ 0.001, $**p &lt;$ 0.01, $*p &lt;$ 0.05 &lt;br&gt; Influential contries: CYP, TUR, TWN, UKR,CZE, FRA, AUS, DNK, USA, VEN,PHL, POL, CHN, ISR, CHL, LVA, PHL&quot;</span>, </span>
-<span id="cb20-8"><a href="#cb20-8"></a>        <span class="dt">custom.coef.names =</span> <span class="kw">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="st">&quot;University. Ed.&quot;</span>, <span class="st">&quot;Quintile 2&quot;</span>, <span class="st">&quot;Quintile 3&quot;</span>, <span class="st">&quot;Quintile 4&quot;</span>,<span class="st">&quot;Quintile 5&quot;</span>, <span class="st">&quot;Quintile miss&quot;</span>, <span class="st">&quot;Subjetive status&quot;</span>, </span>
-<span id="cb20-9"><a href="#cb20-9"></a>                              <span class="st">&quot;Subjetive upward mobility&quot;</span>, <span class="st">&quot;Supjetive downward mobility&quot;</span> ,<span class="st">&quot;Subjetive non-mobility&quot;</span>,<span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;Age&quot;</span>, <span class="st">&quot;Meritorcatic perception&quot;</span>, </span>
-<span id="cb20-10"><a href="#cb20-10"></a>                              <span class="st">&quot;Meritocratic preferences&quot;</span>, <span class="st">&quot;Unmeritocratic perception&quot;</span>, <span class="st">&quot;Unmeritocratic preferences&quot;</span>, <span class="st">&quot;Gini index&quot;</span>, <span class="st">&quot;Economic freedom index&quot;</span>, </span>
-<span id="cb20-11"><a href="#cb20-11"></a>                              <span class="st">&quot;Merit-perception x Gini&quot;</span>, <span class="st">&quot;Merit-perception x Economic-freedom&quot;</span>))</span></code></pre></div>
+<div id="comparación-de-los-modelos-excluyendo-casos-influyentes-a-nivel-2" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Comparación de los modelos excluyendo casos influyentes a nivel 2</h3>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref[<span class="kw">which</span>(mer_pref<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;ZAF&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-2" title="2">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;CYP&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-3" title="3">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;TUR&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-4" title="4">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;TWN&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-5" title="5">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;UKR&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-6" title="6">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;CZE&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-7" title="7">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;FRA&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-8" title="8">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;AUS&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-9" title="9">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;DNK&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-10" title="10">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;USA&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-11" title="11">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;VEN&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-12" title="12">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;PHL&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-13" title="13">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;POL&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-14" title="14">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;CHN&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-15" title="15"></a>
+<a class="sourceLine" id="cb19-16" title="16">results_<span class="dv">3</span>_redist_macro_bvi_sininf =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st"> </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>merit<span class="op">*</span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref_sininfl, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb19-17" title="17"></a>
+<a class="sourceLine" id="cb19-18" title="18">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref[<span class="kw">which</span>(mer_pref<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;ZAF&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-19" title="19">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;VEN&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-20" title="20">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;FRA&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-21" title="21">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;CHN&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-22" title="22">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;UKR&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-23" title="23">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;ISR&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-24" title="24">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;CHL&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-25" title="25">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;AUS&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-26" title="26">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;DNK&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-27" title="27">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;LVA&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-28" title="28">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;VEN&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-29" title="29">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;PHL&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-30" title="30">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;POL&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-31" title="31">mer_pref_sininfl &lt;-<span class="st"> </span>mer_pref_sininfl[<span class="kw">which</span>(mer_pref_sininfl<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;CZE&#39;</span>), ]</a>
+<a class="sourceLine" id="cb19-32" title="32"></a>
+<a class="sourceLine" id="cb19-33" title="33">results_<span class="dv">3</span>_accum_macro_bvi_sininfl =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">  </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st">  </span>gini_neto <span class="op">+</span><span class="st"> </span>merit<span class="op">*</span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref_sininfl, <span class="dt">REML=</span>F)</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">htmlreg</span>(<span class="kw">list</span>(results_<span class="dv">3</span>_redist_macro_bvi, results_<span class="dv">3</span>_redist_macro_bvi_sininf,results_<span class="dv">3</span>_accum_macro_bvi, results_<span class="dv">3</span>_accum_macro_bvi_sininfl), </a>
+<a class="sourceLine" id="cb20-2" title="2">        <span class="dt">caption =</span> <span class="st">&quot;Comparison model Without influential cases in level two&quot;</span>, </a>
+<a class="sourceLine" id="cb20-3" title="3">        <span class="dt">custom.model.names =</span> <span class="kw">c</span>(<span class="st">&quot;Whit&quot;</span>, <span class="st">&quot;Whithout&quot;</span>,<span class="st">&quot;Whit&quot;</span>, <span class="st">&quot;Whithout&quot;</span>), </a>
+<a class="sourceLine" id="cb20-4" title="4">        <span class="dt">custom.header =</span> <span class="kw">list</span>(<span class="st">&quot;Redistribution&quot;</span> =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="st">&quot;Accumulation&quot;</span> =<span class="st"> </span><span class="dv">3</span><span class="op">:</span><span class="dv">4</span>), </a>
+<a class="sourceLine" id="cb20-5" title="5">        <span class="dt">caption.above =</span> T, </a>
+<a class="sourceLine" id="cb20-6" title="6">        <span class="dt">star.symbol =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">*&quot;</span>, </a>
+<a class="sourceLine" id="cb20-7" title="7">        <span class="dt">custom.note =</span> <span class="st">&quot;$***p &lt;$ 0.001, $**p &lt;$ 0.01, $*p &lt;$ 0.05 &lt;br&gt; Influential contries: CYP, TUR, TWN, UKR,CZE, FRA, AUS, DNK, USA, VEN,PHL, POL, CHN, ISR, CHL, LVA, PHL&quot;</span>, </a>
+<a class="sourceLine" id="cb20-8" title="8">        <span class="dt">custom.coef.names =</span> <span class="kw">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="st">&quot;University. Ed.&quot;</span>, <span class="st">&quot;Quintile 2&quot;</span>, <span class="st">&quot;Quintile 3&quot;</span>, <span class="st">&quot;Quintile 4&quot;</span>,<span class="st">&quot;Quintile 5&quot;</span>, <span class="st">&quot;Quintile miss&quot;</span>, <span class="st">&quot;Subjetive status&quot;</span>, </a>
+<a class="sourceLine" id="cb20-9" title="9">                              <span class="st">&quot;Subjetive upward mobility&quot;</span>, <span class="st">&quot;Supjetive downward mobility&quot;</span> ,<span class="st">&quot;Subjetive non-mobility&quot;</span>,<span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;Age&quot;</span>, <span class="st">&quot;Meritorcatic perception&quot;</span>, </a>
+<a class="sourceLine" id="cb20-10" title="10">                              <span class="st">&quot;Meritocratic preferences&quot;</span>, <span class="st">&quot;Unmeritocratic perception&quot;</span>, <span class="st">&quot;Unmeritocratic preferences&quot;</span>, <span class="st">&quot;Gini index&quot;</span>, <span class="st">&quot;Economic freedom index&quot;</span>, </a>
+<a class="sourceLine" id="cb20-11" title="11">                              <span class="st">&quot;Merit-perception x Gini&quot;</span>, <span class="st">&quot;Merit-perception x Economic-freedom&quot;</span>))</a></code></pre></div>
 <table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;color: #000000;border-top: 2px solid #000000;">
 <caption>
 Comparison model Without influential cases in level two
@@ -3612,16 +3610,16 @@ Whithout
 Intercept
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.72
+0.74
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.96
+0.97
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--1.61<sup>*</sup>
+-1.64<sup>*</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--4.71<sup>***</sup>
+-4.79<sup>***</sup>
 </td>
 </tr>
 <tr>
@@ -3754,7 +3752,7 @@ Quintile 4
 -0.04<sup>*</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.07<sup>**</sup>
+0.06<sup>**</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 0.02
@@ -3819,13 +3817,13 @@ Quintile miss
 -0.10<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.07<sup>***</sup>
+-0.06<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.07<sup>***</sup>
+0.06<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.06<sup>**</sup>
+0.05<sup>**</sup>
 </td>
 </tr>
 <tr>
@@ -3884,7 +3882,7 @@ Subjetive status
 Subjetive upward mobility
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.02<sup>*</sup>
+-0.01<sup>*</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 -0.02<sup>**</sup>
@@ -3921,7 +3919,7 @@ Supjetive downward mobility
 0.03<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.03<sup>**</sup>
+0.03<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 -0.03<sup>*</sup>
@@ -4054,16 +4052,16 @@ Age
 Meritorcatic perception
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.32<sup>***</sup>
+-0.33<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.36<sup>**</sup>
+-0.37<sup>**</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.64<sup>***</sup>
+-0.65<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.78<sup>*</sup>
+-0.76<sup>*</sup>
 </td>
 </tr>
 <tr>
@@ -4080,7 +4078,7 @@ Meritorcatic perception
 (0.19)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.33)
+(0.34)
 </td>
 </tr>
 <tr>
@@ -4233,7 +4231,7 @@ Economic freedom index
 0.01
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.41<sup>***</sup>
+0.42<sup>***</sup>
 </td>
 </tr>
 <tr>
@@ -4301,7 +4299,7 @@ Merit-perception x Economic-freedom
 0.10<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.12<sup>*</sup>
+0.11<sup>*</sup>
 </td>
 </tr>
 <tr>
@@ -4326,16 +4324,16 @@ Merit-perception x Economic-freedom
 AIC
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-91004.02
+91281.21
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-46910.02
+46975.43
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-146965.87
+147075.40
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-83835.28
+83907.40
 </td>
 </tr>
 <tr>
@@ -4343,16 +4341,16 @@ AIC
 BIC
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-91216.95
+91494.14
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-47108.00
+47173.41
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-147178.80
+147288.33
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-84035.17
+84107.29
 </td>
 </tr>
 <tr>
@@ -4360,16 +4358,16 @@ BIC
 Log Likelihood
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--45478.01
+-45616.61
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--23431.01
+-23463.72
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--73458.94
+-73513.70
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--41893.64
+-41929.70
 </td>
 </tr>
 <tr>
@@ -4544,7 +4542,7 @@ $(document).ready(function ()  {
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
       },
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
