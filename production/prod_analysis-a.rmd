@@ -117,17 +117,28 @@ labels= c("Strongly agree", "Agree", "Disagree",
 png<-sjPlot::plot_likert((redistrib[3:7]), 
                          axis.labels   = items,
                          legend.labels = labels,
+                         legend.pos = "bottom",
                          cat.neutral   = 5, # identifica a indiferentes
                          geom.colors   = c("#9ecae1", "#6baed6", "#4292c6",
                                            "#2171b5"), # colorbrewer2.org
                          sort.frq      = "neg.asc", # sort descending)
-                         title         = "Redistribution preferences.",
+                         title         = "Redistributive preferences",
                          intercept.line.color = "white", # vertical middle
                          expand.grid   = F, # no inner margins in plot
                          show.n        = FALSE, # hide N's in axis labels
                          grid.range    = 1.8,
-                         geom.size = 0.6) # expand axis 130% )
-    
+                         geom.size = 0.6, values = "sum.outside") + set_theme(legend.pos  ="bottom",
+                                    base = theme_classic(),
+                                    theme.font = "serif", 
+                                    axis.textsize.x = 1.2,
+                                    axis.textsize.y = 1.2, 
+                                    geom.label.size = 4, 
+                                    legend.just = 0.35,
+                                    legend.size = 1.2,  legend.backgroundcol = "white") # expand axis 130% )
+
+
+
+
 ggsave(png,filename = "output/images/plotlikert.png",device = "png", width=15, height=5)
 ```
 
@@ -138,7 +149,12 @@ ggsave(png,filename = "output/images/plotlikert.png",device = "png", width=15, h
 # cambiar orden para la leyenda  
 labels= c("Strongly agree", "Agree", "Disagree", "Strongly disagree", "(neither/nor)" )  ### E
 
+items <- c("Wealthy parents", "Educated parents",
+           "Ambition", "Hard work", 
+           "Right people", "political contacts") 
+
 png<-sjPlot::plot_likert((getahead[3:8]), 
+                        axis.labels   = items,
                         legend.labels = labels,
                         cat.neutral   = 5, # identifica a indiferentes
                         geom.colors   = c("#9ecae1", "#6baed6","#4292c6", 
@@ -149,8 +165,15 @@ png<-sjPlot::plot_likert((getahead[3:8]),
                         expand.grid   = F, # no inner margins in plot
                         show.n        = FALSE, # hide N's in axis labels
                         grid.range    = 1.8,
-                        geom.size = 0.6) # expand axis 130% )
-    
+                        geom.size = 0.6, values = "sum.outside") + set_theme(legend.pos  ="bottom",
+                                    base = theme_classic(),
+                                    theme.font = "serif", 
+                                    axis.textsize.x = 1.2,
+                                    axis.textsize.y = 1.2, 
+                                    geom.label.size = 4, 
+                                    legend.just = 0.35,
+                                    legend.size = 1.2,  legend.backgroundcol = "white") # expand axis 130% )
+
 # Save
 ggsave(png,filename = "output/images/plotlikert_getahead.png",device = "png", width=15, height=5)
 ```
@@ -164,9 +187,15 @@ ggsave(png,filename = "output/images/plotlikert_getahead.png",device = "png", wi
 labels= c("Essential", "Very important", "Fairly important",
               "Not very important", "Not important at all" )  ### E
 
+items <- c("have children to support", "have family to support",
+           "Education and training", "how well does the job", 
+           "how hard works at the job", "how much responsibility goes with the job") 
+set_theme(legend.pos  ="bottom") # expand axis 130% )
+
 png<-sjPlot::plot_likert((detearn[3:8]), 
+                        axis.labels   = items,
                         legend.labels = labels,
-                        cat.neutral = 3,
+                        cat.neutral = 5,
                         geom.colors   = c("#9ecae1", "#6baed6","#4292c6", "#2171b5"), # colorbrewer2.org 
                         sort.frq      = "neg.asc", # sort descending)
                         title         = "Pay preferences",
@@ -174,7 +203,17 @@ png<-sjPlot::plot_likert((detearn[3:8]),
                         expand.grid   = F, # no inner margins in plot
                         show.n        = FALSE, # hide N's in axis labels
                         grid.range    = 1.8,
-                        geom.size = 0.6) # expand axis 130% )
+                        geom.size = 0.6, values = "sum.outside") + set_theme(legend.pos  ="bottom",
+                                    base = theme_classic(),
+                                    theme.font = "serif", 
+                                    axis.textsize.x = 1.2,
+                                    axis.textsize.y = 1.2, 
+                                    geom.label.size = 4, 
+                                    legend.just = 0.35,
+                                    legend.size = 1.2,  legend.backgroundcol = "white") # expand axis 130% )
+
+
+
 # Save
 ggsave(png,filename = "output/images/plotlikert_detearn.png",device = "png", width=15, height=5)
 ```
@@ -434,7 +473,7 @@ sum_fit <- sum_fit %>% dplyr::select("mod","est","chisq","df","cfi","rmsea","rms
 
 colnames <- c("Model","Estimator","$\\chi2$","df","CFI","RMSEA","RMSEA CI lower", "RMSEA CI upper")
 	  
-sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, caption = "Redistribution measurement model summary fit",col.names = colnames,escape = FALSE) %>%
+sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, caption = "Redistributive preferences measurement model summary fit",col.names = colnames,escape = FALSE) %>%
   kable_styling(full_width = F)  %>%
       collapse_rows(columns = 1,valign = "middle")  %>%
       footnote(number = c("Model 1: Continue item",
@@ -584,7 +623,7 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
 
 **El modelo no converge ni en croatia, Chipre, Italia ni Letonia**
 
-## Meritocracy and Redistribution.  
+## Meritocracy and Redistributive preferences  
 
 ```{r, cache=TRUE}
 # CFA with secon order unmerit
@@ -613,7 +652,7 @@ sum_fit <- sum_fit %>% dplyr::select("mod","est","chisq","df","cfi","rmsea","rms
 
 colnames <- c("Model","Estimator","$\\chi2$","df","CFI","RMSEA","RMSEA CI lower", "RMSEA CI upper")
 	  
-sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, caption = "Redistribution and Meritocratic measurement Summary fit",col.names = colnames,escape = FALSE) %>%
+sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, caption = "Redistributive preferences and Meritocratic measurement Summary fit",col.names = colnames,escape = FALSE) %>%
   kable_styling(full_width = F)  %>%
       collapse_rows(columns = 1,valign = "middle")  %>%
       footnote(number = c("Model 1: Continue item",
@@ -632,7 +671,7 @@ sum_fit <- sum_fit %>% dplyr::select("mod","est","chisq","df","cfi","rmsea","rms
 
 colnames <- c("Model","Estimator","$\\chi2$","df","CFI","RMSEA","RMSEA CI lower", "RMSEA CI upper")
 	  
-sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, caption = "Redistribution and Meritocratic measurement Summary fit",col.names = colnames,escape = FALSE) %>%
+sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, caption = "Redistributive preferences and Meritocratic measurement Summary fit",col.names = colnames,escape = FALSE) %>%
   kable_styling(full_width = F)  %>%
       collapse_rows(columns = 1,valign = "middle")  %>%
       footnote(number = c("Model 1: Continue item",
@@ -662,7 +701,7 @@ png("output/results/corplot_totscores.png",width=600,height=600)
 	
 windowsFonts(A = windowsFont("Times New Roman"))
 rownames(cormat) <-c(
-    "A. Redistribution Preferences",
+    "A. Redistributive Preferences",
     "B. Acummulation Preferences",
     "C. Meritocratic Perception",
     "D. Non-Meritocratic Perception",
@@ -717,7 +756,7 @@ png("output/results/macrocor.png",width=600,height=600)
 	
 windowsFonts(A = windowsFont("Times New Roman"))
 rownames(corMat) <-c(
-    "A. Redistribution Preferences",
+    "A. Redistributive Preferences",
     "B. Acummulation Preferences",
     "C. Meritocratic Perception",
     "D. Non-Meritocratic Perception",
@@ -764,7 +803,7 @@ theme_update(plot.caption = element_text(size = 12),
 
 ```{r results='hide'}
 plotredistgini <- plot_scatter(mer_pref_agg, gini_neto, redist,
-                               title = "Redistribution and Inequality",
+                               title = "Redistributive preferences and Inequality",
                              #dot.labels = merit_agg$v5c,
                              fit.line = "lm", 
                              show.ci = TRUE)  + ylab("Redistributive preferences") + xlab("Gini index")
@@ -772,23 +811,23 @@ plotredistgini <- plot_scatter(mer_pref_agg, gini_neto, redist,
 mer_pref_agg_zaf <- mer_pref_agg[which(mer_pref_agg$v5c != 'ZAF'),]
 
 plotredistgini_outliers <- plot_scatter(mer_pref_agg_zaf, gini_neto, redist, 
-                                        title = "Redistribution and inequality ",
+                                        title = "Redistributive preferences and inequality ",
                                         fit.line = lm,
                                         show.ci = TRUE) + ylab("Redistributive preferences") +xlab("Gini index") + labs(caption = "Excluding outliers") 
 
 plotredistfi <- plot_scatter(mer_pref_agg,  fi_index, redist,
-                             title = "Redistribution and Economic Freedom Index",
+                             title = "Redistributive preferences and Economic Freedom Index",
                            #dot.labels = merit_agg$v5c,
                            fit.line = "lm",
-                           show.ci = TRUE) +  ylab("Redistributive preferences") + xlab("Economic freedom index")
+                           show.ci = TRUE) +  ylab("Redistributive preferences") + xlab("Economic Freedom Index")
 
 mer_pref_agg_ven <- mer_pref_agg[which(mer_pref_agg$v5c != 'VEN'),]
 
 plotredistfi_outliers<-plot_scatter(mer_pref_agg_ven,  fi_index, redist, 
-                                    title = "Redistribution and Economic Freedom Index",
+                                    title = "Redistributive preferences and Economic Freedom Index",
                                     #dot.labels = merit_agg$v5c,
                                     fit.line = "lm",
-                                    show.ci = TRUE) +  ylab("Redistributive preferences") + xlab("Economic freedom index") +labs(caption = "Excluding outliers")
+                                    show.ci = TRUE) +  ylab("Redistributive preferences") + xlab("Economic Freedom Index") +labs(caption = "Excluding outliers")
 
 ggsave(plot = plot_grid(list(plotredistgini, plotredistgini_outliers, plotredistfi, plotredistfi_outliers),
                         margin = c(0.3,0.3,0.3,0.3), 
@@ -800,29 +839,29 @@ ggsave(plot = plot_grid(list(plotredistgini, plotredistgini_outliers, plotredist
 
 ```{r results='hide'}
 plotredistmerit <- plot_scatter(mer_pref_agg,  merit, redist, 
-                                title = "Redistribution and Meritocratic perception",
+                                title = "Redistributive preferences and Meritocratic perception",
                                 #	dot.labels = merit_agg$v5c,
                                 fit.line = "lm",
-                                show.ci = TRUE) + ylab("Redistribution preferences") + xlab("Meritocratic perception") 
+                                show.ci = TRUE) + ylab("Redistributive preferences") + xlab("Meritocratic perception") 
   
 
 plotredistbmerit <-plot_scatter(mer_pref_agg,  bmerit, redist, 
-                                title = "Redistribution and Meritocratic preferences",
+                                title = "Redistributive preferences and Meritocratic preferences",
                                 #	dot.labels = merit_agg$v5c,
                                 fit.line = "lm",
-                                show.ci = TRUE) + ylab("Redistribution preferences") + xlab("Meritocratic preferences") 
+                                show.ci = TRUE) + ylab("Redistributive preferences") + xlab("Meritocratic preferences") 
 
 plotredistunmerit <-plot_scatter(mer_pref_agg,  unmerit, redist, 
-                                 title = "Redistribution and Unmeritocratic perception",
+                                 title = "Redistributive preferences and Unmeritocratic perception",
                                  #dot.labels = merit_agg$v5c,
                                  fit.line = "lm",
-                                 show.ci = TRUE) + ylab("Redistribution preferences") + xlab("Unmeritocratic perception") 
+                                 show.ci = TRUE) + ylab("Redistributive preferences") + xlab("Unmeritocratic perception") 
 
 plotredistneed <-plot_scatter(mer_pref_agg,  need, redist, 
-                              title = "Redistribution and Need",
+                              title = "Redistributive preferences and Unmeritocratic preferences (Need)",
                               #dot.labels = merit_agg$v5c,
                               fit.line = "lm",
-                              show.ci = TRUE) + ylab("Redistribution preferences") + xlab("Unmeritocratic preferences") 
+                              show.ci = TRUE) + ylab("Redistributive preferences") + xlab("Unmeritocratic preferences (Need)") 
 
 ggsave(plot = plot_grid(list(plotredistmerit, plotredistbmerit, plotredistunmerit, plotredistneed),
                         margin = c(0.3,0.3,0.3,0.3), 
@@ -830,7 +869,7 @@ ggsave(plot = plot_grid(list(plotredistmerit, plotredistbmerit, plotredistunmeri
        filename = "output/results/plot_redistmerit.png", width = 10, height = 10, dpi= "retina")
 ```
 
-![Redistribution preferences and Meritocratic beliefs](../output/results/plot_redistmerit.png)
+![Redistributive preferences and Meritocratic beliefs](../output/results/plot_redistmerit.png)
 
 ## Preferencias de Mercantilizacion.
 
@@ -892,10 +931,10 @@ plotaccumunmerit <-plot_scatter(mer_pref_agg,  unmerit, accum,
                                 show.ci = TRUE) + ylab("Accumulation preferences") + xlab("Unmeritocratic perception")
 
 plotaccumneed <-plot_scatter(mer_pref_agg,  need, accum, 
-                             title = "Accumulation and Unmeritocratic preferences",
+                             title = "Accumulation and Unmeritocratic preferences (Need)",
                              #dot.labels = merit_agg$v5c,
                              fit.line = "lm",
-                             show.ci = TRUE) + ylab("Accumulation preferences") + xlab("Unmeritocratic preferences")
+                             show.ci = TRUE) + ylab("Accumulation preferences") + xlab("Unmeritocratic preferences (Need)")
 
 ggsave(plot = plot_grid(list(plotaccummerit, plotaccumbmerit, plotaccumunmerit, plotaccumneed),
                         margin = c(0.3,0.3,0.3,0.3), 
@@ -927,7 +966,7 @@ plotgfimerit <- plot_scatter(mer_pref_agg,fi_index,  merit,
                              title = "Meritocratic perception and Economic freedom",
                              #dot.labels = mer_pref_agg$v5c,
                              fit.line = "lm",
-                             show.ci = TRUE) + ylab("Meritocratic perception") + xlab("Economic freedom index")
+                             show.ci = TRUE) + ylab("Meritocratic perception") + xlab("Economic Freedom Index")
 
 mer_pref_agg_ven <- mer_pref_agg[which(mer_pref_agg$v5c!='VEN'), ]
 
@@ -935,7 +974,7 @@ plotgfimerit_out<- plot_scatter(mer_pref_agg_ven,fi_index,  merit,
                                 title = "Meritocratic perception and Economic freedom",
                                 #	dot.labels = mer_pref_agg_ven$v5c,
                                 fit.line = "lm",
-                                show.ci = TRUE)  + ylab("Meritocratic perception") + xlab("Economic freedom index") +labs(caption = "Excluding outliers")
+                                show.ci = TRUE)  + ylab("Meritocratic perception") + xlab("Economic Freedom Index") +labs(caption = "Excluding outliers")
 
 ggsave(plot = plot_grid(list(plotginimerit, plotginimerit_out, plotgfimerit, plotgfimerit_out),
                         margin = c(0.3,0.3,0.3,0.3), 
@@ -964,15 +1003,15 @@ plotfibmerit <- plot_scatter(mer_pref_agg,fi_index,  bmerit,
                              title = "Meritocratic preferences and Economic freedom",
                              #dot.labels = mer_pref_agg$v5c,
                              fit.line = "lm",
-                             show.ci = TRUE)  + ylab("Meritocratic preferences") + xlab("Economic freedom index")
+                             show.ci = TRUE)  + ylab("Meritocratic preferences") + xlab("Economic Freedom Index")
 
 mer_pref_agg_ven <- mer_pref_agg[which(mer_pref_agg$v5c!='VEN'), ]
 
 plotfibmerit_out <- plot_scatter(mer_pref_agg_ven,fi_index,  bmerit,  
-                                 title = "Meritocratic preferences and Economic freedom",
+                                 title = "Meritocratic preferences (Need) and Economic freedom",
                                  #	dot.labels = mer_pref_agg_ven$v5c,
                                  fit.line = "lm",
-                                 show.ci = TRUE)  + ylab("Meritocratic preferences") + xlab("Economic freedom index")+labs(caption = "Excluding outliers")
+                                 show.ci = TRUE)  + ylab("Meritocratic preferences (Need)") + xlab("Economic Freedom Index")+labs(caption = "Excluding outliers")
 
 ggsave(plot = plot_grid(list(plotginibmerit, plotginibmerit_out, plotfibmerit, plotfibmerit_out),
                         margin = c(0.3,0.3,0.3,0.3), 
@@ -1001,7 +1040,7 @@ plotfiunmerit <- plot_scatter(mer_pref_agg,fi_index,  unmerit,
                               title = "Unmeritocratic perception and Economic freedom",
                               #dot.labels = mer_pref_agg$v5c,
                               fit.line = "lm",
-                              show.ci = TRUE) + ylab("Unmeritocratic perception") + xlab("Economic freedom index")
+                              show.ci = TRUE) + ylab("Unmeritocratic perception") + xlab("Economic Freedom Index")
 
 mer_pref_agg_ven <- mer_pref_agg[which(mer_pref_agg$v5c!='VEN'), ]
 
@@ -1009,7 +1048,7 @@ plotfiunmerit_out <- plot_scatter(mer_pref_agg_ven,fi_index,  unmerit,
                                   title = "Unmeritocratic perception and Economic freedom (without outliers)",
                                   #	dot.labels = mer_pref_agg_ven$v5c,
                                   fit.line = "lm",
-                                  show.ci = TRUE) + ylab("Unmeritocratic perception") + xlab("Economic freedom index")
+                                  show.ci = TRUE) + ylab("Unmeritocratic perception") + xlab("Economic Freedom Index")
 
 ggsave(plot = plot_grid(list(plotginiunmerit, plotginiunmerit_out, plotfiunmerit, plotfiunmerit_out),
                         margin = c(0.3,0.3,0.3,0.3), 
@@ -1023,32 +1062,32 @@ ggsave(plot = plot_grid(list(plotginiunmerit, plotginiunmerit_out, plotfiunmerit
 
 ```{r results='hide'}
 plotginineed <- plot_scatter(mer_pref_agg,gini_neto,  need,  
-                             title = "Unmeritocratic preferences and Inequality",
+                             title = "Unmeritocratic preferences (Need) and Inequality",
                              #dot.labels = mer_pref_agg$v5c,
                              fit.line = "lm",
-                             show.ci = TRUE)  + ylab("Unmeritocratic preferences") + xlab("Gini index")
+                             show.ci = TRUE)  + ylab("Unmeritocratic preferences (Need)") + xlab("Gini index")
 
 mer_pref_agg_zaf <- mer_pref_agg[which(mer_pref_agg$v5c!='ZAF'), ]
 
 plotginineed_out<- plot_scatter(mer_pref_agg_zaf,gini_neto,  need,  
-                                title = "Unmeritocratic preferences and Inequality",
+                                title = "Unmeritocratic preferences (Need) and Inequality",
                                 #	dot.labels = mer_pref_agg$v5c,
                                 fit.line = "lm",
                                 show.ci = TRUE)  + ylab("Unmeritocratic preferences") + xlab("Gini index") + labs(caption = "Excluding outliers")
 
 plotfineed <- plot_scatter(mer_pref_agg,fi_index,  need,  
-                           title = "Unmeritocratic preferences and Economic freedom index ",
+                           title = "Unmeritocratic preferences (Need) and Economic Freedom Index ",
                            #dot.labels = mer_pref_agg$v5c, 
                            fit.line = "lm",
-                           show.ci = TRUE) + ylab("Unmeritocratic preferences") + xlab("Economic freedom index")
+                           show.ci = TRUE) + ylab("Unmeritocratic preferences (Need)") + xlab("Economic Freedom Index")
 
 mer_pref_agg_ven <- mer_pref_agg[which(mer_pref_agg$v5c!='VEN'), ]
 
 plotfineed_out <- plot_scatter(mer_pref_agg_ven,fi_index,  need,  
-                               title = "Unmeritocratic preferences and Economic freedom index",
+                               title = "Unmeritocratic preferences (Need) and Economic Freedom Index",
                                #	dot.labels = mer_pref_agg_ven$v5c,
                                fit.line = "lm",
-                               show.ci = TRUE) + ylab("Unmeritocratic preferences") + xlab("Economic freedom index") + labs(caption = "Excluding outliers")
+                               show.ci = TRUE) + ylab("Unmeritocratic preferences (Need)") + xlab("Economic Freedom Index") + labs(caption = "Excluding outliers")
 
 ggsave(plot = plot_grid(list(plotginineed, plotginineed_out, plotfineed, plotfineed_out),
                         margin = c(0.3,0.3,0.3,0.3), tags = c(" ", " ", " ", " ", " ", " ")), 

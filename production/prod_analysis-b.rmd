@@ -96,8 +96,8 @@ results_0_redist = lmer(redist ~ 1 + (1| v5c), data = mer_pref, REML=F)
 results_0_accum  = lmer(accum ~ 1 + (1| v5c), data = mer_pref, REML=F)
 
 htmlreg(list(results_0_redist,results_0_accum), 
-        caption = "null model of redistribution preferences and accumulation preferences", 
-        custom.model.names = c("Redistribution", "Accumulation"), 
+        caption = "null model of Redistributive preferences and accumulation preferences", 
+        custom.model.names = c("Redistributive", "Accumulation"), 
         caption.adove = T, star.symbol = "\\*") 
 
 #reghelper::ICC(results_0_redist)
@@ -149,7 +149,7 @@ results_3_redist_macro_bvi = lmer(redist ~ univ + as.factor(quintile_miss) +	sst
 
 ```{r results='asis'} 
 htmlreg(list(results_1_redist__1, results_1_redist_3,results_1_redist_4,results_1_redist_5,results_1_redist_6,results_1_redist_7, results_1_redist_9, results_2_redist_macro_bv, results_3_redist_macro_bvi),
-        caption = "Redistribution preference models", 
+        caption = "Redistributive preference models", 
         omit.coef = "(sstatus)|(movstatus)|(univ)|(quintile_miss)|(age)|(sex)", 
         custom.coef.names = c("Intercept", "Gini index", "Economic freedom index", "Meritocratic perception", 
                               "Meritocratic preference", "Unmeritocratic Perception","Unmerit preference", "GINI x Merit-perception"), 
@@ -322,7 +322,7 @@ results_3_accum_macro_bvi_nocong = lmer(accum ~ univ + as.factor(quintile_miss) 
 htmlreg(list(results_3_redist_macro_bvi, results_3_redist_macro_bvi_nocong, results_3_accum_macro_bvi, results_3_accum_macro_bvi_nocong), 
         caption = "Comparison model excludig countries non convergent in the measurement", 
         custom.model.names = c("Whit", "Whithout","Whit", "Whithout"), 
-        custom.header = list("Redistribution" = 1:2, "Accumulation" = 3:4), 
+        custom.header = list("Redistributive" = 1:2, "Accumulation" = 3:4), 
         star.symbol = "\\*", 
         custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05 <br> countries non convergent in the measurement model:Venezuela, Croatia, Cyprus, Italy, Latvia", 
         custom.coef.names = c("Intercept", "University. Ed.", "Quintile 2", "Quintile 3", "Quintile 4","Quintile 5", "Quintile miss", "Subjetive status", 
@@ -344,7 +344,7 @@ estex.m23_2a <- influence.ME::influence(results_3_redist_macro_bvi, "v5c")
 
 plota <- plot(estex.m23_2a, which="cook",
               cutoff = .1, sort = TRUE,
-              xlab = "Cooks Distance Redistribution Model",
+              xlab = "Cooks Distance Redistributive Model",
               ylab="Contries")
 
 estex.m23_2b <-  influence.ME::influence(results_3_accum_macro_bvi, "v5c") 
@@ -399,7 +399,7 @@ results_3_accum_macro_bvi_sininfl = lmer(accum ~ univ + as.factor(quintile_miss)
 htmlreg(list(results_3_redist_macro_bvi, results_3_redist_macro_bvi_sininf,results_3_accum_macro_bvi, results_3_accum_macro_bvi_sininfl), 
         caption = "Comparison model Without influential cases in level two", 
         custom.model.names = c("Whit", "Whithout","Whit", "Whithout"), 
-        custom.header = list("Redistribution" = 1:2, "Accumulation" = 3:4), 
+        custom.header = list("Redistributive" = 1:2, "Accumulation" = 3:4), 
         caption.above = T, 
         star.symbol = "\\*", 
         custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05 <br> Influential contries: CYP, TUR, TWN, UKR,CZE, FRA, AUS, DNK, USA, VEN,PHL, POL, CHN, ISR, CHL, LVA, PHL", 
@@ -413,3 +413,73 @@ htmlreg(list(results_3_redist_macro_bvi, results_3_redist_macro_bvi_sininf,resul
 Al excluir los casos influyentes la mayoria de las variable no cambia drasticamente significaciones ni sentidos. La variable fi_index pasa a ser significativa.  A mayor libertad economica menor preferencia redistributiva. 
 
 Considerando las variables sustantivas, al eliminar quellos paises con una distancia de cook por sobre el punto de corte (0.1 = 4/40), la variable percepcion meritocratica pierde significacion aunque gana potencia, manteniendose el rechazo a la hipotesis nula con un 95% de confianza. La variable percepcion no meritocrtica pierde la mitad de su efecto y desja de ser significativa. En consideracion de esta evaluacion podemos decir que las relaciones señaladas son provocadas en alguna medida por los 13 paises que se 
+
+## Centrado 
+
+### Redistributive prefereneces centered on the group mean
+
+```{r}
+
+mer_pref$merit_g = as.numeric(mer_pref$merit - mer_pref$j_merit)
+mer_pref$bmerit_g = as.numeric(mer_pref$bmerit - mer_pref$j_bmerit)
+mer_pref$unmerit_g = as.numeric(mer_pref$unmerit - mer_pref$j_unmerit)
+mer_pref$need_g = as.numeric(mer_pref$need - mer_pref$j_need)
+
+
+results_1_redist__1  = lmer(redist ~  gini_neto + fi_index + 1 + (1| v5c), data = mer_pref, REML=F)
+results_1_redist_3 = lmer(redist ~ merit_g + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_redist_4 = lmer(redist ~  merit_g + bmerit_g + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_redist_5 = lmer(redist ~  merit_g + bmerit_g + unmerit_g + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_redist_6 = lmer(redist ~ merit_g + bmerit_g + unmerit_g + need_g + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_redist_7 = lmer(redist ~ merit_g + fi_index + merit_g + bmerit_g + unmerit_g + need_g + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_redist_9 = lmer(redist ~ gini_neto + fi_index + merit_g + bmerit_g + unmerit_g + need_g + sstatus + as.factor(movstatus) + univ + as.factor(quintile_miss)  + sex + age  + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_2_redist_macro_bv = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit_g + bmerit_g + unmerit_g + need_g + gini_neto + fi_index + 1 +  (1 + merit| v5c), data= mer_pref, REML=F)
+results_3_redist_macro_bvi = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit_g + bmerit_g + unmerit_g + need_g + merit_g*gini_neto + fi_index + 1 +  (1 + merit_g | v5c), data = mer_pref, REML=F)
+
+```
+
+```{r results='asis'} 
+htmlreg(list(results_1_redist__1, results_1_redist_3,results_1_redist_4,results_1_redist_5,results_1_redist_6,results_1_redist_7, results_1_redist_9, results_2_redist_macro_bv, results_3_redist_macro_bvi),
+        caption = "Redistributive preference models centered on the group mean", 
+        omit.coef = "(sstatus)|(movstatus)|(univ)|(quintile_miss)|(age)|(sex)", 
+        custom.coef.names = c("Intercept", "Gini index", "Economic freedom index", "Meritocratic perception", 
+                              "Meritocratic preference", "Unmeritocratic Perception","Unmerit preference", "GINI x Merit-perception"), 
+        caption.above = T, 
+        star.symbol = "\\*", 
+        center = T, 
+        custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05 <br> Since Model 6 control by subjetive status, mov subjetive status, Ed.univ, quintile_miss, age and sex") 
+```
+
+
+### Accumulation models centered on the group mean
+
+```{r results='asis', cache=TRUE}
+results_1_accum__1  = lmer(accum ~  gini_neto + fi_index + 1 + (1| v5c), data = mer_pref, REML=F)
+results_1_accum__2  = lmer(accum ~  gini_neto + fi_index + 1 + (1| v5c), data = mer_pref, REML=F)
+results_1_accum_3 = lmer(accum ~ merit_g + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_accum_4 = lmer(accum ~  merit_g + bmerit_g + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_accum_5 = lmer(accum ~ merit_g + bmerit_g + unmerit_g + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_accum_6 = lmer(accum ~ merit_g + bmerit_g + unmerit_g + need_g + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_accum_7 = lmer(accum ~ gini_neto + fi_index + merit_g + bmerit_g + unmerit_g + need_g + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_accum_8 = lmer(accum ~ gini_neto + fi_index + merit_g + bmerit_g + unmerit_g + need_g + sstatus + as.factor(movstatus) + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_accum_9 = lmer(accum ~ gini_neto + fi_index + merit_g + bmerit_g + unmerit_g + need_g + sstatus + as.factor(movstatus) + univ + as.factor(quintile_miss)  + sex + age  + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_accum_macro = lmer(accum ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit_g + bmerit_g + unmerit_g + need_g + gini_neto + fi_index + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_2_accum_macro_bv = lmer(accum ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit_g + bmerit_g + unmerit_g + need_g +  gini_neto + fi_index + 1 +  (1 + merit_g| v5c), data = mer_pref, REML=F)
+results_3_accum_macro_bvi = lmer(accum ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit_g + bmerit_g + unmerit_g + need_g +  gini_neto + merit_g*fi_index + 1 +  (1 + merit_g| v5c), data = mer_pref, REML=F)
+results_3_accum_macro_bvi_2 = lmer(accum ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit_g + bmerit_g + unmerit_g + need_g +  fi_index + merit_g*gini_neto + 1 +  (1 + merit_g| v5c), data = mer_pref, REML=F)
+
+#htmlreg(list(results_1_accum_macro,results_2_accum_macro_bv,results_3_accum_macro_bvi, results_3_accum_macro_bvi_2), star.symbol = "\\*")
+```
+
+```{r, results='asis'}
+htmlreg(list(results_1_accum__1,results_1_accum__2, results_1_accum_3,results_1_accum_4,results_1_accum_5,results_1_accum_6,results_1_accum_7, results_2_accum_macro_bv, results_3_accum_macro_bvi), 
+        caption = "Accumulation preferences models centered on the group mean", 
+        omit.coef = "(sstatus)|(movstatus)|(univ)|(quintile_miss)|(age)|(sex)", 
+        custom.coef.names = c("Intercept", "Gini index", "Economic freedom index", "Meritocratic perception", 
+                              "Meritocratic preference", "Unmeritocratic Perception","Unmerit preference", "Economic-freedom Merit-perception"), 
+        caption.above = T, 
+        star.symbol = "\\*", 
+        center = T, 
+        custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05 <br> Since Model 6 control by subjetive status, mov subjetive status, Ed.univ, quintile_miss, age and sex") 
+```
+

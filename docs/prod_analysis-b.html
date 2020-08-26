@@ -485,7 +485,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Meritocracy and distributive preferences ISSP</h1>
-<h4 class="date">viernes 21 agosto 2020 8:33:47</h4>
+<h4 class="date">miércoles 26 agosto 2020 8:57:34</h4>
 
 </div>
 
@@ -544,12 +544,12 @@ div.tocify {
 <a class="sourceLine" id="cb3-4" title="4">results_<span class="dv">0</span>_accum  =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
 <a class="sourceLine" id="cb3-5" title="5"></a>
 <a class="sourceLine" id="cb3-6" title="6"><span class="kw">htmlreg</span>(<span class="kw">list</span>(results_<span class="dv">0</span>_redist,results_<span class="dv">0</span>_accum), </a>
-<a class="sourceLine" id="cb3-7" title="7">        <span class="dt">caption =</span> <span class="st">&quot;null model of redistribution preferences and accumulation preferences&quot;</span>, </a>
-<a class="sourceLine" id="cb3-8" title="8">        <span class="dt">custom.model.names =</span> <span class="kw">c</span>(<span class="st">&quot;Redistribution&quot;</span>, <span class="st">&quot;Accumulation&quot;</span>), </a>
+<a class="sourceLine" id="cb3-7" title="7">        <span class="dt">caption =</span> <span class="st">&quot;null model of Redistributive preferences and accumulation preferences&quot;</span>, </a>
+<a class="sourceLine" id="cb3-8" title="8">        <span class="dt">custom.model.names =</span> <span class="kw">c</span>(<span class="st">&quot;Redistributive&quot;</span>, <span class="st">&quot;Accumulation&quot;</span>), </a>
 <a class="sourceLine" id="cb3-9" title="9">        <span class="dt">caption.adove =</span> T, <span class="dt">star.symbol =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">*&quot;</span>) </a></code></pre></div>
 <table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
 <caption>
-null model of redistribution preferences and accumulation preferences
+null model of Redistributive preferences and accumulation preferences
 </caption>
 <thead>
 <tr>
@@ -557,7 +557,7 @@ null model of redistribution preferences and accumulation preferences
  
 </th>
 <th style="padding-left: 5px;padding-right: 5px;">
-Redistribution
+Redistributive
 </th>
 <th style="padding-left: 5px;padding-right: 5px;">
 Accumulation
@@ -720,7 +720,7 @@ Correlacion intraclase
 <a class="sourceLine" id="cb8-8" title="8">results_<span class="dv">2</span>_redist_macro_bv =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st"> </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data=</span> mer_pref, <span class="dt">REML=</span>F)</a>
 <a class="sourceLine" id="cb8-9" title="9">results_<span class="dv">3</span>_redist_macro_bvi =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">    </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit <span class="op">+</span><span class="st"> </span>bmerit <span class="op">+</span><span class="st"> </span>unmerit <span class="op">+</span><span class="st"> </span>need <span class="op">+</span><span class="st"> </span>merit<span class="op">*</span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">htmlreg</span>(<span class="kw">list</span>(results_<span class="dv">1</span>_redist__<span class="dv">1</span>, results_<span class="dv">1</span>_redist_<span class="dv">3</span>,results_<span class="dv">1</span>_redist_<span class="dv">4</span>,results_<span class="dv">1</span>_redist_<span class="dv">5</span>,results_<span class="dv">1</span>_redist_<span class="dv">6</span>,results_<span class="dv">1</span>_redist_<span class="dv">7</span>, results_<span class="dv">1</span>_redist_<span class="dv">9</span>, results_<span class="dv">2</span>_redist_macro_bv, results_<span class="dv">3</span>_redist_macro_bvi),</a>
-<a class="sourceLine" id="cb9-2" title="2">        <span class="dt">caption =</span> <span class="st">&quot;Redistribution preference models&quot;</span>, </a>
+<a class="sourceLine" id="cb9-2" title="2">        <span class="dt">caption =</span> <span class="st">&quot;Redistributive preference models&quot;</span>, </a>
 <a class="sourceLine" id="cb9-3" title="3">        <span class="dt">omit.coef =</span> <span class="st">&quot;(sstatus)|(movstatus)|(univ)|(quintile_miss)|(age)|(sex)&quot;</span>, </a>
 <a class="sourceLine" id="cb9-4" title="4">        <span class="dt">custom.coef.names =</span> <span class="kw">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="st">&quot;Gini index&quot;</span>, <span class="st">&quot;Economic freedom index&quot;</span>, <span class="st">&quot;Meritocratic perception&quot;</span>, </a>
 <a class="sourceLine" id="cb9-5" title="5">                              <span class="st">&quot;Meritocratic preference&quot;</span>, <span class="st">&quot;Unmeritocratic Perception&quot;</span>,<span class="st">&quot;Unmerit preference&quot;</span>, <span class="st">&quot;GINI x Merit-perception&quot;</span>), </a>
@@ -730,7 +730,7 @@ Correlacion intraclase
 <a class="sourceLine" id="cb9-9" title="9">        <span class="dt">custom.note =</span> <span class="st">&quot;$***p &lt;$ 0.001, $**p &lt;$ 0.01, $*p &lt;$ 0.05 &lt;br&gt; Since Model 6 control by subjetive status, mov subjetive status, Ed.univ, quintile_miss, age and sex&quot;</span>) </a></code></pre></div>
 <table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;color: #000000;border-top: 2px solid #000000;">
 <caption>
-Redistribution preference models
+Redistributive preference models
 </caption>
 <thead>
 <tr>
@@ -2575,7 +2575,7 @@ Cov: v5c (Intercept) merit
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">htmlreg</span>(<span class="kw">list</span>(results_<span class="dv">3</span>_redist_macro_bvi, results_<span class="dv">3</span>_redist_macro_bvi_nocong, results_<span class="dv">3</span>_accum_macro_bvi, results_<span class="dv">3</span>_accum_macro_bvi_nocong), </a>
 <a class="sourceLine" id="cb17-2" title="2">        <span class="dt">caption =</span> <span class="st">&quot;Comparison model excludig countries non convergent in the measurement&quot;</span>, </a>
 <a class="sourceLine" id="cb17-3" title="3">        <span class="dt">custom.model.names =</span> <span class="kw">c</span>(<span class="st">&quot;Whit&quot;</span>, <span class="st">&quot;Whithout&quot;</span>,<span class="st">&quot;Whit&quot;</span>, <span class="st">&quot;Whithout&quot;</span>), </a>
-<a class="sourceLine" id="cb17-4" title="4">        <span class="dt">custom.header =</span> <span class="kw">list</span>(<span class="st">&quot;Redistribution&quot;</span> =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="st">&quot;Accumulation&quot;</span> =<span class="st"> </span><span class="dv">3</span><span class="op">:</span><span class="dv">4</span>), </a>
+<a class="sourceLine" id="cb17-4" title="4">        <span class="dt">custom.header =</span> <span class="kw">list</span>(<span class="st">&quot;Redistributive&quot;</span> =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="st">&quot;Accumulation&quot;</span> =<span class="st"> </span><span class="dv">3</span><span class="op">:</span><span class="dv">4</span>), </a>
 <a class="sourceLine" id="cb17-5" title="5">        <span class="dt">star.symbol =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">*&quot;</span>, </a>
 <a class="sourceLine" id="cb17-6" title="6">        <span class="dt">custom.note =</span> <span class="st">&quot;$***p &lt;$ 0.001, $**p &lt;$ 0.01, $*p &lt;$ 0.05 &lt;br&gt; countries non convergent in the measurement model:Venezuela, Croatia, Cyprus, Italy, Latvia&quot;</span>, </a>
 <a class="sourceLine" id="cb17-7" title="7">        <span class="dt">custom.coef.names =</span> <span class="kw">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="st">&quot;University. Ed.&quot;</span>, <span class="st">&quot;Quintile 2&quot;</span>, <span class="st">&quot;Quintile 3&quot;</span>, <span class="st">&quot;Quintile 4&quot;</span>,<span class="st">&quot;Quintile 5&quot;</span>, <span class="st">&quot;Quintile miss&quot;</span>, <span class="st">&quot;Subjetive status&quot;</span>, </a>
@@ -2593,7 +2593,7 @@ Comparison model excludig countries non convergent in the measurement
  
 </th>
 <th style="padding-left: 5px;padding-right: 5px;border-bottom: 1px solid #000000;" colspan="2">
-Redistribution
+Redistributive
 </th>
 <th style="padding-left: 5px;padding-right: 5px;border-bottom: 1px solid #000000;" colspan="2">
 Accumulation
@@ -3505,7 +3505,7 @@ Var: Residual
 <a class="sourceLine" id="cb18-3" title="3"></a>
 <a class="sourceLine" id="cb18-4" title="4">plota &lt;-<span class="st"> </span><span class="kw">plot</span>(estex.m23_2a, <span class="dt">which=</span><span class="st">&quot;cook&quot;</span>,</a>
 <a class="sourceLine" id="cb18-5" title="5">              <span class="dt">cutoff =</span> <span class="fl">.1</span>, <span class="dt">sort =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb18-6" title="6">              <span class="dt">xlab =</span> <span class="st">&quot;Cooks Distance Redistribution Model&quot;</span>,</a>
+<a class="sourceLine" id="cb18-6" title="6">              <span class="dt">xlab =</span> <span class="st">&quot;Cooks Distance Redistributive Model&quot;</span>,</a>
 <a class="sourceLine" id="cb18-7" title="7">              <span class="dt">ylab=</span><span class="st">&quot;Contries&quot;</span>)</a>
 <a class="sourceLine" id="cb18-8" title="8"></a>
 <a class="sourceLine" id="cb18-9" title="9">estex.m23_2b &lt;-<span class="st">  </span>influence.ME<span class="op">::</span><span class="kw">influence</span>(results_<span class="dv">3</span>_accum_macro_bvi, <span class="st">&quot;v5c&quot;</span>) </a>
@@ -3562,7 +3562,7 @@ D de Cook
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">htmlreg</span>(<span class="kw">list</span>(results_<span class="dv">3</span>_redist_macro_bvi, results_<span class="dv">3</span>_redist_macro_bvi_sininf,results_<span class="dv">3</span>_accum_macro_bvi, results_<span class="dv">3</span>_accum_macro_bvi_sininfl), </a>
 <a class="sourceLine" id="cb20-2" title="2">        <span class="dt">caption =</span> <span class="st">&quot;Comparison model Without influential cases in level two&quot;</span>, </a>
 <a class="sourceLine" id="cb20-3" title="3">        <span class="dt">custom.model.names =</span> <span class="kw">c</span>(<span class="st">&quot;Whit&quot;</span>, <span class="st">&quot;Whithout&quot;</span>,<span class="st">&quot;Whit&quot;</span>, <span class="st">&quot;Whithout&quot;</span>), </a>
-<a class="sourceLine" id="cb20-4" title="4">        <span class="dt">custom.header =</span> <span class="kw">list</span>(<span class="st">&quot;Redistribution&quot;</span> =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="st">&quot;Accumulation&quot;</span> =<span class="st"> </span><span class="dv">3</span><span class="op">:</span><span class="dv">4</span>), </a>
+<a class="sourceLine" id="cb20-4" title="4">        <span class="dt">custom.header =</span> <span class="kw">list</span>(<span class="st">&quot;Redistributive&quot;</span> =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="st">&quot;Accumulation&quot;</span> =<span class="st"> </span><span class="dv">3</span><span class="op">:</span><span class="dv">4</span>), </a>
 <a class="sourceLine" id="cb20-5" title="5">        <span class="dt">caption.above =</span> T, </a>
 <a class="sourceLine" id="cb20-6" title="6">        <span class="dt">star.symbol =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">*&quot;</span>, </a>
 <a class="sourceLine" id="cb20-7" title="7">        <span class="dt">custom.note =</span> <span class="st">&quot;$***p &lt;$ 0.001, $**p &lt;$ 0.01, $*p &lt;$ 0.05 &lt;br&gt; Influential contries: CYP, TUR, TWN, UKR,CZE, FRA, AUS, DNK, USA, VEN,PHL, POL, CHN, ISR, CHL, LVA, PHL&quot;</span>, </a>
@@ -3580,7 +3580,7 @@ Comparison model Without influential cases in level two
  
 </th>
 <th style="padding-left: 5px;padding-right: 5px;border-bottom: 1px solid #000000;" colspan="2">
-Redistribution
+Redistributive
 </th>
 <th style="padding-left: 5px;padding-right: 5px;border-bottom: 1px solid #000000;" colspan="2">
 Accumulation
@@ -4483,6 +4483,1823 @@ Var: Residual
 </table>
 <p>Al excluir los casos influyentes la mayoria de las variable no cambia drasticamente significaciones ni sentidos. La variable fi_index pasa a ser significativa. A mayor libertad economica menor preferencia redistributiva.</p>
 <p>Considerando las variables sustantivas, al eliminar quellos paises con una distancia de cook por sobre el punto de corte (0.1 = 4/40), la variable percepcion meritocratica pierde significacion aunque gana potencia, manteniendose el rechazo a la hipotesis nula con un 95% de confianza. La variable percepcion no meritocrtica pierde la mitad de su efecto y desja de ser significativa. En consideracion de esta evaluacion podemos decir que las relaciones señaladas son provocadas en alguna medida por los 13 paises que se</p>
+</div>
+</div>
+<div id="centrado" class="section level2">
+<h2><span class="header-section-number">2.3</span> Centrado</h2>
+<div id="redistributive-prefereneces-centered-on-the-group-mean" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Redistributive prefereneces centered on the group mean</h3>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">mer_pref<span class="op">$</span>merit_g =<span class="st"> </span><span class="kw">as.numeric</span>(mer_pref<span class="op">$</span>merit <span class="op">-</span><span class="st"> </span>mer_pref<span class="op">$</span>j_merit)</a>
+<a class="sourceLine" id="cb21-2" title="2">mer_pref<span class="op">$</span>bmerit_g =<span class="st"> </span><span class="kw">as.numeric</span>(mer_pref<span class="op">$</span>bmerit <span class="op">-</span><span class="st"> </span>mer_pref<span class="op">$</span>j_bmerit)</a>
+<a class="sourceLine" id="cb21-3" title="3">mer_pref<span class="op">$</span>unmerit_g =<span class="st"> </span><span class="kw">as.numeric</span>(mer_pref<span class="op">$</span>unmerit <span class="op">-</span><span class="st"> </span>mer_pref<span class="op">$</span>j_unmerit)</a>
+<a class="sourceLine" id="cb21-4" title="4">mer_pref<span class="op">$</span>need_g =<span class="st"> </span><span class="kw">as.numeric</span>(mer_pref<span class="op">$</span>need <span class="op">-</span><span class="st"> </span>mer_pref<span class="op">$</span>j_need)</a>
+<a class="sourceLine" id="cb21-5" title="5"></a>
+<a class="sourceLine" id="cb21-6" title="6"></a>
+<a class="sourceLine" id="cb21-7" title="7">results_<span class="dv">1</span>_redist__<span class="dv">1</span>  =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st">  </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb21-8" title="8">results_<span class="dv">1</span>_redist_<span class="dv">3</span> =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>merit_g <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb21-9" title="9">results_<span class="dv">1</span>_redist_<span class="dv">4</span> =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st">  </span>merit_g <span class="op">+</span><span class="st"> </span>bmerit_g <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb21-10" title="10">results_<span class="dv">1</span>_redist_<span class="dv">5</span> =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st">  </span>merit_g <span class="op">+</span><span class="st"> </span>bmerit_g <span class="op">+</span><span class="st"> </span>unmerit_g <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb21-11" title="11">results_<span class="dv">1</span>_redist_<span class="dv">6</span> =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>merit_g <span class="op">+</span><span class="st"> </span>bmerit_g <span class="op">+</span><span class="st"> </span>unmerit_g <span class="op">+</span><span class="st"> </span>need_g <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb21-12" title="12">results_<span class="dv">1</span>_redist_<span class="dv">7</span> =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>merit_g <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span>merit_g <span class="op">+</span><span class="st"> </span>bmerit_g <span class="op">+</span><span class="st"> </span>unmerit_g <span class="op">+</span><span class="st"> </span>need_g <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb21-13" title="13">results_<span class="dv">1</span>_redist_<span class="dv">9</span> =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span>merit_g <span class="op">+</span><span class="st"> </span>bmerit_g <span class="op">+</span><span class="st"> </span>unmerit_g <span class="op">+</span><span class="st"> </span>need_g <span class="op">+</span><span class="st"> </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss)  <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb21-14" title="14">results_<span class="dv">2</span>_redist_macro_bv =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st"> </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit_g <span class="op">+</span><span class="st"> </span>bmerit_g <span class="op">+</span><span class="st"> </span>unmerit_g <span class="op">+</span><span class="st"> </span>need_g <span class="op">+</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data=</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb21-15" title="15">results_<span class="dv">3</span>_redist_macro_bvi =<span class="st"> </span><span class="kw">lmer</span>(redist <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">    </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit_g <span class="op">+</span><span class="st"> </span>bmerit_g <span class="op">+</span><span class="st"> </span>unmerit_g <span class="op">+</span><span class="st"> </span>need_g <span class="op">+</span><span class="st"> </span>merit_g<span class="op">*</span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit_g <span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw">htmlreg</span>(<span class="kw">list</span>(results_<span class="dv">1</span>_redist__<span class="dv">1</span>, results_<span class="dv">1</span>_redist_<span class="dv">3</span>,results_<span class="dv">1</span>_redist_<span class="dv">4</span>,results_<span class="dv">1</span>_redist_<span class="dv">5</span>,results_<span class="dv">1</span>_redist_<span class="dv">6</span>,results_<span class="dv">1</span>_redist_<span class="dv">7</span>, results_<span class="dv">1</span>_redist_<span class="dv">9</span>, results_<span class="dv">2</span>_redist_macro_bv, results_<span class="dv">3</span>_redist_macro_bvi),</a>
+<a class="sourceLine" id="cb22-2" title="2">        <span class="dt">caption =</span> <span class="st">&quot;Redistributive preference models centered on the group mean&quot;</span>, </a>
+<a class="sourceLine" id="cb22-3" title="3">        <span class="dt">omit.coef =</span> <span class="st">&quot;(sstatus)|(movstatus)|(univ)|(quintile_miss)|(age)|(sex)&quot;</span>, </a>
+<a class="sourceLine" id="cb22-4" title="4">        <span class="dt">custom.coef.names =</span> <span class="kw">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="st">&quot;Gini index&quot;</span>, <span class="st">&quot;Economic freedom index&quot;</span>, <span class="st">&quot;Meritocratic perception&quot;</span>, </a>
+<a class="sourceLine" id="cb22-5" title="5">                              <span class="st">&quot;Meritocratic preference&quot;</span>, <span class="st">&quot;Unmeritocratic Perception&quot;</span>,<span class="st">&quot;Unmerit preference&quot;</span>, <span class="st">&quot;GINI x Merit-perception&quot;</span>), </a>
+<a class="sourceLine" id="cb22-6" title="6">        <span class="dt">caption.above =</span> T, </a>
+<a class="sourceLine" id="cb22-7" title="7">        <span class="dt">star.symbol =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">*&quot;</span>, </a>
+<a class="sourceLine" id="cb22-8" title="8">        <span class="dt">center =</span> T, </a>
+<a class="sourceLine" id="cb22-9" title="9">        <span class="dt">custom.note =</span> <span class="st">&quot;$***p &lt;$ 0.001, $**p &lt;$ 0.01, $*p &lt;$ 0.05 &lt;br&gt; Since Model 6 control by subjetive status, mov subjetive status, Ed.univ, quintile_miss, age and sex&quot;</span>) </a></code></pre></div>
+<table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;color: #000000;border-top: 2px solid #000000;">
+<caption>
+Redistributive preference models centered on the group mean
+</caption>
+<thead>
+<tr>
+<th style="padding-left: 5px;padding-right: 5px;">
+ 
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 1
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 2
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 3
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 4
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 5
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 6
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 7
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 8
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 9
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+Intercept
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+1.04<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.01
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.01
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.01
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.01
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.66
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.94
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+1.18<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.95<sup>*</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.50)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.04)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.04)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.04)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.04)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.40)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.48)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.38)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.39)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Gini index
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.01
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.01
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.02<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.01
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.00)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Economic freedom index
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.11<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.09
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.10
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.09<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.10<sup>*</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.06)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.05)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.05)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.04)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.04)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Meritocratic perception
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.07<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.13<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.06<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.06<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.05<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.06<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.33<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.02)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.09)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Meritocratic preference
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.11<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.12<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.03<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.03<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.03<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.04<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.04<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Unmeritocratic Perception
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.13<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.06<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.06<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.07<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.07<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.07<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.00)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Unmerit preference
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.16<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.16<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.15<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.15<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.15<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.00)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.00)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.00)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.00)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.00)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+GINI x Merit-perception
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.01<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.00)
+</td>
+</tr>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+AIC
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+98968.45
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+98970.47
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+98671.26
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+98017.58
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+96244.14
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+96243.41
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+91624.30
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+91212.54
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+91205.62
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+BIC
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+99013.03
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+99006.13
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+98715.84
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+98071.08
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+96306.54
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+96314.74
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+91810.61
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+91416.60
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+91418.55
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Log Likelihood
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-49479.22
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-49481.23
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-49330.63
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-49002.79
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-48115.07
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-48113.71
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-45791.15
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-45583.27
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-45578.81
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. obs.
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+55021
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+55021
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+55021
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+55021
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+55021
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+55021
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+52681
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+52681
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+52681
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. groups: v5c
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+40
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+40
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+40
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+40
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+40
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+40
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+40
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+40
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+40
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Var: v5c (Intercept)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.06
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.06
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.06
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.06
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.06
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.06
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.05
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.06
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.05
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Var: Residual
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.35
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.35
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.35
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.35
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.34
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.34
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.33
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.33
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.33
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Var: v5c merit
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.02
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Cov: v5c (Intercept) merit
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.02
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Var: v5c merit_g
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.01
+</td>
+</tr>
+<tr style="border-bottom: 2px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+Cov: v5c (Intercept) merit_g
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.02
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="font-size: 0.8em;" colspan="10">
+<span class="math inline">\(***p &lt;\)</span> 0.001, <span class="math inline">\(**p &lt;\)</span> 0.01, <span class="math inline">\(*p &lt;\)</span> 0.05 <br> Since Model 6 control by subjetive status, mov subjetive status, Ed.univ, quintile_miss, age and sex
+</td>
+</tr>
+</tfoot>
+</table>
+</div>
+<div id="accumulation-models-centered-on-the-group-mean" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> Accumulation models centered on the group mean</h3>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">results_<span class="dv">1</span>_accum__<span class="dv">1</span>  =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st">  </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb23-2" title="2">results_<span class="dv">1</span>_accum__<span class="dv">2</span>  =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st">  </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb23-3" title="3">results_<span class="dv">1</span>_accum_<span class="dv">3</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>merit_g <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb23-4" title="4">results_<span class="dv">1</span>_accum_<span class="dv">4</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st">  </span>merit_g <span class="op">+</span><span class="st"> </span>bmerit_g <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb23-5" title="5">results_<span class="dv">1</span>_accum_<span class="dv">5</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>merit_g <span class="op">+</span><span class="st"> </span>bmerit_g <span class="op">+</span><span class="st"> </span>unmerit_g <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb23-6" title="6">results_<span class="dv">1</span>_accum_<span class="dv">6</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>merit_g <span class="op">+</span><span class="st"> </span>bmerit_g <span class="op">+</span><span class="st"> </span>unmerit_g <span class="op">+</span><span class="st"> </span>need_g <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb23-7" title="7">results_<span class="dv">1</span>_accum_<span class="dv">7</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span>merit_g <span class="op">+</span><span class="st"> </span>bmerit_g <span class="op">+</span><span class="st"> </span>unmerit_g <span class="op">+</span><span class="st"> </span>need_g <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb23-8" title="8">results_<span class="dv">1</span>_accum_<span class="dv">8</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span>merit_g <span class="op">+</span><span class="st"> </span>bmerit_g <span class="op">+</span><span class="st"> </span>unmerit_g <span class="op">+</span><span class="st"> </span>need_g <span class="op">+</span><span class="st"> </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb23-9" title="9">results_<span class="dv">1</span>_accum_<span class="dv">9</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span>merit_g <span class="op">+</span><span class="st"> </span>bmerit_g <span class="op">+</span><span class="st"> </span>unmerit_g <span class="op">+</span><span class="st"> </span>need_g <span class="op">+</span><span class="st"> </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss)  <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb23-10" title="10">results_<span class="dv">1</span>_accum_macro =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">  </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit_g <span class="op">+</span><span class="st"> </span>bmerit_g <span class="op">+</span><span class="st"> </span>unmerit_g <span class="op">+</span><span class="st"> </span>need_g <span class="op">+</span><span class="st"> </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span><span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb23-11" title="11">results_<span class="dv">2</span>_accum_macro_bv =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">   </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit_g <span class="op">+</span><span class="st"> </span>bmerit_g <span class="op">+</span><span class="st"> </span>unmerit_g <span class="op">+</span><span class="st"> </span>need_g <span class="op">+</span><span class="st">  </span>gini_neto <span class="op">+</span><span class="st"> </span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit_g<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb23-12" title="12">results_<span class="dv">3</span>_accum_macro_bvi =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">  </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit_g <span class="op">+</span><span class="st"> </span>bmerit_g <span class="op">+</span><span class="st"> </span>unmerit_g <span class="op">+</span><span class="st"> </span>need_g <span class="op">+</span><span class="st">  </span>gini_neto <span class="op">+</span><span class="st"> </span>merit_g<span class="op">*</span>fi_index <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit_g<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb23-13" title="13">results_<span class="dv">3</span>_accum_macro_bvi_<span class="dv">2</span> =<span class="st"> </span><span class="kw">lmer</span>(accum <span class="op">~</span><span class="st"> </span>univ <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(quintile_miss) <span class="op">+</span><span class="st">    </span>sstatus <span class="op">+</span><span class="st"> </span><span class="kw">as.factor</span>(movstatus) <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>age  <span class="op">+</span><span class="st"> </span>merit_g <span class="op">+</span><span class="st"> </span>bmerit_g <span class="op">+</span><span class="st"> </span>unmerit_g <span class="op">+</span><span class="st"> </span>need_g <span class="op">+</span><span class="st">  </span>fi_index <span class="op">+</span><span class="st"> </span>merit_g<span class="op">*</span>gini_neto <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st">  </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>merit_g<span class="op">|</span><span class="st"> </span>v5c), <span class="dt">data =</span> mer_pref, <span class="dt">REML=</span>F)</a>
+<a class="sourceLine" id="cb23-14" title="14"></a>
+<a class="sourceLine" id="cb23-15" title="15"><span class="co">#htmlreg(list(results_1_accum_macro,results_2_accum_macro_bv,results_3_accum_macro_bvi, results_3_accum_macro_bvi_2), star.symbol = &quot;\\*&quot;)</span></a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">htmlreg</span>(<span class="kw">list</span>(results_<span class="dv">1</span>_accum__<span class="dv">1</span>,results_<span class="dv">1</span>_accum__<span class="dv">2</span>, results_<span class="dv">1</span>_accum_<span class="dv">3</span>,results_<span class="dv">1</span>_accum_<span class="dv">4</span>,results_<span class="dv">1</span>_accum_<span class="dv">5</span>,results_<span class="dv">1</span>_accum_<span class="dv">6</span>,results_<span class="dv">1</span>_accum_<span class="dv">7</span>, results_<span class="dv">2</span>_accum_macro_bv, results_<span class="dv">3</span>_accum_macro_bvi), </a>
+<a class="sourceLine" id="cb24-2" title="2">        <span class="dt">caption =</span> <span class="st">&quot;Accumulation preferences models centered on the group mean&quot;</span>, </a>
+<a class="sourceLine" id="cb24-3" title="3">        <span class="dt">omit.coef =</span> <span class="st">&quot;(sstatus)|(movstatus)|(univ)|(quintile_miss)|(age)|(sex)&quot;</span>, </a>
+<a class="sourceLine" id="cb24-4" title="4">        <span class="dt">custom.coef.names =</span> <span class="kw">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="st">&quot;Gini index&quot;</span>, <span class="st">&quot;Economic freedom index&quot;</span>, <span class="st">&quot;Meritocratic perception&quot;</span>, </a>
+<a class="sourceLine" id="cb24-5" title="5">                              <span class="st">&quot;Meritocratic preference&quot;</span>, <span class="st">&quot;Unmeritocratic Perception&quot;</span>,<span class="st">&quot;Unmerit preference&quot;</span>, <span class="st">&quot;Economic-freedom Merit-perception&quot;</span>), </a>
+<a class="sourceLine" id="cb24-6" title="6">        <span class="dt">caption.above =</span> T, </a>
+<a class="sourceLine" id="cb24-7" title="7">        <span class="dt">star.symbol =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">*&quot;</span>, </a>
+<a class="sourceLine" id="cb24-8" title="8">        <span class="dt">center =</span> T, </a>
+<a class="sourceLine" id="cb24-9" title="9">        <span class="dt">custom.note =</span> <span class="st">&quot;$***p &lt;$ 0.001, $**p &lt;$ 0.01, $*p &lt;$ 0.05 &lt;br&gt; Since Model 6 control by subjetive status, mov subjetive status, Ed.univ, quintile_miss, age and sex&quot;</span>) </a></code></pre></div>
+<table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;color: #000000;border-top: 2px solid #000000;">
+<caption>
+Accumulation preferences models centered on the group mean
+</caption>
+<thead>
+<tr>
+<th style="padding-left: 5px;padding-right: 5px;">
+ 
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 1
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 2
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 3
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 4
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 5
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 6
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 7
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 8
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 9
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+Intercept
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-1.42
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-1.42
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.06
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.06
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.06
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.06
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-1.42
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.84
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-1.59<sup>*</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.80)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.80)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.07)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.07)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.07)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.07)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.80)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.74)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.77)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Gini index
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.04<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.04<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.04<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.05<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.05<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Economic freedom index
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.01
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.01
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.01
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.09
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.01
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.09)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.09)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.09)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.08)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.09)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Meritocratic perception
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.03<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.09<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.10<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.04<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.04<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.05
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.63<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.02)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.19)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Meritocratic preference
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.11<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.11<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.04<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.04<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.04<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.04<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Unmeritocratic Perception
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.01
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.04<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.04<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.03<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.03<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Unmerit preference
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.13<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.13<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.11<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.11<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.01)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Economic-freedom Merit-perception
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.09<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.03)
+</td>
+</tr>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+AIC
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+154847.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+154847.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+154849.38
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+154758.78
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+154760.25
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+154394.33
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+154381.18
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+147096.71
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+147087.92
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+BIC
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+154891.57
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+154891.57
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+154885.04
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+154803.36
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+154813.74
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+154456.73
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+154461.42
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+147300.76
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+147300.85
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Log Likelihood
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-77418.50
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-77418.50
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-77420.69
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-77374.39
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-77374.12
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-77190.16
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-77181.59
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-73525.35
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-73519.96
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. obs.
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+55021
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+55021
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+55021
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+55021
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+55021
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+55021
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+55021
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+52681
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+52681
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. groups: v5c
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+40
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+40
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+40
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+40
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+40
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+40
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+40
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+40
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+40
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Var: v5c (Intercept)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.14
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.14
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.22
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.22
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.22
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.22
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.14
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.14
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.14
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Var: Residual
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.97
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.97
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.97
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.97
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.97
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.96
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.96
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.95
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.95
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Var: v5c merit_g
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.01
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.01
+</td>
+</tr>
+<tr style="border-bottom: 2px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+Cov: v5c (Intercept) merit_g
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+ 
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.02
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.02
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="font-size: 0.8em;" colspan="10">
+<span class="math inline">\(***p &lt;\)</span> 0.001, <span class="math inline">\(**p &lt;\)</span> 0.01, <span class="math inline">\(*p &lt;\)</span> 0.05 <br> Since Model 6 control by subjetive status, mov subjetive status, Ed.univ, quintile_miss, age and sex
+</td>
+</tr>
+</tfoot>
+</table>
 </div>
 </div>
 </div>
