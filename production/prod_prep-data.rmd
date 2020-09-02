@@ -805,5 +805,35 @@ save(mer_pref_polycor, file ="input/data/proc/mer_pref_polycor.rda")
 ```
 
 
+# Pib per capita
+
+```{r}
+ library(readxl)
+ pibpc <- read_excel("input/data/original/pibpc.xls", sheet = "Data")
+ View(pibpc)
+
+ pibpc$v5c<-pibpc$CountryCode
+
+pibpc$pibpc <- pibpc$`PIB per cápita (US$ a precios actuales)`
+
+mer_pref <- merge(mer_pref, pibpc, by=c("v5c"))
+
+hist(mer_pref$pibpc)
+```
+
+# Variable redistribución (Gini disminuido según impuestos y transferencias)
 
 
+```{r}
+mer_pref$redis_neto= as.numeric(mer_pref$gini_mkt - mer_pref$gini_neto)
+
+mer_pref$redis_relativo = as.numeric(mer_pref$redis_neto / mer_pref$gini_mkt)
+
+hist(mer_pref$redis_relativo)
+```
+
+
+
+```{r}
+save(mer_pref, file="input/data/proc/mer_pref.rda")
+```

@@ -403,7 +403,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Data preparation</h1>
-<h4 class="date">miércoles 26 agosto 2020 9:00:33</h4>
+<h4 class="date">lunes 31 agosto 2020 12:07:56</h4>
 
 </div>
 
@@ -5297,6 +5297,31 @@ mer_pref$gini_mkt &lt;- mer_pref$.dots...gini_mkt</code></pre>
 <pre class="r"><code>mer_pref_polycor &lt;- mer_pref %&gt;% dplyr::select( 
 &quot;j_redist&quot;, &quot;j_accum&quot; , &quot;j_merit&quot;,&quot;j_unmerit&quot;,&quot;j_bmerit&quot;,&quot;j_need&quot;,&quot;.dots...gini_disp&quot;,&quot;.dots...gini_mkt&quot;,&quot;fi_index&quot;)
 save(mer_pref_polycor, file =&quot;input/data/proc/mer_pref_polycor.rda&quot;)</code></pre>
+</div>
+<div id="pib-per-capita" class="section level1">
+<h1>Pib per capita</h1>
+<pre class="r"><code> library(readxl)
+ pibpc &lt;- read_excel(&quot;input/data/original/pibpc.xls&quot;, sheet = &quot;Data&quot;)
+ View(pibpc)
+
+ pibpc$v5c&lt;-pibpc$CountryCode
+
+pibpc$pibpc &lt;- pibpc$`PIB per cápita (US$ a precios actuales)`
+
+mer_pref &lt;- merge(mer_pref, pibpc, by=c(&quot;v5c&quot;))
+
+hist(mer_pref$pibpc)</code></pre>
+<p><img src="prod_prep-data_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+</div>
+<div id="variable-redistribución-gini-disminuido-según-impuestos-y-transferencias" class="section level1">
+<h1>Variable redistribución (Gini disminuido según impuestos y transferencias)</h1>
+<pre class="r"><code>mer_pref$redis_neto= as.numeric(mer_pref$gini_mkt - mer_pref$gini_neto)
+
+mer_pref$redis_relativo = as.numeric(mer_pref$redis_neto / mer_pref$gini_mkt)
+
+hist(mer_pref$redis_relativo)</code></pre>
+<p><img src="prod_prep-data_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<pre class="r"><code>save(mer_pref, file=&quot;input/data/proc/mer_pref.rda&quot;)</code></pre>
 </div>
 
 
