@@ -764,8 +764,11 @@ rownames(corMat) <-c(
     "F. Non-Meritocratic Preferences",
     "H. Gini market index",
     "I. Gini disp index",
-    "J. FI index")
-colnames(corMat) <-c("(A)", "(B)","(C)","(D)","(E)","(F)","(H)","(I)","(J)")
+    "J. FI index",
+    "K. PIB per capita",
+    "L. Redistribution"
+    )
+colnames(corMat) <-c("(A)", "(B)","(C)","(D)","(E)","(F)","(H)","(I)","(J)", "(K)", "(L)")
 
 corrplot(
 corMat,

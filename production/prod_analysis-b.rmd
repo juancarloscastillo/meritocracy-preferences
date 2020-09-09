@@ -194,7 +194,9 @@ ggsave(results_3_redist_macro_bvi_efectplot, filename = "output/results/results_
 
 graf2=ggpredict(results_2_redist_macro_bv, terms = c("merit","v5c [sample = 9]"), type="re")
 pendiente_aleatoria_redistbv <- plot(graf2)
+pendiente_aleatoria_redistbv
 ggsave(pendiente_aleatoria_redistbv, filename = "output/results/pendiente_aleatoria_redistbv.png", width = 10, height = 10, dpi= "retina")
+
 
 
 results_3_redist_macro_bvi_interacgini_meansd <- sjPlot::plot_model(results_3_redist_macro_bvi, 
@@ -204,7 +206,7 @@ results_3_redist_macro_bvi_interacgini_meansd <- sjPlot::plot_model(results_3_re
 
 results_3_redist_macro_bvi_interacgini_minmax <- sjPlot::plot_model(results_3_redist_macro_bvi, 
                                                                     type = c("int"), 
-                                                                    title = "Interaccion desigualdad") +  scale_color_discrete("Gini Index", labels = c("Min", "Max")) + theme(legend.position = "bottom") + ylab("Redistributive preferences") + xlab("Meritocratic perception") 
+                                                                    title = "Interaccion desigualdad", terms = c ("merit [-3,2]")) +  scale_color_discrete("Gini Index", labels = c("Min", "Max")) + theme(legend.position = "bottom") + ylab("Redistributive preferences") + xlab("Meritocratic perception")
    
 ggsave(plot_grid(list(results_3_redist_macro_bvi_efectplot, pendiente_aleatoria_redistbv,results_3_redist_macro_bvi_interacgini_meansd, results_3_redist_macro_bvi_interacgini_minmax) ,
                  margin = c(0.5,0.5,0.5,0.5), 
@@ -224,8 +226,10 @@ results_1_accum_3 = lmer(accum ~ merit + 1 +  (1| v5c), data = mer_pref, REML=F)
 results_1_accum_4 = lmer(accum ~  merit + bmerit + 1 +  (1| v5c), data = mer_pref, REML=F)
 results_1_accum_5 = lmer(accum ~  merit + bmerit + unmerit + 1 +  (1| v5c), data = mer_pref, REML=F)
 results_1_accum_6 = lmer(accum ~ merit + bmerit + unmerit + need + 1 +  (1| v5c), data = mer_pref, REML=F)
-results_1_accum_7 = lmer(accum ~ gini_neto + fi_index + merit + bmerit + unmerit + need + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_accum_7 = lmer(accum ~ gini_neto + fi_index + pibpc  + merit + bmerit + unmerit + need + 1 +  (1| v5c), data = mer_pref, REML=F)
+
 results_1_accum_8 = lmer(accum ~ gini_neto + fi_index + merit + bmerit + unmerit + need + sstatus + as.factor(movstatus) + 1 +  (1| v5c), data = mer_pref, REML=F)
+
 results_1_accum_9 = lmer(accum ~ gini_neto + fi_index + merit + bmerit + unmerit + need + sstatus + as.factor(movstatus) + univ + as.factor(quintile_miss)  + sex + age  + 1 +  (1| v5c), data = mer_pref, REML=F)
 
 results_1_accum_macro = lmer(accum ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit + bmerit + unmerit + need + gini_neto + fi_index + pibpc + 1 +  (1| v5c), data = mer_pref, REML=F)
@@ -239,13 +243,13 @@ results_3_accum_macro_bvi_2 = lmer(accum ~ univ + as.factor(quintile_miss) +	sst
 #htmlreg(list(results_1_accum_macro,results_2_accum_macro_bv,results_3_accum_macro_bvi, results_3_accum_macro_bvi_2), star.symbol = "\\*")
 ```
 
-
 ```{r, results='asis'}
 htmlreg(list(results_1_accum__1, results_1_accum_3,results_1_accum_4,results_1_accum_5,results_1_accum_6,results_1_accum_7, results_2_accum_macro_bv, results_3_accum_macro_bvi), 
         caption = "Accumulation preferences models", 
         omit.coef = "(sstatus)|(movstatus)|(univ)|(quintile_miss)|(age)|(sex)", 
-        custom.coef.names = c("Intercept", "Gini index" , "PIB per capita", "Economic freedom index", "Meritocratic perception", 
-                              "Meritocratic preference", "Unmeritocratic Perception","Unmerit preference", "Economic-freedom Merit-perception"), 
+        custom.coef.names = c("Intercept", "Gini index" , "Economic freedom index",  "PIB per capita" , "Meritocratic perception", 
+                              "Meritocratic preference", "Unmeritocratic Perception","Unmerit preference", "Economic-freedom Merit-perception"),
+
         caption.above = T, 
         star.symbol = "\\*", 
         center = T, 
@@ -285,7 +289,7 @@ mer_accum_int_f2 <- sjPlot::plot_model(results_3_accum_macro_bvi_2,
 
 ggsave(mer_accum_int_f1, filename = "output/results/mer_accum_int_f1.png", width = 10, height = 10, dpi= "retina")
 
-ggsave(plot_grid(list(results_3_accum_macro_bvi_efect, pendiente_aleatoria_redistbv,mer_accum_int_f1, mer_accum_int_f2) ,
+ggsave(plot_grid(list(results_3_accum_macro_bvi_efect, pendientealeatoria_accum,mer_accum_int_f1, mer_accum_int_f2) ,
                  margin = c(0.5,0.5,0.5,0.5), tags = c(" ", " "," ", " ")), 
        filename = "output/results/results_3_accum_macro_bvi_interacgini.png", width = 10, height = 10, dpi= "retina")
 
@@ -469,23 +473,23 @@ mer_pref$unmerit_g = as.numeric(mer_pref$unmerit - mer_pref$j_unmerit)
 mer_pref$need_g = as.numeric(mer_pref$need - mer_pref$j_need)
 
 
-results_1_redist__1  = lmer(redist ~  gini_neto + fi_index + 1 + (1| v5c), data = mer_pref, REML=F)
+results_1_redist__1  = lmer(redist ~  gini_neto + fi_index + pibpc + 1 + (1| v5c), data = mer_pref, REML=F)
 results_1_redist_3 = lmer(redist ~ merit_g + 1 +  (1| v5c), data = mer_pref, REML=F)
 results_1_redist_4 = lmer(redist ~  merit_g + bmerit_g + 1 +  (1| v5c), data = mer_pref, REML=F)
 results_1_redist_5 = lmer(redist ~  merit_g + bmerit_g + unmerit_g + 1 +  (1| v5c), data = mer_pref, REML=F)
 results_1_redist_6 = lmer(redist ~ merit_g + bmerit_g + unmerit_g + need_g + 1 +  (1| v5c), data = mer_pref, REML=F)
-results_1_redist_7 = lmer(redist ~ merit_g + fi_index + merit_g + bmerit_g + unmerit_g + need_g + 1 +  (1| v5c), data = mer_pref, REML=F)
-results_1_redist_9 = lmer(redist ~ gini_neto + fi_index + merit_g + bmerit_g + unmerit_g + need_g + sstatus + as.factor(movstatus) + univ + as.factor(quintile_miss)  + sex + age  + 1 +  (1| v5c), data = mer_pref, REML=F)
-results_2_redist_macro_bv = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit_g + bmerit_g + unmerit_g + need_g + gini_neto + fi_index + 1 +  (1 + merit| v5c), data= mer_pref, REML=F)
-results_3_redist_macro_bvi = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit_g + bmerit_g + unmerit_g + need_g + merit_g*gini_neto + fi_index + 1 +  (1 + merit_g | v5c), data = mer_pref, REML=F)
+results_1_redist_7 = lmer(redist ~ gini_neto + fi_index + pibpc + merit_g + bmerit_g + unmerit_g + need_g + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_redist_9 = lmer(redist ~ gini_neto + fi_index + pibpc + merit_g + bmerit_g + unmerit_g + need_g + sstatus + as.factor(movstatus) + univ + as.factor(quintile_miss)  + sex + age  + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_2_redist_macro_bv = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit_g + bmerit_g + unmerit_g + need_g + gini_neto + fi_index + pibpc + 1 +  (1 + merit| v5c), data= mer_pref, REML=F)
+results_3_redist_macro_bvi = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit_g + bmerit_g + unmerit_g + need_g + merit_g*gini_neto + fi_index + pibpc + 1 +  (1 + merit_g | v5c), data = mer_pref, REML=F)
 
 ```
 
 ```{r results='asis'} 
 htmlreg(list(results_1_redist__1, results_1_redist_3,results_1_redist_4,results_1_redist_5,results_1_redist_6,results_1_redist_7, results_1_redist_9, results_2_redist_macro_bv, results_3_redist_macro_bvi),
-        caption = "Redistributive preference models centered on the group mean", 
+        caption = "Redistributive preference models", 
         omit.coef = "(sstatus)|(movstatus)|(univ)|(quintile_miss)|(age)|(sex)", 
-        custom.coef.names = c("Intercept", "Gini index", "Economic freedom index", "Meritocratic perception", 
+        custom.coef.names = c("Intercept", "Gini index", "Economic freedom index", "PIB per capita", "Meritocratic perception", 
                               "Meritocratic preference", "Unmeritocratic Perception","Unmerit preference", "GINI x Merit-perception"), 
         caption.above = T, 
         star.symbol = "\\*", 
@@ -494,35 +498,43 @@ htmlreg(list(results_1_redist__1, results_1_redist_3,results_1_redist_4,results_
 ```
 
 
+
+
 ### Accumulation models centered on the group mean
 
 ```{r results='asis', cache=TRUE}
-results_1_accum__1  = lmer(accum ~  gini_neto + fi_index + 1 + (1| v5c), data = mer_pref, REML=F)
-results_1_accum__2  = lmer(accum ~  gini_neto + fi_index + 1 + (1| v5c), data = mer_pref, REML=F)
+results_1_accum__1  = lmer(accum ~  gini_neto + fi_index + pibpc + 1 + (1| v5c), data = mer_pref, REML=F)
+results_1_accum__2  = lmer(accum ~  gini_neto + fi_index + pibpc + 1 + (1| v5c), data = mer_pref, REML=F)
 results_1_accum_3 = lmer(accum ~ merit_g + 1 +  (1| v5c), data = mer_pref, REML=F)
 results_1_accum_4 = lmer(accum ~  merit_g + bmerit_g + 1 +  (1| v5c), data = mer_pref, REML=F)
 results_1_accum_5 = lmer(accum ~ merit_g + bmerit_g + unmerit_g + 1 +  (1| v5c), data = mer_pref, REML=F)
 results_1_accum_6 = lmer(accum ~ merit_g + bmerit_g + unmerit_g + need_g + 1 +  (1| v5c), data = mer_pref, REML=F)
-results_1_accum_7 = lmer(accum ~ gini_neto + fi_index + merit_g + bmerit_g + unmerit_g + need_g + 1 +  (1| v5c), data = mer_pref, REML=F)
-results_1_accum_8 = lmer(accum ~ gini_neto + fi_index + merit_g + bmerit_g + unmerit_g + need_g + sstatus + as.factor(movstatus) + 1 +  (1| v5c), data = mer_pref, REML=F)
-results_1_accum_9 = lmer(accum ~ gini_neto + fi_index + merit_g + bmerit_g + unmerit_g + need_g + sstatus + as.factor(movstatus) + univ + as.factor(quintile_miss)  + sex + age  + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_accum_7 = lmer(accum ~ gini_neto + fi_index + pibpc  + merit_g + bmerit_g + unmerit_g + need_g + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_accum_8 = lmer(accum ~ gini_neto + fi_index + pibpc  + bmerit_g + unmerit_g + need_g + sstatus + as.factor(movstatus) + 1 +  (1| v5c), data = mer_pref, REML=F)
+
+results_1_accum_9 = lmer(accum ~ gini_neto + fi_index + pibpc  + merit_g + bmerit_g + unmerit_g + need_g + sstatus + as.factor(movstatus) + univ + as.factor(quintile_miss)  + sex + age  + 1 +  (1| v5c), data = mer_pref, REML=F)
+
 results_1_accum_macro = lmer(accum ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit_g + bmerit_g + unmerit_g + need_g + gini_neto + fi_index + 1 +  (1| v5c), data = mer_pref, REML=F)
-results_2_accum_macro_bv = lmer(accum ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit_g + bmerit_g + unmerit_g + need_g +  gini_neto + fi_index + 1 +  (1 + merit_g| v5c), data = mer_pref, REML=F)
-results_3_accum_macro_bvi = lmer(accum ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit_g + bmerit_g + unmerit_g + need_g +  gini_neto + merit_g*fi_index + 1 +  (1 + merit_g| v5c), data = mer_pref, REML=F)
-results_3_accum_macro_bvi_2 = lmer(accum ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit_g + bmerit_g + unmerit_g + need_g +  fi_index + merit_g*gini_neto + 1 +  (1 + merit_g| v5c), data = mer_pref, REML=F)
+
+results_2_accum_macro_bv = lmer(accum ~ gini_neto + fi_index + pibpc + univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit_g + bmerit_g + unmerit_g + need_g +  gini_neto + fi_index + 1 +  (1 + merit_g| v5c), data = mer_pref, REML=F)
+
+results_3_accum_macro_bvi = lmer(accum ~ gini_neto + fi_index + pibpc + univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit_g + bmerit_g + unmerit_g + need_g + merit_g*fi_index + 1 +  (1 + merit_g| v5c), data = mer_pref, REML=F)
+
+results_3_accum_macro_bvi_2 = lmer(accum ~ gini_neto + fi_index + pibpc + univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit_g + bmerit_g + unmerit_g + need_g +  merit_g*gini_neto + 1 +  (1 + merit_g| v5c), data = mer_pref, REML=F)
 
 #htmlreg(list(results_1_accum_macro,results_2_accum_macro_bv,results_3_accum_macro_bvi, results_3_accum_macro_bvi_2), star.symbol = "\\*")
 ```
 
 ```{r, results='asis'}
-htmlreg(list(results_1_accum__1,results_1_accum__2, results_1_accum_3,results_1_accum_4,results_1_accum_5,results_1_accum_6,results_1_accum_7, results_2_accum_macro_bv, results_3_accum_macro_bvi), 
-        caption = "Accumulation preferences models centered on the group mean", 
+htmlreg(list(results_1_accum__1, results_1_accum_3,results_1_accum_4,results_1_accum_5,results_1_accum_6,results_1_accum_7, results_2_accum_macro_bv, results_3_accum_macro_bvi), 
+        caption = "Accumulation preferences models", 
         omit.coef = "(sstatus)|(movstatus)|(univ)|(quintile_miss)|(age)|(sex)", 
-        custom.coef.names = c("Intercept", "Gini index", "Economic freedom index", "Meritocratic perception", 
-                              "Meritocratic preference", "Unmeritocratic Perception","Unmerit preference", "Economic-freedom Merit-perception"), 
+        custom.coef.names = c("Intercept", "Gini index" , "Economic freedom index",  "PIB per capita" , "Meritocratic perception", 
+                              "Meritocratic preference", "Unmeritocratic Perception","Unmerit preference", "Economic-freedom Merit-perception"),
+
         caption.above = T, 
         star.symbol = "\\*", 
         center = T, 
-        custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05 <br> Since Model 6 control by subjetive status, mov subjetive status, Ed.univ, quintile_miss, age and sex") 
+        custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05 <br> Since Model 6 control by subjetive status, mov subjetive status, Ed.univ, quintile_miss, age and sex")
 ```
 

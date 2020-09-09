@@ -30,9 +30,7 @@ options(knitr.kable.NA = '')
 
 In this site the production and adjustment of the databases that are used for the multilevel analysis are exposed. The work in general focuses on selecting and recoding variables obtained from international databases such as the International Social Survey (ISSP) and the Standardized World Income Income Inequality Database (SWIID). In addition, factor analyzes are performed to subsequently impute predicted values that represent the estimated latent variables.
 
-In diagram 1, a summary of the data processing is presented, which starts from international databases (input) to processed databases. As shown in the graph, the document is divided into 4 sections , corresponding to the subtitles of the codes.
-
-In the first section, in addition to selecting and recoding ISSP variables, factor analyzes are performed to evaluate and create the latent variables of preferences about redistribution and inequality. In section 2, international SWIID and GOQ data are collected and added together with ISSP data, which includes predicted values for latent variables of meritocratic perceptions and preferences. In the next two sections, adjustments are made for multilevel analyzes for the pref.rda and meritocracy.rda databases.
+In the first section, in addition to selecting and recoding ISSP variables, factor analyzes are performed to evaluate and create the latent variables of preferences about redistribution and inequality. In section 2, international SWIID, GOQ and World bank data  are collected and added together with ISSP data, which includes predicted values for latent variables of meritocratic perceptions and preferences.
 
 
 ### load packages
@@ -73,15 +71,16 @@ library(knitr)
 
 ```
 
-# Section-1: Preparation individual variables ISSP
+# Section 1: Preparation individual variables ISSP
 
-## General preparation
+## 1.1 General preparation ISSP
+
+ - change variable names to lowercase
+ - Generate new sequential id individuals by country to merge
 
 ```{r results='hide'}
 load(file = "input/data/original/issp.rda")
 #load(url('https://raw.githubusercontent.com/franciscomeneses/bases/master/issp.rda'))
-
-sjPlot::view_df(issp2009, max.len = 15)
 
 # Check data  
 #names(issp2009)
@@ -96,7 +95,7 @@ issp2009$idtem=issp2009$v5*10000
 issp2009$id=issp2009$idtem + issp2009$id
 ```
 
-##  Preparation-data of the redistributive preference scales: redistrib.rda    
+##  1.2 Preparation-data of the redistributive preference scales: redistrib.rda    
 
 | Code | New Code   | Variable                                                                                                        |
 |------|------------|-----------------------------------------------------------------------------------------------------------------|
@@ -106,7 +105,9 @@ issp2009$id=issp2009$idtem + issp2009$id
 | v38  | health     | ok if people with high income can buy better health                                                             |
 | v39  | educ       | ok if people with high income can buy better education                                                          |                     Table:`Items for latent variables`                                   
 
-###  Rename & define object
+### 1.2.1 Preparation
+
+- Rename & define object
  
 ```{r results='asis'}
 # select
@@ -125,7 +126,7 @@ stargazer(redistrib[-c(1,2)], type="html")
 ```
 
 
-### Recode NAs
+- Recode NAs
 
 ```{r results='asis'}
 redistrib[3:7][redistrib[3:7] > 5] <- NA
@@ -136,20 +137,20 @@ stargazer(redistrib[-c(1,2)], type="html")
 dim(redistrib)
 ```
 
-### adjust labels NAs
+- adjust labels NAs
 
 ```{r}
 get_labels(redistrib$income_dif)
 redistrib[,3:7] <-sjlabelled::set_na(redistrib[,c("income_dif","unemployed", "taxes", "health", "educ")], na = c(8,9))  
 ```
 
-### Reverse code for SEM models
+-  Reverse code for SEM models
 
 ```{r}
 redistrib[3:7]=6-redistrib[3:7]
 ```
 
-### 2.4 Factor scores 
+### 1.2.2 Factor scores 
 
 ```{r cache=TRUE, results='hide'}
 cfa_red1 <- '
@@ -209,20 +210,22 @@ print(dfSummary(redistrib_sco, valid.col = FALSE, graph.magnif = 1),
       max.tbl.height = 300, method = "render")
 ```
 
-## Individual level variables: Sociodemograficas.
+## 1.3 Prepare individual level variables.
 
 ```{r results='asis'}
 ### Select
 indepvar= issp2009 %>% dplyr::select(contains("_inc"), "sex","age","degree", "hompop", "v44", "v45", "movstatus"="v46", "v5","id")
 
 ### Recode sex
-sjPlot::plot_frq(indepvar$sex, title ="Gender before")
+sex_plotbefore <- sjPlot::plot_frq(indepvar$sex, title ="Gender before")
 indepvar$sex=ifelse(indepvar$sex==1,0,ifelse(indepvar$sex==2,1,NA))  
-sjPlot::plot_frq(indepvar$sex, title ="gender after")
+sex_plotafter <- sjPlot::plot_frq(indepvar$sex, title ="Gender after")
+
+cowplot::plot_grid(sex_plotbefore, sex_plotafter, ncol=2)
 
 ### Recode Age
   # Age
-sjPlot::plot_frq(indepvar$age, title = "Age before",show.mean = T , show.values = F,show.n = F)
+agebefore<-sjPlot::plot_frq(indepvar$age, title = "Age before",show.mean = T , show.values = F,show.n = F, axis.labels = NULL)
 
 #which(indepvar$age > 85) # / 461 casos !
 #which(indepvar$age < 15) # / 0 casos !
@@ -237,10 +240,13 @@ indepvar$age_c[indepvar$age_c > 45 & indepvar$age_c <=55] = 4
 indepvar$age_c[indepvar$age_c > 55 & indepvar$age_c <=65] = 5
 indepvar$age_c[indepvar$age_c > 65] = 6
 
-sjPlot::plot_frq(indepvar$age_c, title = "Age after", show.na = T)
+ageafter <- sjPlot::plot_frq(indepvar$age_c, title = "Age after", show.na = T, axis.labels =   c("18-25","25 -35", "35-45", "45-55", "55,65", "65-85","NA(>85)")) 
+
+cowplot::plot_grid(agebefore, ageafter, ncol=2)
+
 
 ### Recode Education
-sjPlot::plot_frq(indepvar$degree, coord.flip = TRUE, title = "Degree before")
+degrebefore <-sjPlot::plot_frq(indepvar$degree, coord.flip = TRUE, title = "Degree before")
   # Recode. Values over 5 are removed
 indepvar$degree[indepvar$degree > 5]=NA
 
@@ -250,11 +256,14 @@ indepvar$univ=indepvar$degree
 indepvar$univ=ifelse(indepvar$univ<=4,0,
 ifelse(indepvar$univ==5,1,NA))
 
-sjPlot::plot_frq(indepvar$univ, coord.flip = TRUE, title = "Dummy university")
+degreafter<- sjPlot::plot_frq(indepvar$univ, coord.flip = TRUE, title = "Dummy university")
+
+cowplot::plot_grid(degrebefore, degreafter, ncol=2)
+
 
 ### Recode Income
 
-stargazer(indepvar[1:41], type="html")
+#stargazer(indepvar[1:41], type="html")
 
 # Income (variables finish in _inc)
 # Continuo
@@ -276,7 +285,7 @@ indepvar$income=rowSums(indepvar[1:41],na.rm = TRUE)
 indepvar$income[indepvar$income ==0]=NA
 indepvar$income[indepvar$income ==1111]=0
 
-stargazer(indepvar[1:41], type="html")
+#stargazer(indepvar[1:41], type="html")
 
 #summary(indepvar$income)
 
@@ -333,17 +342,18 @@ indepvar$f_sstatus=indepvar$v45
 indepvar$f_sstatus[indepvar$f_sstatus>10]=NA
 #freq(indepvar$f_sstatus)
 
-    
-knitr::kable(table(indepvar$movstatus), "html")
-    
+movestatusbefore <- sjPlot::plot_frq(indepvar$movstatus, coord.flip = TRUE, title = "Subjective status mobility before")    
+
 indepvar$movstatus[indepvar$movstatus>=8]= NA
 indepvar$movstatus <- car::recode(indepvar$movstatus,recodes ="c(1,2)=2;3=1;c(4,5)=3;c(6,7)=4")
+
 indepvar$movstatus <- set_labels(indepvar$movstatus,labels = c("Sin movilidad"=1,
-                                                                    "Mov. Ascendente"=2,
+                                                                "Mov. Ascendente"=2,
                                                                     "Mov. Descendente"=3,
                                                                     "Indeterminado"=4))
-    
-knitr::kable(table(indepvar$movstatus), "html")
+
+movestatusafter <- sjPlot::plot_frq(indepvar$movstatus, coord.flip = TRUE, title = "subjective status mobility after")     
+cowplot::plot_grid(movestatusbefore, movestatusafter, ncol=2)
 ```
 
 ```{r}
@@ -380,7 +390,7 @@ print(dfSummary(indepvar[-c(8)], valid.col = FALSE, graph.magnif = 1),
 ```
 
 
-## Measurement Merit & Getting ahead
+## 1.4 Measurement Merit & Getting ahead
 
 | Code  	| New Code  	| Variable              	|
 |-------	|-----------	|-----------------------	|
@@ -468,35 +478,35 @@ plot_likert((getahead[,3:8]),
 #names(issp2009)
 detearn = issp2009[, c("v47", "v48", "v49", "v50", "v51",
                        "v52", "v5", "id")]
-names(detearn)
+#names(detearn)
 detearn$respons 	= detearn$v47
 detearn$yeduc  	  = detearn$v48
 detearn$family    = detearn$v49
 detearn$child     = detearn$v50
 detearn$welljob   = detearn$v51
 detearn$hardjob   = detearn$v52
-names(detearn)
+#names(detearn)
 detearn = detearn[-c(1:6)]
-names(detearn)
+#names(detearn)
 # recode values 8 9 to NA
-summary(detearn)
+#summary(detearn)
 # freq(detearn$respons)
 detearn[3:8][detearn[3:8] > 5] <- NA
 
 # freq(detearn$respons) # check ok
 
-knitr::kable(summary(detearn), "html")
+#knitr::kable(summary(detearn), "html")
 
 # Out Portugal (no answer in well job item)
 detearn[which(detearn$v5 == 620), ] = NA
 # adjust labels ###PROB PORTUCAL!!!
-get_labels(detearn)
+#get_labels(detearn)
 detearn[, 3:8][detearn[, 3:8] >= 8] <- NA
 detearn$welljob <- sjlabelled::set_na(detearn$welljob, na = c(0))
-knitr::kable(summary(detearn), "html")
+#knitr::kable(summary(detearn), "html")
 # freq(detearn$welljob) ## prob portugal
 detearn$welljob[detearn$welljob == 0] = NA
-get_labels(detearn$welljob)
+#get_labels(detearn$welljob)
 labels(detearn$welljob) = labels(detearn$respons)### PROB NOT SOLVED
 
 # Reverse code for SEM models
@@ -542,7 +552,7 @@ freq(detearn$respons)
 ```
 
 
-## Measuring Beliefs & Perceptions: merit_pref_perc
+## 1.5 Measuring Beliefs & Perceptions: merit_pref_perc
 
 ```{r, cache=TRUE}
 # 3. MEASURING BELIEFS & PERCEPTIONS ------ -
@@ -658,7 +668,7 @@ save(indiv, file="input/data/proc/indiv.rda")
 ```
 
 
-# Section 2: agregar datos
+# Section 2: Multilevel preparation data. 
 
 ```{r}
 agg_lm=aggregate(indiv, by=list(indiv$v5),FUN=mean, na.rm=TRUE)
@@ -680,9 +690,8 @@ mer_pref$sstatus_g = mer_pref$sstatus - mer_pref$j_sstatus
 summary(mer_pref$univ_g)
 ```
 
-# Seccion 3:  add macro var
 
-## Section 2.1: SWIID
+## 2.1: SWIID
 ```{r}
 # Inequality swiid (4)        
 #load(url("https://raw.githubusercontent.com/franciscomeneses/bases/master/swiid8_3.rda"))
@@ -731,7 +740,27 @@ str(swiid_summary09$v5c)
 mer_pref<- merge(swiid_summary09,mer_pref, by=c("v5"))
 ```
 
-## Section 2.2: Qog
+```{r}
+mer_pref$gini_neto<- mer_pref$.dots...gini_disp
+mer_pref$gini_mkt <- mer_pref$.dots...gini_mkt
+```
+
+```{r}
+mer_pref$redis_neto= as.numeric(mer_pref$gini_mkt - mer_pref$gini_neto)
+
+mer_pref$redis_relativo = as.numeric(mer_pref$redis_neto / mer_pref$gini_mkt)
+
+hist(mer_pref$redis_relativo)
+```
+
+```{r}
+mer_pref$redis_bradley  <- as.numeric((1- mer_pref$gini_neto / mer_pref$gini_mkt) *100)
+hist(mer_pref$redis_bradley)
+```
+
+
+
+## 2.2: Qog
 
 ```{r echo=FALSE, results='hide'}
 #Para descargar 
@@ -780,32 +809,16 @@ qog2009_c_na = qog2009_c_na %>% dplyr::select("v5", "fi_index") %>% as.data.fram
 #names(qog2009_c_na)
 ```
 
-
-# Merge
+- Merge
 
 ```{r}
 mer_pref <- merge(mer_pref, qog2009_c_na, by=c("v5"))
 ```
 
 
-```{r}
-mer_pref$gini_neto<- mer_pref$.dots...gini_disp
-mer_pref$gini_mkt <- mer_pref$.dots...gini_mkt
-```
-
-```{r}
-save(mer_pref, file="input/data/proc/mer_pref.rda")
-```
 
 
-```{r}
-mer_pref_polycor <- mer_pref %>% dplyr::select( 
-"j_redist", "j_accum" , "j_merit","j_unmerit","j_bmerit","j_need",".dots...gini_disp",".dots...gini_mkt","fi_index")
-save(mer_pref_polycor, file ="input/data/proc/mer_pref_polycor.rda")
-```
-
-
-# Pib per capita
+## Pib per capita
 
 ```{r}
  library(readxl)
@@ -821,19 +834,17 @@ mer_pref <- merge(mer_pref, pibpc, by=c("v5c"))
 hist(mer_pref$pibpc)
 ```
 
-# Variable redistribución (Gini disminuido según impuestos y transferencias)
-
-
-```{r}
-mer_pref$redis_neto= as.numeric(mer_pref$gini_mkt - mer_pref$gini_neto)
-
-mer_pref$redis_relativo = as.numeric(mer_pref$redis_neto / mer_pref$gini_mkt)
-
-hist(mer_pref$redis_relativo)
-```
+Taiwán no posee información sobre pibpc en el banco mundial, por ende los casos de este pais son excluidos.
 
 
 
 ```{r}
 save(mer_pref, file="input/data/proc/mer_pref.rda")
+```
+
+
+```{r}
+#mer_pref_polycor <- mer_pref %>% dplyr::select( 
+#"j_redist", "j_accum" , #"j_merit","j_unmerit","j_bmerit","j_need",".dots...gini_disp",".dots...gini_mkt","fi_index", #"pibpc", "redis_relativo")
+#save(mer_pref_polycor, file ="input/data/proc/mer_pref_polycor.rda")
 ```
