@@ -386,7 +386,7 @@ Como puede apresiarce en las regresiones, los pesos de las distintas variables y
 
 ### Cook Distance 
 ```{r out.width=c('50%', '50%'), fig.cap=" D de Cook", fig.show='hold', results=TRUE,cache=TRUE}
-#Redis
+#Redis #
 estex.m23_2a <- influence.ME::influence(results_3_redist_macro_bvi, "v5c") 
 
 plota <- plot(estex.m23_2a, which="cook",
@@ -538,3 +538,34 @@ htmlreg(list(results_1_accum__1, results_1_accum_3,results_1_accum_4,results_1_a
         custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05 <br> Since Model 6 control by subjetive status, mov subjetive status, Ed.univ, quintile_miss, age and sex")
 ```
 
+# Controlando por Efficiencia de los Gobiernos 
+
+```{r}
+
+```
+
+```{r}
+
+results_1_redist__1  = lmer(redist ~  gini_neto + fi_index + pibpc + goveffect + 1 + (1| v5c), data = mer_pref, REML=F)
+results_1_redist_3 = lmer(redist ~ merit_g + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_redist_4 = lmer(redist ~  merit_g + bmerit_g + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_redist_5 = lmer(redist ~  merit_g + bmerit_g + unmerit_g + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_redist_6 = lmer(redist ~ merit_g + bmerit_g + unmerit_g + need_g + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_redist_7 = lmer(redist ~ gini_neto + fi_index + pibpc + goveffect + merit_g + bmerit_g + unmerit_g + need_g + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_1_redist_9 = lmer(redist ~ gini_neto + fi_index + pibpc + goveffect + merit_g + bmerit_g + unmerit_g + need_g + sstatus + as.factor(movstatus) + univ + as.factor(quintile_miss)  + sex + age  + 1 +  (1| v5c), data = mer_pref, REML=F)
+results_2_redist_macro_bv = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit_g + bmerit_g + unmerit_g + need_g + gini_neto + fi_index + pibpc + goveffect + 1 +  (1 + merit| v5c), data= mer_pref, REML=F)
+results_3_redist_macro_bvi = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age  + merit_g + bmerit_g + unmerit_g + need_g + merit_g*gini_neto + fi_index + pibpc + goveffect + 1 +  (1 + merit_g | v5c), data = mer_pref, REML=F)
+
+```
+
+```{r results='asis'} 
+htmlreg(list(results_1_redist__1, results_1_redist_3,results_1_redist_4,results_1_redist_5,results_1_redist_6,results_1_redist_7, results_1_redist_9, results_2_redist_macro_bv, results_3_redist_macro_bvi),
+        caption = "Redistributive preference models", 
+        omit.coef = "(sstatus)|(movstatus)|(univ)|(quintile_miss)|(age)|(sex)", 
+        custom.coef.names = c("Intercept", "Gini index", "Economic freedom index", "PIB per capita", "Gov. Effectiviness", "Meritocratic perception", 
+                              "Meritocratic preference", "Unmeritocratic Perception","Unmerit preference", "GINI x Merit-perception"), 
+        caption.above = T, 
+        star.symbol = "\\*", 
+        center = T, 
+        custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05 <br> Since Model 6 control by subjetive status, mov subjetive status, Ed.univ, quintile_miss, age and sex") 
+```

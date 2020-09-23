@@ -85,6 +85,8 @@ load(file = "input/data/original/issp.rda")
 # Check data  
 #names(issp2009)
 
+#sjPlot::view_df(issp2009)
+
 ### change variable names to lowercase
 names(issp2009) <- tolower(names(issp2009)) 
 
@@ -225,7 +227,7 @@ cowplot::plot_grid(sex_plotbefore, sex_plotafter, ncol=2)
 
 ### Recode Age
   # Age
-agebefore<-sjPlot::plot_frq(indepvar$age, title = "Age before",show.mean = T , show.values = F,show.n = F, axis.labels = NULL)
+agebefore<-sjPlot::plot_frq(indepvar$age, title = "Age before",show.mean = T , show.values = F,show.n = F, axis.labels = NULL, type = c("histogram"))
 
 #which(indepvar$age > 85) # / 461 casos !
 #which(indepvar$age < 15) # / 0 casos !
@@ -319,11 +321,11 @@ ntile(hhincome,5)) ->indepvar
 #prop.table(table(indepvar$v5,indepvar$quintile),1)*100
 
 
-# Generar quintiles con NA como categorÃ?a
+# Generar quintiles con NA como categoria
 indepvar$quintile_miss=indepvar$quintile
 indepvar$quintile_miss[is.na(indepvar$quintile_miss)] = 6
 
-sjPlot::plot_frq(indepvar$quintile_miss, coord.flip = TRUE, title = "Quintiles de ingreso")
+sjPlot::plot_frq(indepvar$quintile_miss, coord.flip = TRUE, title = "Quintiles de ingreso" , axis.labels=c("quintile 1","quintile 2","quintile 3","quintile 4","quintile 5","Miss"))
 #stargazer(indepvar$quintile_miss, type = "html")
 
 ### Recode Subjetive status
@@ -750,12 +752,25 @@ mer_pref$redis_neto= as.numeric(mer_pref$gini_mkt - mer_pref$gini_neto)
 
 mer_pref$redis_relativo = as.numeric(mer_pref$redis_neto / mer_pref$gini_mkt)
 
-hist(mer_pref$redis_relativo)
+#hist(mer_pref$redis_relativo)
 ```
 
 ```{r}
 mer_pref$redis_bradley  <- as.numeric((1- mer_pref$gini_neto / mer_pref$gini_mkt) *100)
-hist(mer_pref$redis_bradley)
+#hist(mer_pref$redis_bradley)
+```
+
+
+
+```{r}
+### Recode Age
+  # Age
+redistributionswiid <-sjPlot::plot_frq(mer_pref$redis_relativo, title = "Redistribution SWIID",show.mean = T , show.values = F,show.n = F, axis.labels = NULL, type = c("histogram"))
+
+redistribbradley <- sjPlot::plot_frq(mer_pref$redis_bradley, title = "Redistribution Bradley", show.na = T, axis.labels = NULL, type = c("histogram")) 
+
+cowplot::plot_grid(redistributionswiid, redistribbradley, ncol=1)
+
 ```
 
 
@@ -789,6 +804,11 @@ load( file = "input/data/original/qog.rda")
 # Extract 2009 data
 qog2009 = subset(qog, year == 2009)
 
+
+# hist(qog$sgi_ectx) # Desempeño de las políticas: políticas económicas - impuestos 
+# hist(qog$sgi_sogi) # Desempeño de las políticas: Políticas sociales - Desigualdades sociales globales
+
+
 # Merge with ISSP countries for cleaning
 
 load("input/data/proc/indepvar_contries.rda")
@@ -805,8 +825,8 @@ colSums(is.na(qog2009_c))
 # Eliminar columnas con máximo 5 NAs
 qog2009_c_na = qog2009_c[, colSums(is.na(qog2009_c)) < 6]
 
-qog2009_c_na = qog2009_c_na %>% dplyr::select("v5", "fi_index") %>% as.data.frame()
-#names(qog2009_c_na)
+qog2009_c_na = qog2009_c %>% dplyr::select("v5", "fi_index") %>% as.data.frame()
+# "sgi_ectx", "sgi_sogi" # Hasta ahora no hay valores, parece no haber para el 2009
 ```
 
 - Merge
@@ -831,11 +851,11 @@ pibpc$pibpc <- pibpc$`PIB per cápita (US$ a precios actuales)`
 
 mer_pref <- merge(mer_pref, pibpc, by=c("v5c"))
 
-hist(mer_pref$pibpc)
+
+sjPlot::plot_frq(mer_pref$pibpc, title = "Pib Per capita",show.mean = T , show.values = F,show.n = F, axis.labels = NULL, type = c("histogram"))
 ```
 
-Taiwán no posee información sobre pibpc en el banco mundial, por ende los casos de este pais son excluidos.
-
+Taiwán no posee información sobre pibpc en el banco mundial, por ende el pib per capita para este pais se obtuvo de otra fuente: [DatosMacro](https://datosmacro.expansion.com/pib/taiwan)
 
 
 ```{r}
@@ -848,3 +868,22 @@ save(mer_pref, file="input/data/proc/mer_pref.rda")
 #"j_redist", "j_accum" , #"j_merit","j_unmerit","j_bmerit","j_need",".dots...gini_disp",".dots...gini_mkt","fi_index", #"pibpc", "redis_relativo")
 #save(mer_pref_polycor, file ="input/data/proc/mer_pref_polycor.rda")
 ```
+
+## Government Effectivinnes
+
+```{r}
+gov_effect <- read_excel("input/data/original/Data_Extract_From_Indicadores_mundiales_de_buen_gobierno.xlsx")
+
+gov_effect$v5c<-gov_effect$`paiscode`
+
+gov_effect$goveffect <- as.numeric(gov_effect$`2009 [YR2009]`)
+
+mer_pref <- merge(mer_pref, gov_effect, by=c("v5c"))
+
+sjPlot::plot_frq(mer_pref$goveffect, title = "Government Effectivinnes",show.mean = T , show.values = F,show.n = F, axis.labels = NULL, type = c("histogram"))
+```
+
+```{r}
+save(mer_pref, file="input/data/proc/mer_pref.rda")
+```
+
