@@ -40,3 +40,7 @@ haven
 sjlabelled
 ggeffects
 influence.ME
+summarytools
+tidyselect
+magrittr
+readxl

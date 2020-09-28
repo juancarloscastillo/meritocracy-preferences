@@ -192,9 +192,10 @@ results_3_redist_macro_bvi_2 = lmer(redist ~ univ + as.factor(quintile_miss) +	s
 results_3_redist_macro_bvi_efectplot <- sjPlot::plot_model(results_3_redist_macro_bvi, type="std", title = "Modelo final con predictores, pendiente aleatoria e interaccion.")
 ggsave(results_3_redist_macro_bvi_efectplot, filename = "output/results/results_3_redist_macro_bvi_efectplot.png", width = 10, height = 10, dpi= "retina")
 
-graf2=ggpredict(results_2_redist_macro_bv, terms = c("merit","v5c [sample = 9]"), type="re")
+graf2=ggpredict(results_2_redist_macro_bv, terms = c("merit","v5c [DNK, SVN, CHE, FRA, POL, KOR, RUS, CHL, ARG]"), type="re")
 pendiente_aleatoria_redistbv <- plot(graf2)
 pendiente_aleatoria_redistbv
+
 ggsave(pendiente_aleatoria_redistbv, filename = "output/results/pendiente_aleatoria_redistbv.png", width = 10, height = 10, dpi= "retina")
 
 
@@ -274,7 +275,7 @@ htmlreg(list(results_1_accum__1, results_1_accum_3,results_1_accum_4,results_1_a
 results_3_accum_macro_bvi_efect <- sjPlot::plot_model(results_3_accum_macro_bvi, type="std", title = "Modelo de pendiente aleatoria e interaccion (desigualdad)")
 ggsave(results_3_accum_macro_bvi_efect, filename = "output/results/results_3_accum_macro_bvi_efect.png", width = 10, height = 10, dpi= "retina")
 
-graf2=ggpredict(results_2_accum_macro_bv, terms = c("merit","v5c [sample = 9]"), type="re")
+graf2=ggpredict(results_2_accum_macro_bv, terms = c("merit","v5c [DNK, SVN, CHE, FRA, POL, KOR, RUS, ARG, CHL]"), type="re")
 pendientealeatoria_accum <- plot(graf2)
 ggsave(pendientealeatoria_accum, filename = "output/results/pendientealeatoria_accum.png", width = 10, height = 10, dpi= "retina")
 
@@ -390,14 +391,14 @@ Como puede apresiarce en las regresiones, los pesos de las distintas variables y
 estex.m23_2a <- influence.ME::influence(results_3_redist_macro_bvi, "v5c") 
 
 plota <- plot(estex.m23_2a, which="cook",
-              cutoff = .1, sort = TRUE,
+              cutoff = 4/40, sort = TRUE,
               xlab = "Cooks Distance Redistributive Model",
               ylab="Contries")
 
 estex.m23_2b <-  influence.ME::influence(results_3_accum_macro_bvi, "v5c") 
 
 plotb <-plot(estex.m23_2b, which="cook",
-             cutoff = .1, sort = TRUE,
+             cutoff = 4/40, sort = TRUE,
              xlab = "Cooks Distance Accumulation Model",
              ylab="Contries")
 ```

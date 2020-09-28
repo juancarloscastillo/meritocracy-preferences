@@ -418,10 +418,13 @@ A nivel país se utiliza la variable Gini neto de la base de datos SWIID y el í
 Como técnicas analíticas se utilizaron análisis factoriales e imputación de puntajes factoriales, para la construcción de las variables y  regresiones multinivel para el análisis de las relaciones. Utilizar regresiones multinivel es beneficioso para este tipo de investigaciones pues nos permite comprender los efectos de los contextos nacionales (http://www.jstor.org/stable/2779798).
 En primer lugar, se estimó el efecto de la percepción meritocrática sobre las preferencias por redistribución y las preferencias por la mercantilización de servicios básicos. Ambas estimaciones se realizaron desde una perspectiva multinivel, incorporando interceptos aleatorios. Además, se controlaron dichos efectos por otras creencias meritocráticas (preferencia meritocrática, preferencia no meritocrática, percepción no meritocrática) y por otras variables relevantes (estatus subjetivo, quintil de ingreso, educación universitaria, entre otras).
 
-[Fórmulas]
+$$Redistributive\ preferences _{ij} = \gamma_{00} + \gamma_{10}meritocratic\ perception_{ij} + \gamma_{01}Gross\ National\ Product_{j} + \mu_{0j} + \mu_{1j}Inequality_{ij} + r_{ij}$$  
 
 Posteriormente utilizando las herramientas multinivel se evaluó la capacidad de la desigualdad económica y la libertad económica de moderar ambas relaciones planteadas. En primer lugar, se aleatorizaron las pendientes, comprobando que el sentido y la fuerza de los efectos varían de un país a otro. Para explicar esta variación, se utilizaron interacciones multinivel para evaluar la capacidad de la desigualdad del país de moderar la relación entre percepciones  meritocráticas y preferencias redistributivas. Similarmente, se evaluó la capacidad de la libertad económica de moderar la relación entre percepciones meritocráticas y preferencias por la mercantilización de servicios básicos. Para obtener resultados robustos en las interacciones se siguieron las recomendaciones de @aguinisBestPracticeRecommendationsEstimating2013a . 
-[Formulas]
+
+$$Accumulation\ preferences _{ij} = \gamma_{00} + \gamma_{10}meritocratic\ perception_{ij} + \gamma_{01}Gross\ National\ Product_{j} + \mu_{0j} + \mu_{1j} Meritocratic\ perception_{ij}*Inequality_j + r_{ij}$$  
+  
+ 
 
 ### Herramientas analiticas.
 

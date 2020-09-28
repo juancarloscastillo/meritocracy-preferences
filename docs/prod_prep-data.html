@@ -403,7 +403,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Data preparation</h1>
-<h4 class="date">miércoles 23 septiembre 2020 2:52:09</h4>
+<h4 class="date">lunes 28 septiembre 2020 9:38:46</h4>
 
 </div>
 
@@ -2327,12 +2327,15 @@ mer_pref$redis_relativo = as.numeric(mer_pref$redis_neto / mer_pref$gini_mkt)
 #hist(mer_pref$redis_bradley)</code></pre>
 <pre class="r"><code>### Recode Age
   # Age
-redistributionswiid &lt;-sjPlot::plot_frq(mer_pref$redis_relativo, title = &quot;Redistribution SWIID&quot;,show.mean = T , show.values = F,show.n = F, axis.labels = NULL, type = c(&quot;histogram&quot;))
-
-redistribbradley &lt;- sjPlot::plot_frq(mer_pref$redis_bradley, title = &quot;Redistribution Bradley&quot;, show.na = T, axis.labels = NULL, type = c(&quot;histogram&quot;)) 
-
-cowplot::plot_grid(redistributionswiid, redistribbradley, ncol=1)</code></pre>
+redistributionswiid &lt;- hist(mer_pref$redis_relativo)</code></pre>
 <p><img src="prod_prep-data_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<pre class="r"><code>summary(mer_pref$redis_relativo)
+redistribbradley &lt;- hist(mer_pref$redis_bradley) </code></pre>
+<p><img src="prod_prep-data_files/figure-html/unnamed-chunk-37-2.png" width="672" /></p>
+<pre class="r"><code>cowplot::plot_grid(redistributionswiid, redistribbradley, ncol=1)</code></pre>
+<p><img src="prod_prep-data_files/figure-html/unnamed-chunk-37-3.png" width="672" /></p>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -0.2249  0.1165  0.3149  0.2545  0.3988  0.4908</code></pre>
 </div>
 </div>
 <div id="qog" class="section level2">
@@ -2366,9 +2369,7 @@ qog2009_c_na = qog2009_c[, colSums(is.na(qog2009_c)) &lt; 6]
 
 qog2009_c_na = qog2009_c %&gt;% dplyr::select(&quot;v5&quot;, &quot;fi_index&quot;) %&gt;% as.data.frame()
 # &quot;sgi_ectx&quot;, &quot;sgi_sogi&quot; # Hasta ahora no hay valores, parece no haber para el 2009</code></pre>
-<ul>
-<li>Merge</li>
-</ul>
+<p><strong>Economic fredom variable description:</strong> The index is founded upon objective components that reflect the presence (or absence) of economic freedom. The index comprises 21 components designed to identify the consistency of institutional arrangements and policies with economic freedom in five major areas: size of government (fi_sog), legal structure and security of property rights (fi_legprop), access to sound money (fi_sm), freedom to trade internationally (fi_ftradeint), regulation of credit, labor and business (fi_reg). The index ranges from 0-10 where 0 corresponds to <code>less economic freedom'' and 10 to</code>more economic freedom’’. This is the version of the index published at the current year of measurement, without taking methodological changes over time into account.</p>
 <pre class="r"><code>mer_pref &lt;- merge(mer_pref, qog2009_c_na, by=c(&quot;v5&quot;))</code></pre>
 </div>
 <div id="pib-per-capita" class="section level2">
@@ -2388,9 +2389,6 @@ sjPlot::plot_frq(mer_pref$pibpc, title = &quot;Pib Per capita&quot;,show.mean = 
 <p><img src="prod_prep-data_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 <p>Taiwán no posee información sobre pibpc en el banco mundial, por ende el pib per capita para este pais se obtuvo de otra fuente: <a href="https://datosmacro.expansion.com/pib/taiwan">DatosMacro</a></p>
 <pre class="r"><code>save(mer_pref, file=&quot;input/data/proc/mer_pref.rda&quot;)</code></pre>
-<pre class="r"><code>#mer_pref_polycor &lt;- mer_pref %&gt;% dplyr::select( 
-#&quot;j_redist&quot;, &quot;j_accum&quot; , #&quot;j_merit&quot;,&quot;j_unmerit&quot;,&quot;j_bmerit&quot;,&quot;j_need&quot;,&quot;.dots...gini_disp&quot;,&quot;.dots...gini_mkt&quot;,&quot;fi_index&quot;, #&quot;pibpc&quot;, &quot;redis_relativo&quot;)
-#save(mer_pref_polycor, file =&quot;input/data/proc/mer_pref_polycor.rda&quot;)</code></pre>
 </div>
 <div id="government-effectivinnes" class="section level2">
 <h2>Government Effectivinnes</h2>
@@ -2403,8 +2401,13 @@ gov_effect$goveffect &lt;- as.numeric(gov_effect$`2009 [YR2009]`)
 mer_pref &lt;- merge(mer_pref, gov_effect, by=c(&quot;v5c&quot;))
 
 sjPlot::plot_frq(mer_pref$goveffect, title = &quot;Government Effectivinnes&quot;,show.mean = T , show.values = F,show.n = F, axis.labels = NULL, type = c(&quot;histogram&quot;))</code></pre>
-<p><img src="prod_prep-data_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<p><img src="prod_prep-data_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<p>(Banco Mundial)[<a href="https://databank.bancomundial.org/databases/governance-effectiveness" class="uri">https://databank.bancomundial.org/databases/governance-effectiveness</a>]</p>
+<p>La efectividad del gobierno captura las percepciones de la calidad de los servicios públicos, la calidad del servicio civil y el grado de su independencia de las presiones políticas, la calidad de la formulación e implementación de políticas, y la credibilidad de la compromiso del gobierno con tales políticas. Más información <a href="https://info.worldbank.org/governance/wgi/pdf/ge.pdf">aquí</a></p>
 <pre class="r"><code>save(mer_pref, file=&quot;input/data/proc/mer_pref.rda&quot;)</code></pre>
+<pre class="r"><code>mer_pref_polycor &lt;- mer_pref %&gt;% dplyr::select( 
+&quot;j_redist&quot;, &quot;j_accum&quot; , &quot;j_merit&quot;,&quot;j_unmerit&quot;,&quot;j_bmerit&quot;,&quot;j_need&quot;,&quot;.dots...gini_disp&quot;,&quot;.dots...gini_mkt&quot;,&quot;fi_index&quot;, &quot;pibpc&quot;, &quot;redis_relativo&quot;,&quot;goveffect&quot;)
+save(mer_pref_polycor, file =&quot;input/data/proc/mer_pref_polycor.rda&quot;)</code></pre>
 </div>
 </div>
 

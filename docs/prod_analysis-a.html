@@ -486,7 +486,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Meritocracy and distributive preferences ISSP</h1>
-<h4 class="date">miércoles 23 septiembre 2020 2:41:19</h4>
+<h4 class="date">lunes 28 septiembre 2020 9:22:21</h4>
 
 </div>
 
@@ -3057,7 +3057,12 @@ Estados Unidos.
 <a class="sourceLine" id="cb19-28" title="28"><span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">full_width =</span> F)  <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb19-29" title="29"><span class="st">      </span><span class="kw">collapse_rows</span>(<span class="dt">columns =</span> <span class="dv">1</span>,<span class="dt">valign =</span> <span class="st">&quot;middle&quot;</span>)  <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb19-30" title="30"><span class="st">      </span><span class="kw">footnote</span>(<span class="dt">number =</span> <span class="kw">c</span>(<span class="st">&quot;Model 1: Continue item&quot;</span>,</a>
-<a class="sourceLine" id="cb19-31" title="31">                          <span class="st">&quot;Model 2: Ordered item&quot;</span>));sumtable01</a></code></pre></div>
+<a class="sourceLine" id="cb19-31" title="31">                          <span class="st">&quot;Model 2: Ordered item&quot;</span>));sumtable01</a>
+<a class="sourceLine" id="cb19-32" title="32">     </a>
+<a class="sourceLine" id="cb19-33" title="33">semPlot<span class="op">::</span><span class="kw">semPaths</span>(fit_mer_red2,<span class="dt">layout =</span> <span class="st">&quot;circle&quot;</span>, <span class="dt">rotation =</span> <span class="dv">3</span>, </a>
+<a class="sourceLine" id="cb19-34" title="34">                <span class="dt">intercepts =</span> <span class="ot">FALSE</span>, <span class="dt">style =</span> <span class="st">&quot;lisrel&quot;</span>, <span class="dt">curvePivot =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb19-35" title="35">                <span class="dt">sizeMan =</span> <span class="dv">4</span>, <span class="dt">sizeLat =</span> <span class="dv">6</span>)</a></code></pre></div>
+<img src="prod_analysis-a_files/figure-html/unnamed-chunk-23-1.png" width="672" />
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
 Redistributive preferences and Meritocratic measurement Summary fit
@@ -3157,21 +3162,17 @@ DWLS
 </tr>
 </tfoot>
 </table>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">semPlot<span class="op">::</span><span class="kw">semPaths</span>(fit_mer_red2,<span class="dt">layout =</span> <span class="st">&quot;circle&quot;</span>, <span class="dt">rotation =</span> <span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb20-2" title="2">                <span class="dt">intercepts =</span> <span class="ot">FALSE</span>, <span class="dt">style =</span> <span class="st">&quot;lisrel&quot;</span>, <span class="dt">curvePivot =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb20-3" title="3">                <span class="dt">sizeMan =</span> <span class="dv">4</span>, <span class="dt">sizeLat =</span> <span class="dv">6</span>)</a></code></pre></div>
-<p><img src="prod_analysis-a_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">sum_fit<span class="op">$</span>mod &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Model 1&quot;</span>,<span class="st">&quot;Model 2&quot;</span>)</a>
-<a class="sourceLine" id="cb21-2" title="2">sum_fit<span class="op">$</span>est &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;MLR&quot;</span>,<span class="st">&quot;DWLS&quot;</span>)</a>
-<a class="sourceLine" id="cb21-3" title="3">sum_fit &lt;-<span class="st"> </span>sum_fit <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="st">&quot;mod&quot;</span>,<span class="st">&quot;est&quot;</span>,<span class="st">&quot;chisq&quot;</span>,<span class="st">&quot;df&quot;</span>,<span class="st">&quot;cfi&quot;</span>,<span class="st">&quot;rmsea&quot;</span>,<span class="st">&quot;rmsea.ci.lower&quot;</span>,<span class="st">&quot;rmsea.ci.upper&quot;</span>)</a>
-<a class="sourceLine" id="cb21-4" title="4"></a>
-<a class="sourceLine" id="cb21-5" title="5">colnames &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Model&quot;</span>,<span class="st">&quot;Estimator&quot;</span>,<span class="st">&quot;$</span><span class="ch">\\</span><span class="st">chi2$&quot;</span>,<span class="st">&quot;df&quot;</span>,<span class="st">&quot;CFI&quot;</span>,<span class="st">&quot;RMSEA&quot;</span>,<span class="st">&quot;RMSEA CI lower&quot;</span>, <span class="st">&quot;RMSEA CI upper&quot;</span>)</a>
-<a class="sourceLine" id="cb21-6" title="6">      </a>
-<a class="sourceLine" id="cb21-7" title="7">sumtable01&lt;-<span class="st"> </span><span class="kw">kable</span>(sum_fit,<span class="dt">digits =</span> <span class="dv">3</span>,<span class="dt">format =</span> <span class="st">&quot;html&quot;</span>,<span class="dt">row.names =</span> F,<span class="dt">booktabs=</span>T, <span class="dt">caption =</span> <span class="st">&quot;Redistributive preferences and Meritocratic measurement Summary fit&quot;</span>,<span class="dt">col.names =</span> colnames,<span class="dt">escape =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-8" title="8"><span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">full_width =</span> F)  <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-9" title="9"><span class="st">      </span><span class="kw">collapse_rows</span>(<span class="dt">columns =</span> <span class="dv">1</span>,<span class="dt">valign =</span> <span class="st">&quot;middle&quot;</span>)  <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-10" title="10"><span class="st">      </span><span class="kw">footnote</span>(<span class="dt">number =</span> <span class="kw">c</span>(<span class="st">&quot;Model 1: Continue item&quot;</span>,</a>
-<a class="sourceLine" id="cb21-11" title="11">                          <span class="st">&quot;Model 2: Ordered item&quot;</span>));sumtable01</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">sum_fit<span class="op">$</span>mod &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Model 1&quot;</span>,<span class="st">&quot;Model 2&quot;</span>)</a>
+<a class="sourceLine" id="cb20-2" title="2">sum_fit<span class="op">$</span>est &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;MLR&quot;</span>,<span class="st">&quot;DWLS&quot;</span>)</a>
+<a class="sourceLine" id="cb20-3" title="3">sum_fit &lt;-<span class="st"> </span>sum_fit <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="st">&quot;mod&quot;</span>,<span class="st">&quot;est&quot;</span>,<span class="st">&quot;chisq&quot;</span>,<span class="st">&quot;df&quot;</span>,<span class="st">&quot;cfi&quot;</span>,<span class="st">&quot;rmsea&quot;</span>,<span class="st">&quot;rmsea.ci.lower&quot;</span>,<span class="st">&quot;rmsea.ci.upper&quot;</span>)</a>
+<a class="sourceLine" id="cb20-4" title="4"></a>
+<a class="sourceLine" id="cb20-5" title="5">colnames &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Model&quot;</span>,<span class="st">&quot;Estimator&quot;</span>,<span class="st">&quot;$</span><span class="ch">\\</span><span class="st">chi2$&quot;</span>,<span class="st">&quot;df&quot;</span>,<span class="st">&quot;CFI&quot;</span>,<span class="st">&quot;RMSEA&quot;</span>,<span class="st">&quot;RMSEA CI lower&quot;</span>, <span class="st">&quot;RMSEA CI upper&quot;</span>)</a>
+<a class="sourceLine" id="cb20-6" title="6">      </a>
+<a class="sourceLine" id="cb20-7" title="7">sumtable01&lt;-<span class="st"> </span><span class="kw">kable</span>(sum_fit,<span class="dt">digits =</span> <span class="dv">3</span>,<span class="dt">format =</span> <span class="st">&quot;html&quot;</span>,<span class="dt">row.names =</span> F,<span class="dt">booktabs=</span>T, <span class="dt">caption =</span> <span class="st">&quot;Redistributive preferences and Meritocratic measurement Summary fit&quot;</span>,<span class="dt">col.names =</span> colnames,<span class="dt">escape =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb20-8" title="8"><span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">full_width =</span> F)  <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb20-9" title="9"><span class="st">      </span><span class="kw">collapse_rows</span>(<span class="dt">columns =</span> <span class="dv">1</span>,<span class="dt">valign =</span> <span class="st">&quot;middle&quot;</span>)  <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb20-10" title="10"><span class="st">      </span><span class="kw">footnote</span>(<span class="dt">number =</span> <span class="kw">c</span>(<span class="st">&quot;Model 1: Continue item&quot;</span>,</a>
+<a class="sourceLine" id="cb20-11" title="11">                          <span class="st">&quot;Model 2: Ordered item&quot;</span>));sumtable01</a></code></pre></div>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
 Redistributive preferences and Meritocratic measurement Summary fit
@@ -3271,47 +3272,47 @@ DWLS
 </tr>
 </tfoot>
 </table>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">semPlot<span class="op">::</span><span class="kw">semPaths</span>(fit_mer_red2,<span class="dt">layout =</span> <span class="st">&quot;circle&quot;</span>, <span class="dt">rotation =</span> <span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb22-2" title="2">                <span class="dt">intercepts =</span> <span class="ot">FALSE</span>, <span class="dt">style =</span> <span class="st">&quot;lisrel&quot;</span>, <span class="dt">curvePivot =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb22-3" title="3">                <span class="dt">sizeMan =</span> <span class="dv">4</span>, <span class="dt">sizeLat =</span> <span class="dv">6</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">semPlot<span class="op">::</span><span class="kw">semPaths</span>(fit_mer_red2,<span class="dt">layout =</span> <span class="st">&quot;circle&quot;</span>, <span class="dt">rotation =</span> <span class="dv">3</span>, </a>
+<a class="sourceLine" id="cb21-2" title="2">                <span class="dt">intercepts =</span> <span class="ot">FALSE</span>, <span class="dt">style =</span> <span class="st">&quot;lisrel&quot;</span>, <span class="dt">curvePivot =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb21-3" title="3">                <span class="dt">sizeMan =</span> <span class="dv">4</span>, <span class="dt">sizeLat =</span> <span class="dv">6</span>)</a></code></pre></div>
 <p><img src="prod_analysis-a_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 </div>
 <div id="correlation-factor-scores" class="section level2">
 <h2><span class="header-section-number">2.4</span> Correlation factor scores</h2>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="co"># Factor scores</span></a>
-<a class="sourceLine" id="cb23-2" title="2">fscores &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">lavPredict</span>(fit_mer_red2))</a>
-<a class="sourceLine" id="cb23-3" title="3"></a>
-<a class="sourceLine" id="cb23-4" title="4"><span class="co"># Correlations</span></a>
-<a class="sourceLine" id="cb23-5" title="5">cormat=<span class="kw">cor</span>(fscores[<span class="kw">c</span>(<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">1</span>,<span class="dv">9</span>,<span class="dv">5</span>,<span class="dv">6</span>)],<span class="dt">use=</span><span class="st">&quot;pairwise.complete.obs&quot;</span>)</a>
-<a class="sourceLine" id="cb23-6" title="6"></a>
-<a class="sourceLine" id="cb23-7" title="7"><span class="co">#save</span></a>
-<a class="sourceLine" id="cb23-8" title="8"><span class="kw">png</span>(<span class="st">&quot;output/results/corplot_totscores.png&quot;</span>,<span class="dt">width=</span><span class="dv">600</span>,<span class="dt">height=</span><span class="dv">600</span>)</a>
-<a class="sourceLine" id="cb23-9" title="9">    </a>
-<a class="sourceLine" id="cb23-10" title="10"><span class="kw">windowsFonts</span>(<span class="dt">A =</span> <span class="kw">windowsFont</span>(<span class="st">&quot;Times New Roman&quot;</span>))</a>
-<a class="sourceLine" id="cb23-11" title="11"><span class="kw">rownames</span>(cormat) &lt;-<span class="kw">c</span>(</a>
-<a class="sourceLine" id="cb23-12" title="12">    <span class="st">&quot;A. Redistributive Preferences&quot;</span>,</a>
-<a class="sourceLine" id="cb23-13" title="13">    <span class="st">&quot;B. Acummulation Preferences&quot;</span>,</a>
-<a class="sourceLine" id="cb23-14" title="14">    <span class="st">&quot;C. Meritocratic Perception&quot;</span>,</a>
-<a class="sourceLine" id="cb23-15" title="15">    <span class="st">&quot;D. Non-Meritocratic Perception&quot;</span>,</a>
-<a class="sourceLine" id="cb23-16" title="16">    <span class="st">&quot;E. Meritocratic Preferences&quot;</span>,</a>
-<a class="sourceLine" id="cb23-17" title="17">    <span class="st">&quot;F. Non-Meritocratic Preferences&quot;</span>)</a>
-<a class="sourceLine" id="cb23-18" title="18"><span class="kw">colnames</span>(cormat) &lt;-<span class="kw">c</span>(<span class="st">&quot;(A)&quot;</span>, <span class="st">&quot;(B)&quot;</span>,<span class="st">&quot;(C)&quot;</span>,<span class="st">&quot;(D)&quot;</span>,<span class="st">&quot;(E)&quot;</span>,<span class="st">&quot;(F)&quot;</span>)</a>
-<a class="sourceLine" id="cb23-19" title="19"></a>
-<a class="sourceLine" id="cb23-20" title="20"><span class="kw">corrplot</span>(</a>
-<a class="sourceLine" id="cb23-21" title="21">cormat,</a>
-<a class="sourceLine" id="cb23-22" title="22">  <span class="dt">method =</span> <span class="st">&quot;color&quot;</span>,</a>
-<a class="sourceLine" id="cb23-23" title="23">  <span class="dt">type =</span> <span class="st">&quot;upper&quot;</span>,</a>
-<a class="sourceLine" id="cb23-24" title="24">  <span class="dt">tl.col =</span> <span class="st">&quot;black&quot;</span>,</a>
-<a class="sourceLine" id="cb23-25" title="25">  <span class="dt">addCoef.col =</span> <span class="st">&quot;black&quot;</span>,</a>
-<a class="sourceLine" id="cb23-26" title="26">  <span class="dt">diag =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb23-27" title="27">  <span class="dt">family =</span> <span class="st">&quot;A&quot;</span>, </a>
-<a class="sourceLine" id="cb23-28" title="28">  <span class="dt">number.font =</span> <span class="dv">6</span>,</a>
-<a class="sourceLine" id="cb23-29" title="29">  <span class="dt">tl.cex =</span><span class="fl">0.75</span>,</a>
-<a class="sourceLine" id="cb23-30" title="30">  <span class="dt">number.cex =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb23-31" title="31">    </a>
-<a class="sourceLine" id="cb23-32" title="32"><span class="kw">dev.off</span>()</a></code></pre></div>
-<pre><code>## png 
-##   2</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="co"># Factor scores</span></a>
+<a class="sourceLine" id="cb22-2" title="2">fscores &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">lavPredict</span>(fit_mer_red2))</a>
+<a class="sourceLine" id="cb22-3" title="3"></a>
+<a class="sourceLine" id="cb22-4" title="4"><span class="co"># Correlations</span></a>
+<a class="sourceLine" id="cb22-5" title="5">cormat=<span class="kw">cor</span>(fscores[<span class="kw">c</span>(<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">1</span>,<span class="dv">9</span>,<span class="dv">5</span>,<span class="dv">6</span>)],<span class="dt">use=</span><span class="st">&quot;pairwise.complete.obs&quot;</span>)</a>
+<a class="sourceLine" id="cb22-6" title="6"></a>
+<a class="sourceLine" id="cb22-7" title="7"><span class="co">#save</span></a>
+<a class="sourceLine" id="cb22-8" title="8"><span class="kw">png</span>(<span class="st">&quot;output/results/corplot_totscores.png&quot;</span>,<span class="dt">width=</span><span class="dv">600</span>,<span class="dt">height=</span><span class="dv">600</span>)</a>
+<a class="sourceLine" id="cb22-9" title="9">    </a>
+<a class="sourceLine" id="cb22-10" title="10"><span class="kw">windowsFonts</span>(<span class="dt">A =</span> <span class="kw">windowsFont</span>(<span class="st">&quot;Times New Roman&quot;</span>))</a>
+<a class="sourceLine" id="cb22-11" title="11"><span class="kw">rownames</span>(cormat) &lt;-<span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb22-12" title="12">    <span class="st">&quot;A. Redistributive Preferences&quot;</span>,</a>
+<a class="sourceLine" id="cb22-13" title="13">    <span class="st">&quot;B. Acummulation Preferences&quot;</span>,</a>
+<a class="sourceLine" id="cb22-14" title="14">    <span class="st">&quot;C. Meritocratic Perception&quot;</span>,</a>
+<a class="sourceLine" id="cb22-15" title="15">    <span class="st">&quot;D. Non-Meritocratic Perception&quot;</span>,</a>
+<a class="sourceLine" id="cb22-16" title="16">    <span class="st">&quot;E. Meritocratic Preferences&quot;</span>,</a>
+<a class="sourceLine" id="cb22-17" title="17">    <span class="st">&quot;F. Non-Meritocratic Preferences&quot;</span>)</a>
+<a class="sourceLine" id="cb22-18" title="18"><span class="kw">colnames</span>(cormat) &lt;-<span class="kw">c</span>(<span class="st">&quot;(A)&quot;</span>, <span class="st">&quot;(B)&quot;</span>,<span class="st">&quot;(C)&quot;</span>,<span class="st">&quot;(D)&quot;</span>,<span class="st">&quot;(E)&quot;</span>,<span class="st">&quot;(F)&quot;</span>)</a>
+<a class="sourceLine" id="cb22-19" title="19"></a>
+<a class="sourceLine" id="cb22-20" title="20"><span class="kw">corrplot</span>(</a>
+<a class="sourceLine" id="cb22-21" title="21">cormat,</a>
+<a class="sourceLine" id="cb22-22" title="22">  <span class="dt">method =</span> <span class="st">&quot;color&quot;</span>,</a>
+<a class="sourceLine" id="cb22-23" title="23">  <span class="dt">type =</span> <span class="st">&quot;upper&quot;</span>,</a>
+<a class="sourceLine" id="cb22-24" title="24">  <span class="dt">tl.col =</span> <span class="st">&quot;black&quot;</span>,</a>
+<a class="sourceLine" id="cb22-25" title="25">  <span class="dt">addCoef.col =</span> <span class="st">&quot;black&quot;</span>,</a>
+<a class="sourceLine" id="cb22-26" title="26">  <span class="dt">diag =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb22-27" title="27">  <span class="dt">family =</span> <span class="st">&quot;A&quot;</span>, </a>
+<a class="sourceLine" id="cb22-28" title="28">  <span class="dt">number.font =</span> <span class="dv">6</span>,</a>
+<a class="sourceLine" id="cb22-29" title="29">  <span class="dt">tl.cex =</span><span class="fl">0.75</span>,</a>
+<a class="sourceLine" id="cb22-30" title="30">  <span class="dt">number.cex =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb22-31" title="31">    </a>
+<a class="sourceLine" id="cb22-32" title="32"><span class="kw">dev.off</span>()</a></code></pre></div>
+<pre><code>## RStudioGD 
+##         2</code></pre>
 <div class="figure">
 <img src="../output/results/corplot_totscores.png" alt="Correlation factor scores" />
 <p class="caption">Correlation factor scores</p>
@@ -3322,55 +3323,56 @@ DWLS
 <h1><span class="header-section-number">3</span> Macro Bivariados.</h1>
 <div id="macro-level-correlation" class="section level2">
 <h2><span class="header-section-number">3.1</span> Macro level correlation</h2>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="co">#Se agrega la base de datos dejando paises como</span></a>
-<a class="sourceLine" id="cb25-2" title="2">mer_pref_agg =<span class="st"> </span><span class="kw">aggregate</span>(mer_pref,</a>
-<a class="sourceLine" id="cb25-3" title="3">                         <span class="dt">by =</span> <span class="kw">list</span>(mer_pref<span class="op">$</span>v5c),</a>
-<a class="sourceLine" id="cb25-4" title="4">                         <span class="dt">FUN =</span> mean,</a>
-<a class="sourceLine" id="cb25-5" title="5">                         <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb25-6" title="6"><span class="kw">names</span>(mer_pref_agg)[<span class="kw">names</span>(mer_pref_agg) <span class="op">==</span><span class="st"> &quot;Group.1&quot;</span>] =<span class="st"> &quot;v5c&quot;</span></a>
-<a class="sourceLine" id="cb25-7" title="7"></a>
-<a class="sourceLine" id="cb25-8" title="8"><span class="kw">load</span>(<span class="st">&quot;input/data/proc/meritocracy.rda&quot;</span>)</a>
-<a class="sourceLine" id="cb25-9" title="9"></a>
-<a class="sourceLine" id="cb25-10" title="10"><span class="co"># Adjust data</span></a>
-<a class="sourceLine" id="cb25-11" title="11">merit_agg=<span class="kw">aggregate</span>(meritocracy, <span class="dt">by=</span><span class="kw">list</span>(meritocracy<span class="op">$</span>v5c),<span class="dt">FUN=</span>mean, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb25-12" title="12"><span class="kw">names</span>(merit_agg)[<span class="kw">names</span>(merit_agg)<span class="op">==</span><span class="st">&quot;Group.1&quot;</span>]=<span class="st">&quot;v5c&quot;</span></a>
-<a class="sourceLine" id="cb25-13" title="13"><span class="co">#   names(merit_agg)</span></a>
-<a class="sourceLine" id="cb25-14" title="14"><span class="co">#  dim(merit_agg)</span></a>
-<a class="sourceLine" id="cb25-15" title="15"></a>
-<a class="sourceLine" id="cb25-16" title="16"><span class="kw">load</span>(<span class="st">&quot;input/data/proc/mer_pref_polycor.rda&quot;</span>)</a>
-<a class="sourceLine" id="cb25-17" title="17"></a>
-<a class="sourceLine" id="cb25-18" title="18">corMat &lt;-<span class="st"> </span><span class="kw">cor</span>(mer_pref_polycor, <span class="dt">use=</span><span class="st">&quot;pairwise.complete.obs&quot;</span>)</a>
-<a class="sourceLine" id="cb25-19" title="19"></a>
-<a class="sourceLine" id="cb25-20" title="20"><span class="kw">png</span>(<span class="st">&quot;output/results/macrocor.png&quot;</span>,<span class="dt">width=</span><span class="dv">600</span>,<span class="dt">height=</span><span class="dv">600</span>)</a>
-<a class="sourceLine" id="cb25-21" title="21">    </a>
-<a class="sourceLine" id="cb25-22" title="22"><span class="kw">windowsFonts</span>(<span class="dt">A =</span> <span class="kw">windowsFont</span>(<span class="st">&quot;Times New Roman&quot;</span>))</a>
-<a class="sourceLine" id="cb25-23" title="23"><span class="kw">rownames</span>(corMat) &lt;-<span class="kw">c</span>(</a>
-<a class="sourceLine" id="cb25-24" title="24">    <span class="st">&quot;A. Redistributive Preferences&quot;</span>,</a>
-<a class="sourceLine" id="cb25-25" title="25">    <span class="st">&quot;B. Acummulation Preferences&quot;</span>,</a>
-<a class="sourceLine" id="cb25-26" title="26">    <span class="st">&quot;C. Meritocratic Perception&quot;</span>,</a>
-<a class="sourceLine" id="cb25-27" title="27">    <span class="st">&quot;D. Non-Meritocratic Perception&quot;</span>,</a>
-<a class="sourceLine" id="cb25-28" title="28">    <span class="st">&quot;E. Meritocratic Preferences&quot;</span>,</a>
-<a class="sourceLine" id="cb25-29" title="29">    <span class="st">&quot;F. Non-Meritocratic Preferences&quot;</span>,</a>
-<a class="sourceLine" id="cb25-30" title="30">    <span class="st">&quot;H. Gini market index&quot;</span>,</a>
-<a class="sourceLine" id="cb25-31" title="31">    <span class="st">&quot;I. Gini disp index&quot;</span>,</a>
-<a class="sourceLine" id="cb25-32" title="32">    <span class="st">&quot;J. FI index&quot;</span>,</a>
-<a class="sourceLine" id="cb25-33" title="33">    <span class="st">&quot;K. PIB per capita&quot;</span>,</a>
-<a class="sourceLine" id="cb25-34" title="34">    <span class="st">&quot;L. Redistribution&quot;</span></a>
-<a class="sourceLine" id="cb25-35" title="35">    )</a>
-<a class="sourceLine" id="cb25-36" title="36"><span class="kw">colnames</span>(corMat) &lt;-<span class="kw">c</span>(<span class="st">&quot;(A)&quot;</span>, <span class="st">&quot;(B)&quot;</span>,<span class="st">&quot;(C)&quot;</span>,<span class="st">&quot;(D)&quot;</span>,<span class="st">&quot;(E)&quot;</span>,<span class="st">&quot;(F)&quot;</span>,<span class="st">&quot;(H)&quot;</span>,<span class="st">&quot;(I)&quot;</span>,<span class="st">&quot;(J)&quot;</span>, <span class="st">&quot;(K)&quot;</span>, <span class="st">&quot;(L)&quot;</span>)</a>
-<a class="sourceLine" id="cb25-37" title="37"></a>
-<a class="sourceLine" id="cb25-38" title="38"><span class="kw">corrplot</span>(</a>
-<a class="sourceLine" id="cb25-39" title="39">corMat,</a>
-<a class="sourceLine" id="cb25-40" title="40">  <span class="dt">method =</span> <span class="st">&quot;color&quot;</span>,</a>
-<a class="sourceLine" id="cb25-41" title="41">  <span class="dt">type =</span> <span class="st">&quot;upper&quot;</span>,</a>
-<a class="sourceLine" id="cb25-42" title="42">  <span class="dt">tl.col =</span> <span class="st">&quot;black&quot;</span>,</a>
-<a class="sourceLine" id="cb25-43" title="43">  <span class="dt">addCoef.col =</span> <span class="st">&quot;black&quot;</span>,</a>
-<a class="sourceLine" id="cb25-44" title="44">  <span class="dt">diag =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb25-45" title="45">  <span class="dt">family =</span> <span class="st">&quot;A&quot;</span>, </a>
-<a class="sourceLine" id="cb25-46" title="46">  <span class="dt">number.font =</span> <span class="dv">6</span>,</a>
-<a class="sourceLine" id="cb25-47" title="47">  <span class="dt">tl.cex =</span><span class="fl">0.75</span>,</a>
-<a class="sourceLine" id="cb25-48" title="48">  <span class="dt">number.cex =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb25-49" title="49"><span class="kw">dev.off</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="co">#Se agrega la base de datos dejando paises como</span></a>
+<a class="sourceLine" id="cb24-2" title="2">mer_pref_agg =<span class="st"> </span><span class="kw">aggregate</span>(mer_pref,</a>
+<a class="sourceLine" id="cb24-3" title="3">                         <span class="dt">by =</span> <span class="kw">list</span>(mer_pref<span class="op">$</span>v5c),</a>
+<a class="sourceLine" id="cb24-4" title="4">                         <span class="dt">FUN =</span> mean,</a>
+<a class="sourceLine" id="cb24-5" title="5">                         <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb24-6" title="6"><span class="kw">names</span>(mer_pref_agg)[<span class="kw">names</span>(mer_pref_agg) <span class="op">==</span><span class="st"> &quot;Group.1&quot;</span>] =<span class="st"> &quot;v5c&quot;</span></a>
+<a class="sourceLine" id="cb24-7" title="7"></a>
+<a class="sourceLine" id="cb24-8" title="8"><span class="kw">load</span>(<span class="st">&quot;input/data/proc/meritocracy.rda&quot;</span>)</a>
+<a class="sourceLine" id="cb24-9" title="9"></a>
+<a class="sourceLine" id="cb24-10" title="10"><span class="co"># Adjust data</span></a>
+<a class="sourceLine" id="cb24-11" title="11">merit_agg=<span class="kw">aggregate</span>(meritocracy, <span class="dt">by=</span><span class="kw">list</span>(meritocracy<span class="op">$</span>v5c),<span class="dt">FUN=</span>mean, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb24-12" title="12"><span class="kw">names</span>(merit_agg)[<span class="kw">names</span>(merit_agg)<span class="op">==</span><span class="st">&quot;Group.1&quot;</span>]=<span class="st">&quot;v5c&quot;</span></a>
+<a class="sourceLine" id="cb24-13" title="13"><span class="co">#   names(merit_agg)</span></a>
+<a class="sourceLine" id="cb24-14" title="14"><span class="co">#  dim(merit_agg)</span></a>
+<a class="sourceLine" id="cb24-15" title="15"></a>
+<a class="sourceLine" id="cb24-16" title="16"><span class="kw">load</span>(<span class="st">&quot;input/data/proc/mer_pref_polycor.rda&quot;</span>)</a>
+<a class="sourceLine" id="cb24-17" title="17"></a>
+<a class="sourceLine" id="cb24-18" title="18">corMat &lt;-<span class="st"> </span><span class="kw">cor</span>(mer_pref_polycor, <span class="dt">use=</span><span class="st">&quot;pairwise.complete.obs&quot;</span>)</a>
+<a class="sourceLine" id="cb24-19" title="19"></a>
+<a class="sourceLine" id="cb24-20" title="20"><span class="kw">png</span>(<span class="st">&quot;output/results/macrocor.png&quot;</span>,<span class="dt">width=</span><span class="dv">600</span>,<span class="dt">height=</span><span class="dv">600</span>)</a>
+<a class="sourceLine" id="cb24-21" title="21">    </a>
+<a class="sourceLine" id="cb24-22" title="22"><span class="kw">windowsFonts</span>(<span class="dt">A =</span> <span class="kw">windowsFont</span>(<span class="st">&quot;Times New Roman&quot;</span>))</a>
+<a class="sourceLine" id="cb24-23" title="23"><span class="kw">rownames</span>(corMat) &lt;-<span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb24-24" title="24">    <span class="st">&quot;A. Redistributive Preferences&quot;</span>,</a>
+<a class="sourceLine" id="cb24-25" title="25">    <span class="st">&quot;B. Acummulation Preferences&quot;</span>,</a>
+<a class="sourceLine" id="cb24-26" title="26">    <span class="st">&quot;C. Meritocratic Perception&quot;</span>,</a>
+<a class="sourceLine" id="cb24-27" title="27">    <span class="st">&quot;D. Non-Meritocratic Perception&quot;</span>,</a>
+<a class="sourceLine" id="cb24-28" title="28">    <span class="st">&quot;E. Meritocratic Preferences&quot;</span>,</a>
+<a class="sourceLine" id="cb24-29" title="29">    <span class="st">&quot;F. Non-Meritocratic Preferences&quot;</span>,</a>
+<a class="sourceLine" id="cb24-30" title="30">    <span class="st">&quot;H. Gini market index&quot;</span>,</a>
+<a class="sourceLine" id="cb24-31" title="31">    <span class="st">&quot;I. Gini disp index&quot;</span>,</a>
+<a class="sourceLine" id="cb24-32" title="32">    <span class="st">&quot;J. FI index&quot;</span>,</a>
+<a class="sourceLine" id="cb24-33" title="33">    <span class="st">&quot;K. PIB per capita&quot;</span>,</a>
+<a class="sourceLine" id="cb24-34" title="34">    <span class="st">&quot;L. Redistribution&quot;</span>,</a>
+<a class="sourceLine" id="cb24-35" title="35">    <span class="st">&quot;M. Government Effectivinnes&quot;</span></a>
+<a class="sourceLine" id="cb24-36" title="36">    )</a>
+<a class="sourceLine" id="cb24-37" title="37"><span class="kw">colnames</span>(corMat) &lt;-<span class="kw">c</span>(<span class="st">&quot;(A)&quot;</span>, <span class="st">&quot;(B)&quot;</span>,<span class="st">&quot;(C)&quot;</span>,<span class="st">&quot;(D)&quot;</span>,<span class="st">&quot;(E)&quot;</span>,<span class="st">&quot;(F)&quot;</span>,<span class="st">&quot;(H)&quot;</span>,<span class="st">&quot;(I)&quot;</span>,<span class="st">&quot;(J)&quot;</span>, <span class="st">&quot;(K)&quot;</span>, <span class="st">&quot;(L)&quot;</span>, <span class="st">&quot;(M)&quot;</span>)</a>
+<a class="sourceLine" id="cb24-38" title="38"></a>
+<a class="sourceLine" id="cb24-39" title="39"><span class="kw">corrplot</span>(</a>
+<a class="sourceLine" id="cb24-40" title="40">corMat,</a>
+<a class="sourceLine" id="cb24-41" title="41">  <span class="dt">method =</span> <span class="st">&quot;color&quot;</span>,</a>
+<a class="sourceLine" id="cb24-42" title="42">  <span class="dt">type =</span> <span class="st">&quot;upper&quot;</span>,</a>
+<a class="sourceLine" id="cb24-43" title="43">  <span class="dt">tl.col =</span> <span class="st">&quot;black&quot;</span>,</a>
+<a class="sourceLine" id="cb24-44" title="44">  <span class="dt">addCoef.col =</span> <span class="st">&quot;black&quot;</span>,</a>
+<a class="sourceLine" id="cb24-45" title="45">  <span class="dt">diag =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb24-46" title="46">  <span class="dt">family =</span> <span class="st">&quot;A&quot;</span>, </a>
+<a class="sourceLine" id="cb24-47" title="47">  <span class="dt">number.font =</span> <span class="dv">6</span>,</a>
+<a class="sourceLine" id="cb24-48" title="48">  <span class="dt">tl.cex =</span><span class="fl">0.75</span>,</a>
+<a class="sourceLine" id="cb24-49" title="49">  <span class="dt">number.cex =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb24-50" title="50"><span class="kw">dev.off</span>()</a></code></pre></div>
 <div class="figure">
 <img src="../output/results/macrocor.png" alt="Macro level cor" />
 <p class="caption">Macro level cor</p>
@@ -3378,82 +3380,82 @@ DWLS
 </div>
 <div id="preferencias-redistributivas." class="section level2">
 <h2><span class="header-section-number">3.2</span> Preferencias redistributivas.</h2>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">set_theme</span>(<span class="dt">base =</span> <span class="kw">theme_classic</span>(),</a>
-<a class="sourceLine" id="cb26-2" title="2">          <span class="dt">theme.font =</span> <span class="st">&quot;serif&quot;</span>, </a>
-<a class="sourceLine" id="cb26-3" title="3">          <span class="dt">axis.textsize.x =</span> <span class="fl">1.2</span>,</a>
-<a class="sourceLine" id="cb26-4" title="4">          <span class="dt">axis.textsize.y =</span> <span class="fl">1.2</span>, </a>
-<a class="sourceLine" id="cb26-5" title="5">          <span class="dt">geom.label.size =</span> <span class="dv">4</span>, </a>
-<a class="sourceLine" id="cb26-6" title="6">          <span class="dt">legend.just =</span> <span class="fl">0.35</span>, </a>
-<a class="sourceLine" id="cb26-7" title="7">          <span class="dt">legend.size =</span> <span class="fl">1.2</span>,</a>
-<a class="sourceLine" id="cb26-8" title="8">          <span class="dt">legend.backgroundcol =</span> <span class="st">&quot;white&quot;</span>)</a>
-<a class="sourceLine" id="cb26-9" title="9"></a>
-<a class="sourceLine" id="cb26-10" title="10">old &lt;-<span class="st"> </span><span class="kw">theme_set</span>(<span class="kw">theme_classic</span>())</a>
-<a class="sourceLine" id="cb26-11" title="11"><span class="kw">theme_update</span>(<span class="dt">plot.caption =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>),</a>
-<a class="sourceLine" id="cb26-12" title="12">             <span class="dt">text=</span><span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">12</span>,  <span class="dt">family=</span><span class="st">&quot;serif&quot;</span>))</a></code></pre></div>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">plotredistgini &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg, gini_neto, redist,</a>
-<a class="sourceLine" id="cb27-2" title="2">                               <span class="dt">title =</span> <span class="st">&quot;Redistributive preferences and Inequality&quot;</span>,</a>
-<a class="sourceLine" id="cb27-3" title="3">                             <span class="co">#dot.labels = merit_agg$v5c,</span></a>
-<a class="sourceLine" id="cb27-4" title="4">                             <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>, </a>
-<a class="sourceLine" id="cb27-5" title="5">                             <span class="dt">show.ci =</span> <span class="ot">TRUE</span>)  <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Redistributive preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>)</a>
-<a class="sourceLine" id="cb27-6" title="6"></a>
-<a class="sourceLine" id="cb27-7" title="7">mer_pref_agg_zaf &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c <span class="op">!=</span><span class="st"> &#39;ZAF&#39;</span>),]</a>
-<a class="sourceLine" id="cb27-8" title="8"></a>
-<a class="sourceLine" id="cb27-9" title="9">plotredistgini_outliers &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg_zaf, gini_neto, redist, </a>
-<a class="sourceLine" id="cb27-10" title="10">                                        <span class="dt">title =</span> <span class="st">&quot;Redistributive preferences and inequality &quot;</span>,</a>
-<a class="sourceLine" id="cb27-11" title="11">                                        <span class="dt">fit.line =</span> lm,</a>
-<a class="sourceLine" id="cb27-12" title="12">                                        <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Redistributive preferences&quot;</span>) <span class="op">+</span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Excluding outliers&quot;</span>) </a>
-<a class="sourceLine" id="cb27-13" title="13"></a>
-<a class="sourceLine" id="cb27-14" title="14">plotredistfi &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,  fi_index, redist,</a>
-<a class="sourceLine" id="cb27-15" title="15">                             <span class="dt">title =</span> <span class="st">&quot;Redistributive preferences and Economic Freedom Index&quot;</span>,</a>
-<a class="sourceLine" id="cb27-16" title="16">                           <span class="co">#dot.labels = merit_agg$v5c,</span></a>
-<a class="sourceLine" id="cb27-17" title="17">                           <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb27-18" title="18">                           <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Redistributive preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Economic Freedom Index&quot;</span>)</a>
-<a class="sourceLine" id="cb27-19" title="19"></a>
-<a class="sourceLine" id="cb27-20" title="20">mer_pref_agg_ven &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c <span class="op">!=</span><span class="st"> &#39;VEN&#39;</span>),]</a>
-<a class="sourceLine" id="cb27-21" title="21"></a>
-<a class="sourceLine" id="cb27-22" title="22">plotredistfi_outliers&lt;-<span class="kw">plot_scatter</span>(mer_pref_agg_ven,  fi_index, redist, </a>
-<a class="sourceLine" id="cb27-23" title="23">                                    <span class="dt">title =</span> <span class="st">&quot;Redistributive preferences and Economic Freedom Index&quot;</span>,</a>
-<a class="sourceLine" id="cb27-24" title="24">                                    <span class="co">#dot.labels = merit_agg$v5c,</span></a>
-<a class="sourceLine" id="cb27-25" title="25">                                    <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb27-26" title="26">                                    <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Redistributive preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Economic Freedom Index&quot;</span>) <span class="op">+</span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Excluding outliers&quot;</span>)</a>
-<a class="sourceLine" id="cb27-27" title="27"></a>
-<a class="sourceLine" id="cb27-28" title="28"><span class="kw">ggsave</span>(<span class="dt">plot =</span> <span class="kw">plot_grid</span>(<span class="kw">list</span>(plotredistgini, plotredistgini_outliers, plotredistfi, plotredistfi_outliers),</a>
-<a class="sourceLine" id="cb27-29" title="29">                        <span class="dt">margin =</span> <span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>), </a>
-<a class="sourceLine" id="cb27-30" title="30">                        <span class="dt">tags =</span> <span class="kw">c</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>)), </a>
-<a class="sourceLine" id="cb27-31" title="31">       <span class="dt">filename =</span> <span class="st">&quot;output/results/plot_redistmacro.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">set_theme</span>(<span class="dt">base =</span> <span class="kw">theme_classic</span>(),</a>
+<a class="sourceLine" id="cb25-2" title="2">          <span class="dt">theme.font =</span> <span class="st">&quot;serif&quot;</span>, </a>
+<a class="sourceLine" id="cb25-3" title="3">          <span class="dt">axis.textsize.x =</span> <span class="fl">1.2</span>,</a>
+<a class="sourceLine" id="cb25-4" title="4">          <span class="dt">axis.textsize.y =</span> <span class="fl">1.2</span>, </a>
+<a class="sourceLine" id="cb25-5" title="5">          <span class="dt">geom.label.size =</span> <span class="dv">4</span>, </a>
+<a class="sourceLine" id="cb25-6" title="6">          <span class="dt">legend.just =</span> <span class="fl">0.35</span>, </a>
+<a class="sourceLine" id="cb25-7" title="7">          <span class="dt">legend.size =</span> <span class="fl">1.2</span>,</a>
+<a class="sourceLine" id="cb25-8" title="8">          <span class="dt">legend.backgroundcol =</span> <span class="st">&quot;white&quot;</span>)</a>
+<a class="sourceLine" id="cb25-9" title="9"></a>
+<a class="sourceLine" id="cb25-10" title="10">old &lt;-<span class="st"> </span><span class="kw">theme_set</span>(<span class="kw">theme_classic</span>())</a>
+<a class="sourceLine" id="cb25-11" title="11"><span class="kw">theme_update</span>(<span class="dt">plot.caption =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>),</a>
+<a class="sourceLine" id="cb25-12" title="12">             <span class="dt">text=</span><span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">12</span>,  <span class="dt">family=</span><span class="st">&quot;serif&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">plotredistgini &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg, gini_neto, redist,</a>
+<a class="sourceLine" id="cb26-2" title="2">                               <span class="dt">title =</span> <span class="st">&quot;Redistributive preferences and Inequality&quot;</span>,</a>
+<a class="sourceLine" id="cb26-3" title="3">                             <span class="co">#dot.labels = merit_agg$v5c,</span></a>
+<a class="sourceLine" id="cb26-4" title="4">                             <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>, </a>
+<a class="sourceLine" id="cb26-5" title="5">                             <span class="dt">show.ci =</span> <span class="ot">TRUE</span>)  <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Redistributive preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>)</a>
+<a class="sourceLine" id="cb26-6" title="6"></a>
+<a class="sourceLine" id="cb26-7" title="7">mer_pref_agg_zaf &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c <span class="op">!=</span><span class="st"> &#39;ZAF&#39;</span>),]</a>
+<a class="sourceLine" id="cb26-8" title="8"></a>
+<a class="sourceLine" id="cb26-9" title="9">plotredistgini_outliers &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg_zaf, gini_neto, redist, </a>
+<a class="sourceLine" id="cb26-10" title="10">                                        <span class="dt">title =</span> <span class="st">&quot;Redistributive preferences and inequality &quot;</span>,</a>
+<a class="sourceLine" id="cb26-11" title="11">                                        <span class="dt">fit.line =</span> lm,</a>
+<a class="sourceLine" id="cb26-12" title="12">                                        <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Redistributive preferences&quot;</span>) <span class="op">+</span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Excluding outliers&quot;</span>) </a>
+<a class="sourceLine" id="cb26-13" title="13"></a>
+<a class="sourceLine" id="cb26-14" title="14">plotredistfi &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,  fi_index, redist,</a>
+<a class="sourceLine" id="cb26-15" title="15">                             <span class="dt">title =</span> <span class="st">&quot;Redistributive preferences and Economic Freedom Index&quot;</span>,</a>
+<a class="sourceLine" id="cb26-16" title="16">                           <span class="co">#dot.labels = merit_agg$v5c,</span></a>
+<a class="sourceLine" id="cb26-17" title="17">                           <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb26-18" title="18">                           <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Redistributive preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Economic Freedom Index&quot;</span>)</a>
+<a class="sourceLine" id="cb26-19" title="19"></a>
+<a class="sourceLine" id="cb26-20" title="20">mer_pref_agg_ven &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c <span class="op">!=</span><span class="st"> &#39;VEN&#39;</span>),]</a>
+<a class="sourceLine" id="cb26-21" title="21"></a>
+<a class="sourceLine" id="cb26-22" title="22">plotredistfi_outliers&lt;-<span class="kw">plot_scatter</span>(mer_pref_agg_ven,  fi_index, redist, </a>
+<a class="sourceLine" id="cb26-23" title="23">                                    <span class="dt">title =</span> <span class="st">&quot;Redistributive preferences and Economic Freedom Index&quot;</span>,</a>
+<a class="sourceLine" id="cb26-24" title="24">                                    <span class="co">#dot.labels = merit_agg$v5c,</span></a>
+<a class="sourceLine" id="cb26-25" title="25">                                    <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb26-26" title="26">                                    <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Redistributive preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Economic Freedom Index&quot;</span>) <span class="op">+</span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Excluding outliers&quot;</span>)</a>
+<a class="sourceLine" id="cb26-27" title="27"></a>
+<a class="sourceLine" id="cb26-28" title="28"><span class="kw">ggsave</span>(<span class="dt">plot =</span> <span class="kw">plot_grid</span>(<span class="kw">list</span>(plotredistgini, plotredistgini_outliers, plotredistfi, plotredistfi_outliers),</a>
+<a class="sourceLine" id="cb26-29" title="29">                        <span class="dt">margin =</span> <span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>), </a>
+<a class="sourceLine" id="cb26-30" title="30">                        <span class="dt">tags =</span> <span class="kw">c</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>)), </a>
+<a class="sourceLine" id="cb26-31" title="31">       <span class="dt">filename =</span> <span class="st">&quot;output/results/plot_redistmacro.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a></code></pre></div>
 <div class="figure">
 <img src="../output/results/plot_redistmacro.png" alt="Redistributive preferences, Gini and FI index" />
 <p class="caption">Redistributive preferences, Gini and FI index</p>
 </div>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">plotredistmerit &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,  merit, redist, </a>
-<a class="sourceLine" id="cb28-2" title="2">                                <span class="dt">title =</span> <span class="st">&quot;Redistributive preferences and Meritocratic perception&quot;</span>,</a>
-<a class="sourceLine" id="cb28-3" title="3">                                <span class="co">#   dot.labels = merit_agg$v5c,</span></a>
-<a class="sourceLine" id="cb28-4" title="4">                                <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb28-5" title="5">                                <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Redistributive preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Meritocratic perception&quot;</span>) </a>
-<a class="sourceLine" id="cb28-6" title="6">  </a>
-<a class="sourceLine" id="cb28-7" title="7"></a>
-<a class="sourceLine" id="cb28-8" title="8">plotredistbmerit &lt;-<span class="kw">plot_scatter</span>(mer_pref_agg,  bmerit, redist, </a>
-<a class="sourceLine" id="cb28-9" title="9">                                <span class="dt">title =</span> <span class="st">&quot;Redistributive preferences and Meritocratic preferences&quot;</span>,</a>
-<a class="sourceLine" id="cb28-10" title="10">                                <span class="co">#   dot.labels = merit_agg$v5c,</span></a>
-<a class="sourceLine" id="cb28-11" title="11">                                <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb28-12" title="12">                                <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Redistributive preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Meritocratic preferences&quot;</span>) </a>
-<a class="sourceLine" id="cb28-13" title="13"></a>
-<a class="sourceLine" id="cb28-14" title="14">plotredistunmerit &lt;-<span class="kw">plot_scatter</span>(mer_pref_agg,  unmerit, redist, </a>
-<a class="sourceLine" id="cb28-15" title="15">                                 <span class="dt">title =</span> <span class="st">&quot;Redistributive preferences and Unmeritocratic perception&quot;</span>,</a>
-<a class="sourceLine" id="cb28-16" title="16">                                 <span class="co">#dot.labels = merit_agg$v5c,</span></a>
-<a class="sourceLine" id="cb28-17" title="17">                                 <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb28-18" title="18">                                 <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Redistributive preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Unmeritocratic perception&quot;</span>) </a>
-<a class="sourceLine" id="cb28-19" title="19"></a>
-<a class="sourceLine" id="cb28-20" title="20">plotredistneed &lt;-<span class="kw">plot_scatter</span>(mer_pref_agg,  need, redist, </a>
-<a class="sourceLine" id="cb28-21" title="21">                              <span class="dt">title =</span> <span class="st">&quot;Redistributive preferences and Unmeritocratic preferences (Need)&quot;</span>,</a>
-<a class="sourceLine" id="cb28-22" title="22">                              <span class="co">#dot.labels = merit_agg$v5c,</span></a>
-<a class="sourceLine" id="cb28-23" title="23">                              <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb28-24" title="24">                              <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Redistributive preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Unmeritocratic preferences (Need)&quot;</span>) </a>
-<a class="sourceLine" id="cb28-25" title="25"></a>
-<a class="sourceLine" id="cb28-26" title="26"><span class="kw">ggsave</span>(<span class="dt">plot =</span> <span class="kw">plot_grid</span>(<span class="kw">list</span>(plotredistmerit, plotredistbmerit, plotredistunmerit, plotredistneed),</a>
-<a class="sourceLine" id="cb28-27" title="27">                        <span class="dt">margin =</span> <span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>), </a>
-<a class="sourceLine" id="cb28-28" title="28">                        <span class="dt">tags =</span> <span class="kw">c</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>)), </a>
-<a class="sourceLine" id="cb28-29" title="29">       <span class="dt">filename =</span> <span class="st">&quot;output/results/plot_redistmerit.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">plotredistmerit &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,  merit, redist, </a>
+<a class="sourceLine" id="cb27-2" title="2">                                <span class="dt">title =</span> <span class="st">&quot;Redistributive preferences and Meritocratic perception&quot;</span>,</a>
+<a class="sourceLine" id="cb27-3" title="3">                                <span class="co">#   dot.labels = merit_agg$v5c,</span></a>
+<a class="sourceLine" id="cb27-4" title="4">                                <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb27-5" title="5">                                <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Redistributive preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Meritocratic perception&quot;</span>) </a>
+<a class="sourceLine" id="cb27-6" title="6">  </a>
+<a class="sourceLine" id="cb27-7" title="7"></a>
+<a class="sourceLine" id="cb27-8" title="8">plotredistbmerit &lt;-<span class="kw">plot_scatter</span>(mer_pref_agg,  bmerit, redist, </a>
+<a class="sourceLine" id="cb27-9" title="9">                                <span class="dt">title =</span> <span class="st">&quot;Redistributive preferences and Meritocratic preferences&quot;</span>,</a>
+<a class="sourceLine" id="cb27-10" title="10">                                <span class="co">#   dot.labels = merit_agg$v5c,</span></a>
+<a class="sourceLine" id="cb27-11" title="11">                                <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb27-12" title="12">                                <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Redistributive preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Meritocratic preferences&quot;</span>) </a>
+<a class="sourceLine" id="cb27-13" title="13"></a>
+<a class="sourceLine" id="cb27-14" title="14">plotredistunmerit &lt;-<span class="kw">plot_scatter</span>(mer_pref_agg,  unmerit, redist, </a>
+<a class="sourceLine" id="cb27-15" title="15">                                 <span class="dt">title =</span> <span class="st">&quot;Redistributive preferences and Unmeritocratic perception&quot;</span>,</a>
+<a class="sourceLine" id="cb27-16" title="16">                                 <span class="co">#dot.labels = merit_agg$v5c,</span></a>
+<a class="sourceLine" id="cb27-17" title="17">                                 <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb27-18" title="18">                                 <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Redistributive preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Unmeritocratic perception&quot;</span>) </a>
+<a class="sourceLine" id="cb27-19" title="19"></a>
+<a class="sourceLine" id="cb27-20" title="20">plotredistneed &lt;-<span class="kw">plot_scatter</span>(mer_pref_agg,  need, redist, </a>
+<a class="sourceLine" id="cb27-21" title="21">                              <span class="dt">title =</span> <span class="st">&quot;Redistributive preferences and Unmeritocratic preferences (Need)&quot;</span>,</a>
+<a class="sourceLine" id="cb27-22" title="22">                              <span class="co">#dot.labels = merit_agg$v5c,</span></a>
+<a class="sourceLine" id="cb27-23" title="23">                              <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb27-24" title="24">                              <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Redistributive preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Unmeritocratic preferences (Need)&quot;</span>) </a>
+<a class="sourceLine" id="cb27-25" title="25"></a>
+<a class="sourceLine" id="cb27-26" title="26"><span class="kw">ggsave</span>(<span class="dt">plot =</span> <span class="kw">plot_grid</span>(<span class="kw">list</span>(plotredistmerit, plotredistbmerit, plotredistunmerit, plotredistneed),</a>
+<a class="sourceLine" id="cb27-27" title="27">                        <span class="dt">margin =</span> <span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>), </a>
+<a class="sourceLine" id="cb27-28" title="28">                        <span class="dt">tags =</span> <span class="kw">c</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>)), </a>
+<a class="sourceLine" id="cb27-29" title="29">       <span class="dt">filename =</span> <span class="st">&quot;output/results/plot_redistmerit.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a></code></pre></div>
 <div class="figure">
 <img src="../output/results/plot_redistmerit.png" alt="Redistributive preferences and Meritocratic beliefs" />
 <p class="caption">Redistributive preferences and Meritocratic beliefs</p>
@@ -3461,70 +3463,70 @@ DWLS
 </div>
 <div id="preferencias-de-mercantilizacion." class="section level2">
 <h2><span class="header-section-number">3.3</span> Preferencias de Mercantilizacion.</h2>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">plotaccumgini&lt;-<span class="kw">plot_scatter</span>(mer_pref_agg, gini_neto, accum, </a>
-<a class="sourceLine" id="cb29-2" title="2">                            <span class="dt">title =</span> <span class="st">&quot;Accumulation and Inequality &quot;</span>,</a>
-<a class="sourceLine" id="cb29-3" title="3">                            <span class="co">#dot.labels = merit_agg$v5c,</span></a>
-<a class="sourceLine" id="cb29-4" title="4">                            <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb29-5" title="5">                            <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Accumulation preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>)</a>
-<a class="sourceLine" id="cb29-6" title="6"></a>
-<a class="sourceLine" id="cb29-7" title="7">mer_pref_agg_zaf &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;ZAF&#39;</span>), ]</a>
-<a class="sourceLine" id="cb29-8" title="8">          </a>
-<a class="sourceLine" id="cb29-9" title="9">plotaccumgini_outliers &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg_zaf, gini_neto, accum, </a>
-<a class="sourceLine" id="cb29-10" title="10">                                       <span class="dt">title =</span> <span class="st">&quot;Accumulation and Inequality&quot;</span>,</a>
-<a class="sourceLine" id="cb29-11" title="11">                                       <span class="co">#dot.labels = merit_agg$v5c,</span></a>
-<a class="sourceLine" id="cb29-12" title="12">                                       <span class="dt">fit.line =</span> lm,</a>
-<a class="sourceLine" id="cb29-13" title="13">                                       <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Accumulation preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>) <span class="op">+</span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Excluding outliers&quot;</span>)</a>
-<a class="sourceLine" id="cb29-14" title="14"></a>
-<a class="sourceLine" id="cb29-15" title="15">mer_pref_agg_ven &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;VEN&#39;</span>), ]</a>
-<a class="sourceLine" id="cb29-16" title="16"></a>
-<a class="sourceLine" id="cb29-17" title="17">plotaccumfi &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg, fi_index, accum,</a>
-<a class="sourceLine" id="cb29-18" title="18">                            <span class="dt">title =</span> <span class="st">&quot;Accumulation and Economic freedom&quot;</span>,</a>
-<a class="sourceLine" id="cb29-19" title="19">                            <span class="co">#dot.labels = mer_pref_agg$v5c,</span></a>
-<a class="sourceLine" id="cb29-20" title="20">                            <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb29-21" title="21">                            <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Accumulation preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Ecconomic freedom index&quot;</span>)</a>
-<a class="sourceLine" id="cb29-22" title="22"></a>
-<a class="sourceLine" id="cb29-23" title="23">plotaccumfi_outliers&lt;-<span class="kw">plot_scatter</span>(mer_pref_agg_ven,  fi_index, accum, </a>
-<a class="sourceLine" id="cb29-24" title="24">                                   <span class="dt">title =</span> <span class="st">&quot;Accumulation and Economic freedom&quot;</span>,</a>
-<a class="sourceLine" id="cb29-25" title="25">                                   <span class="co">#dot.labels = merit_agg$v5c,</span></a>
-<a class="sourceLine" id="cb29-26" title="26">                                   <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb29-27" title="27">                                   <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Accumulation preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Ecconomic freedom index&quot;</span>) <span class="op">+</span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Excluding outliers&quot;</span>)</a>
-<a class="sourceLine" id="cb29-28" title="28"></a>
-<a class="sourceLine" id="cb29-29" title="29"><span class="kw">ggsave</span>(<span class="dt">plot =</span> <span class="kw">plot_grid</span>(<span class="kw">list</span>(plotaccumgini, plotaccumgini_outliers, plotaccumfi, plotaccumfi_outliers),</a>
-<a class="sourceLine" id="cb29-30" title="30">                        <span class="dt">margin =</span> <span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>), </a>
-<a class="sourceLine" id="cb29-31" title="31">                        <span class="dt">tags =</span> <span class="kw">c</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>)), </a>
-<a class="sourceLine" id="cb29-32" title="32">       <span class="dt">filename =</span> <span class="st">&quot;output/results/plot_accumginifi.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">plotaccumgini&lt;-<span class="kw">plot_scatter</span>(mer_pref_agg, gini_neto, accum, </a>
+<a class="sourceLine" id="cb28-2" title="2">                            <span class="dt">title =</span> <span class="st">&quot;Accumulation and Inequality &quot;</span>,</a>
+<a class="sourceLine" id="cb28-3" title="3">                            <span class="co">#dot.labels = merit_agg$v5c,</span></a>
+<a class="sourceLine" id="cb28-4" title="4">                            <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb28-5" title="5">                            <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Accumulation preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>)</a>
+<a class="sourceLine" id="cb28-6" title="6"></a>
+<a class="sourceLine" id="cb28-7" title="7">mer_pref_agg_zaf &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;ZAF&#39;</span>), ]</a>
+<a class="sourceLine" id="cb28-8" title="8">          </a>
+<a class="sourceLine" id="cb28-9" title="9">plotaccumgini_outliers &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg_zaf, gini_neto, accum, </a>
+<a class="sourceLine" id="cb28-10" title="10">                                       <span class="dt">title =</span> <span class="st">&quot;Accumulation and Inequality&quot;</span>,</a>
+<a class="sourceLine" id="cb28-11" title="11">                                       <span class="co">#dot.labels = merit_agg$v5c,</span></a>
+<a class="sourceLine" id="cb28-12" title="12">                                       <span class="dt">fit.line =</span> lm,</a>
+<a class="sourceLine" id="cb28-13" title="13">                                       <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Accumulation preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>) <span class="op">+</span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Excluding outliers&quot;</span>)</a>
+<a class="sourceLine" id="cb28-14" title="14"></a>
+<a class="sourceLine" id="cb28-15" title="15">mer_pref_agg_ven &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;VEN&#39;</span>), ]</a>
+<a class="sourceLine" id="cb28-16" title="16"></a>
+<a class="sourceLine" id="cb28-17" title="17">plotaccumfi &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg, fi_index, accum,</a>
+<a class="sourceLine" id="cb28-18" title="18">                            <span class="dt">title =</span> <span class="st">&quot;Accumulation and Economic freedom&quot;</span>,</a>
+<a class="sourceLine" id="cb28-19" title="19">                            <span class="co">#dot.labels = mer_pref_agg$v5c,</span></a>
+<a class="sourceLine" id="cb28-20" title="20">                            <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb28-21" title="21">                            <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Accumulation preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Ecconomic freedom index&quot;</span>)</a>
+<a class="sourceLine" id="cb28-22" title="22"></a>
+<a class="sourceLine" id="cb28-23" title="23">plotaccumfi_outliers&lt;-<span class="kw">plot_scatter</span>(mer_pref_agg_ven,  fi_index, accum, </a>
+<a class="sourceLine" id="cb28-24" title="24">                                   <span class="dt">title =</span> <span class="st">&quot;Accumulation and Economic freedom&quot;</span>,</a>
+<a class="sourceLine" id="cb28-25" title="25">                                   <span class="co">#dot.labels = merit_agg$v5c,</span></a>
+<a class="sourceLine" id="cb28-26" title="26">                                   <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb28-27" title="27">                                   <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Accumulation preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Ecconomic freedom index&quot;</span>) <span class="op">+</span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Excluding outliers&quot;</span>)</a>
+<a class="sourceLine" id="cb28-28" title="28"></a>
+<a class="sourceLine" id="cb28-29" title="29"><span class="kw">ggsave</span>(<span class="dt">plot =</span> <span class="kw">plot_grid</span>(<span class="kw">list</span>(plotaccumgini, plotaccumgini_outliers, plotaccumfi, plotaccumfi_outliers),</a>
+<a class="sourceLine" id="cb28-30" title="30">                        <span class="dt">margin =</span> <span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>), </a>
+<a class="sourceLine" id="cb28-31" title="31">                        <span class="dt">tags =</span> <span class="kw">c</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>)), </a>
+<a class="sourceLine" id="cb28-32" title="32">       <span class="dt">filename =</span> <span class="st">&quot;output/results/plot_accumginifi.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a></code></pre></div>
 <div class="figure">
 <img src="../output/results/plot_accumginifi.png" alt="Accumulation preferences, gini and fi index" />
 <p class="caption">Accumulation preferences, gini and fi index</p>
 </div>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">plotaccummerit &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,  merit, accum, </a>
-<a class="sourceLine" id="cb30-2" title="2">                               <span class="dt">title =</span> <span class="st">&quot;Accumulation and Meritocratic perception&quot;</span>,</a>
-<a class="sourceLine" id="cb30-3" title="3">                               <span class="co">#    dot.labels = merit_agg$v5c,</span></a>
-<a class="sourceLine" id="cb30-4" title="4">                               <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb30-5" title="5">                               <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Accumulation preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Meritocratic perception&quot;</span>)</a>
-<a class="sourceLine" id="cb30-6" title="6"></a>
-<a class="sourceLine" id="cb30-7" title="7">plotaccumbmerit &lt;-<span class="kw">plot_scatter</span>(mer_pref_agg,  bmerit, accum, </a>
-<a class="sourceLine" id="cb30-8" title="8">                               <span class="dt">title =</span> <span class="st">&quot;Accumulation and Meritocratic preferences&quot;</span>,</a>
-<a class="sourceLine" id="cb30-9" title="9">                               <span class="co">#    dot.labels = merit_agg$v5c,</span></a>
-<a class="sourceLine" id="cb30-10" title="10">                               <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb30-11" title="11">                               <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Accumulation preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Meritocratic preferences&quot;</span>)</a>
-<a class="sourceLine" id="cb30-12" title="12"></a>
-<a class="sourceLine" id="cb30-13" title="13">plotaccumunmerit &lt;-<span class="kw">plot_scatter</span>(mer_pref_agg,  unmerit, accum, </a>
-<a class="sourceLine" id="cb30-14" title="14">                                <span class="dt">title =</span> <span class="st">&quot;Accumulation and Unmeritocratic perception&quot;</span>,</a>
-<a class="sourceLine" id="cb30-15" title="15">                                <span class="co">#dot.labels = merit_agg$v5c,</span></a>
-<a class="sourceLine" id="cb30-16" title="16">                                <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb30-17" title="17">                                <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Accumulation preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Unmeritocratic perception&quot;</span>)</a>
-<a class="sourceLine" id="cb30-18" title="18"></a>
-<a class="sourceLine" id="cb30-19" title="19">plotaccumneed &lt;-<span class="kw">plot_scatter</span>(mer_pref_agg,  need, accum, </a>
-<a class="sourceLine" id="cb30-20" title="20">                             <span class="dt">title =</span> <span class="st">&quot;Accumulation and Unmeritocratic preferences (Need)&quot;</span>,</a>
-<a class="sourceLine" id="cb30-21" title="21">                             <span class="co">#dot.labels = merit_agg$v5c,</span></a>
-<a class="sourceLine" id="cb30-22" title="22">                             <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb30-23" title="23">                             <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Accumulation preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Unmeritocratic preferences (Need)&quot;</span>)</a>
-<a class="sourceLine" id="cb30-24" title="24"></a>
-<a class="sourceLine" id="cb30-25" title="25"><span class="kw">ggsave</span>(<span class="dt">plot =</span> <span class="kw">plot_grid</span>(<span class="kw">list</span>(plotaccummerit, plotaccumbmerit, plotaccumunmerit, plotaccumneed),</a>
-<a class="sourceLine" id="cb30-26" title="26">                        <span class="dt">margin =</span> <span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>), </a>
-<a class="sourceLine" id="cb30-27" title="27">                        <span class="dt">tags =</span> <span class="kw">c</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>)),</a>
-<a class="sourceLine" id="cb30-28" title="28">       <span class="dt">filename =</span> <span class="st">&quot;output/results/plot_accummerit.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">plotaccummerit &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,  merit, accum, </a>
+<a class="sourceLine" id="cb29-2" title="2">                               <span class="dt">title =</span> <span class="st">&quot;Accumulation and Meritocratic perception&quot;</span>,</a>
+<a class="sourceLine" id="cb29-3" title="3">                               <span class="co">#    dot.labels = merit_agg$v5c,</span></a>
+<a class="sourceLine" id="cb29-4" title="4">                               <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb29-5" title="5">                               <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Accumulation preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Meritocratic perception&quot;</span>)</a>
+<a class="sourceLine" id="cb29-6" title="6"></a>
+<a class="sourceLine" id="cb29-7" title="7">plotaccumbmerit &lt;-<span class="kw">plot_scatter</span>(mer_pref_agg,  bmerit, accum, </a>
+<a class="sourceLine" id="cb29-8" title="8">                               <span class="dt">title =</span> <span class="st">&quot;Accumulation and Meritocratic preferences&quot;</span>,</a>
+<a class="sourceLine" id="cb29-9" title="9">                               <span class="co">#    dot.labels = merit_agg$v5c,</span></a>
+<a class="sourceLine" id="cb29-10" title="10">                               <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb29-11" title="11">                               <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Accumulation preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Meritocratic preferences&quot;</span>)</a>
+<a class="sourceLine" id="cb29-12" title="12"></a>
+<a class="sourceLine" id="cb29-13" title="13">plotaccumunmerit &lt;-<span class="kw">plot_scatter</span>(mer_pref_agg,  unmerit, accum, </a>
+<a class="sourceLine" id="cb29-14" title="14">                                <span class="dt">title =</span> <span class="st">&quot;Accumulation and Unmeritocratic perception&quot;</span>,</a>
+<a class="sourceLine" id="cb29-15" title="15">                                <span class="co">#dot.labels = merit_agg$v5c,</span></a>
+<a class="sourceLine" id="cb29-16" title="16">                                <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb29-17" title="17">                                <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Accumulation preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Unmeritocratic perception&quot;</span>)</a>
+<a class="sourceLine" id="cb29-18" title="18"></a>
+<a class="sourceLine" id="cb29-19" title="19">plotaccumneed &lt;-<span class="kw">plot_scatter</span>(mer_pref_agg,  need, accum, </a>
+<a class="sourceLine" id="cb29-20" title="20">                             <span class="dt">title =</span> <span class="st">&quot;Accumulation and Unmeritocratic preferences (Need)&quot;</span>,</a>
+<a class="sourceLine" id="cb29-21" title="21">                             <span class="co">#dot.labels = merit_agg$v5c,</span></a>
+<a class="sourceLine" id="cb29-22" title="22">                             <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb29-23" title="23">                             <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Accumulation preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Unmeritocratic preferences (Need)&quot;</span>)</a>
+<a class="sourceLine" id="cb29-24" title="24"></a>
+<a class="sourceLine" id="cb29-25" title="25"><span class="kw">ggsave</span>(<span class="dt">plot =</span> <span class="kw">plot_grid</span>(<span class="kw">list</span>(plotaccummerit, plotaccumbmerit, plotaccumunmerit, plotaccumneed),</a>
+<a class="sourceLine" id="cb29-26" title="26">                        <span class="dt">margin =</span> <span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>), </a>
+<a class="sourceLine" id="cb29-27" title="27">                        <span class="dt">tags =</span> <span class="kw">c</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>)),</a>
+<a class="sourceLine" id="cb29-28" title="28">       <span class="dt">filename =</span> <span class="st">&quot;output/results/plot_accummerit.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a></code></pre></div>
 <div class="figure">
 <img src="../output/results/plot_accummerit.png" alt="Accumulation preferences and Meritocratic beliefs" />
 <p class="caption">Accumulation preferences and Meritocratic beliefs</p>
@@ -3532,145 +3534,145 @@ DWLS
 </div>
 <div id="creencias-meritocraticas." class="section level2">
 <h2><span class="header-section-number">3.4</span> Creencias meritocraticas.</h2>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">plotginimerit &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,gini_neto,  merit,  </a>
-<a class="sourceLine" id="cb31-2" title="2">                              <span class="dt">title =</span> <span class="st">&quot;Meritocratic perception and inequality&quot;</span>,</a>
-<a class="sourceLine" id="cb31-3" title="3">                              <span class="co">#dot.labels = merit_agg$v5c,</span></a>
-<a class="sourceLine" id="cb31-4" title="4">                              <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb31-5" title="5">                              <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Meritocratic perception&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>)</a>
-<a class="sourceLine" id="cb31-6" title="6"></a>
-<a class="sourceLine" id="cb31-7" title="7">mer_pref_agg_zaf &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;ZAF&#39;</span>), ]</a>
-<a class="sourceLine" id="cb31-8" title="8"></a>
-<a class="sourceLine" id="cb31-9" title="9">plotginimerit_out &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg_zaf,gini_neto,  merit,  </a>
-<a class="sourceLine" id="cb31-10" title="10">                                  <span class="dt">title =</span> <span class="st">&quot;Meritocratic perception and inequality&quot;</span>,</a>
-<a class="sourceLine" id="cb31-11" title="11">                                  <span class="co">#dot.labels = merit_agg$v5c,</span></a>
-<a class="sourceLine" id="cb31-12" title="12">                                  <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb31-13" title="13">                                  <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Meritocratic perception&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>) <span class="op">+</span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Excluding outliers&quot;</span>)</a>
-<a class="sourceLine" id="cb31-14" title="14"></a>
-<a class="sourceLine" id="cb31-15" title="15">plotgfimerit &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,fi_index,  merit,  </a>
-<a class="sourceLine" id="cb31-16" title="16">                             <span class="dt">title =</span> <span class="st">&quot;Meritocratic perception and Economic freedom&quot;</span>,</a>
-<a class="sourceLine" id="cb31-17" title="17">                             <span class="co">#dot.labels = mer_pref_agg$v5c,</span></a>
-<a class="sourceLine" id="cb31-18" title="18">                             <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb31-19" title="19">                             <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Meritocratic perception&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Economic Freedom Index&quot;</span>)</a>
-<a class="sourceLine" id="cb31-20" title="20"></a>
-<a class="sourceLine" id="cb31-21" title="21">mer_pref_agg_ven &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;VEN&#39;</span>), ]</a>
-<a class="sourceLine" id="cb31-22" title="22"></a>
-<a class="sourceLine" id="cb31-23" title="23">plotgfimerit_out&lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg_ven,fi_index,  merit,  </a>
-<a class="sourceLine" id="cb31-24" title="24">                                <span class="dt">title =</span> <span class="st">&quot;Meritocratic perception and Economic freedom&quot;</span>,</a>
-<a class="sourceLine" id="cb31-25" title="25">                                <span class="co">#   dot.labels = mer_pref_agg_ven$v5c,</span></a>
-<a class="sourceLine" id="cb31-26" title="26">                                <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb31-27" title="27">                                <span class="dt">show.ci =</span> <span class="ot">TRUE</span>)  <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Meritocratic perception&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Economic Freedom Index&quot;</span>) <span class="op">+</span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Excluding outliers&quot;</span>)</a>
-<a class="sourceLine" id="cb31-28" title="28"></a>
-<a class="sourceLine" id="cb31-29" title="29"><span class="kw">ggsave</span>(<span class="dt">plot =</span> <span class="kw">plot_grid</span>(<span class="kw">list</span>(plotginimerit, plotginimerit_out, plotgfimerit, plotgfimerit_out),</a>
-<a class="sourceLine" id="cb31-30" title="30">                        <span class="dt">margin =</span> <span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>), </a>
-<a class="sourceLine" id="cb31-31" title="31">                        <span class="dt">tags =</span> <span class="kw">c</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>)), </a>
-<a class="sourceLine" id="cb31-32" title="32">       <span class="dt">filename =</span> <span class="st">&quot;output/results/plot_meritginifi.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">plotginimerit &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,gini_neto,  merit,  </a>
+<a class="sourceLine" id="cb30-2" title="2">                              <span class="dt">title =</span> <span class="st">&quot;Meritocratic perception and inequality&quot;</span>,</a>
+<a class="sourceLine" id="cb30-3" title="3">                              <span class="co">#dot.labels = merit_agg$v5c,</span></a>
+<a class="sourceLine" id="cb30-4" title="4">                              <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb30-5" title="5">                              <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Meritocratic perception&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>)</a>
+<a class="sourceLine" id="cb30-6" title="6"></a>
+<a class="sourceLine" id="cb30-7" title="7">mer_pref_agg_zaf &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;ZAF&#39;</span>), ]</a>
+<a class="sourceLine" id="cb30-8" title="8"></a>
+<a class="sourceLine" id="cb30-9" title="9">plotginimerit_out &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg_zaf,gini_neto,  merit,  </a>
+<a class="sourceLine" id="cb30-10" title="10">                                  <span class="dt">title =</span> <span class="st">&quot;Meritocratic perception and inequality&quot;</span>,</a>
+<a class="sourceLine" id="cb30-11" title="11">                                  <span class="co">#dot.labels = merit_agg$v5c,</span></a>
+<a class="sourceLine" id="cb30-12" title="12">                                  <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb30-13" title="13">                                  <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Meritocratic perception&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>) <span class="op">+</span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Excluding outliers&quot;</span>)</a>
+<a class="sourceLine" id="cb30-14" title="14"></a>
+<a class="sourceLine" id="cb30-15" title="15">plotgfimerit &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,fi_index,  merit,  </a>
+<a class="sourceLine" id="cb30-16" title="16">                             <span class="dt">title =</span> <span class="st">&quot;Meritocratic perception and Economic freedom&quot;</span>,</a>
+<a class="sourceLine" id="cb30-17" title="17">                             <span class="co">#dot.labels = mer_pref_agg$v5c,</span></a>
+<a class="sourceLine" id="cb30-18" title="18">                             <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb30-19" title="19">                             <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Meritocratic perception&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Economic Freedom Index&quot;</span>)</a>
+<a class="sourceLine" id="cb30-20" title="20"></a>
+<a class="sourceLine" id="cb30-21" title="21">mer_pref_agg_ven &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;VEN&#39;</span>), ]</a>
+<a class="sourceLine" id="cb30-22" title="22"></a>
+<a class="sourceLine" id="cb30-23" title="23">plotgfimerit_out&lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg_ven,fi_index,  merit,  </a>
+<a class="sourceLine" id="cb30-24" title="24">                                <span class="dt">title =</span> <span class="st">&quot;Meritocratic perception and Economic freedom&quot;</span>,</a>
+<a class="sourceLine" id="cb30-25" title="25">                                <span class="co">#   dot.labels = mer_pref_agg_ven$v5c,</span></a>
+<a class="sourceLine" id="cb30-26" title="26">                                <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb30-27" title="27">                                <span class="dt">show.ci =</span> <span class="ot">TRUE</span>)  <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Meritocratic perception&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Economic Freedom Index&quot;</span>) <span class="op">+</span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Excluding outliers&quot;</span>)</a>
+<a class="sourceLine" id="cb30-28" title="28"></a>
+<a class="sourceLine" id="cb30-29" title="29"><span class="kw">ggsave</span>(<span class="dt">plot =</span> <span class="kw">plot_grid</span>(<span class="kw">list</span>(plotginimerit, plotginimerit_out, plotgfimerit, plotgfimerit_out),</a>
+<a class="sourceLine" id="cb30-30" title="30">                        <span class="dt">margin =</span> <span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>), </a>
+<a class="sourceLine" id="cb30-31" title="31">                        <span class="dt">tags =</span> <span class="kw">c</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>)), </a>
+<a class="sourceLine" id="cb30-32" title="32">       <span class="dt">filename =</span> <span class="st">&quot;output/results/plot_meritginifi.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a></code></pre></div>
 <div class="figure">
 <img src="../output/results/plot_meritginifi.png" alt="Meritocratic perception, gini and fi index" />
 <p class="caption">Meritocratic perception, gini and fi index</p>
 </div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1">plotginibmerit &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,gini_neto,  bmerit,  </a>
-<a class="sourceLine" id="cb32-2" title="2">                               <span class="dt">title =</span> <span class="st">&quot;Meritocratic preferences and inequality&quot;</span>,</a>
-<a class="sourceLine" id="cb32-3" title="3">                               <span class="co">#dot.labels = mer_pref_agg$v5c,</span></a>
-<a class="sourceLine" id="cb32-4" title="4">                               <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb32-5" title="5">                               <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Meritocratic preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>)</a>
-<a class="sourceLine" id="cb32-6" title="6"></a>
-<a class="sourceLine" id="cb32-7" title="7">mer_pref_agg_zaf &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;ZAF&#39;</span>), ]</a>
-<a class="sourceLine" id="cb32-8" title="8"></a>
-<a class="sourceLine" id="cb32-9" title="9">plotginibmerit_out&lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg_zaf,gini_neto,  bmerit,  </a>
-<a class="sourceLine" id="cb32-10" title="10">                                  <span class="dt">title =</span> <span class="st">&quot;Meritocratic preferences and inequality&quot;</span>,</a>
-<a class="sourceLine" id="cb32-11" title="11">                                  <span class="co"># dot.labels = mer_pref_agg$v5c,</span></a>
-<a class="sourceLine" id="cb32-12" title="12">                                  <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb32-13" title="13">                                  <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Meritocratic preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>) <span class="op">+</span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Excluding outliers&quot;</span>)</a>
-<a class="sourceLine" id="cb32-14" title="14"></a>
-<a class="sourceLine" id="cb32-15" title="15">plotfibmerit &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,fi_index,  bmerit,  </a>
-<a class="sourceLine" id="cb32-16" title="16">                             <span class="dt">title =</span> <span class="st">&quot;Meritocratic preferences and Economic freedom&quot;</span>,</a>
-<a class="sourceLine" id="cb32-17" title="17">                             <span class="co">#dot.labels = mer_pref_agg$v5c,</span></a>
-<a class="sourceLine" id="cb32-18" title="18">                             <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb32-19" title="19">                             <span class="dt">show.ci =</span> <span class="ot">TRUE</span>)  <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Meritocratic preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Economic Freedom Index&quot;</span>)</a>
-<a class="sourceLine" id="cb32-20" title="20"></a>
-<a class="sourceLine" id="cb32-21" title="21">mer_pref_agg_ven &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;VEN&#39;</span>), ]</a>
-<a class="sourceLine" id="cb32-22" title="22"></a>
-<a class="sourceLine" id="cb32-23" title="23">plotfibmerit_out &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg_ven,fi_index,  bmerit,  </a>
-<a class="sourceLine" id="cb32-24" title="24">                                 <span class="dt">title =</span> <span class="st">&quot;Meritocratic preferences (Need) and Economic freedom&quot;</span>,</a>
-<a class="sourceLine" id="cb32-25" title="25">                                 <span class="co">#  dot.labels = mer_pref_agg_ven$v5c,</span></a>
-<a class="sourceLine" id="cb32-26" title="26">                                 <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb32-27" title="27">                                 <span class="dt">show.ci =</span> <span class="ot">TRUE</span>)  <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Meritocratic preferences (Need)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Economic Freedom Index&quot;</span>)<span class="op">+</span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Excluding outliers&quot;</span>)</a>
-<a class="sourceLine" id="cb32-28" title="28"></a>
-<a class="sourceLine" id="cb32-29" title="29"><span class="kw">ggsave</span>(<span class="dt">plot =</span> <span class="kw">plot_grid</span>(<span class="kw">list</span>(plotginibmerit, plotginibmerit_out, plotfibmerit, plotfibmerit_out),</a>
-<a class="sourceLine" id="cb32-30" title="30">                        <span class="dt">margin =</span> <span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>), </a>
-<a class="sourceLine" id="cb32-31" title="31">                        <span class="dt">tags =</span> <span class="kw">c</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>)), </a>
-<a class="sourceLine" id="cb32-32" title="32">       <span class="dt">filename =</span> <span class="st">&quot;output/results/plot_bmeritginifi.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">plotginibmerit &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,gini_neto,  bmerit,  </a>
+<a class="sourceLine" id="cb31-2" title="2">                               <span class="dt">title =</span> <span class="st">&quot;Meritocratic preferences and inequality&quot;</span>,</a>
+<a class="sourceLine" id="cb31-3" title="3">                               <span class="co">#dot.labels = mer_pref_agg$v5c,</span></a>
+<a class="sourceLine" id="cb31-4" title="4">                               <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb31-5" title="5">                               <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Meritocratic preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>)</a>
+<a class="sourceLine" id="cb31-6" title="6"></a>
+<a class="sourceLine" id="cb31-7" title="7">mer_pref_agg_zaf &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;ZAF&#39;</span>), ]</a>
+<a class="sourceLine" id="cb31-8" title="8"></a>
+<a class="sourceLine" id="cb31-9" title="9">plotginibmerit_out&lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg_zaf,gini_neto,  bmerit,  </a>
+<a class="sourceLine" id="cb31-10" title="10">                                  <span class="dt">title =</span> <span class="st">&quot;Meritocratic preferences and inequality&quot;</span>,</a>
+<a class="sourceLine" id="cb31-11" title="11">                                  <span class="co"># dot.labels = mer_pref_agg$v5c,</span></a>
+<a class="sourceLine" id="cb31-12" title="12">                                  <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb31-13" title="13">                                  <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Meritocratic preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>) <span class="op">+</span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Excluding outliers&quot;</span>)</a>
+<a class="sourceLine" id="cb31-14" title="14"></a>
+<a class="sourceLine" id="cb31-15" title="15">plotfibmerit &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,fi_index,  bmerit,  </a>
+<a class="sourceLine" id="cb31-16" title="16">                             <span class="dt">title =</span> <span class="st">&quot;Meritocratic preferences and Economic freedom&quot;</span>,</a>
+<a class="sourceLine" id="cb31-17" title="17">                             <span class="co">#dot.labels = mer_pref_agg$v5c,</span></a>
+<a class="sourceLine" id="cb31-18" title="18">                             <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb31-19" title="19">                             <span class="dt">show.ci =</span> <span class="ot">TRUE</span>)  <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Meritocratic preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Economic Freedom Index&quot;</span>)</a>
+<a class="sourceLine" id="cb31-20" title="20"></a>
+<a class="sourceLine" id="cb31-21" title="21">mer_pref_agg_ven &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;VEN&#39;</span>), ]</a>
+<a class="sourceLine" id="cb31-22" title="22"></a>
+<a class="sourceLine" id="cb31-23" title="23">plotfibmerit_out &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg_ven,fi_index,  bmerit,  </a>
+<a class="sourceLine" id="cb31-24" title="24">                                 <span class="dt">title =</span> <span class="st">&quot;Meritocratic preferences (Need) and Economic freedom&quot;</span>,</a>
+<a class="sourceLine" id="cb31-25" title="25">                                 <span class="co">#  dot.labels = mer_pref_agg_ven$v5c,</span></a>
+<a class="sourceLine" id="cb31-26" title="26">                                 <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb31-27" title="27">                                 <span class="dt">show.ci =</span> <span class="ot">TRUE</span>)  <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Meritocratic preferences (Need)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Economic Freedom Index&quot;</span>)<span class="op">+</span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Excluding outliers&quot;</span>)</a>
+<a class="sourceLine" id="cb31-28" title="28"></a>
+<a class="sourceLine" id="cb31-29" title="29"><span class="kw">ggsave</span>(<span class="dt">plot =</span> <span class="kw">plot_grid</span>(<span class="kw">list</span>(plotginibmerit, plotginibmerit_out, plotfibmerit, plotfibmerit_out),</a>
+<a class="sourceLine" id="cb31-30" title="30">                        <span class="dt">margin =</span> <span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>), </a>
+<a class="sourceLine" id="cb31-31" title="31">                        <span class="dt">tags =</span> <span class="kw">c</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>)), </a>
+<a class="sourceLine" id="cb31-32" title="32">       <span class="dt">filename =</span> <span class="st">&quot;output/results/plot_bmeritginifi.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a></code></pre></div>
 <div class="figure">
 <img src="../output/results/plot_bmeritginifi.png" alt="Meritocratic preferences, gini and fi index" />
 <p class="caption">Meritocratic preferences, gini and fi index</p>
 </div>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">plotginiunmerit &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,gini_neto,  unmerit,  </a>
-<a class="sourceLine" id="cb33-2" title="2">                                <span class="dt">title =</span> <span class="st">&quot;Unmeritocratic perception and Inequality&quot;</span>,</a>
-<a class="sourceLine" id="cb33-3" title="3">                                <span class="co">#dot.labels = mer_pref_agg$v5c,</span></a>
-<a class="sourceLine" id="cb33-4" title="4">                                <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb33-5" title="5">                                <span class="dt">show.ci =</span> <span class="ot">TRUE</span>)  <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Unmeritocratic perception&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>)</a>
-<a class="sourceLine" id="cb33-6" title="6"></a>
-<a class="sourceLine" id="cb33-7" title="7">mer_pref_agg_zaf &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;ZAF&#39;</span>), ]</a>
-<a class="sourceLine" id="cb33-8" title="8"></a>
-<a class="sourceLine" id="cb33-9" title="9">plotginiunmerit_out&lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg_zaf,gini_neto,  unmerit,  </a>
-<a class="sourceLine" id="cb33-10" title="10">                                   <span class="dt">title =</span> <span class="st">&quot;Unmeritocratic perception and Inequality (without outliers)&quot;</span>,</a>
-<a class="sourceLine" id="cb33-11" title="11">                                   <span class="co">#    dot.labels = mer_pref_agg$v5c,</span></a>
-<a class="sourceLine" id="cb33-12" title="12">                                   <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb33-13" title="13">                                   <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Unmeritocratic perception&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>)</a>
-<a class="sourceLine" id="cb33-14" title="14"></a>
-<a class="sourceLine" id="cb33-15" title="15">plotfiunmerit &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,fi_index,  unmerit,  </a>
-<a class="sourceLine" id="cb33-16" title="16">                              <span class="dt">title =</span> <span class="st">&quot;Unmeritocratic perception and Economic freedom&quot;</span>,</a>
-<a class="sourceLine" id="cb33-17" title="17">                              <span class="co">#dot.labels = mer_pref_agg$v5c,</span></a>
-<a class="sourceLine" id="cb33-18" title="18">                              <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb33-19" title="19">                              <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Unmeritocratic perception&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Economic Freedom Index&quot;</span>)</a>
-<a class="sourceLine" id="cb33-20" title="20"></a>
-<a class="sourceLine" id="cb33-21" title="21">mer_pref_agg_ven &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;VEN&#39;</span>), ]</a>
-<a class="sourceLine" id="cb33-22" title="22"></a>
-<a class="sourceLine" id="cb33-23" title="23">plotfiunmerit_out &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg_ven,fi_index,  unmerit,  </a>
-<a class="sourceLine" id="cb33-24" title="24">                                  <span class="dt">title =</span> <span class="st">&quot;Unmeritocratic perception and Economic freedom (without outliers)&quot;</span>,</a>
-<a class="sourceLine" id="cb33-25" title="25">                                  <span class="co"># dot.labels = mer_pref_agg_ven$v5c,</span></a>
-<a class="sourceLine" id="cb33-26" title="26">                                  <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb33-27" title="27">                                  <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Unmeritocratic perception&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Economic Freedom Index&quot;</span>)</a>
-<a class="sourceLine" id="cb33-28" title="28"></a>
-<a class="sourceLine" id="cb33-29" title="29"><span class="kw">ggsave</span>(<span class="dt">plot =</span> <span class="kw">plot_grid</span>(<span class="kw">list</span>(plotginiunmerit, plotginiunmerit_out, plotfiunmerit, plotfiunmerit_out),</a>
-<a class="sourceLine" id="cb33-30" title="30">                        <span class="dt">margin =</span> <span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>), </a>
-<a class="sourceLine" id="cb33-31" title="31">                        <span class="dt">tags =</span> <span class="kw">c</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>)), </a>
-<a class="sourceLine" id="cb33-32" title="32">       <span class="dt">filename =</span> <span class="st">&quot;output/results/plot_unmeritginifi.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1">plotginiunmerit &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,gini_neto,  unmerit,  </a>
+<a class="sourceLine" id="cb32-2" title="2">                                <span class="dt">title =</span> <span class="st">&quot;Unmeritocratic perception and Inequality&quot;</span>,</a>
+<a class="sourceLine" id="cb32-3" title="3">                                <span class="co">#dot.labels = mer_pref_agg$v5c,</span></a>
+<a class="sourceLine" id="cb32-4" title="4">                                <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb32-5" title="5">                                <span class="dt">show.ci =</span> <span class="ot">TRUE</span>)  <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Unmeritocratic perception&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>)</a>
+<a class="sourceLine" id="cb32-6" title="6"></a>
+<a class="sourceLine" id="cb32-7" title="7">mer_pref_agg_zaf &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;ZAF&#39;</span>), ]</a>
+<a class="sourceLine" id="cb32-8" title="8"></a>
+<a class="sourceLine" id="cb32-9" title="9">plotginiunmerit_out&lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg_zaf,gini_neto,  unmerit,  </a>
+<a class="sourceLine" id="cb32-10" title="10">                                   <span class="dt">title =</span> <span class="st">&quot;Unmeritocratic perception and Inequality (without outliers)&quot;</span>,</a>
+<a class="sourceLine" id="cb32-11" title="11">                                   <span class="co">#    dot.labels = mer_pref_agg$v5c,</span></a>
+<a class="sourceLine" id="cb32-12" title="12">                                   <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb32-13" title="13">                                   <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Unmeritocratic perception&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>)</a>
+<a class="sourceLine" id="cb32-14" title="14"></a>
+<a class="sourceLine" id="cb32-15" title="15">plotfiunmerit &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,fi_index,  unmerit,  </a>
+<a class="sourceLine" id="cb32-16" title="16">                              <span class="dt">title =</span> <span class="st">&quot;Unmeritocratic perception and Economic freedom&quot;</span>,</a>
+<a class="sourceLine" id="cb32-17" title="17">                              <span class="co">#dot.labels = mer_pref_agg$v5c,</span></a>
+<a class="sourceLine" id="cb32-18" title="18">                              <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb32-19" title="19">                              <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Unmeritocratic perception&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Economic Freedom Index&quot;</span>)</a>
+<a class="sourceLine" id="cb32-20" title="20"></a>
+<a class="sourceLine" id="cb32-21" title="21">mer_pref_agg_ven &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;VEN&#39;</span>), ]</a>
+<a class="sourceLine" id="cb32-22" title="22"></a>
+<a class="sourceLine" id="cb32-23" title="23">plotfiunmerit_out &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg_ven,fi_index,  unmerit,  </a>
+<a class="sourceLine" id="cb32-24" title="24">                                  <span class="dt">title =</span> <span class="st">&quot;Unmeritocratic perception and Economic freedom (without outliers)&quot;</span>,</a>
+<a class="sourceLine" id="cb32-25" title="25">                                  <span class="co"># dot.labels = mer_pref_agg_ven$v5c,</span></a>
+<a class="sourceLine" id="cb32-26" title="26">                                  <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb32-27" title="27">                                  <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Unmeritocratic perception&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Economic Freedom Index&quot;</span>)</a>
+<a class="sourceLine" id="cb32-28" title="28"></a>
+<a class="sourceLine" id="cb32-29" title="29"><span class="kw">ggsave</span>(<span class="dt">plot =</span> <span class="kw">plot_grid</span>(<span class="kw">list</span>(plotginiunmerit, plotginiunmerit_out, plotfiunmerit, plotfiunmerit_out),</a>
+<a class="sourceLine" id="cb32-30" title="30">                        <span class="dt">margin =</span> <span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>), </a>
+<a class="sourceLine" id="cb32-31" title="31">                        <span class="dt">tags =</span> <span class="kw">c</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>)), </a>
+<a class="sourceLine" id="cb32-32" title="32">       <span class="dt">filename =</span> <span class="st">&quot;output/results/plot_unmeritginifi.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a></code></pre></div>
 <div class="figure">
 <img src="../output/results/plot_unmeritginifi.png" alt="Non Meritocratic perception, gini and fi index" />
 <p class="caption">Non Meritocratic perception, gini and fi index</p>
 </div>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">plotginineed &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,gini_neto,  need,  </a>
-<a class="sourceLine" id="cb34-2" title="2">                             <span class="dt">title =</span> <span class="st">&quot;Unmeritocratic preferences (Need) and Inequality&quot;</span>,</a>
-<a class="sourceLine" id="cb34-3" title="3">                             <span class="co">#dot.labels = mer_pref_agg$v5c,</span></a>
-<a class="sourceLine" id="cb34-4" title="4">                             <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb34-5" title="5">                             <span class="dt">show.ci =</span> <span class="ot">TRUE</span>)  <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Unmeritocratic preferences (Need)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>)</a>
-<a class="sourceLine" id="cb34-6" title="6"></a>
-<a class="sourceLine" id="cb34-7" title="7">mer_pref_agg_zaf &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;ZAF&#39;</span>), ]</a>
-<a class="sourceLine" id="cb34-8" title="8"></a>
-<a class="sourceLine" id="cb34-9" title="9">plotginineed_out&lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg_zaf,gini_neto,  need,  </a>
-<a class="sourceLine" id="cb34-10" title="10">                                <span class="dt">title =</span> <span class="st">&quot;Unmeritocratic preferences (Need) and Inequality&quot;</span>,</a>
-<a class="sourceLine" id="cb34-11" title="11">                                <span class="co">#   dot.labels = mer_pref_agg$v5c,</span></a>
-<a class="sourceLine" id="cb34-12" title="12">                                <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb34-13" title="13">                                <span class="dt">show.ci =</span> <span class="ot">TRUE</span>)  <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Unmeritocratic preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Excluding outliers&quot;</span>)</a>
-<a class="sourceLine" id="cb34-14" title="14"></a>
-<a class="sourceLine" id="cb34-15" title="15">plotfineed &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,fi_index,  need,  </a>
-<a class="sourceLine" id="cb34-16" title="16">                           <span class="dt">title =</span> <span class="st">&quot;Unmeritocratic preferences (Need) and Economic Freedom Index &quot;</span>,</a>
-<a class="sourceLine" id="cb34-17" title="17">                           <span class="co">#dot.labels = mer_pref_agg$v5c, </span></a>
-<a class="sourceLine" id="cb34-18" title="18">                           <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb34-19" title="19">                           <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Unmeritocratic preferences (Need)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Economic Freedom Index&quot;</span>)</a>
-<a class="sourceLine" id="cb34-20" title="20"></a>
-<a class="sourceLine" id="cb34-21" title="21">mer_pref_agg_ven &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;VEN&#39;</span>), ]</a>
-<a class="sourceLine" id="cb34-22" title="22"></a>
-<a class="sourceLine" id="cb34-23" title="23">plotfineed_out &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg_ven,fi_index,  need,  </a>
-<a class="sourceLine" id="cb34-24" title="24">                               <span class="dt">title =</span> <span class="st">&quot;Unmeritocratic preferences (Need) and Economic Freedom Index&quot;</span>,</a>
-<a class="sourceLine" id="cb34-25" title="25">                               <span class="co">#    dot.labels = mer_pref_agg_ven$v5c,</span></a>
-<a class="sourceLine" id="cb34-26" title="26">                               <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb34-27" title="27">                               <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Unmeritocratic preferences (Need)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Economic Freedom Index&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Excluding outliers&quot;</span>)</a>
-<a class="sourceLine" id="cb34-28" title="28"></a>
-<a class="sourceLine" id="cb34-29" title="29"><span class="kw">ggsave</span>(<span class="dt">plot =</span> <span class="kw">plot_grid</span>(<span class="kw">list</span>(plotginineed, plotginineed_out, plotfineed, plotfineed_out),</a>
-<a class="sourceLine" id="cb34-30" title="30">                        <span class="dt">margin =</span> <span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>), <span class="dt">tags =</span> <span class="kw">c</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>)), </a>
-<a class="sourceLine" id="cb34-31" title="31">       <span class="dt">filename =</span> <span class="st">&quot;output/results/plot_needginifi.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">plotginineed &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,gini_neto,  need,  </a>
+<a class="sourceLine" id="cb33-2" title="2">                             <span class="dt">title =</span> <span class="st">&quot;Unmeritocratic preferences (Need) and Inequality&quot;</span>,</a>
+<a class="sourceLine" id="cb33-3" title="3">                             <span class="co">#dot.labels = mer_pref_agg$v5c,</span></a>
+<a class="sourceLine" id="cb33-4" title="4">                             <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb33-5" title="5">                             <span class="dt">show.ci =</span> <span class="ot">TRUE</span>)  <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Unmeritocratic preferences (Need)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>)</a>
+<a class="sourceLine" id="cb33-6" title="6"></a>
+<a class="sourceLine" id="cb33-7" title="7">mer_pref_agg_zaf &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;ZAF&#39;</span>), ]</a>
+<a class="sourceLine" id="cb33-8" title="8"></a>
+<a class="sourceLine" id="cb33-9" title="9">plotginineed_out&lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg_zaf,gini_neto,  need,  </a>
+<a class="sourceLine" id="cb33-10" title="10">                                <span class="dt">title =</span> <span class="st">&quot;Unmeritocratic preferences (Need) and Inequality&quot;</span>,</a>
+<a class="sourceLine" id="cb33-11" title="11">                                <span class="co">#   dot.labels = mer_pref_agg$v5c,</span></a>
+<a class="sourceLine" id="cb33-12" title="12">                                <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb33-13" title="13">                                <span class="dt">show.ci =</span> <span class="ot">TRUE</span>)  <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Unmeritocratic preferences&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Gini index&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Excluding outliers&quot;</span>)</a>
+<a class="sourceLine" id="cb33-14" title="14"></a>
+<a class="sourceLine" id="cb33-15" title="15">plotfineed &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg,fi_index,  need,  </a>
+<a class="sourceLine" id="cb33-16" title="16">                           <span class="dt">title =</span> <span class="st">&quot;Unmeritocratic preferences (Need) and Economic Freedom Index &quot;</span>,</a>
+<a class="sourceLine" id="cb33-17" title="17">                           <span class="co">#dot.labels = mer_pref_agg$v5c, </span></a>
+<a class="sourceLine" id="cb33-18" title="18">                           <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb33-19" title="19">                           <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Unmeritocratic preferences (Need)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Economic Freedom Index&quot;</span>)</a>
+<a class="sourceLine" id="cb33-20" title="20"></a>
+<a class="sourceLine" id="cb33-21" title="21">mer_pref_agg_ven &lt;-<span class="st"> </span>mer_pref_agg[<span class="kw">which</span>(mer_pref_agg<span class="op">$</span>v5c<span class="op">!=</span><span class="st">&#39;VEN&#39;</span>), ]</a>
+<a class="sourceLine" id="cb33-22" title="22"></a>
+<a class="sourceLine" id="cb33-23" title="23">plotfineed_out &lt;-<span class="st"> </span><span class="kw">plot_scatter</span>(mer_pref_agg_ven,fi_index,  need,  </a>
+<a class="sourceLine" id="cb33-24" title="24">                               <span class="dt">title =</span> <span class="st">&quot;Unmeritocratic preferences (Need) and Economic Freedom Index&quot;</span>,</a>
+<a class="sourceLine" id="cb33-25" title="25">                               <span class="co">#    dot.labels = mer_pref_agg_ven$v5c,</span></a>
+<a class="sourceLine" id="cb33-26" title="26">                               <span class="dt">fit.line =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb33-27" title="27">                               <span class="dt">show.ci =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Unmeritocratic preferences (Need)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Economic Freedom Index&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;Excluding outliers&quot;</span>)</a>
+<a class="sourceLine" id="cb33-28" title="28"></a>
+<a class="sourceLine" id="cb33-29" title="29"><span class="kw">ggsave</span>(<span class="dt">plot =</span> <span class="kw">plot_grid</span>(<span class="kw">list</span>(plotginineed, plotginineed_out, plotfineed, plotfineed_out),</a>
+<a class="sourceLine" id="cb33-30" title="30">                        <span class="dt">margin =</span> <span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>,<span class="fl">0.3</span>), <span class="dt">tags =</span> <span class="kw">c</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot; &quot;</span>)), </a>
+<a class="sourceLine" id="cb33-31" title="31">       <span class="dt">filename =</span> <span class="st">&quot;output/results/plot_needginifi.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">dpi=</span> <span class="st">&quot;retina&quot;</span>)</a></code></pre></div>
 <div class="figure">
 <img src="../output/results/plot_needginifi.png" alt="Non Meritocratic preferences, gini and fi index" />
 <p class="caption">Non Meritocratic preferences, gini and fi index</p>

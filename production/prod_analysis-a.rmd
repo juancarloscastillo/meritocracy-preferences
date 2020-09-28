@@ -766,9 +766,10 @@ rownames(corMat) <-c(
     "I. Gini disp index",
     "J. FI index",
     "K. PIB per capita",
-    "L. Redistribution"
+    "L. Redistribution",
+    "M. Government Effectivinnes"
     )
-colnames(corMat) <-c("(A)", "(B)","(C)","(D)","(E)","(F)","(H)","(I)","(J)", "(K)", "(L)")
+colnames(corMat) <-c("(A)", "(B)","(C)","(D)","(E)","(F)","(H)","(I)","(J)", "(K)", "(L)", "(M)")
 
 corrplot(
 corMat,

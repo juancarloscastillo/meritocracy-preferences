@@ -765,9 +765,9 @@ mer_pref$redis_bradley  <- as.numeric((1- mer_pref$gini_neto / mer_pref$gini_mkt
 ```{r}
 ### Recode Age
   # Age
-redistributionswiid <-sjPlot::plot_frq(mer_pref$redis_relativo, title = "Redistribution SWIID",show.mean = T , show.values = F,show.n = F, axis.labels = NULL, type = c("histogram"))
-
-redistribbradley <- sjPlot::plot_frq(mer_pref$redis_bradley, title = "Redistribution Bradley", show.na = T, axis.labels = NULL, type = c("histogram")) 
+redistributionswiid <- hist(mer_pref$redis_relativo)
+summary(mer_pref$redis_relativo)
+redistribbradley <- hist(mer_pref$redis_bradley) 
 
 cowplot::plot_grid(redistributionswiid, redistribbradley, ncol=1)
 
@@ -829,7 +829,7 @@ qog2009_c_na = qog2009_c %>% dplyr::select("v5", "fi_index") %>% as.data.frame()
 # "sgi_ectx", "sgi_sogi" # Hasta ahora no hay valores, parece no haber para el 2009
 ```
 
-- Merge
+__Economic fredom variable description:__ The index is founded upon objective components that reflect the presence (or absence) of economic freedom. The index comprises 21 components designed to identify the consistency of institutional arrangements and policies with economic freedom in five major areas: size of government (fi_sog), legal structure and security of property rights (fi_legprop), access to sound money (fi_sm), freedom to trade internationally (fi_ftradeint), regulation of credit, labor and business (fi_reg). The index ranges from 0-10 where 0 corresponds to ``less economic freedom'' and 10 to ``more economic freedom''. This is the version of the index published at the current year of measurement, without taking methodological changes over time into account.
 
 ```{r}
 mer_pref <- merge(mer_pref, qog2009_c_na, by=c("v5"))
@@ -863,11 +863,6 @@ save(mer_pref, file="input/data/proc/mer_pref.rda")
 ```
 
 
-```{r}
-#mer_pref_polycor <- mer_pref %>% dplyr::select( 
-#"j_redist", "j_accum" , #"j_merit","j_unmerit","j_bmerit","j_need",".dots...gini_disp",".dots...gini_mkt","fi_index", #"pibpc", "redis_relativo")
-#save(mer_pref_polycor, file ="input/data/proc/mer_pref_polycor.rda")
-```
 
 ## Government Effectivinnes
 
@@ -883,7 +878,19 @@ mer_pref <- merge(mer_pref, gov_effect, by=c("v5c"))
 sjPlot::plot_frq(mer_pref$goveffect, title = "Government Effectivinnes",show.mean = T , show.values = F,show.n = F, axis.labels = NULL, type = c("histogram"))
 ```
 
+(Banco Mundial)[https://databank.bancomundial.org/databases/governance-effectiveness]
+
+La efectividad del gobierno captura las percepciones de la calidad de los servicios públicos, la calidad del servicio civil y el grado
+de su independencia de las presiones políticas, la calidad de la formulación e implementación de políticas, y la credibilidad de la
+compromiso del gobierno con tales políticas. Más información [aquí](https://info.worldbank.org/governance/wgi/pdf/ge.pdf)
+
+
 ```{r}
 save(mer_pref, file="input/data/proc/mer_pref.rda")
 ```
 
+```{r}
+mer_pref_polycor <- mer_pref %>% dplyr::select( 
+"j_redist", "j_accum" , "j_merit","j_unmerit","j_bmerit","j_need",".dots...gini_disp",".dots...gini_mkt","fi_index", "pibpc", "redis_relativo","goveffect")
+save(mer_pref_polycor, file ="input/data/proc/mer_pref_polycor.rda")
+```
