@@ -17,16 +17,13 @@ editor_options:
 ---
 <div style="text-align: justify">
 
-En el presente documento se exponen los análisis realizados a la base de datos creada en data-prep. 
+In this document "Analysis A" the descriptive and correlational analyzes performed on the database created in data-prep are exposed.
 
-En la primera sección se entregan análisis descriptivos de las principales variables dependientes e independientes.
+The first section provides descriptive analyzes of the main dependent and independent variables.
 
-En la segunda sección se exponen los análisis factoriales a partir de los cuales se imputan valores  para utilizar en la seccion de analisis multinivel. Además, en la segunda sección se incorpora un análisis de invarianza de medida y una ecuación estructural que resume los modelos a testear. 
+In the second section, the factor analyzes are presented from which values are imputed to be used in the multilevel analysis section. The adjustment by country is also exposed.
 
-En la tercera sección se presentan los modelos multinivel que son utilizados para el artículo. Se calcula la correlación intraclase, se evalúan los efectos de las variables nacionales e individuales, para posteriormente evaluar pendientes aleatorias e interacciones entre niveles. 
-
-resultados. 
-pese a que la educacion y la sal son formas de redistribucion la gente no lo considera lo mismo.
+In the third section, bivariate analyzes are presented: correlations and dispersion graphs. 
 
 ***
 
@@ -220,7 +217,7 @@ ggsave(png,filename = "output/images/plotlikert_detearn.png",device = "png", wid
 
 ![](../output/images/plotlikert_detearn.png) 
 
-# Measurement models {.tabset .tabset-fade .tabset-pills}
+# Measurement models  
 
 ```{r}
 # 4.1 Merge objects --------------------- ---- 
@@ -287,7 +284,7 @@ semPlot::semPaths(
 ```
 
 
-> A partir del buen ajuste de lo modelos se infiere que la dimensionalidad propuesta posee evidencia de valides. No existe gran diferencia entre los resultados de los distintos estimadores. Podemos decir ademas, en función del modelo que incluye grupos, que esta dimensionalidad funciona en distintos países. 
+> Based on the good fit of the models, it is inferred that the proposed dimensionality has valid evidence. There is no great difference between the results of the different estimators. We can also say, depending on the model that includes groups, that this dimensionality works in different countries.
 
 
 ```{r, cache=TRUE}
@@ -485,7 +482,7 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
 semPlot::semPaths(fit_mer_mer, layout = "tree", rotation = 3, intercepts = FALSE, style = "lisrel", curvePivot = TRUE, sizeMan = 4,  sizeLat = 6)
 ```
 
-> A partir del buen ajuste de los modelos se infiere que la dimensionalidad propuesta posee evidencia de valides. No existe gran diferencia entre los resultados de los distintos estimadores. Podemos decir ademas, en función del modelo que incluye grupos, que esta dimensionalidad funciona en distintos países.
+>  Based on the good fit of the models, it is inferred that the proposed dimensionality has evidence of validity. There is no great difference between the results of the different estimators. We can also say, depending on the model that includes groups, that this dimensionality works in different countries.
 
 ```{r, cache=TRUE}
 # por paises   
@@ -621,7 +618,7 @@ sumtable01<- kable(sum_fit,digits = 3,format = "html",row.names = F,booktabs=T, 
       collapse_rows(columns = 1,valign = "middle");sumtable01
 ```
 
-**El modelo no converge ni en croatia, Chipre, Italia ni Letonia**
+**The model does not converge neither in Croatia, Cyprus, Italy nor Latvia**
 
 ## Meritocracy and Redistributive preferences  
 
@@ -726,7 +723,7 @@ dev.off()
 
 ![Correlation factor scores](../output/results/corplot_totscores.png)
 
-# Macro Bivariados. {.tabset .tabset-fade .tabset-pills}
+# Macro Bivariados.  
 
 
 ## Macro level correlation

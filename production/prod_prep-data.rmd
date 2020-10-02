@@ -128,7 +128,7 @@ stargazer(redistrib[-c(1,2)], type="html")
 ```
 
 
-- Recode NAs
+- Recode NAs (9)
 
 ```{r results='asis'}
 redistrib[3:7][redistrib[3:7] > 5] <- NA
@@ -161,6 +161,11 @@ cfa_red1 <- '
 	accum  =~ health + educ
 	'
 ```
+
+ - generate 5 multiple complete datasets
+ - fit model for each complete dataset
+ - predict scores for all model
+ - compute 'average' across 5 sets of scores
 
 ```{r include=FALSE, cache=TRUE}
 # generate 5 multiple complete datasets
@@ -219,15 +224,17 @@ print(dfSummary(redistrib_sco, valid.col = FALSE, graph.magnif = 1),
 indepvar= issp2009 %>% dplyr::select(contains("_inc"), "sex","age","degree", "hompop", "v44", "v45", "movstatus"="v46", "v5","id")
 
 ### Recode sex
-sex_plotbefore <- sjPlot::plot_frq(indepvar$sex, title ="Gender before")
+sex_plotbefore <- sjPlot::plot_frq(indepvar$sex, title ="Gender before") + xlab("Sex")
+
 indepvar$sex=ifelse(indepvar$sex==1,0,ifelse(indepvar$sex==2,1,NA))  
-sex_plotafter <- sjPlot::plot_frq(indepvar$sex, title ="Gender after")
+
+sex_plotafter <- sjPlot::plot_frq(indepvar$sex, title ="Gender after") + xlab("Sex")
 
 cowplot::plot_grid(sex_plotbefore, sex_plotafter, ncol=2)
 
 ### Recode Age
   # Age
-agebefore<-sjPlot::plot_frq(indepvar$age, title = "Age before",show.mean = T , show.values = F,show.n = F, axis.labels = NULL, type = c("histogram"))
+agebefore<-sjPlot::plot_frq(indepvar$age, title = "Age before",show.mean = T , show.values = F,show.n = F, axis.labels = NULL, type = c("histogram")) + xlab("Age")
 
 #which(indepvar$age > 85) # / 461 casos !
 #which(indepvar$age < 15) # / 0 casos !
@@ -242,13 +249,13 @@ indepvar$age_c[indepvar$age_c > 45 & indepvar$age_c <=55] = 4
 indepvar$age_c[indepvar$age_c > 55 & indepvar$age_c <=65] = 5
 indepvar$age_c[indepvar$age_c > 65] = 6
 
-ageafter <- sjPlot::plot_frq(indepvar$age_c, title = "Age after", show.na = T, axis.labels =   c("18-25","25 -35", "35-45", "45-55", "55,65", "65-85","NA(>85)")) 
+ageafter <- sjPlot::plot_frq(indepvar$age_c, title = "Age after", show.na = T, axis.labels =   c("18-25","25 -35", "35-45", "45-55", "55,65", "65-85","NA(>85)")) + xlab("Age") 
 
 cowplot::plot_grid(agebefore, ageafter, ncol=2)
-
+ 
 
 ### Recode Education
-degrebefore <-sjPlot::plot_frq(indepvar$degree, coord.flip = TRUE, title = "Degree before")
+degrebefore <-sjPlot::plot_frq(indepvar$degree, coord.flip = TRUE, title = "Degree before") 
   # Recode. Values over 5 are removed
 indepvar$degree[indepvar$degree > 5]=NA
 
@@ -258,7 +265,7 @@ indepvar$univ=indepvar$degree
 indepvar$univ=ifelse(indepvar$univ<=4,0,
 ifelse(indepvar$univ==5,1,NA))
 
-degreafter<- sjPlot::plot_frq(indepvar$univ, coord.flip = TRUE, title = "Dummy university")
+degreafter<- sjPlot::plot_frq(indepvar$univ, coord.flip = TRUE, title = "Dummy university") + xlab("University education")
 
 cowplot::plot_grid(degrebefore, degreafter, ncol=2)
 
@@ -299,7 +306,7 @@ indepvar$hompop[indepvar$hompop==99]=NA
 
 # Ahora dividir el vector income por n° de personas en hogar
 indepvar$hhincome=indepvar$income/indepvar$hompop
-summary(indepvar$hhincome)
+#summary(indepvar$hhincome)
  
 # Y ajustar NAs de la variable final ingreso continuo
 indepvar$hhincome[indepvar$hhincome==0]= NA
@@ -325,7 +332,8 @@ ntile(hhincome,5)) ->indepvar
 indepvar$quintile_miss=indepvar$quintile
 indepvar$quintile_miss[is.na(indepvar$quintile_miss)] = 6
 
-sjPlot::plot_frq(indepvar$quintile_miss, coord.flip = TRUE, title = "Quintiles de ingreso" , axis.labels=c("quintile 1","quintile 2","quintile 3","quintile 4","quintile 5","Miss"))
+sjPlot::plot_frq(indepvar$quintile_miss, coord.flip = TRUE, title = "income quintiles" , axis.labels=c("quintile 1","quintile 2","quintile 3","quintile 4","quintile 5","Miss")) + xlab("Income quintiles")
+
 #stargazer(indepvar$quintile_miss, type = "html")
 
 ### Recode Subjetive status
@@ -344,18 +352,18 @@ indepvar$f_sstatus=indepvar$v45
 indepvar$f_sstatus[indepvar$f_sstatus>10]=NA
 #freq(indepvar$f_sstatus)
 
-movestatusbefore <- sjPlot::plot_frq(indepvar$movstatus, coord.flip = TRUE, title = "Subjective status mobility before")    
+movestatusbefore <- sjPlot::plot_frq(indepvar$movstatus, coord.flip = TRUE, title = "Subjective Mobility before")    
 
 indepvar$movstatus[indepvar$movstatus>=8]= NA
 indepvar$movstatus <- car::recode(indepvar$movstatus,recodes ="c(1,2)=2;3=1;c(4,5)=3;c(6,7)=4")
 
-indepvar$movstatus <- set_labels(indepvar$movstatus,labels = c("Sin movilidad"=1,
-                                                                "Mov. Ascendente"=2,
-                                                                    "Mov. Descendente"=3,
-                                                                    "Indeterminado"=4))
+indepvar$movstatus <- set_labels(indepvar$movstatus,labels = c("No mobility"=1,
+                                                                "Upward mobility"=2,
+                                                                    "Upward mobility"=3,
+                                                                    "Indeterminate"=4))
 
-movestatusafter <- sjPlot::plot_frq(indepvar$movstatus, coord.flip = TRUE, title = "subjective status mobility after")     
-cowplot::plot_grid(movestatusbefore, movestatusafter, ncol=2)
+movestatusafter <- sjPlot::plot_frq(indepvar$movstatus, coord.flip = TRUE, title = "Subjective mobility after")     
+cowplot::plot_grid(movestatusbefore, movestatusafter, ncol=2) + xlab("Subjective status mobility")
 ```
 
 ```{r}
@@ -521,7 +529,7 @@ detearn$hardjob <- as.numeric(detearn$hardjob)
 ```
 
 ```{r}
-sjPlot::plot_likert(detearn[, 3:8],
+before_detearn<-sjPlot::plot_likert(detearn[,3:8],
                     geom.colors   = c("#9ecae1", "#6baed6", "#4292c6", "#2171b5"), # colorbrewer2.org
                     cat.neutral = 3,
                     sort.frq      = "neg.asc", # sort descending)
@@ -532,6 +540,14 @@ sjPlot::plot_likert(detearn[, 3:8],
                     grid.range    = 1.8,
                     geom.size = 0.6) # expand axis 130% ))
 
+save(before_detearn, file="output/images/before_detearn.png")
+
+```
+
+
+
+```{r}
+
 detearn$respons = as.numeric(6 - detearn$respons)
 detearn$yeduc = as.numeric(6 - detearn$yeduc)
 detearn$family = as.numeric(6 - detearn$family)
@@ -539,7 +555,7 @@ detearn$child = as.numeric(6 - detearn$child)
 detearn$welljob = as.numeric(6 - detearn$welljob)
 detearn$hardjob = as.numeric(6 - detearn$hardjob)
   
-sjPlot::plot_likert(detearn[,3:8],
+after_detearn<- sjPlot::plot_likert(detearn[,3:8],
                     geom.colors   = c("#9ecae1", "#6baed6", "#4292c6", "#2171b5"), # colorbrewer2.org
                     cat.neutral = 3,
                     sort.frq      = "neg.asc", # sort descending)
@@ -549,12 +565,21 @@ sjPlot::plot_likert(detearn[,3:8],
                     show.n        = FALSE, # hide N's in axis labels
                     grid.range    = 1.8,
                     geom.size = 0.6) # expand axis 130% ))
-  
-freq(detearn$respons)
+
+
+save(after_detearn, file="output/images/after_detearn.png")
+
 ```
 
 
 ## 1.5 Measuring Beliefs & Perceptions: merit_pref_perc
+
+ - 
+Estimation of the model c / unmerit 2nd order
+ - 
+Estimation of the model c / unmerit 2nd order
+
+- 
 
 ```{r, cache=TRUE}
 # 3. MEASURING BELIEFS & PERCEPTIONS ------ -
@@ -570,7 +595,7 @@ merit_per_pref=merge(getahead,detearn, by=c("id","v5"))
 		#	names(merit_per_pref)
 
 		
-  # Estimación del modelo c/ unmerit 2do orden
+  # Estimation of the model c / unmerit 2nd order
 cfa_perpref2 <- '
 	  # latent variables
 	  merit =~ hwork + ambition
@@ -595,6 +620,12 @@ fit_perpref2 <- cfa(cfa_perpref2, data = merit_per_pref,missing = "ML")
 ```{r cache=TRUE, results='hide'}
 out <- mice(merit_per_pref[,c(3:10,19:24)], m=5)
 ```
+
+ - generate 5 multiple complete datasets
+ - fit model for each complete dataset
+ - predict scores for all model
+ - compute 'average' across 5 sets of scores
+ - Generate factor scores
 
 ```{r results='hide', cache=TRUE}
 # Multiple imputation (para recuperar missings en scores) - REVIEW THIS, command lavPredict from 2017 should predict with missing values therefore saving from multiple imputation
@@ -643,16 +674,17 @@ merit_per_pref_sco = merit_per_pref_sco[, c(1:2, 25:31)]
 
 ```
 
-Bases de datos creadas. 
 
-[Explicar mejor]
+In this section, 3 databases were created on sociodemographic variables, dependent latent variables (Redistributive preferences) and independent latent variables (Meritocratic beliefs).
 
-Indepvar.rda: variables sociodemograficas
-redistrib_sco: variables latentes de preferencias redistributivas.
-merit_perc_pref_sco: variables latentes de creencias meritocraticas. 
+Each one is indicated below and later they are unified.
+
+Indepvar.rda: sociodemografic variables 
+redistrib_sco: latent variables of redistributive preferences.
+merit_perc_pref_sco: latent variables of meritocratic beliefs. 
 
 
-## Merge varaibles indivuales. 
+## Merge variables indivuales. 
 
 ```{r}
 indiv<- merge (indepvar, redistrib_sco, by = c("id"))
@@ -693,7 +725,7 @@ summary(mer_pref$univ_g)
 ```
 
 
-## 2.1: SWIID
+## 2.1: Standardized World Income Income Inequality Database (SWIID)
 ```{r}
 # Inequality swiid (4)        
 #load(url("https://raw.githubusercontent.com/franciscomeneses/bases/master/swiid8_3.rda"))
@@ -724,11 +756,13 @@ swiid_summary09=subset(swiid_summary, .dots...year==2009)
 head(swiid_summary09$.dots...country)
 as.numeric(swiid_summary09$country)
  
-# Continuo
+# Continuous variable
+
 swiid_summary09$v5=countrycode(swiid_summary09$.dots...country,'country.name','iso3n')
 str(swiid_summary09$v5)
 
-# Categórico
+# categorical variables
+
 swiid_summary09$v5c=countrycode(swiid_summary09$.dots...country,'country.name','iso3c')
 str(swiid_summary09$v5c)
 
@@ -762,23 +796,27 @@ mer_pref$redis_bradley  <- as.numeric((1- mer_pref$gini_neto / mer_pref$gini_mkt
 
 
 
-```{r}
+Two ways of calculating the redistribution variable at the country level are presented below. Both proportionally equivalent.
+   - Calculation according to Bradley[(2003)](https://www.jstor.org/stable/25054218?seq=1) __(net gini / gini mkt)*100__
+   - Calculation used by Solt in [SWIID](https://fsolt.org/swiid/) __(gini mkt - gini net)/gini mkt__
+
+
+```{r }
 ### Recode Age
-  # Age
-redistributionswiid <- hist(mer_pref$redis_relativo)
-summary(mer_pref$redis_relativo)
-redistribbradley <- hist(mer_pref$redis_bradley) 
-
-cowplot::plot_grid(redistributionswiid, redistribbradley, ncol=1)
-
+  # Age 
+hist1 <- mer_pref %>% ggplot(aes(x=redis_relativo)) + geom_histogram() + xlab("Redistribution")
+hist2 <- mer_pref %>% ggplot(aes(x=redis_bradley)) + geom_histogram() + xlab("Redistribution")
+ggsave(plot_grid(list(hist1, hist2), tags = c("Bradley", "Solt")),  file ="output/images/redistriv_comparation.png")
 ```
 
+![](../output/images/redistriv_comparation.png)
 
+## 2.2:  Quality of Government (QoG)
 
-## 2.2: Qog
-
+ - to download the database from your quote on github
+ 
 ```{r echo=FALSE, results='hide'}
-#Para descargar 
+# to download the database from your quote on github
 
 #devtools::install_github("ropengov/rqog")
 #library("rqog")
@@ -829,16 +867,26 @@ qog2009_c_na = qog2009_c %>% dplyr::select("v5", "fi_index") %>% as.data.frame()
 # "sgi_ectx", "sgi_sogi" # Hasta ahora no hay valores, parece no haber para el 2009
 ```
 
-__Economic fredom variable description:__ The index is founded upon objective components that reflect the presence (or absence) of economic freedom. The index comprises 21 components designed to identify the consistency of institutional arrangements and policies with economic freedom in five major areas: size of government (fi_sog), legal structure and security of property rights (fi_legprop), access to sound money (fi_sm), freedom to trade internationally (fi_ftradeint), regulation of credit, labor and business (fi_reg). The index ranges from 0-10 where 0 corresponds to ``less economic freedom'' and 10 to ``more economic freedom''. This is the version of the index published at the current year of measurement, without taking methodological changes over time into account.
+__Economic fredom variable description:__ The index is founded upon objective components that reflect the presence (or absence) of economic freedom. The index comprises 21 components designed to identify the consistency of institutional arrangements and policies with economic freedom in five major areas: size of government (fi_sog), legal structure and security of property rights (fi_legprop), access to sound money (fi_sm), freedom to trade internationally (fi_ftradeint), regulation of credit, labor and business (fi_reg). The index ranges from 0-10 where 0 corresponds to less economic freedom and 10 to more economic freedom. This is the version of the index published at the current year of measurement, without taking methodological changes over time into account.
+
+- Merge
 
 ```{r}
 mer_pref <- merge(mer_pref, qog2009_c_na, by=c("v5"))
 ```
 
 
+```{r}
+sjPlot::plot_frq(mer_pref$fi_index, title = "Pib Per capita",show.mean = T , show.values = F,show.n = F, axis.labels = NULL, type = c("histogram")) +xlab("Economic freedom")
+```
 
+# Data Ban
 
-## Pib per capita
+Country data on their wealth and government effectiveness were obtained from World Bank data sets. This institution has an extensive set of data and a platform to facilitate its accessibility, which you can access [here](https://datos.bancomundial.org/).
+
+## GDP per capita (current US $)
+
+To access the data click [here](https://datos.bancomundial.org/indicador/NY.GDP.PCAP.CD)
 
 ```{r}
  library(readxl)
@@ -855,7 +903,7 @@ mer_pref <- merge(mer_pref, pibpc, by=c("v5c"))
 sjPlot::plot_frq(mer_pref$pibpc, title = "Pib Per capita",show.mean = T , show.values = F,show.n = F, axis.labels = NULL, type = c("histogram"))
 ```
 
-Taiwán no posee información sobre pibpc en el banco mundial, por ende el pib per capita para este pais se obtuvo de otra fuente: [DatosMacro](https://datosmacro.expansion.com/pib/taiwan)
+Taiwan does not have information on GDP in the world bank, therefore the GDP per capita for this country was obtained from another source: [DatosMacro](https://datosmacro.expansion.com/pib/taiwan)
 
 
 ```{r}
@@ -864,7 +912,7 @@ save(mer_pref, file="input/data/proc/mer_pref.rda")
 
 
 
-## Government Effectivinnes
+## Government effectiveness
 
 ```{r}
 gov_effect <- read_excel("input/data/original/Data_Extract_From_Indicadores_mundiales_de_buen_gobierno.xlsx")
@@ -875,14 +923,14 @@ gov_effect$goveffect <- as.numeric(gov_effect$`2009 [YR2009]`)
 
 mer_pref <- merge(mer_pref, gov_effect, by=c("v5c"))
 
-sjPlot::plot_frq(mer_pref$goveffect, title = "Government Effectivinnes",show.mean = T , show.values = F,show.n = F, axis.labels = NULL, type = c("histogram"))
+sjPlot::plot_frq(mer_pref$goveffect, title = "government effectiveness",show.mean = T , show.values = F,show.n = F, axis.labels = NULL, type = c("histogram")) + xlab("Government effectiveness")
 ```
 
-(Banco Mundial)[https://databank.bancomundial.org/databases/governance-effectiveness]
+[World Bank](https://databank.bancomundial.org/databases/governance-effectiveness)
 
-La efectividad del gobierno captura las percepciones de la calidad de los servicios públicos, la calidad del servicio civil y el grado
-de su independencia de las presiones políticas, la calidad de la formulación e implementación de políticas, y la credibilidad de la
-compromiso del gobierno con tales políticas. Más información [aquí](https://info.worldbank.org/governance/wgi/pdf/ge.pdf)
+Government effectiveness captures perceptions of the quality of public services, the quality of civil service, and the degree
+its independence from political pressures, the quality of policy formulation and implementation, and the credibility of the
+government commitment to such policies. More information [here](https://info.worldbank.org/governance/wgi/pdf/ge.pdf)
 
 
 ```{r}

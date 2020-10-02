@@ -17,16 +17,11 @@ editor_options:
 ---
 <div style="text-align: justify">
 
-En el presente documento se exponen los análisis realizados a la base de datos creada en data-prep. 
+In this document "Analysis B" the analyzes performed on the database created in data-prep are exposed.
 
-En la primera sección se entregan análisis descriptivos de las principales variables dependientes e independientes.
+The first section provides a multilevel analysis of the variables redistributive preferences and preferences for accumulation. Analysis of random slopes and interactions between levels are included.
 
-En la segunda sección se exponen los análisis factoriales a partir de los cuales se imputan valores  para utilizar en la seccion de analisis multinivel. Además, en la segunda sección se incorpora un análisis de invarianza de medida y una ecuación estructural que resume los modelos a testear. 
-
-En la tercera sección se presentan los modelos multinivel que son utilizados para el artículo. Se calcula la correlación intraclase, se evalúan los efectos de las variables nacionales e individuales, para posteriormente evaluar pendientes aleatorias e interacciones entre niveles. 
-
-resultados. 
-pese a que la educacion y la sal son formas de redistribucion la gente no lo considera lo mismo.
+The second section presents the robustness analyzes.
 
 ***
 
@@ -85,7 +80,7 @@ load("input/data/proc/getahead.rda")
 load("input/data/proc/detearn.rda")
 ```
 
-# Modelos Multinivel  {.tabset .tabset-fade .tabset-pills}
+# Modelos Multinivel
 
 ## Modelos nulos: correlacion intraclase.
 
@@ -114,7 +109,7 @@ ggplot(df,aes(x="",y=porcentaje, fill=Variance))+
   coord_polar(theta="y") + 
      geom_text(aes(label=paste(porcentaje, "%")),
               position=position_stack(vjust=0.5),color="white",size=6)+
-  coord_polar(theta = "y") + ggtitle("Correlacion intraclase prederencias redistributivas")
+  coord_polar(theta = "y") + ggtitle("Intraclass correlation redistributive preferences")
 
 reghelper::ICC(results_0_accum)
 
@@ -125,15 +120,14 @@ ggplot(df,aes(x="",y=porcentaje, fill=Variance))+
   coord_polar(theta="y") + 
      geom_text(aes(label=paste(porcentaje, "%")),
               position=position_stack(vjust=0.5),color="white",size=6)+
-  coord_polar(theta = "y") + ggtitle("Correlacion intraclase prederencias redistributivas")
+  coord_polar(theta = "y") + ggtitle("Intraclass correlation accumulation preferences")
 ```
 
-> Aproximadamente un 15% de la varianza de las preferencias redistributivas se encuentra entre paises
+> Approximately 15% of the variance of redistributive preferences is found between countries
 
-> Aproximadamente un 18% de la varianza de las preferencias redistributivas se encuentra entre paises.
+> Approximately 18% of the variance of redistributive preferences is found between countries.
 
-
-## Modelos de Preferencias redistributivas. 
+## Redistributive Preference Models.
 
 ```{r results='asis', cache=TRUE} 
 results_1_redist__1  = lmer(redist ~  gini_neto + fi_index + pibpc + 1 + (1| v5c), data = mer_pref, REML=F)
@@ -163,18 +157,17 @@ htmlreg(list(results_1_redist__1, results_1_redist_3,results_1_redist_4,results_
 ```
 
 
-> __Variables macroeconómicas__: A nivel país, tanto la riqueza como la desigualdad generan un efecto negativo sobre las preferencias redistributivas. El efecto de la riqueza deja de ser significativo al aleatorizar la pendiente y al interactuar la desigualdad con el efecto de percepcion meritocratica. Por su parte,  el índice de libertad económica no posee un efecto sobre meritocracia al ser controlado por desigualdad y riqueza. 
+> __Macroeconomic variables__: At the country level, both wealth and inequality have a negative effect on redistributive preferences. The wealth effect ceases to be significant when the slope is randomized and when inequality interacts with the meritocratic perception effect. For its part, the economic freedom index does not have an effect on meritocracy as it is controlled for inequality and wealth.
 
-> __Creencias meritocraticas__: la variable percepcion meritocratica no posee un efecto significativo sobre la variable preferencias redistributivas hasta ser controlada por las preferencias meritocraticas, las cuales tienen un efecto positivo sobre la preferencia por la redistribucion. Esto destaca la importancia de diferenciar en los modelos de medidas percepciones y preferencias pues pueden tener efectos contrarios sobre una misma variable, anulando la significación de dicho efecto.  En términos sustantivos esto indica que lo importante es la percepcion de distribucion según talento y esfuerzo,  separado de la creencia de que el mundo debería funcionar así. El efecto de esta variable vuelve a crecer cuando se controla por las percepciones no meritocraticas, pero disminuye considerablemente al incorporar la variable preferencia no meritocratica de pago según necesidades. Esta ultima variable, es aquella que mayor efecto posee sobre las preferencias redistributivas, lo cual nos sugiere que la preferencia por un estado que promueva la igualdad está relacionada con la consideracion de las necesidades de las personas a la hora de distribuir recursos. 
+> __Meritocratic beliefs__: the meritocratic perception variable does not have a significant effect on the redistributive preferences variable until it is controlled by meritocratic preferences, which have a positive effect on the preference for redistribution. This highlights the importance of differentiating perceptions and preferences in the measurement models, as they can have opposite effects on the same variable, canceling the significance of said effect. In substantive terms this indicates that what is important is the perception of distribution according to talent and effort, apart from the belief that the world should work like this. The effect of this variable grows again when controlling for non-meritocratic perceptions, but decreases considerably when incorporating the variable non-meritocratic preference of payment according to needs. This last variable is the one that has the greatest effect on redistributive preferences, which suggests that the preference for a state that promotes equality is related to the consideration of people's needs when distributing resources.
 
-> __Estatus subjetivo__: puede verse que ambas poseen un efecto significativo incluso según un criterio de 99,9% de confianza. El Efecto de la variable estatus subjetivo es negativo, es decir, una persona que se considera en una posición subjetiva alta posee una menor preferencia por al redistribucion. Por su parte, la movilidad subjetiva posee un efecto positivo sobre las preferencias redistributivas, cuando esta esta controladas por el estatus subjetivo individual y las creencias meritocraticas.  Quizás, el contacto con grupos desfavorecidos puede generar mayor empatía. 
+> __Subjective status__: it can be seen that both have a significant effect even according to a 99.9% confidence criterion. The effect of the subjective status variable is negative, that is, a person who considers himself in a high subjective position has a lower preference for redistribution. For its part, subjective mobility has a positive effect on redistributive preferences, when it is controlled by individual subjective status and meritocratic beliefs. Perhaps, contact with disadvantaged groups can generate greater empathy.
 
-> __Variables demográficas__: Estas variables son todas significativas. Además, su inclusión en el modelo multinivel no anula la significación de las variables sustantivas del modelo. Entre ellas destaca la variable quintil de ingreso, según la cual, pertenecer al quintil más rico, implica una menor preferencia por la redistribucion. 
+> __Demographic variables__: These variables are all significant. Furthermore, their inclusion in the multilevel model does not nullify the significance of the substantive variables of the model. Among them, the income quintile variable stands out, according to which, belonging to the richest quintile implies a lower preference for redistribution.
 
-> Al _aleatorizar la pendientre_ entre percepcion de meritocracia y preferencias redistributivas mejora significativamente el modelo, lo cual se debe a las diferencias entre paises en torno a dicha relacion. Comos se ejemplifica en el grafico de pendientes aleatorias, las relaciones incluso cambian de sentido de un pais a otro. 
+> By _randomizing the slope_ between the perception of meritocracy and redistributive preferences significantly improves the model, which is due to the differences between countries regarding said relationship. As exemplified in the graph of random slopes, the relationships even change direction from one country to another.
 
-> Al incluir la _interaccion entre niveles_ el modelo mejora signifiicativamente. En alguna medida, lo que hace variar la pendiente de la relacion, es la desigualdad del pais. 
-
+> By including the _interaction between levels_ the model improves significantly. To some extent, what makes the slope of the relationship vary is the country's inequality.
 
 ```{r results='asis', cache=TRUE}
 results_1_redist_dem  = lmer(redist ~ univ + as.factor(quintile_miss) +	sstatus + as.factor(movstatus) + sex + age + 1 + (1| v5c), data = mer_pref, REML=F)
@@ -217,9 +210,9 @@ ggsave(plot_grid(list(results_3_redist_macro_bvi_efectplot, pendiente_aleatoria_
 #sjPlot::plot_model(results_3_redist_macro_bvi_2, type = c("int"), title = "Interaccion libertad economica",  mdrt.values = "meansd")
 ```
 
-![Modelos  de Redistribucion; Efectos, pendientes aleatorias e interacciones](../output/results/results_3_redist_macro_bvi_interacgini.png) 
+![Redistribution Models; Effects, Random Slopes, and Interactions](../output/results/results_3_redist_macro_bvi_interacgini.png) 
 
-## Modelos de Preferencias por marketizacion (accu).
+## Preference Models for marketization (accu).
 
 ```{r results='asis', cache=TRUE}
 results_1_accum__1  = lmer(accum ~  gini_neto + fi_index + pibpc + 1 + (1| v5c), data = mer_pref, REML=F)
@@ -257,19 +250,19 @@ htmlreg(list(results_1_accum__1, results_1_accum_3,results_1_accum_4,results_1_a
         custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05 <br> Since Model 6 control by subjetive status, mov subjetive status, Ed.univ, quintile_miss, age and sex") 
 ```
 
-> __Variables macroeconómicas__: Solo la desigualdad posee un efecto positivo sobre las preferencias de acumulación, es decir, en países donde existen mayores diferencias de ingresos la población tiende a validar la desigualdad económica en el acceso a salud y educación. Por su parte, la libertad económica no genera un efecto positivo como podría esperarse sobre las preferencias por acumulación. 
+> __Macroeconomic variables__: Only inequality has a positive effect on accumulation preferences, that is, in countries where there are greater income differences, the population tends to validate economic inequality in access to health and education. For its part, economic freedom does not generate a positive effect as might be expected on accumulation preferences.
 
-> __Creencias meritocraticas__: La variable percepciones meritocraticas posee un efecto significativo, el cual crece al ser controlado por preferencias meritocraticas y percepciones no meritocraticas.  En función de esto podemos decir que creer que la gente de mayores recursos fue más esforzada que la gente de menores recursos posee una relación significativa con justificar desigualdades socioeconómicas en el acceso a salud y educación. Por su parte, las preferencias meritocraticas poseen un efecto negativo sobre estas creencias. Dado que las preferencias están controladas por las percepciones meritocraticas, podemos decir que quienes prefieren una distribucion según merito, pero no la perciben,  poseen una mayor preferencia redistributiva, lo cual podría explicarse por su sentimiento de injusticia (_esta idea es similar a los decepcionados de Reynols) .  
+> __Meritocratic beliefs__: The meritocratic perceptions variable has a significant effect, which grows when controlled by meritocratic preferences and non-meritocratic perceptions. Based on this, we can say that believing that people with greater resources made more effort than people with fewer resources has a significant relationship with justifying socioeconomic inequalities in access to health and education. On the other hand, meritocratic preferences have a negative effect on these beliefs. Given that preferences are controlled by meritocratic perceptions, we can say that those who prefer a distribution according to merit, but do not perceive it, have a greater redistributive preference, which could be explained by their feeling of injustice (_ this idea is similar to those disappointed in Reynols).
 
-> __Estatus subjetivo__: puede verse que ambas poseen un efecto significativo incluso según un criterio de 99,9% de confianza. El Efecto de la variable estatus subjetivo es positivo, es decir, una persona que se considera en una posición subjetiva alta posee una mayor preferencia por a la desigualdad de acceso a servicios básicos. Por su parte, la movilidad subjetiva posee un efecto negativo sobre las preferencias de acumulación, cuando esta está controlada por el estatus subjetivo individual y las creencias meritocraticas.  Quizás, el contacto con grupos desfavorecidos puede generar mayor empatía. 
+> __Subjective status__: it can be seen that both have a significant effect even according to a 99.9% confidence criterion. The effect of the subjective status variable is positive, that is, a person who considers himself in a high subjective position has a greater preference for unequal access to basic services. For its part, subjective mobility has a negative effect on accumulation preferences, when it is controlled by individual subjective status and meritocratic beliefs. Perhaps, contact with disadvantaged groups can generate greater empathy.
 
-> __Variables demográficas__: Estas variables son todas significativas. Además, su inclusión en el modelo multinivel no anula la significación de las variables sustantivas del modelo. Entre ellas destaca la variable quintil de ingreso.
+> __Demographic variables__: These variables are all significant. Furthermore, their inclusion in the multilevel model does not nullify the significance of the substantive variables of the model. Among them, the income quintile variable stands out.
 
-> Cada modelo es significativamente mejor que el anterior. Respecto al modelo anterior si bien los efectos son menores, puede verse un efecto mucho más claro de una variable macro, el gini_neto (Esto va en la linea de la h: un pais más desigual fomenta preferencia por )
+> Each model is significantly better than the previous one. Regarding the previous model, although the effects are smaller, a much clearer effect of a macro variable can be seen, the gini_neto (This goes along the line of the h: a more unequal country encourages a preference for)
 
-> Al aleatorizar la pendientre entre percepcion de meritocracia y preferencias por la merkantilizacion mejora significativamente el modelo, lo cual se debe a las diferencias entre paises en torno a dicha relacion, comos e ejemplifica en el grafico de pendientes aleatorias, las relaciones incluso cambian de sentido de un pais a otro. 
+> By randomizing the slope between perception of meritocracy and preferences for commercialization, the model significantly improves, which is due to the differences between countries around said relationship, as exemplified in the graph of random slopes, the relationships even change their direction from one country to another.
 
-> Al incorporar la interacción entre percepciones meritocraticas y libertad económica, cambia radicalmente el efecto de percepcion no meritocratica,  el cual se vuelve negativo. [Tengo la duda de si al interactuar uno ve la pendiente en el menor valor de la variable macro, en este caso de fi-index]. 
+> By incorporating the interaction between meritocratic perceptions and economic freedom, the effect of non-meritocratic perception radically changes, which becomes negative. [I have the doubt if when interacting one sees the slope in the smallest value of the macro variable, in this case of fi-index].
 
 ```{r}
 results_3_accum_macro_bvi_efect <- sjPlot::plot_model(results_3_accum_macro_bvi, type="std", title = "Modelo de pendiente aleatoria e interaccion (desigualdad)")
@@ -300,8 +293,7 @@ ggsave(plot_grid(list(results_3_accum_macro_bvi_efect, pendientealeatoria_accum,
 ![](../output/results/results_3_accum_macro_bvi_interacgini.png)
 
 
-Segun la interaccion, podemos decir que el discursos meritocratico permite justifica r la desigual participacion de derechos basicos como la salud y la educaiccion, pero solo en contextos con una baja desigualdad. En paises con una alta desigualdad, la  percepcion de meritocracia no fomenta la justificacion del acceso desigual a servicios basicos, lo cual hipotetiso que puede deberse a las diferencias redicales entre los servicios de alto y bajo costo, diferencias que por sus consecuencias no permiten justificar el acceso desigual ni si quiera considerando las diferencias de merito. 
-
+According to the interaction, we can say that the meritocratic discourse allows to justify the unequal participation of basic rights such as health and education, but only in contexts with low inequality. In countries with high inequality, the perception of meritocracy does not promote the justification of unequal access to basic services, which is hypothesized that may be due to the redical differences between high and low-cost services, differences that due to their consequences do not allow to justify unequal access not even considering the differences of merit.
 
 ```{r}
 # guardar tablas
@@ -318,7 +310,6 @@ save(results_3_accum_macro_bvi, file = "output/results/results_3_accum_macro_bvi
 
 
 ## Redistribution and Redistributive preferences
-
 
 ```{r results='asis', cache=TRUE} 
 results_1_redist__1r  = lmer(redist ~  redis_relativo + fi_index + pibpc + 1 + (1| v5c), data = mer_pref, REML=F)
@@ -345,14 +336,13 @@ htmlreg(list(results_1_redist__1r, results_1_redist_3r,results_1_redist_4r,resul
         center = T, 
         custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05 <br> Since Model 6 control by subjetive status, mov subjetive status, Ed.univ, quintile_miss, age and sex") 
 ```
+ 
+From the analysis carried out, it is concluded that the level of redistribution does not generate a direct effect on the preferences for redistribution. However, it is necessary to consider the evidence from other investigations that propose that this effect occurs in particular conditions, such as affecting more those who receive the positive benefits of net transfers [support transfers - taxes] (Andreoli and Olivera, 2020) .
 
-A partir del análisis realizado se concluye que el nivel de redistribucion no genera un efecto directo sobre las preferencias por redistribucion.  No obstante, es necesario considerar la evidencia de otras investigaciones que proponen que dicho efecto se da en condiciones particulares, tales como afectar más a quienes reciben los beneficios positivos de las transferencias netas [transferencias de apoyo - impuestos] (Andreoli y Olivera, 2020).
 
+# Robustness analysis Multilevel Models
 
-# Analisis de robustez Modelos Multinivel
-
-## Regresiones finales sin paises en los que no converge el modelo de medida. 
-
+## Final regressions without countries in which the measurement model does not converge.
  
 ```{r, results=TRUE}
 mer_pref_sinnonconvr<- mer_pref[which(mer_pref$v5c!='VEN'), ]
@@ -380,32 +370,33 @@ htmlreg(list(results_3_redist_macro_bvi, results_3_redist_macro_bvi_nocong, resu
         caption.above = T)
 ```
 
-Como puede apresiarce en las regresiones, los pesos de las distintas variables y su significacion no varian sustantivamente al excluir del calculo a los paises que no convergen en los modelos de medida. 
+As can be seen in the regressions, the weights of the different variables and their significance do not change substantively when countries that do not converge in the measurement models are excluded from the calculation.
 
 
-## Casos influyentes 
+## Influential cases
 
-### Cook Distance 
+### Cook Distance
+
 ```{r out.width=c('50%', '50%'), fig.cap=" D de Cook", fig.show='hold', results=TRUE,cache=TRUE}
 #Redis #
 estex.m23_2a <- influence.ME::influence(results_3_redist_macro_bvi, "v5c") 
 
 plota <- plot(estex.m23_2a, which="cook",
-              cutoff = 4/40, sort = TRUE,
+              cutoff = 4/39, sort = TRUE,
               xlab = "Cooks Distance Redistributive Model",
               ylab="Contries")
 
 estex.m23_2b <-  influence.ME::influence(results_3_accum_macro_bvi, "v5c") 
 
 plotb <-plot(estex.m23_2b, which="cook",
-             cutoff = 4/40, sort = TRUE,
+             cutoff = 4/39, sort = TRUE,
              xlab = "Cooks Distance Accumulation Model",
              ylab="Contries")
 ```
 
-> cut point > 0.1 (4/40)
+> cut point > 0.1 (4/39)
 
-### Comparación de los modelos excluyendo casos influyentes a nivel 2  
+### Comparison of the models excluding influential cases at level 2
  
 ```{r results='asis', results=TRUE}
 mer_pref_sininfl <- mer_pref[which(mer_pref$v5c!='ZAF'), ]
@@ -457,12 +448,11 @@ htmlreg(list(results_3_redist_macro_bvi, results_3_redist_macro_bvi_sininf,resul
                               "Merit-perception x Gini", "Merit-perception x Economic-freedom"))
 ```
 
+By excluding influential cases, most of the variables do not drastically change meanings or meanings. The fi_index variable becomes significant. The greater the economic freedom, the less redistributive preference.
 
-Al excluir los casos influyentes la mayoria de las variable no cambia drasticamente significaciones ni sentidos. La variable fi_index pasa a ser significativa.  A mayor libertad economica menor preferencia redistributiva. 
+Considering the substantive variables, when eliminating those countries with a cook distance above the cutoff point (0.1 = 4/39), the meritocratic perception variable loses significance although it gains power, maintaining the rejection of the null hypothesis with 95% of trust. The non-meritocratic perception variable loses half its effect and is no longer significant. In consideration of this evaluation, we can say that the aforementioned relationships are caused to some extent by the 13 countries that
 
-Considerando las variables sustantivas, al eliminar quellos paises con una distancia de cook por sobre el punto de corte (0.1 = 4/40), la variable percepcion meritocratica pierde significacion aunque gana potencia, manteniendose el rechazo a la hipotesis nula con un 95% de confianza. La variable percepcion no meritocrtica pierde la mitad de su efecto y desja de ser significativa. En consideracion de esta evaluacion podemos decir que las relaciones señaladas son provocadas en alguna medida por los 13 paises que se 
-
-## Centrado 
+## Centered
 
 ### Redistributive prefereneces centered on the group mean
 
@@ -539,11 +529,8 @@ htmlreg(list(results_1_accum__1, results_1_accum_3,results_1_accum_4,results_1_a
         custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05 <br> Since Model 6 control by subjetive status, mov subjetive status, Ed.univ, quintile_miss, age and sex")
 ```
 
-# Controlando por Efficiencia de los Gobiernos 
+## Controlling for Efficiency of Governments
 
-```{r}
-
-```
 
 ```{r}
 
