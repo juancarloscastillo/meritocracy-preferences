@@ -464,7 +464,7 @@ names(getahead_temp2) # ok
 getahead = getahead_temp2
 ```
 
-```{r}
+```{r likert-getahead}
 plot_likert((getahead[,3:8]), 
                         geom.colors   = c("#9ecae1", "#6baed6","#4292c6", 
                                             "#2171b5"), # colorbrewer2.org 
@@ -528,7 +528,7 @@ detearn$welljob <- as.numeric(detearn$welljob)
 detearn$hardjob <- as.numeric(detearn$hardjob)
 ```
 
-```{r}
+```{r likert-detearn-before}
 before_detearn<-sjPlot::plot_likert(detearn[,3:8],
                     geom.colors   = c("#9ecae1", "#6baed6", "#4292c6", "#2171b5"), # colorbrewer2.org
                     cat.neutral = 3,
@@ -539,6 +539,7 @@ before_detearn<-sjPlot::plot_likert(detearn[,3:8],
                     show.n        = FALSE, # hide N's in axis labels
                     grid.range    = 1.8,
                     geom.size = 0.6) # expand axis 130% ))
+before_detearn
 
 save(before_detearn, file="output/images/before_detearn.png")
 
@@ -546,7 +547,7 @@ save(before_detearn, file="output/images/before_detearn.png")
 
 
 
-```{r}
+```{r likert-detearn-after}
 
 detearn$respons = as.numeric(6 - detearn$respons)
 detearn$yeduc = as.numeric(6 - detearn$yeduc)
@@ -568,7 +569,7 @@ after_detearn<- sjPlot::plot_likert(detearn[,3:8],
 
 
 save(after_detearn, file="output/images/after_detearn.png")
-
+after_detearn
 ```
 
 
@@ -576,8 +577,7 @@ save(after_detearn, file="output/images/after_detearn.png")
 
  - 
 Estimation of the model c / unmerit 2nd order
- - 
-Estimation of the model c / unmerit 2nd order
+
 
 - 
 
@@ -797,8 +797,10 @@ mer_pref$redis_bradley  <- as.numeric((1- mer_pref$gini_neto / mer_pref$gini_mkt
 
 
 Two ways of calculating the redistribution variable at the country level are presented below. Both proportionally equivalent.
-   - Calculation according to Bradley[(2003)](https://www.jstor.org/stable/25054218?seq=1) __(net gini / gini mkt)*100__
-   - Calculation used by Solt in [SWIID](https://fsolt.org/swiid/) __(gini mkt - gini net)/gini mkt__
+   
+   +  Calculation according to Bradley[(2003)](https://www.jstor.org/stable/25054218?seq=1) __(net gini/gini mkt)*100__
+   
+   + Calculation used by Solt in [SWIID](https://fsolt.org/swiid/) __(gini mkt - gini net)/gini mkt__
 
 
 ```{r }
